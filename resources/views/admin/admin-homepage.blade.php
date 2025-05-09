@@ -417,7 +417,7 @@
 
     .announcement-text {
       width: 100%;
-      max-width: 600px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 24px 32px;
       background: #fff;
@@ -889,6 +889,65 @@
       transition: 0.5s ease-out;
     }
 
+    .account-approval-container {
+      margin-bottom: 40px;
+      min-height: 400px;
+      max-height: 800px;
+      overflow-y: auto;
+      margin-top: 40px;
+      margin-bottom: 60px;
+    }
+    #approvalTable th, #approvalTable td {
+      text-align: left;
+      font-size: 1rem;
+      border-bottom: 1px solid #e3e8f0;
+    }
+    #approvalTable tr:last-child td {
+      border-bottom: none;
+    }
+    #approvalTable tr {
+      transition: background 0.2s;
+    }
+    #approvalTable tr:hover {
+      background: #f0f6ff;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      background: #ffe066;
+      color: #333;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .status-approved {
+      background: #4ade80;
+      color: #065f46;
+    }
+    .status-declined {
+      background: #f87171;
+      color: #991b1b;
+    }
+    .status-pending {
+      background: #ffe066;
+      color: #b45309;
+    }
+    .account-approval-container select {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #bcd0ee;
+      font-size: 1rem;
+      background: #f7faff;
+      color: #333;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .account-approval-container select:focus {
+      border: 1.5px solid #1E63E9;
+    }
+
 	</style>
 </head>
 
@@ -945,7 +1004,7 @@
     </div>
     </section>
 
-<div class="announcement-section">
+    <div class="announcement-section">
   <div class="announcement-header">
     <h2> <i class="fa fa-bullhorn" aria-hidden="true"></i> Announcement & News Update </h2>
     <p id="datetime"> </p>
@@ -957,7 +1016,7 @@
     </div>
   </div>
 </div>
-
+    
 <div class="slider-container">
   <div class="slider">
     @foreach($announcements as $announcement)
@@ -980,27 +1039,31 @@
           <button type="submit" class="reset-button" style="background: #426DDC; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif; width: 220px; margin: 0 auto; display: block;">Reset to Default Photo</button>
         </form>
       </div>
-      <div class="announcement-text">
-        <form action="{{ url('/admin/announcements/' . $announcement->id) }}" method="POST" style="margin-bottom: 20px;">
+      <div class="announcement-text" style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 24px 32px; background: #fff; border-radius: 0 0 16px 16px; box-shadow: 0 2px 8px rgba(66, 109, 220, 0.07); display: flex; flex-direction: column; align-items: center;">
+        <form action="{{ url('/admin/announcements/' . $announcement->id) }}" method="POST" style="margin-bottom: 20px; width: 100%;">
           @csrf
           @method('PUT')
-          <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-            <input
-              type="text"
-              name="title"
-              value="{{ $announcement->title }}"
-              required
-              style="font-size: 24px; font-weight: bold; text-align: center; width: 100%; max-width: 600px; border-radius: 6px; border: 1px solid #ccc; padding: 8px;"
-            >
-            <textarea
-              name="content"
-              required
-              style="font-size: 16px; width: 100%; max-width: 600px; border-radius: 6px; border: 1px solid #ccc; padding: 8px; min-height: 60px;"
-            >{{ $announcement->content }}</textarea>
-            <button
-              type="submit"
-              style="background: #426DDC; color: white; border: none; padding: 8px 24px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 16px;"
-            >Save Changes</button>
+          <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; gap: 24px; width: 100%; max-width: 1200px;">
+            <div style="flex: 2; display: flex; flex-direction: column; gap: 10px;">
+              <input
+                type="text"
+                name="title"
+                value="{{ $announcement->title }}"
+                required
+                style="font-size: 24px; font-weight: bold; text-align: left; width: 100%; max-width: 1000px; border-radius: 6px; border: 1px solid #ccc; padding: 8px;"
+              >
+              <textarea
+                name="content"
+                required
+                style="font-size: 16px; width: 100%; max-width: 1000px; border-radius: 6px; border: 1px solid #ccc; padding: 8px; min-height: 60px;"
+              >{{ $announcement->content }}</textarea>
+            </div>
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; width: 100%;">
+              <button
+                type="submit"
+                style="background: #426DDC; color: white; border: none; padding: 8px 24px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 16px; min-width: 180px;"
+              >Save Changes</button>
+            </div>
           </div>
         </form>
       </div>
@@ -1011,30 +1074,64 @@
   <button class="next" onclick="moveSlide(1)">&#10095;</button>
 </div>
 
-<!-- Add Announcement Button and Modal -->
-<button id="addAnnouncementBtn" style="margin: 30px auto; display: block; background: #426DDC; color: white; font-size: 16px; padding: 10px 24px; border: none; border-radius: 8px; cursor: pointer;">Add Announcement</button>
-<div id="addAnnouncementModal" style="display:none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.4); justify-content: center; align-items: center;">
-  <div style="background: white; padding: 32px 24px; border-radius: 12px; max-width: 400px; margin: 80px auto; position: relative;">
-    <form action="{{ route('admin.announcements.store') }}" method="POST" enctype="multipart/form-data">
-      @csrf
-      <h2 style="margin-bottom: 18px; color: #426DDC;">Add Announcement</h2>
-      <label>Title:</label>
-      <input type="text" name="title" required style="width: 100%; margin-bottom: 10px; padding: 7px; border-radius: 5px; border: 1px solid #ccc;">
-      <label>Content:</label>
-      <textarea name="content" required style="width: 100%; margin-bottom: 10px; padding: 7px; border-radius: 5px; border: 1px solid #ccc;"></textarea>
-      <label>Image:</label>
-      <div style="position: relative; margin-bottom: 18px;">
-        <input type="file" id="customFileInput" name="image" accept="image/*" required style="opacity:0; position:absolute; left:0; top:0; width:100%; height:100%; cursor:pointer;">
-        <label for="customFileInput" id="customFileLabel" style="display:inline-block; background:#426DDC; color:white; padding:8px 18px; border-radius:5px; cursor:pointer; font-size:15px;">Choose File</label>
-        <span id="fileName" style="margin-left:10px; color:#333;">No file chosen</span>
-      </div>
-      <div style="display: flex; justify-content: flex-end; gap: 10px;">
-        <button type="button" onclick="closeAddAnnouncementModal()" style="background: #ccc; color: #333; border: none; border-radius: 5px; padding: 7px 16px;">Cancel</button>
-        <button type="submit" style="background: #426DDC; color: white; border: none; border-radius: 5px; padding: 7px 16px;">Add</button>
-      </div>
-    </form>
-  </div>
+<!-- ACCOUNT APPROVAL SECTION (Backend-Driven) -->
+<div class="account-approval-container" style="max-width: 1200px; margin: 40px auto 60px auto; background: #f7faff; border-radius: 12px; box-shadow: 0 4px 16px rgba(30,99,233,0.07); overflow: hidden; min-height: 400px; max-height: 800px; overflow-y: auto;">
+  <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">ACCOUNT APPROVAL</h2>
+  <table id="approvalTable" style="width: 100%; border-collapse: collapse; font-family: 'Poppins', sans-serif; background: white;">
+    <thead style="background-color: #1E63E9; color: white;">
+      <tr>
+        <th style="padding: 12px;">User Name</th>
+        <th style="padding: 12px;">Email Address</th>
+        <th style="padding: 12px;">ID Type</th>
+        <th style="padding: 12px;">ID Uploaded</th>
+        <th style="padding: 12px;">Current/Permanent Address</th>
+        <th style="padding: 12px;">Date of Birth</th>
+        <th style="padding: 12px;">Status</th>
+        <th style="padding: 12px;">Action</th>
+      </tr>
+    </thead>
+    <tbody id="approvalTableBody">
+      @if($pending_users->isEmpty())
+        <tr>
+          <td colspan="8" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">No pending users for approval.</td>
+        </tr>
+      @else
+        @foreach($pending_users as $user)
+          <tr style="background-color: white;">
+            <td style="padding: 12px;">{{ $user->first_name }} {{ $user->last_name }}</td>
+            <td style="padding: 12px;">{{ $user->email }}</td>
+            <td style="padding: 12px;">{{ $user->id_type }}</td>
+            <td style="padding: 12px;">
+              @if($user->id_image)
+                <a href="{{ asset('storage/uploads/' . $user->id_image) }}" target="_blank" style="color: #1E63E9; text-decoration: underline;">View ID</a>
+              @else
+                <span style="color: #aaa;">No ID</span>
+              @endif
+            </td>
+            <td style="padding: 12px;">{{ $user->current_address }}</td>
+            <td style="padding: 12px;">{{ $user->date_of_birth }}</td>
+            <td style="padding: 12px;">
+              <span class="status-badge status-pending">Pending</span>
+            </td>
+            <td style="padding: 12px;">
+              <div style="display: flex; gap: 8px;">
+                <form method="POST" action="{{ route('admin.accept-user', $user->id) }}" class="approval-action-form" style="display:inline;">
+                  @csrf
+                  <button type="submit" class="approve-btn" style="background: #4ade80; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Approve</button>
+                </form>
+                <form method="POST" action="{{ route('admin.reject-user', $user->id) }}" class="approval-action-form" style="display:inline;">
+                  @csrf
+                  <button type="submit" class="reject-btn" style="background: #f87171; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Reject</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        @endforeach
+      @endif
+    </tbody>
+  </table>
 </div>
+<!-- END ACCOUNT APPROVAL SECTION -->
 
 <footer>
   <div class="container">
@@ -1240,8 +1337,6 @@ function resetImage(imgId, announcementId) {
         performSearch();
     }
     });
-
-
 
 function toggleDropdown() {
     const dropdown = document.getElementById("accountDropdown");

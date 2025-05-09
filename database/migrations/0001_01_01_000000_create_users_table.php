@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('status')->default('Pending');
             $table->boolean('is_verified')->default(false);
             $table->string('password');
             $table->boolean('receive_notifications')->default(false);

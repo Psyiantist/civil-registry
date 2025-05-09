@@ -711,7 +711,6 @@
         <form action="{{ route('admin.login') }}" method="POST" id="loginForm">
           @csrf
 
-
           <input type="text" name="username" placeholder="Username" required>
           <input type="password" name="password" placeholder="Password" required>
           <img src="{{ asset('build/assets/icons8-blind-30.jpg') }}" id="eye-icon" onclick="togglePasswordVisibility('password')">

@@ -273,11 +273,11 @@
                 <label for="idType">Select ID Type:</label>
                 <select id="idType" name="id_type" required class="{{ $errors->has('id_type') ? 'select-error' : '' }}">
                     <option value="">-- Select ID --</option>
-                    <option value="sss" {{ old('id_type') == 'sss' ? 'selected' : '' }}>SSS ID</option>
-                    <option value="passport" {{ old('id_type') == 'passport' ? 'selected' : '' }}>Passport</option>
-                    <option value="national" {{ old('id_type') == 'national' ? 'selected' : '' }}>National ID</option>
-                    <option value="driver" {{ old('id_type') == 'driver' ? 'selected' : '' }}>Driver's License</option>
-                    <option value="philhealth" {{ old('id_type') == 'philhealth' ? 'selected' : '' }}>PhilHealth ID</option>
+                    <option value="SSS ID" {{ old('id_type') == 'sss' ? 'selected' : '' }}>SSS ID</option>
+                    <option value="Passport ID" {{ old('id_type') == 'passport' ? 'selected' : '' }}>Passport</option>
+                    <option value="National ID" {{ old('id_type') == 'national' ? 'selected' : '' }}>National ID</option>
+                    <option value="Driver's License" {{ old('id_type') == 'driver' ? 'selected' : '' }}>Driver's License</option>
+                    <option value="PhilHealth ID" {{ old('id_type') == 'philhealth' ? 'selected' : '' }}>PhilHealth ID</option>
                 </select>
                 @error('id_type')
                     <span class="error-message">{{ $message }}</span>

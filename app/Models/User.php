@@ -29,6 +29,8 @@ class User extends Authenticatable
         'current_address',
         'permanent_address',
         'date_of_birth',
+        'is_verified',
+        'status'
     ];
 
     /**

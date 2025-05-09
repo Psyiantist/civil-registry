@@ -729,25 +729,45 @@
           <div class="contact-info-box">
             <h3> <i class="fas fa-thumbtack" aria-hidden="true"></i> Contact Information</h3>
 
-            <p><strong>Address:</strong> 
-            <span contenteditable="true" data-field="address">{{ $contact->address ?? '2/F Left Wing Executive Building City Government Complex, Maysilo Circle, Plainview, Mandaluyong City' }}</span>
-            <i class="fas fa-save save-icon" title="Save Address" style="display: none;"></i>
-            </p>
+            <div style="background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(66,109,220,0.07); padding: 24px 20px; margin-bottom: 24px;">
+              <form class="contact-form" method="POST" action="{{ route('contact.update') }}">
+                  @csrf
+                  <input type="hidden" name="field" value="address">
+                  <label for="address"><strong>Address:</strong></label>
+                  <input type="text" id="address" name="address" value="{{ $contact->address }}" required />
+                  <button type="submit">Save</button>
+              </form>
+            </div>
 
-            <p><strong>Phone:</strong> 
-            <span contenteditable="true" data-field="phone">{{ $contact->phone ?? '(02) 8533-28-21' }}</span>
-            <i class="fas fa-save save-icon" title="Save Phone" style="display: none;"></i>
-            </p>
+            <div style="background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(66,109,220,0.07); padding: 24px 20px; margin-bottom: 24px;">
+              <form class="contact-form" method="POST" action="{{ route('contact.update') }}">
+                  @csrf
+                  <input type="hidden" name="field" value="phone">
+                  <label for="phone"><strong>Phone:</strong></label>
+                  <input type="text" id="phone" name="phone" value="{{ $contact->phone }}" required />
+                  <button type="submit">Save</button>
+              </form>
+            </div>
 
-            <p><strong>Email:</strong> 
-            <span contenteditable="true" data-field="email">{{ $contact->email ?? 'city.registrar@mandaluyong.gov.ph' }}</span>
-            <i class="fas fa-save save-icon" title="Save Email" style="display: none;"></i>
-            </p>
+            <div style="background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(66,109,220,0.07); padding: 24px 20px; margin-bottom: 24px;">
+              <form class="contact-form" method="POST" action="{{ route('contact.update') }}">
+                  @csrf
+                  <input type="hidden" name="field" value="email">
+                  <label for="email"><strong>Email:</strong></label>
+                  <input type="email" id="email" name="email" value="{{ $contact->email }}" required />
+                  <button type="submit">Save</button>
+              </form>
+            </div>
 
-            <p><strong>Office Hours:</strong> 
-            <span contenteditable="true" data-field="office_hours">{{ $contact->office_hours ?? 'Monday - Friday, 8:00 AM to 5:00 PM' }}</span>
-            <i class="fas fa-save save-icon" title="Save Office Hours" style="display: none;"></i>
-           </p>
+            <div style="background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(66,109,220,0.07); padding: 24px 20px; margin-bottom: 0;">
+              <form class="contact-form" method="POST" action="{{ route('contact.update') }}">
+                  @csrf
+                  <input type="hidden" name="field" value="office_hours">
+                  <label for="office_hours"><strong>Office Hours:</strong></label>
+                  <input type="text" id="office_hours" name="office_hours" value="{{ $contact->office_hours }}" required />
+                  <button type="submit">Save</button>
+              </form>
+            </div>
           </div>
         </div>
      
@@ -788,119 +808,6 @@
         <p>&copy; 2025 Civil Registry Department. All Rights Reserved.</p>
     </div>
 </footer>
-
-
-  <script>
-    // Add CSRF token to all AJAX requests
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    function toggleDropdown() {
-      const dropdown = document.getElementById("accountDropdown");
-      dropdown.classList.toggle("show");
-    }
-
-    function performSearch() {
-            const input = document.getElementById("searchInput").value.trim().toLowerCase();
-
-            if (input === "") {
-        alert("Please enter a search term.");
-    } else {
-        if (input === "home page" || input === "homepage" || input === "home") {
-            window.location.href = "{{ route('admin.homepage') }}";
-        } else if (input === "faqs" || input === "facts" || input === "help") {
-            window.location.href = "{{ route('admin.faqs') }}";
-        } else if (input === "about" || input === "about civil") {
-            window.location.href = "{{ route('admin.about') }}";
-        } else if (input === "appointment" || input === "appointments" || input === "schedule" || input === "schedules") {
-            window.location.href = "{{ route('admin.appointment') }}";
-        } else if (input === "reqs" || input === "requirements" || input === "requirement") {
-            window.location.href = "{{ route('admin.requirements') }}";
-        } else if (input === "contact" || input === "number" || input === "email") {
-            window.location.href = "{{ route('admin.contact') }}";
-        } else {
-                alert("No results found.");
-                inputField.value = "";
-        }
-    }}
-    document.getElementById("searchInput").addEventListener("keypress", function(e) {
-        if (e.key === "Enter") {
-        performSearch();
-    }
-    });
-
-    window.addEventListener("click", function(event) {
-      const userIcon = document.querySelector(".user-icon");
-      const dropdown = document.getElementById("accountDropdown");
-
-      if (!userIcon.contains(event.target) && !dropdown.contains(event.target)) {
-        dropdown.classList.remove("show");
-      }
-    });
-
-    // Add this new code for contact information editing
-    document.querySelectorAll('[contenteditable="true"]').forEach(element => {
-        const saveIcon = element.nextElementSibling;
-        
-        element.addEventListener('focus', () => {
-            saveIcon.style.display = 'inline-block';
-        });
-
-        element.addEventListener('blur', (e) => {
-            // Don't hide if clicking the save icon
-            if (e.relatedTarget === saveIcon) {
-                return;
-            }
-            setTimeout(() => {
-                saveIcon.style.display = 'none';
-            }, 200);
-        });
-
-        saveIcon.addEventListener('click', async () => {
-            const field = element.dataset.field;
-            const value = element.textContent.trim();
-            
-            try {
-                const response = await fetch('{{ route("contact.update") }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({
-                        [field]: value
-                    })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Network response was not ok');
-                }
-
-                const data = await response.json();
-                
-                if (data.success) {
-                    alert('Contact information updated successfully!');
-                } else {
-                    throw new Error(data.message || 'Failed to update contact information');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert(error.message || 'Failed to update contact information. Please try again.');
-                // Revert the content if update fails
-                try {
-                    const currentContact = await fetch('{{ route("contact.get") }}').then(r => r.json());
-                    element.textContent = currentContact[field];
-                } catch (e) {
-                    console.error('Error fetching current contact:', e);
-                }
-            }
-        });
-    });
-  </script>
 
 </body>
 </html>

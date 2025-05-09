@@ -19,7 +19,7 @@ Route::get('/', function () {
 // USER ROUTES
 Route::view('/home', 'homepage')->name('home');
 Route::view('/about', 'about')->name('about');
-Route::view('/contact', 'contact')->name('contact');
+Route::get('/contact', [ContactController::class, 'showUserContact'])->name('contact');
 
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 Route::post('/feedback', [ContactController::class, 'sendFeedback'])->name('contact.sendFeedback');
@@ -38,6 +38,7 @@ Route::post('/forget-password', [AuthController::class, 'forgetPassword'])->name
 
 Route::view('/forget-password/confirmation', 'temporary-views.password-reset-confirmation')->name('password-reset-confirmation');
 
+// Residence Routes
 Route::get('/residence-homepage', [ResidenceController::class, 'showResidenceHomepage'])->middleware('auth')->name('residence-homepage');
 Route::get('/residence-appointment', [ResidenceController::class, 'showResidenceAppointment'])->middleware('auth')->name('residence-appointment');
 Route::get('/residence-requirements', [ResidenceController::class, 'showResidenceRequirements'])->middleware('auth')->name('residence-requirements');
@@ -59,15 +60,12 @@ Route::post('/residence/appointment/store', [AppointmentController::class, 'stor
 Route::get('/admin/login', [AuthController::class, 'showEmployeeLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AuthController::class, 'employeeLoginHandler'])->name('admin.login.handler');
 Route::get('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
+Route::post('/admin/password', [AuthController::class, 'updateAdminPassword'])->name('admin.password.update');
 
-Route::get('/admin/homepage', [EmployeeController::class, 'showAdminHomepage'])->middleware('auth')->name('admin.homepage');
 Route::get('/admin/appointment', [EmployeeController::class, 'showAdminAppointment'])->middleware('auth')->name('admin.appointment');
-Route::get('/admin/requirements', [EmployeeController::class, 'showAdminRequirements'])->middleware('auth')->name('admin.requirements');
-Route::get('/admin/faqs', [EmployeeController::class, 'showAdminFaqs'])->middleware('auth')->name('admin.faqs');
 Route::get('/admin/about', [EmployeeController::class, 'showAdminAbout'])->middleware('auth')->name('admin.about');
-Route::get('/admin/contact', [EmployeeController::class, 'showAdminContact'])->middleware('auth')->name('admin.contact');
 
-// Admin Routes
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/homepage', [EmployeeController::class, 'showAdminHomepage'])->name('admin.homepage');
     Route::put('/admin/announcements/{announcement}', [AnnouncementController::class, 'update'])->name('admin.announcements.update');
@@ -85,6 +83,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/contact', [ContactController::class, 'showAdminContact'])->name('admin.contact');
     Route::post('/admin/contact/update', [ContactController::class, 'updateContact'])->name('contact.update');
     Route::get('/contact/get', [ContactController::class, 'getContact'])->name('contact.get');
+
+    // User Acceptance Routes 
+    Route::post('/admin/accept-user/{user}', [EmployeeController::class, 'acceptUser'])->middleware('auth')->name('admin.accept-user');
+    Route::post('/admin/reject-user/{user}', [EmployeeController::class, 'rejectUser'])->middleware('auth')->name('admin.reject-user');
+
+    // Requirements Routes 
+    Route::get('/admin/requirements', [EmployeeController::class, 'showAdminRequirements'])->middleware('auth')->name('admin.requirements');
+
 });
 
 // Public Routes
@@ -93,5 +99,6 @@ Route::get('/announcements', [AnnouncementController::class, 'getActiveAnnouncem
 // Public FAQ route
 Route::get('/faqs', [FaqController::class, 'publicFaqs'])->name('faqs');
 
-Route::put('/admin/password', [AuthController::class, 'updateAdminPassword'])->name('admin.password.update');
+// Public Contact route 
+Route::get('/contact-info', [ContactController::class, 'getContact'])->name('contact.get');
 

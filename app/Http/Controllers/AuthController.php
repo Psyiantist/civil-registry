@@ -35,8 +35,8 @@ class AuthController extends Controller
         // Find the user first to check verification status
         $user = User::where('email', $request->email)->first();
         
-        if ($user && $user->is_verified == 0) {
-            return redirect()->back()->withErrors(['email' => 'Please verify your email first']);
+        if ($user && ($user->is_verified == 0 || $user->status == 'Rejected')) {
+            return redirect()->back()->withErrors(['email' => 'Please verify your email first or your account is rejected.']);
         }
 
         if (Auth::attempt($credentials, $remember)) {

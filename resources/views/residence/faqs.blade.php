@@ -776,51 +776,19 @@
 
         <div class="faq-container">
             <h2 class="faq-title">Frequently Asked Questions</h2>
-            <div class="faq-item">
-                <div class="faq-question">
-                    What is Civil Registry?
-                    <i class="fa fa-chevron-down"></i>
+            
+            <div id="faq-list">
+                @foreach($faqs as $faq)
+                <div class="faq-item">
+                    <div class="faq-question">
+                        {{ $faq->question }}
+                        <i class="fa fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        {!! nl2br(e($faq->answer)) !!}
+                    </div>
                 </div>
-                <div class="faq-answer">
-                    The Civil Registry is a government agency responsible for <br/> maintaining records of vital events such as births, deaths, <br/> marriages, and other legal documents.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    How do I request a birth certificate?
-                    <i class="fa fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    You can request a birth certificate online through our website <br/> or by visiting our office in person.  Please bring a valid ID  <br/> and any supporting documents.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    What are the requirements for marriage?
-                    <i class="fa fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    The requirements for marriage may vary.  Generally, you will <br/>
-                    need valid identification, birth certificates, and a marriage <br/> license. Please check our detailed requirements on the <br/> services page.
-                </div>
-            </div>
-             <div class="faq-item">
-                <div class="faq-question">
-                    How can I correct an error on my birth certificate?
-                    <i class="fa fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    To correct an error, you will need to submit a formal request <br/> with supporting documentation, such as original birth records <br/> or other legal documents that prove the correct information.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    Is it possible to get a copy of someone else's death <br/> certificate?
-                    <i class="fa fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    Access to death certificates is subject to certain restrictions <br/> and usually limited to individuals with a direct legal interest, <br/> such as family members or legal representatives.
-                </div>
+                @endforeach
             </div>
         </div>
               </section>

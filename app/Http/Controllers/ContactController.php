@@ -21,7 +21,7 @@ class ContactController extends Controller
             'email' => 'required|email|max:255',
             'message' => 'required|string|max:255',
         ]);
-        
+
         try {
             Mail::to($fixedEmail)->send(new ContactMail($request->name, $request->email, $request->message));
             session()->flash('success', 'Your message has been sent successfully!');
@@ -83,53 +83,40 @@ class ContactController extends Controller
 
     public function updateContact(Request $request)
     {
-        try {
-            // Get the first key from the request (the field being updated)
-            $field = array_key_first($request->all());
-            
-            // Validate only the field being updated
-            $rules = [
-                'address' => 'required|string|max:255',
-                'phone' => 'required|string|max:255',
-                'email' => 'required|email|max:255',
-                'office_hours' => 'required|string|max:255',
-            ];
+        $field = $request->input('field');
+        $allowedFields = ['address', 'phone', 'email', 'office_hours'];
 
-            $validator = \Validator::make([$field => $request->input($field)], [
-                $field => $rules[$field]
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => $validator->errors()->first()
-                ], 422);
-            }
-
-            $contact = Contact::first();
-            if (!$contact) {
-                $contact = new Contact();
-            }
-
-            $contact->$field = $request->input($field);
-            $contact->save();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Contact information updated successfully'
-            ]);
-        } catch (\Exception $e) {
-            \Log::error('Contact update error: ' . $e->getMessage());
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update contact information: ' . $e->getMessage()
-            ], 500);
+        if (!in_array($field, $allowedFields)) {
+            return back()->with('error', 'Invalid field.');
         }
+
+        $rules = [
+            'address' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'office_hours' => 'required|string|max:255',
+        ];
+
+        $request->validate([
+            $field => $rules[$field]
+        ]);
+
+        $contact = Contact::first() ?? new Contact();
+        $contact->$field = $request->input($field);
+        $contact->save();
+
+        return back()->with('success', ucfirst($field) . ' updated successfully.');
     }
 
     public function getContact()
     {
         $contact = Contact::first();
         return response()->json($contact);
+    }
+
+    public function showUserContact()
+    {
+        $contact = Contact::first();
+        return view('contact', compact('contact'));
     }
 }

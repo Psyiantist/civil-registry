@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Announcement;
-
+use App\Models\Contact;
+use App\Models\Faq;
 class ResidenceController extends Controller
 {
     public function showResidenceHomepage()
@@ -15,7 +16,8 @@ class ResidenceController extends Controller
 
     public function showResidenceFaqs()
     {
-        return view('residence.faqs');
+        $faqs = Faq::all();
+        return view('residence.faqs', compact('faqs'));
     }
 
     public function showResidenceAboutUs()
@@ -25,7 +27,8 @@ class ResidenceController extends Controller
 
     public function showResidenceContactUs()
     {
-        return view('residence.contact-us');
+        $contact = Contact::first();
+        return view('residence.contact-us', compact('contact'));
     }
     
     public function showResidenceAppointment()
@@ -42,6 +45,6 @@ class ResidenceController extends Controller
     {
         return view('residence.profile');
     }
-    
+
 
 }
