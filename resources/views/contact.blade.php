@@ -582,7 +582,7 @@
 		<div class="menu">
 			<ul>
 				<li> <a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}"> Home </a> </li>
-                <li> <a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs1') }}"> FAQs </a> </li>
+                <li> <a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs') }}"> FAQs </a> </li>
                 <li> <a class="{{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}"> About Us </a> </li>
                 <li> <a class="{{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}"> Contact Us </a> </li>
 			</ul>
@@ -605,10 +605,10 @@
           <p>If you have any questions or feedback, feel free to contact us using the form. We're here to help you!</p>
           <div class="contact-info-box">
             <h3> <i class="fas fa-thumbtack" aria-hidden="true"></i> Contact Information</h3>
-            <p><strong>Address:</strong> 2/F Left Wing Executive Building City Government Complex, Maysilo Circle, Plainview, Mandaluyong City</p>
-            <p><strong>Phone:</strong> (02) 8533-28-21</p>
-            <p><strong>Email:</strong> city.registrar@mandaluyong.gov.ph</p>
-            <p><strong>Office Hours:</strong> Monday - Friday, 8:00 AM to 5:00 PM</p>
+            <p><strong>Address:</strong> {{ $contact->address ?? '2/F Left Wing Executive Building City Government Complex, Maysilo Circle, Plainview, Mandaluyong City' }}</p>
+            <p><strong>Phone:</strong> {{ $contact->phone ?? '(02) 8533-28-21' }}</p>
+            <p><strong>Email:</strong> {{ $contact->email ?? 'city.registrar@mandaluyong.gov.ph' }}</p>
+            <p><strong>Office Hours:</strong> {{ $contact->office_hours ?? 'Monday - Friday, 8:00 AM to 5:00 PM' }}</p>
           </div>
 
         </div>
@@ -667,7 +667,7 @@
     function performSearch() {
         const routes = {
                     home: "{{ route('home') }}",
-                    faqs: "{{ route('faqs1') }}",
+                    faqs: "{{ route('faqs') }}",
                     about: "{{ route('about') }}",
                     contact: "{{ route('contact') }}"
                 };

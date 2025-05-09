@@ -334,7 +334,7 @@
    .faq-answer {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.3s ease;
+      transition: max-height 0.3s ease-out;
       font-size: 14px;
       font-weight: 400;
       color: #555;
@@ -342,11 +342,15 @@
       line-height: 1.6;
       margin-top: 10px;
       padding: 0 5px;
-    }
+      opacity: 0;
+      transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+   }
 
    .faq-answer.show {
       max-height: 500px;
-    }
+      opacity: 1;
+      padding: 10px 5px;
+   }
 
 
 
@@ -659,8 +663,8 @@
 
 		<div class="menu">
 			<ul>
-				<li> <a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}"> Home </a> </li>
-                <li> <a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs1') }}"> FAQs </a> </li>
+				        <li> <a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}"> Home </a> </li>
+                <li> <a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs') }}"> FAQs </a> </li>
                 <li> <a class="{{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}"> About Us </a> </li>
                 <li> <a class="{{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}"> Contact Us </a> </li>
 			</ul>
@@ -677,7 +681,6 @@
 		<button class="menu-toggle"> </button>
 	</nav>
 
-
   <center>
      <section class="search-section">
        <div class="hcwhy">
@@ -688,55 +691,22 @@
                 <i class="fa fa-search"> </i>
             </button>
         </form>
-
-
+        
         <div class="faq-container">
             <h2 class="faq-title">Frequently Asked Questions</h2>
-            <div class="faq-item">
-                <div class="faq-question">
-                    What is Civil Registry?
-                    <i class="fa fa-chevron-down"></i>
+            
+            <div id="faq-list">
+                @foreach($faqs as $faq)
+                <div class="faq-item">
+                    <div class="faq-question">
+                        {{ $faq->question }}
+                        <i class="fa fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        {!! nl2br(e($faq->answer)) !!}
+                    </div>
                 </div>
-                <div class="faq-answer">
-                    The Civil Registry is a government agency responsible for <br/> maintaining records of vital events such as births, deaths, <br/> marriages, and other legal documents.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    How do I request a birth certificate?
-                    <i class="fa fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    You can request a birth certificate online through our website <br/> or by visiting our office in person.  Please bring a valid ID  <br/> and any supporting documents.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    What are the requirements for marriage?
-                    <i class="fa fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    The requirements for marriage may vary.  Generally, you will <br/>
-                    need valid identification, birth certificates, and a marriage <br/> license. Please check our detailed requirements on the <br/> services page.
-                </div>
-            </div>
-             <div class="faq-item">
-                <div class="faq-question">
-                    How can I correct an error on my birth certificate?
-                    <i class="fa fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    To correct an error, you will need to submit a formal request <br/> with supporting documentation, such as original birth records <br/> or other legal documents that prove the correct information.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    Is it possible to get a copy of someone else's death <br/> certificate?
-                    <i class="fa fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    Access to death certificates is subject to certain restrictions <br/> and usually limited to individuals with a direct legal interest, <br/> such as family members or legal representatives.
-                </div>
+                @endforeach
             </div>
         </div>
               </section>
@@ -775,7 +745,7 @@
             function performSearch() {
                 const routes = {
                     home: "{{ route('home') }}",
-                    faqs: "{{ route('faqs1') }}",
+                    faqs: "{{ route('faqs') }}",
                     about: "{{ route('about') }}",
                     contact: "{{ route('contact') }}"
                 };
@@ -823,21 +793,27 @@
         const faqQuestions = document.querySelectorAll('.faq-question');
 
         faqQuestions.forEach(question => {
-        question.addEventListener('click', () => {
-        const answer = question.nextElementSibling;
-        const icon = question.querySelector('i');
+            question.addEventListener('click', () => {
+                // Toggle active class on the clicked question
+                question.classList.toggle('active');
+                
+                // Get the answer element
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('i');
 
-        document.querySelectorAll('.faq-answer').forEach(ans => {
-                if (ans !== answer) ans.classList.remove('show');
-        });
-        document.querySelectorAll('.faq-question i').forEach(ic => {
-                if (ic !== icon) ic.classList.remove('active');
-        });
+                // Close all other answers
+                faqQuestions.forEach(otherQuestion => {
+                    if (otherQuestion !== question) {
+                        otherQuestion.classList.remove('active');
+                        otherQuestion.querySelector('i')?.classList.remove('active');
+                        otherQuestion.nextElementSibling.classList.remove('show');
+                    }
+                });
 
-            question.classList.toggle('active');
-            answer.classList.toggle('show');
-            icon?.classList.toggle('active');
-        });
+                // Toggle the clicked answer
+                answer.classList.toggle('show');
+                icon?.classList.toggle('active');
+            });
         });
 
 </script>

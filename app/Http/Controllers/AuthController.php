@@ -90,11 +90,29 @@ class AuthController extends Controller
             return redirect()->back()->withErrors(['username' => 'Invalid username']);
         }
 
-        if ($request->password !== $employee->password) {
+        if (!Hash::check($request->password, $employee->password)) {
             return redirect()->back()->withErrors(['password' => 'Invalid password']);
         }
 
         Auth::login($employee);
         return redirect()->route('admin.homepage')->with('success', 'Login successful');
+    }
+
+    public function updateAdminPassword(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string|min:8'
+        ]);
+
+        $employee = Employee::where('username', $request->username)->first();
+        if (!$employee) {
+            return redirect()->back()->withErrors(['username' => 'Username not found.']);
+        }
+
+        $employee->password = Hash::make($request->password);
+        $employee->save();
+
+        return redirect()->back()->with('status', 'Password updated successfully.');
     }
 }

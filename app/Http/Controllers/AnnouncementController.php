@@ -10,34 +10,42 @@ class AnnouncementController extends Controller
 {
     public function update(Request $request, Announcement $announcement)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
-
-        if ($request->hasFile('image')) {
-            // Delete old image
-            if ($announcement->image_path) {
+        if ($request->has('reset_to_default')) {
+            if ($announcement->image_path && $announcement->image_path !== 'default-announcement.png') {
                 $oldImagePath = public_path('storage/announcements/' . $announcement->image_path);
                 if (file_exists($oldImagePath)) {
                     unlink($oldImagePath);
                 }
             }
+            $announcement->image_path = 'default-announcement.png';
+            $announcement->save();
+            return redirect()->back()->with('success', 'Announcement image reset to default successfully!');
+        }
 
-            // Store new image
+        if ($request->hasFile('image')) {
+            $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            ]);
+            if ($announcement->image_path && $announcement->image_path !== 'default-announcement.png') {
+                $oldImagePath = public_path('storage/announcements/' . $announcement->image_path);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
             $image->move(public_path('storage/announcements'), $imageName);
-            $validated['image_path'] = $imageName;
+            $announcement->image_path = $imageName;
+            $announcement->save();
+            return redirect()->back()->with('success', 'Announcement image updated successfully!');
         }
 
-        $announcement->update($validated);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Announcement updated successfully'
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
         ]);
+        $announcement->update($validated);
+        return redirect()->back()->with('success', 'Announcement updated successfully!');
     }
 
     public function getActiveAnnouncements()

@@ -678,7 +678,7 @@
     <div class="menu">
       <ul>
           <li> <a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}"> Home </a> </li>
-          <li> <a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs1') }}"> FAQs </a> </li>
+          <li> <a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs') }}"> FAQs </a> </li>
           <li> <a class="{{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}"> About Us </a> </li>
           <li> <a class="{{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}"> Contact Us </a> </li>
       </ul>
@@ -710,6 +710,8 @@
 
         <form action="{{ route('admin.login') }}" method="POST" id="loginForm">
           @csrf
+
+
           <input type="text" name="username" placeholder="Username" required>
           <input type="password" name="password" placeholder="Password" required>
           <img src="{{ asset('build/assets/icons8-blind-30.jpg') }}" id="eye-icon" onclick="togglePasswordVisibility('password')">
@@ -717,22 +719,50 @@
             <input type="checkbox" id="remember-me">
             <label for="remember-me"> Remember me </label>
           </div>
+          <div class="forgot">
+            <a href="#" onclick="showForgotPassword()" style="margin-top: 10px; margin-left: 0; display: block;"> Forgot Password? </a>
+          </div>
+          @if($errors->has('username'))
+            <div style="color: red; text-align: center; margin-top: 10px;">
+              {{ $errors->first('username') }}
+            </div>
+          @endif
+          @if($errors->has('password'))
+            <div style="color: red; text-align: center; margin-top: 10px;">
+              {{ $errors->first('password') }}
+            </div>
+          @endif
           <button type="submit" class="btnn">SIGN IN</button>
         </form>
-        <div class="forgot">
-          <a href="#" onclick="showForgotPassword()"> Forgot Password? </a>
-        </div>
       </div>
       <div id="forgotPasswordContainer" class="form" style="display: none; position: relative; margin-left: 0; margin-top: 0; left: 0; top: 0; transform: none;">
-        
-        <p class="link" style="margin: 0 0 20px 0; text-align: center;">Please enter your username and new password:</p>
-        <input type="text" id="userName" name="userName" placeholder="Username" required>
-        <input type="password" id="newPassword" name="newPassword" placeholder="Enter New Password" required>
-        <img src="{{ asset('build/assets/icons8-blind-30.jpg') }}" id="eye-icon-confirm" onclick="togglePasswordVisibility('confirmPassword')">
-        <button class="btnn" onclick="submitForgotPassword(event)" style="margin-top: 25px;">SUBMIT</button>
-        <p class="link" style="margin-top: 20px; text-align: center;">Remembered your password?
-          <a href="#" onclick="hideForgotPassword()">Back to Login</a>
-        </p>
+        <form id="forgotPasswordForm" action="{{ route('admin.password.update') }}" method="POST">
+          @csrf
+          @if($errors->has('username'))
+            <div style="color: red;">{{ $errors->first('username') }}</div>
+          @endif
+          <p class="link" style="margin: 0 0 20px 0; text-align: center;">Please enter your username and new password:</p>
+          <input type="text" id="userName" name="username" placeholder="Username" required>
+          <input type="password" id="newPassword" name="password" placeholder="Enter New Password" required>
+          <img src="{{ asset('build/assets/icons8-blind-30.jpg') }}" id="eye-icon-confirm" onclick="togglePasswordVisibility('password')">
+          <button class="btnn" type="submit" style="margin-top: 25px;">SUBMIT</button>
+          @if(session('status'))
+            <div style="color: green; text-align: center; margin-top: 10px;">{{ session('status') }}</div>
+          @endif
+          @if($errors->has('username'))
+            <div style="color: red; text-align: center; margin-top: 10px;">
+              {{ $errors->first('username') }}
+            </div>
+          @endif
+          @if($errors->has('password'))
+            <div style="color: red; text-align: center; margin-top: 10px;">
+              {{ $errors->first('password') }}
+            </div>
+          @endif
+          <p class="link" style="margin-top: 20px; text-align: center;">Remembered your password?
+            <a href="#" onclick="hideForgotPassword()">Back to Login</a>
+          </p>
+        </form>
       </div>
     </div>
   </section>
@@ -746,13 +776,13 @@ function performSearch() {
         alert("Please enter a search term.");
     } else {
         if (input === "home page" || input === "homepage" || input === "home") {
-            window.location.href = "Home page.html";
+            window.location.href = "{{ route('admin.homepage') }}";
         } else if (input === "faqs" || input === "facts" || input === "help") {
-            window.location.href = "FAQs Page.html";
+            window.location.href = "{{ route('admin.faqs') }}";
         } else if (input === "about" || input === "about civil") {
-            window.location.href = "About Us Page.html";
+            window.location.href = "{{ route('admin.about') }}";
         } else if (input === "contact" || input === "number" || input === "email") {
-            window.location.href = "Contact Us Page.html";
+            window.location.href = "{{ route('admin.contact') }}";
         } else {
           alert("No results found.");
           inputField.value = "";
@@ -763,8 +793,6 @@ function performSearch() {
         performSearch();
     }
     });
-
-
 
     const button = document.querySelector('.menu-toggle');
     const menu = document.querySelector('.menu');
@@ -803,69 +831,28 @@ function performSearch() {
     }
 };
 
-
-function submitForgotPassword(event) {
-    event.preventDefault(); 
-
-    const newPassword = document.getElementById("newPassword");
-    const confirmPassword = document.getElementById("confirmPassword");
-
-    newPassword.classList.remove("error");
-    confirmPassword.classList.remove("error");
-
-    const errorMessage = document.getElementById("error-message");
-    if (errorMessage) {
-        errorMessage.remove();
-    }
-
-    if (!newPassword.value || !confirmPassword.value) {
-        if (!newPassword.value) newPassword.classList.add("error");
-        if (!confirmPassword.value) confirmPassword.classList.add("error");
-
-        return false;
-    }
-
-    if (newPassword.value !== confirmPassword.value) {
-        newPassword.classList.add("error");
-        confirmPassword.classList.add("error");
-
-        return false;
-    }
-
-    alert("Password successfully reset!"); 
-
-    newPassword.value = "";
-    confirmPassword.value = "";
-
-    document.getElementById("forgotPasswordContainer").style.display = "none";
-    document.getElementById("loginContainer").style.display = "block";
-    }
-
-
-    function showForgotPassword() {
+function showForgotPassword() {
     document.getElementById('loginContainer').style.display = 'none';
     document.getElementById('forgotPasswordContainer').style.display = 'block';
-    }
+}
 
-    function hideForgotPassword() {
+function hideForgotPassword() {
     document.getElementById('forgotPasswordContainer').style.display = 'none';
     document.getElementById('loginContainer').style.display = 'block';
-    }
+}
 
+const usernameInput = document.querySelector('input[name="username"]');
+const passwordInput = document.querySelector('input[name="password"]');
+const rememberMeCheckbox = document.getElementById("remember-me");
+const loginButton = document.querySelector(".btnn");
 
-    const usernameInput = document.querySelector('input[name="username"]');
-    const passwordInput = document.querySelector('input[name="password"]');
-    const rememberMeCheckbox = document.getElementById("remember-me");
-    const loginButton = document.querySelector(".btnn");
-
-    if (usernameInput && passwordInput && loginButton && rememberMeCheckbox) {
-    if (localStorage.getItem("rememberMe") === "true") {
-        usernameInput.value = localStorage.getItem("username") || "";
-        passwordInput.value = localStorage.getItem("password") || "";
-        rememberMeCheckbox.checked = true;
-    }
-    }
-
+if (usernameInput && passwordInput && loginButton && rememberMeCheckbox) {
+if (localStorage.getItem("rememberMe") === "true") {
+    usernameInput.value = localStorage.getItem("username") || "";
+    passwordInput.value = localStorage.getItem("password") || "";
+    rememberMeCheckbox.checked = true;
+}
+}
 </script>
 
 </body>

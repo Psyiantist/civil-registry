@@ -6,4 +6,5 @@ use App\Models\Announcement;
 
 abstract class Controller
 {
+    
 }

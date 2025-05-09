@@ -784,7 +784,7 @@
     <div class="menu">
       <ul>
         <li> <a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}"> Home </a> </li>
-        <li> <a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs1') }}"> FAQs </a> </li>
+        <li> <a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs') }}"> FAQs </a> </li>
         <li> <a class="{{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}"> About Us </a> </li>
         <li> <a class="{{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}"> Contact Us </a> </li>
       </ul>
@@ -877,13 +877,13 @@ function performSearch() {
         alert("Please enter a search term.");
     } else {
         if (input === "home page" || input === "homepage" || input === "home") {
-            window.location.href = "Home page.html";
+            window.location.href = "{{ route('home') }}";
         } else if (input === "faqs" || input === "facts" || input === "help") {
-            window.location.href = "FAQs Page.html";
+            window.location.href = "{{ route('faqs') }}";
         } else if (input === "about" || input === "about civil") {
-            window.location.href = "About Us Page.html";
+            window.location.href = "{{ route('about') }}";
         } else if (input === "contact" || input === "number" || input === "email") {
-            window.location.href = "Contact Us Page.html";
+            window.location.href = "{{ route('contact') }}";
         } else {
           alert("No results found.");
           inputField.value = "";

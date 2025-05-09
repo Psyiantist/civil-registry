@@ -706,7 +706,7 @@
 		<div class="menu">
 			<ul>
 				  <li> <a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}"> Home </a> </li>
-          <li> <a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs1') }}"> FAQs </a> </li>
+          <li> <a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs') }}"> FAQs </a> </li>
           <li> <a class="{{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}"> About Us </a> </li>
           <li> <a class="{{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}"> Contact Us </a> </li>
 			</ul>
@@ -778,7 +778,7 @@
             function performSearch() {
                 const routes = {
                     home: "{{ route('home') }}",
-                    faqs: "{{ route('faqs1') }}",
+                    faqs: "{{ route('faqs') }}",
                     about: "{{ route('about') }}",
                     contact: "{{ route('contact') }}"
                 };

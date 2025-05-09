@@ -57,12 +57,12 @@
     }
 
     nav .menu {
-      width: 100%;            
+      width: 100%;
       margin-top: -5px;
       margin-left: 20px;
-      text-align: center;     
-      justify-content: center; 
-      align-items: center;    
+      text-align: center;
+      justify-content: center;
+      align-items: center;
     }
 
     nav .menu ul li {
@@ -70,7 +70,7 @@
       font-size: 17px;
       list-style: none;
       font-weight: bold;
-      margin-right: 30px; 
+      margin-right: 30px;
       display: inline-block;
       position: relative;
       font-family: "Poppins", sans-serif;
@@ -99,7 +99,7 @@
 
     nav .menu ul li a:hover {
       color: #426DDC;
-      transition: 0.3s ease; 
+      transition: 0.3s ease;
     }
 
     nav form {
@@ -151,7 +151,7 @@
        list-style: none;
        padding: 0;
        margin-top: 15px;
-       margin-left: 25px; 
+       margin-left: 25px;
        margin-bottom: 9px;
     }
 
@@ -162,7 +162,7 @@
     }
 
     #accountDropdown {
-      display: none; 
+      display: none;
       position: absolute;
       background-color: #fff;
       border-radius: 6px;
@@ -190,7 +190,7 @@
 
     #accountDropdown a:hover {
     color: #426DDC;
-    transition: 0.3s ease; 
+    transition: 0.3s ease;
     }
 
     nav .search-container {
@@ -229,7 +229,7 @@
 
     nav .search-container .fa-search:hover {
       color: #426DDC;
-      transition: 0.3s ease; 
+      transition: 0.3s ease;
     }
 
     nav .user-icon {
@@ -249,10 +249,10 @@
     /* Main content below the NAV BAR */
 		html, body {
       background-color: #d8e4f0;
-      height: 100%; 
-      margin: 0; 
-      padding: 0; 
-      overflow-x: hidden; 
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
     }
 
     section {
@@ -281,12 +281,12 @@
 			margin-top: 60px;
 			font-weight: bolder;
       letter-spacing: 25px;
-      text-shadow: 
-               1px 1px 0px white,   
-              -1px -1px 0px white, 
-               1px -1px 0px white, 
+      text-shadow:
+               1px 1px 0px white,
+              -1px -1px 0px white,
+               1px -1px 0px white,
               -1px 1px 0px white,
-               0 0 50px black; 
+               0 0 50px black;
 			font-family: "Poppins", sans-serif;
     }
 
@@ -296,12 +296,12 @@
 			margin-top: -25px;
       text-align: center;
 			font-weight: bolder;
-      text-shadow: 
-               1px 1px 0px white,   
-              -1px -1px 0px white, 
-               1px -1px 0px white, 
+      text-shadow:
+               1px 1px 0px white,
+              -1px -1px 0px white,
+               1px -1px 0px white,
               -1px 1px 0px white,
-               0 0 50px black; 
+               0 0 50px black;
       letter-spacing: 4px;
 			font-family: "Poppins", sans-serif;
 		}
@@ -321,24 +321,24 @@
     .learn-button {
       left: 230px;
       border: none;
-      bottom: -40px; 
+      bottom: -40px;
       color: black;
       cursor: pointer;
       font-size: 17px;
       font-weight: bold;
       padding: 10px 30px;
       border-radius: 10px;
-      position: relative;  
+      position: relative;
       text-decoration: none;
       background-color: #f9f5ed;
-      transform: translateX(-50%); 
+      transform: translateX(-50%);
       font-family: "Poppins", sans-serif;
       transition: background-color 0.3s ease;
     }
-        
+
     .learn-button:hover {
       color: #426DDC;
-      transition: 0.5s ease; 
+      transition: 0.5s ease;
       box-shadow: 0 0 7px white;
       background-color: #EAEAEA;
     }
@@ -384,8 +384,8 @@
 
     .slider-container {
       position: relative;
-      width: 85%;                 
-      max-width: 900px;            
+      width: 85%;
+      max-width: 900px;
       margin: 30px auto;
       overflow: hidden;
       border-radius: 16px;
@@ -433,13 +433,21 @@
       flex-direction: column;
       align-items: center;
       margin-bottom: 18px;
+      gap: 10px;
     }
 
     .file-input-row {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
       margin-bottom: 0;
+      justify-content: center;
+    }
+
+    .save-button, .cancel-button, .reset-button {
+      width: 220px;
+      margin: 0 auto;
+      display: block;
     }
 
     .custom-file-label {
@@ -467,26 +475,6 @@
       font-size: 15px;
     }
 
-    .reset-button {
-      margin-top: 18px;
-      align-self: center;
-      width: auto;
-    }
-
-    .editable-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      justify-content: center;
-      margin-bottom: 8px;
-    }
-
-    .announcement-text h2,
-    .announcement-text p {
-      text-align: center;
-      width: 100%;
-    }
-
     .prev, .next {
       position: absolute;
       top: 50%;
@@ -495,7 +483,7 @@
       color: white;
       border: none;
       font-size: 26px;
-      padding: 10px 16px;         
+      padding: 10px 16px;
       border-radius: 10px;
       cursor: pointer;
       z-index: 10;
@@ -538,7 +526,7 @@
       width: 33.3%;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start; 
+      justify-content: flex-start;
       margin: 0 10px;
     }
 
@@ -551,8 +539,8 @@
     }
 
     .map-container {
-      flex-grow: 1; 
-      height: 100%; 
+      flex-grow: 1;
+      height: 100%;
     }
 
     h3 {
@@ -738,7 +726,7 @@
       width: 100%;
       position: relative;
       padding: 0 20px;
-      flex-direction: column; 
+      flex-direction: column;
     }
 
     nav .search-container {
@@ -746,7 +734,7 @@
       margin: 0 auto;
       justify-content: center;
       width: 100%;
-      max-width: 500px; 
+      max-width: 500px;
       padding: 10px 20px;
       display: flex;
       align-items: center;
@@ -807,7 +795,7 @@
       color: #333;
       position: relative;
       margin-left: 20px;
-    }  
+    }
 
     nav .menu-toggle:hover {
       color: #426DDC;
@@ -837,18 +825,18 @@
       align-items: center;
       position: relative;
       justify-content: center;
-      gap: 8px; 
+      gap: 8px;
     }
 
     .edit-icon {
-      pointer-events: none; 
+      pointer-events: none;
       user-select: none;
       font-size: 17px;
       color: black;
     }
 
     input[type="file"] {
-      width: auto; 
+      width: auto;
       position: relative;
       z-index: 1;
       margin-left: 300px;
@@ -856,7 +844,7 @@
     }
 
     input[type="file"]::file-selector-button {
-      background: #426DDC; 
+      background: #426DDC;
       color: white;
       border: none;
       font-family: "Poppins", sans-serif;
@@ -872,7 +860,7 @@
     }
 
     input[type="file"]::file-selector-button {
-      background: #426DDC; 
+      background: #426DDC;
       color: white;
       border: none;
       font-family: "Poppins", sans-serif;
@@ -917,7 +905,7 @@
 			<ul>
 				<li> <a class="active" href="{{ route('admin.homepage') }}"> Home </a> </li>
 
-        <li> <a href="#"> Services <i class="fas fa-caret-down"> </i> </a> 
+        <li> <a href="#"> Services <i class="fas fa-caret-down"> </i> </a>
 
         <div class="dropdown_menuuu">
           <ul>
@@ -937,20 +925,20 @@
   <input type="text" id="searchInput" placeholder="Search">
   <i class="fa fa-search" onclick="performSearch()"> </i>
   </div>
-	
+
   <i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
   <div id="accountDropdown" class="absolute hidden">
     <a href="#"> Profile </a>
     <a href="#"> Settings </a>
     <a href="{{ route('admin.logout') }} " id="logoutLink"> Logout </a> </div>
-  
+
     <button class="menu-toggle"> </button>
   </nav>
 
 <section>
     <div class="details">
       <div>
-      <h5> <center> SCHEDULE </h5> 
+      <h5> <center> SCHEDULE </h5>
       <h4> AN APPOINTMENT NOW! <i class="fa fa-calendar-week" aria-hidden="true"> </i> </i> </h4>
       <p> <i> "Convenience you can count on, appointments you can trust." </i> </p>
       <a href="#learn-more" class="learn-button"> Learn more </a> </center>
@@ -965,8 +953,7 @@
 
   <div class="announcement-body">
     <div class="editable-wrapper">
-      <p contenteditable="true"> Welcome! Stay tuned for the latest updates from the <i>City Civil Registry Department. </i> </p>
-      <i class="fa fa-edit edit-icon" aria-hidden="true" title="Edit"> </i>
+      <p> Welcome! Stay tuned for the latest updates from the <i>City Civil Registry Department. </i> </p>
     </div>
   </div>
 </div>
@@ -977,24 +964,45 @@
     <div class="slide">
       <img id="img{{ $announcement->id }}" src="{{ asset('storage/announcements/' . $announcement->image_path) }}"> <br>
       <div class="announcement-controls">
-        <div class="file-input-row">
-          <label class="custom-file-label">
-            <input type="file" accept="image/*" onchange="uploadImage(this, 'img{{ $announcement->id }}', {{ $announcement->id }})">
+        <form action="{{ url('/admin/announcements/' . $announcement->id) }}" method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 10px;">
+          @csrf
+          @method('PUT')
+          <label class="custom-file-label" style="margin-bottom: 0;">
+            <input type="file" name="image" accept="image/*" required>
             <span>Choose File</span>
           </label>
-          <span id="fileNameDisplay{{ $announcement->id }}" class="file-name-display">No file chosen</span>
-        </div>
-        <button onclick="resetImage('img{{ $announcement->id }}', {{ $announcement->id }})" class="reset-button">Reset to Original Photo</button>
+          <button type="submit" class="save-button" style="background: #426DDC; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif;">Save Changes</button>
+        </form>
+        <form action="{{ url('/admin/announcements/' . $announcement->id) }}" method="POST" style="margin: 0;">
+          @csrf
+          @method('PUT')
+          <input type="hidden" name="reset_to_default" value="1">
+          <button type="submit" class="reset-button" style="background: #426DDC; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif; width: 220px; margin: 0 auto; display: block;">Reset to Default Photo</button>
+        </form>
       </div>
       <div class="announcement-text">
-        <div class="editable-wrapper">
-          <h2> <center contenteditable="true" onblur="updateAnnouncement({{ $announcement->id }}, 'title', this.textContent)"> {{ $announcement->title }} </center> </h2>
-          <i class="fa fa-edit edit-icon" aria-hidden="true" title="Edit"> </i>
-        </div>
-        <div class="editable-wrapper">
-          <p contenteditable="true" onblur="updateAnnouncement({{ $announcement->id }}, 'content', this.textContent)"> {{ $announcement->content }} </p>
-          <i class="fa fa-edit edit-icon" aria-hidden="true" title="Edit"> </i>
-        </div>
+        <form action="{{ url('/admin/announcements/' . $announcement->id) }}" method="POST" style="margin-bottom: 20px;">
+          @csrf
+          @method('PUT')
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+            <input
+              type="text"
+              name="title"
+              value="{{ $announcement->title }}"
+              required
+              style="font-size: 24px; font-weight: bold; text-align: center; width: 100%; max-width: 600px; border-radius: 6px; border: 1px solid #ccc; padding: 8px;"
+            >
+            <textarea
+              name="content"
+              required
+              style="font-size: 16px; width: 100%; max-width: 600px; border-radius: 6px; border: 1px solid #ccc; padding: 8px; min-height: 60px;"
+            >{{ $announcement->content }}</textarea>
+            <button
+              type="submit"
+              style="background: #426DDC; color: white; border: none; padding: 8px 24px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 16px;"
+            >Save Changes</button>
+          </div>
+        </form>
       </div>
     </div>
     @endforeach
@@ -1062,94 +1070,147 @@
 <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 <script type="text/javascript">
 
-let originalImageSrc = "{{ asset('build/assets/news_update_1.jpg') }}"; 
-let originalFileName = "{{ asset('build/assets/news_update_1.jpg') }}"; 
-let originalImageSrcSet = false; 
+let originalImageSrc = {};
+let selectedFiles = {};
 
-function uploadImage(input, imgId, announcementId) {
+function handleFileSelect(input, imgId, announcementId) {
     const file = input.files[0];
     const imgElement = document.getElementById(imgId);
     const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
+    const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
 
     if (!imgElement) {
         alert("Image element not found.");
         return;
     }
 
-    if (!originalImageSrcSet) {
-        originalImageSrc = imgElement.src;
-        originalFileName = originalFileName; 
-        originalImageSrcSet = true;
+    if (!originalImageSrc[announcementId]) {
+        originalImageSrc[announcementId] = imgElement.src;
     }
 
     if (file) {
-        const confirmChange = confirm("Are you sure you want to change the current picture?");
-        if (!confirmChange) {
-            alert("Image change canceled.");
-            input.value = ""; 
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('image', file);
-        formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
-
-        fetch(`/admin/announcements/${announcementId}`, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                imgElement.src = URL.createObjectURL(file);
-                alert("Image uploaded successfully!");
-                fileNameDisplay.textContent = file.name; 
-            } else {
-                alert("Failed to upload image");
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert("An error occurred while uploading the image");
-        });
-    } else {
-        alert("No file selected.");
+        // Store the selected file
+        selectedFiles[announcementId] = file;
+        
+        // Preview the image
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imgElement.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+        
+        // Show the save changes container
+        saveChangesContainer.style.display = 'block';
+        fileNameDisplay.textContent = file.name;
     }
+}
+
+function saveImageChanges(imgId, announcementId) {
+    const imgElement = document.getElementById(imgId);
+    const file = selectedFiles[announcementId];
+    const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
+    const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
+
+    if (!file) {
+        alert("No file selected.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    fetch(`/admin/announcements/${announcementId}`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert("Image uploaded successfully!");
+            // Optionally update the image src to the new file if you want to force refresh
+            // imgElement.src = `/storage/announcements/${data.image_path}`;
+            saveChangesContainer.style.display = 'none';
+            selectedFiles[announcementId] = null;
+            fileNameDisplay.textContent = 'No file chosen';
+        } else {
+            alert("Failed to upload image");
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("An error occurred while uploading the image");
+    });
+}
+
+function cancelImageChanges(imgId, announcementId) {
+    const imgElement = document.getElementById(imgId);
+    const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
+    const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
+    const fileInput = document.querySelector(`input[onchange="handleFileSelect(this, '${imgId}', ${announcementId})"]`);
+
+    // Reset the image to original
+    imgElement.src = originalImageSrc[announcementId];
+    
+    // Reset the file input
+    fileInput.value = '';
+    
+    // Hide save changes container
+    saveChangesContainer.style.display = 'none';
+    
+    // Reset file name display
+    fileNameDisplay.textContent = 'No file chosen';
+    
+    // Clear selected file
+    selectedFiles[announcementId] = null;
 }
 
 function resetImage(imgId, announcementId) {
     const imgElement = document.getElementById(imgId);
     const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
-    const inputContainer = document.getElementById("fileInputContainer");
+    const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
+    const fileInput = document.querySelector(`input[onchange="handleFileSelect(this, '${imgId}', ${announcementId})"]`);
 
-    if (imgElement && originalImageSrc) {
-        imgElement.src = originalImageSrc;
-        alert("Image reset to the original picture.");
+    // Reset to default image
+    imgElement.src = "{{ asset('storage/announcements/default-announcement.png') }}";
+    
+    // Reset the file input
+    fileInput.value = '';
+    
+    // Hide save changes container
+    saveChangesContainer.style.display = 'none';
+    
+    // Reset file name display
+    fileNameDisplay.textContent = 'No file chosen';
+    
+    // Clear selected file
+    selectedFiles[announcementId] = null;
 
-        fileNameDisplay.textContent = "No file chosen";
+    // Update the image in the database
+    const formData = new FormData();
+    formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
+    formData.append('reset_to_default', true);
 
-        const newInput = document.createElement("input");
-        newInput.type = "file";
-        newInput.accept = "image/*";
-        newInput.id = "imageInput";
-        newInput.onchange = function () { uploadImage(this, imgId, announcementId); };
-
-        const newLabel = document.createElement("label");
-        newLabel.className = "custom-file";
-        newLabel.appendChild(newInput);
-
-        const span = document.createElement("span");
-        span.textContent = "Choose File";
-        newLabel.appendChild(span);
-
-        inputContainer.innerHTML = "";
-        inputContainer.appendChild(newLabel);
-    } else {
-        alert("No original image to reset.");
-    }
+    fetch(`/admin/announcements/${announcementId}`, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert("Image reset to default successfully!");
+            originalImageSrc[announcementId] = imgElement.src;
+        } else {
+            alert("Failed to reset image");
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("An error occurred while resetting the image");
+    });
 }
-
-
 
     function performSearch() {
     const input = document.getElementById("searchInput").value.trim().toLowerCase();

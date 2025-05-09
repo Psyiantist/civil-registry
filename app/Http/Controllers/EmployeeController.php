@@ -23,11 +23,6 @@ class EmployeeController extends Controller
         return view('admin.admin-requirements');
     }
 
-    public function showAdminFaqs()
-    {
-        return view('admin.admin-faqs');
-    }
-
     public function showAdminAbout()
     {
         return view('admin.admin-about');
@@ -37,6 +32,4 @@ class EmployeeController extends Controller
     {
         return view('admin.admin-contact');
     }
-    
-    
 }

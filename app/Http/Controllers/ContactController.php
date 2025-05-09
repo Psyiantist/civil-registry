@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactMail;
 use App\Mail\FeedbackMail;
 use App\Models\Feedback;
+use App\Models\Contact;
 
 class ContactController extends Controller
 {
@@ -72,5 +73,63 @@ class ContactController extends Controller
 
             return redirect()->back()->with('error', 'There was an error sending your message. Please try again.');
         }
+    }
+
+    public function showAdminContact()
+    {
+        $contact = Contact::first();
+        return view('admin.admin-contact', compact('contact'));
+    }
+
+    public function updateContact(Request $request)
+    {
+        try {
+            // Get the first key from the request (the field being updated)
+            $field = array_key_first($request->all());
+            
+            // Validate only the field being updated
+            $rules = [
+                'address' => 'required|string|max:255',
+                'phone' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'office_hours' => 'required|string|max:255',
+            ];
+
+            $validator = \Validator::make([$field => $request->input($field)], [
+                $field => $rules[$field]
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $validator->errors()->first()
+                ], 422);
+            }
+
+            $contact = Contact::first();
+            if (!$contact) {
+                $contact = new Contact();
+            }
+
+            $contact->$field = $request->input($field);
+            $contact->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Contact information updated successfully'
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Contact update error: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update contact information: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getContact()
+    {
+        $contact = Contact::first();
+        return response()->json($contact);
     }
 }

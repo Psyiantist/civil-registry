@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="civil registry logo.png">
+  <link rel="icon" type="image/x-icon" href="{{ asset('build/assets/civil_registry_logo.png') }}">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
 	<title> FAQs Page - Admin View </title>
 	<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
@@ -738,37 +739,34 @@
       color: black;
     }
 	</style>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 </head>
-
-
-
-
 
 <body>
 	<nav>
         <div class="image-container">
-            <img src="civil registry logo.png"> </div>
+            <img src="{{ asset('build/assets/civil_registry_logo.png') }}"> </div>
 
         <div class="logo-name">
             <b> Civil Registry <br/> <a> Mandaluyong City </a> </b> </div>
 
 		<div class="menu">
 			<ul>
-				<li> <a href="Home Page - Admin View.html"> Home </a> </li>
+				<li> <a href="{{ route('admin.homepage') }}"> Home </a> </li>
 
         <li> <a href="#"> Services <i class="fas fa-caret-down"> </i> </a> 
 
         <div class="dropdown_menuuu">
           <ul>
-        <li> <a href="Appointment Page - Admin View.html"> Appointment </a> </li>
-        <li> <a href="Requirements Page - Admin View.html"> Requirements </a> </li>
+        <li> <a href="{{ route('admin.appointment') }}"> Appointment </a> </li>
+        <li> <a href="{{ route('admin.requirements') }}"> Requirements </a> </li>
            </ul>
         </div>
         </li>
 
-				<li> <a class="active" href="FAQs Page - Admin View.html"> FAQs </a> </li>
-				<li> <a href="About Us Page - Admin View.html"> About Us </a> </li>
-				<li> <a href="Contact Us Page - Admin View.html"> Contact Us </a> </li>
+				<li> <a class="active" href="{{ route('admin.faqs') }}"> FAQs </a> </li>
+				<li> <a href="{{ route('admin.about') }}"> About Us </a> </li>
+				<li> <a href="{{ route('admin.contact') }}"> Contact Us </a> </li>
 			</ul>
     </div>
 
@@ -781,13 +779,11 @@
 <div id="accountDropdown" class="absolute hidden">
     <a href="#"> Profile </a>
     <a href="#"> Settings </a>
-    <a href="#" id="logoutLink"> Logout </a> </div>
+    <a href="{{ route('logout') }}"> Logout </a> </div>
 </div>
   
     <button class="menu-toggle"> </button>
   </nav>
-
-
 
    <center>
      <section class="search-section">
@@ -802,96 +798,34 @@
 
         <div class="faq-container">
             <h2 class="faq-title">Frequently Asked Questions</h2>
+            
+            <div class="faq-actions" style="margin-bottom: 20px; text-align: right;">
+                <button onclick="showAddFaqModal()" class="btn btn-primary" style="background: #426DDC; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+                    <i class="fas fa-plus"></i> Add New FAQ
+                </button>
+            </div>
 
-        <div class="faq-item">
-          <div class="faq-question">
-            <span contenteditable="true"> What is Civil Registry? </span>
-            <i class="fas fa-edit" title="Edit"></i>
-            <i class="fa fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <span contenteditable="true">
-              The Civil Registry is a government agency responsible for <br/>
-              maintaining records of vital events such as births, deaths, <br/>
-              marriages, and other legal documents.
-            </span>
-            <i class="fas fa-edit" title="Edit"></i>
-          </div>
+            <div id="faq-list">
+                @foreach($faqs as $faq)
+                <div class="faq-item" data-id="{{ $faq->id }}">
+                    <div class="faq-question">
+                        <span contenteditable="true" onblur="updateFaq({{ $faq->id }}, this, 'question')">{{ $faq->question }}</span>
+                        <div class="faq-actions">
+                            <i class="fas fa-edit" title="Edit" onclick="editFaq({{ $faq->id }})"></i>
+                            <i class="fas fa-trash" title="Delete" onclick="deleteFaq({{ $faq->id }})"></i>
+                            <i class="fa fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <span contenteditable="true" onblur="updateFaq({{ $faq->id }}, this, 'answer')">{!! nl2br(e($faq->answer)) !!}</span>
+                    </div>
+                </div>
+                @endforeach
+            </div>
         </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span contenteditable="true">How do I request a birth certificate?</span>
-            <i class="fas fa-edit" title="Edit"></i>
-            <i class="fa fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <span contenteditable="true">
-              You can request a birth certificate online through our website <br/>
-              or by visiting our office in person. Please bring a valid ID <br/>
-              and any supporting documents.
-            </span>
-            <i class="fas fa-edit" title="Edit"></i>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span contenteditable="true">What are the requirements for marriage?</span>
-            <i class="fas fa-edit" title="Edit"></i>
-            <i class="fa fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <span contenteditable="true">
-              The requirements for marriage may vary. Generally, you will <br/>
-              need valid identification, birth certificates, and a marriage <br/>
-              license. Please check our detailed requirements on the <br/>
-              services page.
-            </span>
-            <i class="fas fa-edit" title="Edit"></i>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span contenteditable="true">How can I correct an error on my birth certificate?</span>
-            <i class="fas fa-edit" title="Edit"></i>
-            <i class="fa fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <span contenteditable="true">
-              To correct an error, you will need to submit a formal request <br/>
-              with supporting documentation, such as original birth records <br/>
-              or other legal documents that prove the correct information.
-            </span>
-            <i class="fas fa-edit" title="Edit"></i>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span contenteditable="true">
-              Is it possible to get a copy of someone else's death <br/> certificate?
-            </span>
-            <i class="fas fa-edit" title="Edit"></i>
-            <i class="fa fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <span contenteditable="true">
-              Access to death certificates is subject to certain restrictions <br/>
-              and usually limited to individuals with a direct legal interest, <br/>
-              such as family members or legal representatives.
-            </span>
-            <i class="fas fa-edit" title="Edit"></i>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 </center>
-
-
-
 
               <footer>
                 <div class="container">
@@ -934,17 +868,17 @@
         alert("Please enter a search term.");
     } else {
         if (input === "home page" || input === "homepage" || input === "home") {
-            window.location.href = "Home page - Admin View.html";
+            window.location.href = "{{ route('admin.homepage') }}";
         } else if (input === "faqs" || input === "facts" || input === "help") {
-            window.location.href = "FAQs Page - Admin View.html";
+            window.location.href = "{{ route('admin.faqs') }}";
         } else if (input === "about" || input === "about civil") {
-            window.location.href = "About Us Page - Admin View.html";
+            window.location.href = "{{ route('admin.about') }}";
         } else if (input === "appointment" || input === "appointments" || input === "schedule" || input === "schedules") {
-            window.location.href = "Appointment Page - Admin View.html";
+            window.location.href = "{{ route('admin.appointment') }}";
         } else if (input === "reqs" || input === "requirements" || input === "requirement") {
-            window.location.href = "Requirements Page - Admin View.html";
+            window.location.href = "{{ route('admin.requirements') }}";
         } else if (input === "contact" || input === "number" || input === "email") {
-            window.location.href = "Contact Us Page - Admin View.html";
+            window.location.href = "{{ route('admin.contact') }}";
         } else {
                 alert("No results found.");
                 inputField.value = "";
@@ -956,8 +890,6 @@
     }
     });
 
-
-
         const button = document.querySelector('.menu-toggle');
         const menu = document.querySelector('.menu');
             if (button && menu) {
@@ -966,16 +898,6 @@
             button.classList.toggle('expand-icon');
         };
         }
-
-        const logoutLink = document.getElementById("logoutLink");
-
-                 if (logoutLink) {
-                 logoutLink.addEventListener("click", (e) => {
-                e.preventDefault();
-            alert("You have been logged out.");
-            window.location.href = "Home Page.html";
-            });
-            }
 
         function toggleDropdown() {
         const dropdown = document.getElementById("accountDropdown");
@@ -1003,7 +925,156 @@
         });
         });
 
+function showAddFaqModal() {
+    document.getElementById('addFaqModal').style.display = 'block';
+}
+
+function closeAddFaqModal() {
+    document.getElementById('addFaqModal').style.display = 'none';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    var modal = document.getElementById('addFaqModal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Function to update FAQ
+async function updateFaq(id, element, field) {
+    const value = element.textContent;
+    try {
+        const response = await fetch(`/admin/faqs/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({
+                [field]: value
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to update FAQ');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to update FAQ');
+    }
+}
+
+// Function to edit FAQ
+function editFaq(id) {
+    const questionElement = document.querySelector(`.faq-item[data-id="${id}"] .faq-question span`);
+    const answerElement = document.querySelector(`.faq-item[data-id="${id}"] .faq-answer span`);
+    
+    questionElement.contentEditable = true;
+    answerElement.contentEditable = true;
+    
+    questionElement.focus();
+}
+
+// Function to delete FAQ
+async function deleteFaq(id) {
+    if (!confirm('Are you sure you want to delete this FAQ?')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/admin/faqs/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        });
+        
+        if (response.ok) {
+            const faqItem = document.querySelector(`.faq-item[data-id="${id}"]`);
+            faqItem.remove();
+        } else {
+            throw new Error('Failed to delete FAQ');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to delete FAQ');
+    }
+}
+
+// Initialize FAQ question click handlers
+document.addEventListener('DOMContentLoaded', function() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const answer = question.nextElementSibling;
+            const icon = question.querySelector('i');
+
+            document.querySelectorAll('.faq-answer').forEach(ans => {
+                if (ans !== answer) ans.classList.remove('show');
+            });
+            document.querySelectorAll('.faq-question i').forEach(ic => {
+                if (ic !== icon) ic.classList.remove('active');
+            });
+
+            question.classList.toggle('active');
+            answer.classList.toggle('show');
+            icon?.classList.toggle('active');
+        });
+    });
+
+    // Initialize Sortable for FAQ reordering
+    new Sortable(document.getElementById('faq-list'), {
+        animation: 150,
+        onEnd: async function(evt) {
+            const items = Array.from(evt.to.children).map((item, index) => ({
+                id: item.dataset.id,
+                order: index
+            }));
+            
+            try {
+                const response = await fetch('{{ route("admin.faqs.reorder") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ faqs: items })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to reorder FAQs');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to reorder FAQs');
+            }
+        }
+    });
+});
 </script>
+
+<!-- Add FAQ Modal -->
+<div id="addFaqModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+    <div class="modal-content" style="background: white; margin: 15% auto; padding: 20px; width: 50%; border-radius: 8px;">
+        <h3>Add New FAQ</h3>
+        <form action="{{ route('admin.faqs.store') }}" method="POST">
+            @csrf
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;">Question:</label>
+                <input type="text" name="question" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;">Answer:</label>
+                <textarea name="answer" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 100px;"></textarea>
+            </div>
+            <div style="text-align: right;">
+                <button type="button" onclick="closeAddFaqModal()" style="margin-right: 10px; padding: 8px 16px; border: 1px solid #ddd; border-radius: 4px; background: #f5f5f5; cursor: pointer;">Cancel</button>
+                <button type="submit" style="padding: 8px 16px; border: none; border-radius: 4px; background: #426DDC; color: white; cursor: pointer;">Add FAQ</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>

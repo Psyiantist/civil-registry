@@ -10,14 +10,14 @@ use App\Http\Controllers\ResidenceController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\FaqController;
 
 Route::get('/', function () {
     return view('homepage');
 });
 
-// USER ROUTES 
+// USER ROUTES
 Route::view('/home', 'homepage')->name('home');
-Route::view('/faqs', 'faqs1')->name('faqs1');
 Route::view('/about', 'about')->name('about');
 Route::view('/contact', 'contact')->name('contact');
 
@@ -55,10 +55,10 @@ Route::post('/residence/profile/remove-image', [ProfileController::class, 'remov
 
 Route::post('/residence/appointment/store', [AppointmentController::class, 'storeAppointment'])->middleware('auth')->name('residence.appointment.store');
 
-// ADMIN ROUTES 
+// ADMIN ROUTES
 Route::get('/admin/login', [AuthController::class, 'showEmployeeLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AuthController::class, 'employeeLoginHandler'])->name('admin.login.handler');
-Route::get('/admin/logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
+Route::get('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
 Route::get('/admin/homepage', [EmployeeController::class, 'showAdminHomepage'])->middleware('auth')->name('admin.homepage');
 Route::get('/admin/appointment', [EmployeeController::class, 'showAdminAppointment'])->middleware('auth')->name('admin.appointment');
@@ -73,8 +73,25 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/announcements/{announcement}', [AnnouncementController::class, 'update'])->name('admin.announcements.update');
     Route::post('/admin/announcements/{announcement}/image', [AnnouncementController::class, 'updateImage'])->name('admin.announcements.updateImage');
     Route::post('/admin/announcements', [AnnouncementController::class, 'store'])->name('admin.announcements.store');
+    
+    // FAQ Routes
+    Route::get('/admin/faqs', [FaqController::class, 'index'])->name('admin.faqs');
+    Route::post('/admin/faqs', [FaqController::class, 'store'])->name('admin.faqs.store');
+    Route::put('/admin/faqs/{faq}', [FaqController::class, 'update'])->name('admin.faqs.update');
+    Route::delete('/admin/faqs/{faq}', [FaqController::class, 'destroy'])->name('admin.faqs.destroy');
+    Route::post('/admin/faqs/reorder', [FaqController::class, 'reorder'])->name('admin.faqs.reorder');
+
+    // Contact Routes
+    Route::get('/admin/contact', [ContactController::class, 'showAdminContact'])->name('admin.contact');
+    Route::post('/admin/contact/update', [ContactController::class, 'updateContact'])->name('contact.update');
+    Route::get('/contact/get', [ContactController::class, 'getContact'])->name('contact.get');
 });
 
 // Public Routes
 Route::get('/announcements', [AnnouncementController::class, 'getActiveAnnouncements'])->name('announcements.get');
+
+// Public FAQ route
+Route::get('/faqs', [FaqController::class, 'publicFaqs'])->name('faqs');
+
+Route::put('/admin/password', [AuthController::class, 'updateAdminPassword'])->name('admin.password.update');
 
