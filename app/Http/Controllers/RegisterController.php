@@ -58,14 +58,39 @@ class RegisterController extends Controller
 
             $filename = null;
             if($request->hasFile('id_image')){
-                $file = $request->file('id_image');
-                $filename = time() . '_' . $file->getClientOriginalName();
-                
-                // Store in public/storage/uploads
-                $path = $file->storeAs('uploads', $filename, 'public');
-                
-                if (!$path) {
-                    Log::error('Failed to store file: ' . $filename);
+                try {
+                    $file = $request->file('id_image');
+                    Log::info('File details:', [
+                        'original_name' => $file->getClientOriginalName(),
+                        'mime_type' => $file->getMimeType(),
+                        'size' => $file->getSize()
+                    ]);
+                    
+                    $filename = time() . '_' . $file->getClientOriginalName();
+                    
+                    // First try to store in public disk
+                    try {
+                        Log::info('Attempting to store in public disk');
+                        $path = $file->storeAs('uploads', $filename, 'public');
+                        Log::info('File stored successfully in public disk: ' . $path);
+                    } catch (\Exception $e) {
+                        Log::error('Public disk storage failed: ' . $e->getMessage());
+                        // If public disk fails, try local disk
+                        Log::info('Attempting to store in local disk');
+                        $path = $file->storeAs('uploads', $filename, 'local');
+                        Log::info('File stored successfully in local disk: ' . $path);
+                    }
+                    
+                    if (!$path) {
+                        Log::error('Failed to store file: ' . $filename);
+                        return redirect()->back()->withErrors(['id_image' => 'Failed to upload image. Please try again.']);
+                    }
+
+                    // Store the relative path in the database
+                    $filename = $path;
+                } catch (\Exception $e) {
+                    Log::error('File upload error: ' . $e->getMessage());
+                    Log::error('Stack trace: ' . $e->getTraceAsString());
                     return redirect()->back()->withErrors(['id_image' => 'Failed to upload image. Please try again.']);
                 }
             }
