@@ -698,7 +698,7 @@
 <body>
 	<nav>
         <div class="image-container">
-            <img src="{{ asset('build/assets/civil_registry_logo.png') }}"> </div>
+            <img src="{{ asset('public/build/assets/civil_registry_logo.png') }}"> </div>
 
         <div class="logo-name">
             <b> Civil Registry <br/> <a> Mandaluyong City </a> </b> </div>
