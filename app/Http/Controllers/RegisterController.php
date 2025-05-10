@@ -58,56 +58,9 @@ class RegisterController extends Controller
 
             $filename = null;
             if($request->hasFile('id_image')){
-                try {
-                    $file = $request->file('id_image');
-                    Log::info('File details:', [
-                        'original_name' => $file->getClientOriginalName(),
-                        'mime_type' => $file->getMimeType(),
-                        'size' => $file->getSize()
-                    ]);
-                    
-                    $filename = time() . '_' . $file->getClientOriginalName();
-                    
-                    // Ensure the uploads directory exists
-                    if (!Storage::disk('public')->exists('uploads')) {
-                        Storage::disk('public')->makeDirectory('uploads');
-                    }
-                    
-                    // First try to store in public disk
-                    try {
-                        Log::info('Attempting to store in public disk');
-                        $path = $file->storeAs('uploads', $filename, 'public');
-                        Log::info('File stored successfully in public disk: ' . $path);
-                    } catch (\Exception $e) {
-                        Log::error('Public disk storage failed: ' . $e->getMessage());
-                        Log::error('Storage path: ' . Storage::disk('public')->path('uploads'));
-                        Log::error('Directory exists: ' . (Storage::disk('public')->exists('uploads') ? 'yes' : 'no'));
-                        Log::error('Directory writable: ' . (is_writable(Storage::disk('public')->path('uploads')) ? 'yes' : 'no'));
-                        
-                        // If public disk fails, try local disk
-                        Log::info('Attempting to store in local disk');
-                        $path = $file->storeAs('uploads', $filename, 'local');
-                        Log::info('File stored successfully in local disk: ' . $path);
-                    }
-                    
-                    if (!$path) {
-                        Log::error('Failed to store file: ' . $filename);
-                        return redirect()->back()->withErrors(['id_image' => 'Failed to upload image. Please try again.']);
-                    }
-
-                    // Store the relative path in the database
-                    $filename = $path;
-                } catch (\Exception $e) {
-                    Log::error('File upload error: ' . $e->getMessage());
-                    Log::error('Stack trace: ' . $e->getTraceAsString());
-                    Log::error('Storage configuration:', [
-                        'public_path' => Storage::disk('public')->path(''),
-                        'local_path' => Storage::disk('local')->path(''),
-                        'public_exists' => Storage::disk('public')->exists(''),
-                        'local_exists' => Storage::disk('local')->exists('')
-                    ]);
-                    return redirect()->back()->withErrors(['id_image' => 'Failed to upload image. Please try again.']);
-                }
+                $file = $request->file('id_image');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('storage/uploads'), $filename);
             }
 
             $step1Data = [
