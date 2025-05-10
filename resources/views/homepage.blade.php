@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+  <link rel="icon" type="image/x-icon" href="/storage/assets/favicon.ico">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
@@ -739,9 +739,9 @@
         <h2> USER MODE </h2>
         <p class="select" > <i class="fa fa-arrow-down" aria-hidden="true"> </i> Please click or select your user mode: </p>
         <center>
-        <button class="btnn-1" onclick="window.location.href='{{ route('admin.login') }}'">  CITY CIVIL REGISTRY <br/> EMPLOYEE </button>
+        <button style="color: white;" class="btnn-1" onclick="window.location.href='{{ route('admin.login') }}'">  CITY CIVIL REGISTRY <br/> EMPLOYEE </button>
         <p class="choice"> or </p>
-        <button class="btnn-2" onclick="window.location.href='{{ url('login') }}'">  MANDALUYONG CITY <br/> RESIDENCE </button>
+        <button style="color: white;" class="btnn-2" onclick="window.location.href='{{ url('login') }}'">  MANDALUYONG CITY <br/> RESIDENCE </button>
         </center>
         <br/> <br/> <br/> <br/>
         <p class="link"> Upon acessing this service, you consent to adhere to the City Civil Registry of Mandaluyong's
