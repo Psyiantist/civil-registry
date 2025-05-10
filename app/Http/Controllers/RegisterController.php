@@ -68,6 +68,11 @@ class RegisterController extends Controller
                     
                     $filename = time() . '_' . $file->getClientOriginalName();
                     
+                    // Ensure the uploads directory exists
+                    if (!Storage::disk('public')->exists('uploads')) {
+                        Storage::disk('public')->makeDirectory('uploads');
+                    }
+                    
                     // First try to store in public disk
                     try {
                         Log::info('Attempting to store in public disk');
@@ -75,6 +80,10 @@ class RegisterController extends Controller
                         Log::info('File stored successfully in public disk: ' . $path);
                     } catch (\Exception $e) {
                         Log::error('Public disk storage failed: ' . $e->getMessage());
+                        Log::error('Storage path: ' . Storage::disk('public')->path('uploads'));
+                        Log::error('Directory exists: ' . (Storage::disk('public')->exists('uploads') ? 'yes' : 'no'));
+                        Log::error('Directory writable: ' . (is_writable(Storage::disk('public')->path('uploads')) ? 'yes' : 'no'));
+                        
                         // If public disk fails, try local disk
                         Log::info('Attempting to store in local disk');
                         $path = $file->storeAs('uploads', $filename, 'local');
@@ -91,6 +100,12 @@ class RegisterController extends Controller
                 } catch (\Exception $e) {
                     Log::error('File upload error: ' . $e->getMessage());
                     Log::error('Stack trace: ' . $e->getTraceAsString());
+                    Log::error('Storage configuration:', [
+                        'public_path' => Storage::disk('public')->path(''),
+                        'local_path' => Storage::disk('local')->path(''),
+                        'public_exists' => Storage::disk('public')->exists(''),
+                        'local_exists' => Storage::disk('local')->exists('')
+                    ]);
                     return redirect()->back()->withErrors(['id_image' => 'Failed to upload image. Please try again.']);
                 }
             }
