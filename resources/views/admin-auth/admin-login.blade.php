@@ -181,291 +181,307 @@
 
     /* Main content below the NAV BAR */
     html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-x: auto;
+      overflow-y: auto;
       align-items: center;
-      height: 100%; 
-      margin: 0; 
-      padding: 0; 
-      overflow-x: hidden; 
-      overflow-y: hidden;
     }
 
     section {
       width: 100vw;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: flex-start;
       background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url('{{ asset('storage/assets/appointment_bg.jpg') }}') center 40% fixed;
       background-size: cover;
       background-repeat: no-repeat;
       margin: 0;
-      padding: 0;
+      padding: 50px 0 0 0;
       box-sizing: border-box;
       position: relative;
+      overflow-y: auto;
     }
 
     .details {
-      margin-top: -150px;
-      position: fixed;
+      width: 400px;
+      max-width: 90vw;
+      margin: 0 auto;
+      position: relative;
+      text-align: center;
     }
 
-    h5 {
-      color: white;
+    .details h5 {
       font-size: 65px;
-      margin-top: 100px;
-      margin-bottom: -60px;
-      margin-right: 410px;
+      margin: 0 0 -30px 0;
       font-weight: bolder;
       letter-spacing: 20px;
-      text-shadow: 
-               1px 1px 0px white,   
-              -1px -1px 0px white, 
-               1px -1px 0px white, 
+      color: white;
+      text-shadow:
+               1px 1px 0px white,
+              -1px -1px 0px white,
+               1px -1px 0px white,
               -1px 1px 0px white,
-               0 0 50px black;      
+               0 0 50px black;
       font-family: "Poppins", sans-serif;
     }
 
-    h4 {
-      color: white;
+    .details h4 {
       font-size: 35px;
-      margin-top: 40px;
-      margin-right: 410px;
+      margin: 0 0 10px 0;
       font-weight: bolder;
       letter-spacing: 5px;
-      text-shadow: 
-               1px 1px 0px white,   
-              -1px -1px 0px white, 
-               1px -1px 0px white, 
-              -1px 1px 0px white,
-               0 0 30px black;      
-      font-family: "Poppins", sans-serif;
-    }
-
-    h4 i {
       color: white;
-      text-shadow: none;
+      text-shadow:
+               1px 1px 0px white,
+              -1px -1px 0px white,
+               1px -1px 0px white,
+              -1px 1px 0px white,
+               0 0 30px black;
+      font-family: "Poppins", sans-serif;
     }
 
     .details p {
-      color: black;
-      margin-top: 10px;
-      font-size: 14px;
-      font-weight: bold;
-      margin-left: 40px;
-      border-radius: 10px;
-      width: 450px;
-      text-align: center;
-      background-color: #f9f5ed;
-      font-family: "Poppins", sans-serif;
-    }
-
-    .learn-button {
-      left: 20%;
-      top: 20px;
-      border: none;
-      bottom: -30px; 
-      color: black;
-      cursor: pointer;
       font-size: 16px;
+      font-style: italic;
       font-weight: bold;
-      padding: 7px 20px;
-      border-radius: 5px;
-      position: relative;  
-      text-decoration: none;
-      background-color: #f9f5ed;
-      transform: translateX(-50%); 
+      background: #f9f5ed;
+      border-radius: 10px;
+      padding: 8px 0;
+      margin: 0 0 18px 0;
+      color: black;
+      width: 100%;
+      text-align: center;
       font-family: "Poppins", sans-serif;
-      transition: background-color 0.3s ease;
     }
-        
-    .learn-button:hover {
+
+    .details .learn-button {
+      margin: 0 auto;
+      display: inline-block;
+      padding: 10px 28px;
+      background: #FFFFFF;
+      color: #000;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(66, 109, 220, 0.07);
+      font-family: "Poppins", sans-serif;
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .details .learn-button:hover {
+      background: #EAEAEA;
       color: #426DDC;
-      transition: 0.3s ease; 
-      background-color: #EAEAEA;
+      box-shadow: 0 4px 16px rgba(66, 109, 220, 0.15);
+      text-decoration: none;
     }
 
-    .content span{
-      color: #ff7200;
-      font-size: 65px
+    .form {
+      width: 400px;
+      max-width: 90vw;
+      margin: 40px auto 0 auto;
+      position: relative;
+      border-radius: 18px;
+      background-color: #fff;
+      padding: 35px 32px 32px 32px;
+      box-sizing: border-box;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
     }
-
-    .form{
-      top: 220px;
-      left: 700px;
-      width: 350px;
-      min-height: 350px;
-      padding: 25px;
-      margin-top: -5px;
-      margin-left: 25px;
-      position: fixed;
-      border-radius: 10px;
-      background-color: white;
-      transform: translate(0%,-5%);                                                
-    }      
-
-    .form h2{
-      width: 200px;
-      height: 40px;
-      font-family: sans-serif;
+    .form h2 {
+      width: 100%;
+      font-family: "Poppins", sans-serif;
       text-align: center;
-      color: black;
-      font-size: 30px;
-      margin-left: 50px;
+      color: #111;
+      font-size: 36px;
+      font-weight: bold;
       border-radius: 10px;
-      margin-top: 20px;
-      padding: 7px;
-      font-family: "Poppins", sans-serif;                  
-    }   
-    
-    .form h3 {
-      width: 220px;
-      height: 40px;
-      font-family: sans-serif;
-      text-align: center;
-      color: black;
-      font-size: 24px;
-      margin-left: 45px;
-      border-radius: 10px;
-      margin-top: -25px;
-      padding: 7px;
-      font-family: "Poppins", sans-serif;  
+      margin: 0 0 28px 0;
+      padding: 7px 0;
+      letter-spacing: 1px;
     }
-
-    .form input{
-      width: 300px;
-      height: 35px;
+    .form label {
+      font-family: "Poppins", sans-serif;
+      font-size: 16px;
+      color: #222;
+      margin-bottom: 2px;
+      margin-left: 2px;
+      font-weight: 500;
+      text-align: left;
+      display: block;
+    }
+    .form input[type="text"],
+    .form input[type="password"] {
+      width: 100%;
+      height: 38px;
       background: transparent;
-      border-bottom: 2px solid black;
+      border-bottom: 2px solid #222;
       border-top: none;
       border-right: none;
       border-left: none;
-      font-size: 13px;
+      font-size: 15px;
       letter-spacing: 1px;
-      margin-top: 20px;
-      margin-right: 20px;
+      margin-bottom: 18px;
       font-family: "Poppins", sans-serif;
+      padding-left: 0;
+      color: #222;
     }
-
-    .form input:focus{
+    .form input[type="text"]:focus,
+    .form input[type="password"]:focus {
       outline: none;
+      border-bottom: 2px solid #426DDC;
     }
-
-    #eye-icon {
-      width: 15px;
-      height: 15px;
+    .input-group {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .input-group input[type="password"] {
+      width: 100%;
+      padding-right: 35px;
+      margin-bottom: 0;
+    }
+    .input-group img.eye-icon {
       position: absolute;
-      margin-left: 280px;
-      margin-top: -25px;
-    }
-    
-    #eye-icon-new, #eye-icon-confirm {
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
       cursor: pointer;
-      z-index: 1000;
-      width: 15px;
-      height: 15px;
-      position: absolute;
-      margin-left: 280px;
-      margin-top: -25px;
+      z-index: 2;
     }
-
-
-     
-    .remember-forgot {
-      font-family: "Poppins", sans-serif;
-      margin-top: -10px;
+    .form .row-remember-forgot {
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      margin-top: -8px;
     }
-
-    .remember-forgot input {
-      width: 15px;
-      height: 15px;
-      margin-right: 10px;
-      background-color: #818181;
+    .form .remember-forgot {
+      display: flex;
+      align-items: center;
+      margin: 0;
     }
-
-    .remember-forgot label {
-      font-size: 12px;
-      margin-left: 20px;
-      font-weight: normal;
+    .form .remember-forgot input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin-right: 7px;
+      accent-color: #426DDC;
+    }
+    .form .remember-forgot label {
+      font-size: 14px;
+      color: #aaa;
       font-style: italic;
-      margin-top: 19px;
-      position: absolute;
-      color: rgb(145, 145, 145);
+      font-weight: 400;
+      margin: 0;
+      position: static;
     }
-
-    .remember-forgot {
-      font-family: "Poppins", sans-serif;
-      margin-top: -10px;
-      display: flex;
+    .form .forgot {
+      margin: 0;
     }
-
-    .forgot a {
-      display: flex;
+    .form .forgot a {
       color: #426DDC;
-      font-size: 12px;
-      margin-top: -15px;
-      font-weight: bold;
-      margin-left: 190px;
+      font-size: 15px;
+      font-weight: 500;
       text-decoration: none;
-      font-family: "Poppins", sans-serif;
+      transition: color 0.2s;
     }
-
-    .forgot a:hover {
-      text-decoration: underline;
+    .form .forgot a:hover {
       color: #344CB7;
-
+      text-decoration: underline;
     }
-
-    .btnn {
-      width: 305px;
-      height: 35px;
+    .form .btnn {
+      width: 100%;
+      height: 44px;
       background: #426DDC;
       border: none;
-      margin-top: 30px;
-      margin-left: -3px;
-      font-size: 20px;
-      border-radius: 10px;
-      font-weight: bold;
+      margin: 0 0 18px 0;
+      font-size: 22px;
+      border-radius: 12px;
       cursor: pointer;
-      color: black;
-      transition: 0.4s ease;
-      font-family: "Poppins", sans-serif;
-    }
-
-    .btnn:hover {
-      background-color: #344CB7;
-    }
-
-    .btnn a {
-      text-decoration: none;
-      color: white;
+      color: #fff;
       font-weight: bold;
+      font-family: "Poppins", sans-serif;
+      letter-spacing: 1px;
+      transition: background 0.3s;
+      display: block;
     }
-
-    .form .link{
-      color: black;
-      font-size: 12px;
-      padding-top: 10px;
+    .form .btnn:hover {
+      background: #344CB7;
+    }
+    .form .link {
+      color: #111;
+      font-size: 15px;
       text-align: center;
-      margin-top: 5px;
-      margin-left: -5px;
-      font-weight: bold;
+      margin: 0 0 8px 0;
       font-family: "Poppins", sans-serif;
+      font-weight: 500;
     }
-
-    .form .link a{
+    .form .link a {
       color: #426DDC;
       text-decoration: none;
       margin-left: 5px;
-      margin-bottom: 10px;
+      font-weight: 600;
     }
-
     .form .link a:hover {
       text-decoration: underline;
       color: #344CB7;
     }
-
+    .form .liw {
+      margin: 10px 0 0 0;
+      text-align: center;
+      font-size: 15px;
+      color: #111;
+      font-weight: 500;
+      font-family: "Poppins", sans-serif;
+    }
+    .form .divider {
+      display: flex;
+      align-items: center;
+      margin: 10px 0 18px 0;
+    }
+    .form .divider span {
+      flex: 1;
+      height: 1px;
+      background: #222;
+      opacity: 0.5;
+    }
+    .form .divider p {
+      margin: 0 10px;
+      color: #222;
+      font-size: 15px;
+      font-family: "Poppins", sans-serif;
+    }
+    .icons {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin-top: 10px;
+    }
+    .icons a {
+      text-decoration: none;
+    }
+    .icons ion-icon {
+      color: #426DDC;
+      font-size: 48px;
+      margin: 0;
+      padding: 0;
+      transition: color 0.2s;
+    }
+    .icons ion-icon:hover {
+      color: #344CB7;
+    }
 
     /* Zoom-in screen orientation layout */
     @media(max-width: 1000px) {
@@ -679,6 +695,27 @@
         width: 100%;
     }
 
+    .input-group {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+    .input-group input[type="password"] {
+      width: 100%;
+      padding-right: 35px;
+    }
+    .input-group img.eye-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      z-index: 2;
+    }
+
   </style>
 </head>
 
@@ -710,78 +747,90 @@
     <button class="menu-toggle"> </button>
   </nav>
 
-  <section style="display: flex; justify-content: center; align-items: center; height: 100vh; position: relative;">
-    <div style="display: flex; flex-direction: row; align-items: center; gap: 16px;">
-      <div class="details" style="position: relative; margin-top: 0;">
-        <div>
-          <h5><center>SCHEDULE</center></h5>
-          <h4>AN APPOINTMENT NOW! <i class="fa fa-calendar-week" aria-hidden="true"></i></h4>
-          <p><i>"Convenience you can count on, appointments you can trust."</i></p>
-          <a href="#learn-more" class="learn-button">Learn more</a>
-        </div>
+  <section>
+    <div class="details">
+      <div>
+        <h5><center>SCHEDULE</center></h5>
+        <h4>AN APPOINTMENT NOW! <i class="fa fa-calendar-week" aria-hidden="true"></i></h4>
+        <p><i>"Convenience you can count on, appointments you can trust."</i></p>
+        <a href="#learn-more" class="learn-button">Learn more</a>
       </div>
-      <div id="loginContainer" class="form" style="position: relative; margin-left: 0; margin-top: 0; left: 0; top: 0; transform: none;">
-        <h2> LOGIN </h2> 
-        @if(session('success'))
-            <div class="alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-        <form action="{{ route('admin.login') }}" method="POST" id="loginForm">
-          @csrf
+    </div>
+    <div id="loginContainer" class="form">
+      <h2> LOGIN </h2> 
+      @if(session('success'))
+          <div class="alert-success">
+              {{ session('success') }}
+          </div>
+      @endif
+      <form action="{{ route('admin.login') }}" method="POST" id="loginForm">
+        @csrf
 
-          <input type="text" name="username" placeholder="Username" required>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Username" required>
+        <label for="password">Password</label>
+        <div class="input-group">
           <input type="password" name="password" placeholder="Password" required>
-          <img src="{{ asset('storage/assets/icons8-blind-30.jpg') }}" id="eye-icon" onclick="togglePasswordVisibility('password')">
+          <img src="{{ asset('storage/assets/icons8-blind-30.jpg') }}" id="eye-icon" class="eye-icon" onclick="togglePasswordVisibility('password')">
+        </div>
+        <div class="row-remember-forgot">
           <div class="remember-forgot">
             <input type="checkbox" id="remember-me">
             <label for="remember-me"> Remember me </label>
           </div>
           <div class="forgot">
-            <a href="#" onclick="showForgotPassword()" style="margin-top: 10px; margin-left: 0; display: block;"> Forgot Password? </a>
+            <a href="#" onclick="showForgotPassword()">Forgot Password?</a>
           </div>
-          @if($errors->has('username'))
-            <div style="color: red; text-align: center; margin-top: 10px;">
-              {{ $errors->first('username') }}
-            </div>
-          @endif
-          @if($errors->has('password'))
-            <div style="color: red; text-align: center; margin-top: 10px;">
-              {{ $errors->first('password') }}
-            </div>
-          @endif
-          <button type="submit" class="btnn">SIGN IN</button>
-        </form>
+        </div>
+        @if($errors->has('username'))
+          <div style="color: red; text-align: center; margin-top: 10px;">
+            {{ $errors->first('username') }}
+          </div>
+        @endif
+        @if($errors->has('password'))
+          <div style="color: red; text-align: center; margin-top: 10px;">
+            {{ $errors->first('password') }}
+          </div>
+        @endif
+        <button type="submit" class="btnn">SIGN IN</button>
+      </form>
+      <p class="link"> Don't have an account yet?
+        <a href="{{ route('register') }}"> Register here</a>
+      </p>
+      <div class="divider"><span></span><p>or Log in with</p><span></span></div>
+      <div class="icons">
+        <a href="#"> <ion-icon name="logo-facebook"></ion-icon> </a>
+        <a href="#"> <ion-icon name="logo-google"></ion-icon> </a>
       </div>
-      <div id="forgotPasswordContainer" class="form" style="display: none; position: relative; margin-left: 0; margin-top: 0; left: 0; top: 0; transform: none;">
-        <form id="forgotPasswordForm" action="{{ route('admin.password.update') }}" method="POST">
-          @csrf
-          @if($errors->has('username'))
-            <div style="color: red;">{{ $errors->first('username') }}</div>
-          @endif
-          <p class="link" style="margin: 0 0 20px 0; text-align: center;">Please enter your username and new password:</p>
-          <input type="text" id="userName" name="username" placeholder="Username" required>
-          <input type="password" id="newPassword" name="password" placeholder="Enter New Password" required>
-          <img src="{{ asset('storage/assets/icons8-blind-30.jpg') }}" id="eye-icon-confirm" onclick="togglePasswordVisibility('password')">
-          <button class="btnn" type="submit" style="margin-top: 25px;">SUBMIT</button>
-          @if(session('status'))
-            <div style="color: green; text-align: center; margin-top: 10px;">{{ session('status') }}</div>
-          @endif
-          @if($errors->has('username'))
-            <div style="color: red; text-align: center; margin-top: 10px;">
-              {{ $errors->first('username') }}
-            </div>
-          @endif
-          @if($errors->has('password'))
-            <div style="color: red; text-align: center; margin-top: 10px;">
-              {{ $errors->first('password') }}
-            </div>
-          @endif
-          <p class="link" style="margin-top: 20px; text-align: center;">Remembered your password?
-            <a href="#" onclick="hideForgotPassword()">Back to Login</a>
-          </p>
-        </form>
-      </div>
+    </div>
+    <div id="forgotPasswordContainer" class="form" style="display: none;">
+      <form id="forgotPasswordForm" action="{{ route('admin.password.update') }}" method="POST">
+        @csrf
+        @if($errors->has('username'))
+          <div style="color: red;">{{ $errors->first('username') }}</div>
+        @endif
+        <p class="link" style="margin: 0 0 20px 0; text-align: center;">Please enter your username and new password:</p>
+        <input type="text" id="userName" name="username" placeholder="Username" required>
+        <input type="password" id="newPassword" name="password" placeholder="Enter New Password" required>
+        <img src="{{ asset('storage/assets/icons8-blind-30.jpg') }}" id="eye-icon-confirm" onclick="togglePasswordVisibility('password')">
+        <button class="btnn" type="submit" style="margin-top: 25px;">SUBMIT</button>
+        @if(session('status'))
+          <div style="color: green; text-align: center; margin-top: 10px;">{{ session('status') }}</div>
+        @endif
+        @if($errors->has('username'))
+          <div style="color: red; text-align: center; margin-top: 10px;">
+            {{ $errors->first('username') }}
+          </div>
+        @endif
+        @if($errors->has('password'))
+          <div style="color: red; text-align: center; margin-top: 10px;">
+            {{ $errors->first('password') }}
+          </div>
+        @endif
+        <p class="link" style="margin-top: 20px; text-align: center;">Remembered your password?
+          <a href="#" onclick="hideForgotPassword()">Back to Login</a>
+        </p>
+      </form>
     </div>
   </section>
 

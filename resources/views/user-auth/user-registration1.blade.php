@@ -52,7 +52,7 @@
         }
 
         .form {
-            top: 90px;
+            top: 30%;
             left: 50%;
             width: 460px;
             height: 550px;
@@ -60,7 +60,7 @@
             position: absolute;
             border-radius: 10px;
             background-color: white;
-            transform: translateX(-50%);
+            transform: translate(-50%, -50%);
             padding-right: 30px;
             box-shadow: black;
             z-index: 999;
@@ -91,11 +91,11 @@
         @keyframes popUp {
             from {
                 opacity: 0;
-                transform: scale(0.8) translateX(-50%);
+                transform: scale(0.8) translate(-50%, -50%);
             }
             to {
                 opacity: 1;
-                transform: scale(1) translateX(-50%);
+                transform: scale(1) translate(-50%, -50%);
             }
         }
 

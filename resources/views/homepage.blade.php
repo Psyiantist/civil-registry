@@ -184,38 +184,40 @@
       height: 100%;
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
-      overflow-y: hidden;
+      overflow-x: auto;
+      overflow-y: auto;
     }
 
     section {
       width: 100vw;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: flex-start;
       background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url('{{ asset('storage/assets/appointment_bg.jpg') }}') center 40% fixed;
       background-size: cover;
       background-repeat: no-repeat;
       margin: 0;
-      padding: 0;
+      padding: 50px 0 0 0;
       box-sizing: border-box;
       position: relative;
+      overflow-y: auto;
     }
 
     .details {
-      position: fixed;
-      margin-top: -150px;
+      width: 400px;
+      max-width: 90vw;
+      margin: 0 auto;
+      position: relative;
+      text-align: center;
     }
-
-		h5 {
-      color: white;
+    .details h5 {
       font-size: 65px;
-      margin-top: 100px;
-      margin-bottom: -60px;
-      margin-right: 410px;
+      margin: 0 0 -30px 0;
       font-weight: bolder;
       letter-spacing: 20px;
+      color: white;
       text-shadow:
                1px 1px 0px white,
               -1px -1px 0px white,
@@ -224,14 +226,12 @@
                0 0 50px black;
       font-family: "Poppins", sans-serif;
     }
-
-		h4 {
-			color: white;
-			font-size: 35px;
-			margin-top: 40px;
-			margin-right: 410px;
-			font-weight: bolder;
+    .details h4 {
+      font-size: 35px;
+      margin: 0 0 10px 0;
+      font-weight: bolder;
       letter-spacing: 5px;
+      color: white;
       text-shadow:
                1px 1px 0px white,
               -1px -1px 0px white,
@@ -239,82 +239,63 @@
               -1px 1px 0px white,
                0 0 30px black;
       font-family: "Poppins", sans-serif;
-		}
-
-    h4 i {
-      color: white;
-      text-shadow: none;
     }
-
-		.details p {
-			color: black;
-      margin-top: 10px;
-			font-size: 14px;
-			font-weight: bold;
-			margin-left: 40px;
-      border-radius: 10px;
-      width: 450px;
-      text-align: center;
-      background-color: #f9f5ed;
-			font-family: "Poppins", sans-serif;
-		}
-
-		.learn-button {
-      left: 20%;
-      top: 20px;
-      border: none;
-      bottom: -30px;
-      color: black;
-      cursor: pointer;
+    .details p {
       font-size: 16px;
+      font-style: italic;
       font-weight: bold;
-      padding: 7px 20px;
-      border-radius: 5px;
-      position: relative;
-      text-decoration: none;
-      background-color: #f9f5ed;
-      transform: translateX(-50%);
+      background: #f9f5ed;
+      border-radius: 10px;
+      padding: 8px 0;
+      margin: 0 0 18px 0;
+      color: black;
+      width: 100%;
+      text-align: center;
       font-family: "Poppins", sans-serif;
-      transition: background-color 0.3s ease;
     }
-
-    .learn-button:hover {
-      color: #426DDC;
-      transition: 0.3s ease;
-      background-color: #EAEAEA;
+    .details .learn-button {
+      margin: 0 auto;
+      display: inline-block;
+      padding: 10px 28px;
+      background: #FFFFFF;
+      color: #000;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(66, 109, 220, 0.07);
+      font-family: "Poppins", sans-serif;
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+      cursor: pointer;
     }
-
-    .content span{
-      color: #ff7200;
-      font-size: 65px
+    .details .learn-button:hover {
+      background: #344CB7;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(66, 109, 220, 0.15);
+      text-decoration: none;
     }
-
-    .form{
-      top: 220px;
-      left: 700px;
-      width: 350px;
-      height: 350px;
-      padding: 25px;
-      margin-top: -5px;
-      margin-left: 25px;
-      position: fixed;
+    .form {
+      width: 400px;
+      max-width: 90vw;
+      margin: 40px auto 0 auto;
+      position: relative;
       border-radius: 10px;
       background-color: white;
-      transform: translate(0%,-5%);
+      padding: 25px;
+      box-sizing: border-box;
+      /* keep other form styles as before */
     }
 
-    .form h2{
-      width: 200px;
-      height: 40px;
-      font-family: sans-serif;
+    .form h2 {
+      width: 100%;
+      font-family: "Poppins", sans-serif;
       text-align: center;
       color: black;
       font-size: 30px;
-      margin-left: 50px;
       border-radius: 10px;
-      margin-top: -25px;
-      padding: 7px;
-      font-family: "Poppins", sans-serif;
+      margin: 0 0 20px 0;
+      padding: 7px 0;
     }
 
     .form input{
@@ -725,28 +706,26 @@
 	</nav>
 
 
-	<section style="display: flex; justify-content: center; align-items: center; height: 100vh; position: relative;">
-    <div style="display: flex; flex-direction: row; align-items: center; gap: 16px;">
-      <div class="details" style="position: relative; margin-top: 0;">
-        <div>
-          <h5> <center> SCHEDULE </center> </h5>
-          <h4> AN APPOINTMENT NOW! <i class="fa fa-calendar-week" aria-hidden="true"> </i> </h4>
-          <p> <i> "Convenience you can count on, appointments you can trust." </i> </p>
-          <a href="#learn-more" class="learn-button"> Learn more </a>
-        </div>
+	<section>
+    <div class="details">
+      <div>
+        <h5><center>SCHEDULE</center></h5>
+        <h4>AN APPOINTMENT NOW! <i class="fa fa-calendar-week" aria-hidden="true"></i></h4>
+        <p><i>"Convenience you can count on, appointments you can trust."</i></p>
+        <a href="#learn-more" class="learn-button">Learn more</a>
       </div>
-      <div class="form" style="position: relative; margin-left: 0; margin-top: 0; left: 0; top: 0; transform: none;">
-        <h2> USER MODE </h2>
-        <p class="select" > <i class="fa fa-arrow-down" aria-hidden="true"> </i> Please click or select your user mode: </p>
-        <center>
-        <button style="color: white;" class="btnn-1" onclick="window.location.href='{{ route('admin.login') }}'">  CITY CIVIL REGISTRY <br/> EMPLOYEE </button>
-        <p class="choice"> or </p>
-        <button style="color: white;" class="btnn-2" onclick="window.location.href='{{ url('login') }}'">  MANDALUYONG CITY <br/> RESIDENCE </button>
-        </center>
-        <br/> <br/> <br/> <br/>
-        <p class="link"> Upon acessing this service, you consent to adhere to the City Civil Registry of Mandaluyong's
-        <a href="#" onclick="openModal()"> <br/> Terms of Use and Privacy Policy </a> </p>
-      </div>
+    </div>
+    <div class="form">
+      <h2> USER MODE </h2>
+      <p class="select" > <i class="fa fa-arrow-down" aria-hidden="true"> </i> Please click or select your user mode: </p>
+      <center>
+      <button style="color: white;" class="btnn-1" onclick="window.location.href='{{ route('admin.login') }}'">  CITY CIVIL REGISTRY <br/> EMPLOYEE </button>
+      <p class="choice"> or </p>
+      <button style="color: white;" class="btnn-2" onclick="window.location.href='{{ url('login') }}'">  MANDALUYONG CITY <br/> RESIDENCE </button>
+      </center>
+      <br/> <br/> <br/> <br/>
+      <p class="link"> Upon acessing this service, you consent to adhere to the City Civil Registry of Mandaluyong's
+      <a href="#" onclick="openModal()"> <br/> Terms of Use and Privacy Policy </a> </p>
     </div>
   </section>
 
