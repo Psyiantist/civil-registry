@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="{{ asset('build/assets/civil_registry_logo.png') }}">
+  <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title> Requirements Page - Residence View </title>
@@ -250,7 +250,7 @@
         margin: 0;
         padding: 0;
         background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.35)),
-              url('build/assets/appointment_bg.jpg') no-repeat center center fixed;
+              url('storage/assets/appointment_bg.jpg') no-repeat center center fixed;
         background-size: cover;
         background-attachment: fixed;
         background-repeat: no-repeat;
@@ -272,7 +272,7 @@
         margin: 0;
         padding: 0;
         background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.35)),
-              url('build/assets/appointment_bg.jpg') no-repeat center center fixed;
+              url('storage/assets/appointment_bg.jpg') no-repeat center center fixed;
         background-size: cover;
         background-attachment: fixed;
         background-repeat: no-repeat;
@@ -564,7 +564,7 @@
 <body>
         <nav>
             <div class="image-container">
-                <img src="{{ asset('build/assets/civil_registry_logo.png') }}"> </div>
+                <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
     
             <div class="logo-name">
                 <b> Civil Registry <br/> <a> Mandaluyong City </a> </b> </div>
@@ -620,7 +620,7 @@
           <div class="grid grid-cols-2 gap-6 mb-10">
             @foreach($requirements as $requirement)
             <div onclick="showChecklist('{{ $requirement->id }}')" class="transition-transform transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-400 p-6 bg-white rounded-xl flex flex-col items-center text-blue-500 cursor-pointer">
-              <img src="{{ asset('build/assets/docreq.png') }}" class="h-32 w-32 mb-3" alt="{{ $requirement->title }} Icon" />
+              <img src="{{ asset('storage/assets/docreq.png') }}" class="h-32 w-32 mb-3" alt="{{ $requirement->title }} Icon" />
               <span>{{ $requirement->title }}<i class="fas fa-chevron-right text-gray-500 mt-2"></i></span>
             </div>
             @endforeach

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="{{ asset('build/assets/civil_registry_logo.png') }}">
+  <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
@@ -195,7 +195,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url('{{ asset('build/assets/appointment_bg.jpg') }}') center 40% fixed;
+      background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url('{{ asset('storage/assets/appointment_bg.jpg') }}') center 40% fixed;
       background-size: cover;
       background-repeat: no-repeat;
       margin: 0;
@@ -685,7 +685,7 @@
 <body>
   <nav>
         <div class="image-container">
-            <img src="{{ asset('build/assets/civil_registry_logo.png') }}"> </div>
+            <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
 
         <div class="logo-name">
             <b> Civil Registry <br/> <a> Mandaluyong City </a> </b> </div>
@@ -732,7 +732,7 @@
 
           <input type="text" name="username" placeholder="Username" required>
           <input type="password" name="password" placeholder="Password" required>
-          <img src="{{ asset('build/assets/icons8-blind-30.jpg') }}" id="eye-icon" onclick="togglePasswordVisibility('password')">
+          <img src="{{ asset('storage/assets/icons8-blind-30.jpg') }}" id="eye-icon" onclick="togglePasswordVisibility('password')">
           <div class="remember-forgot">
             <input type="checkbox" id="remember-me">
             <label for="remember-me"> Remember me </label>
@@ -762,7 +762,7 @@
           <p class="link" style="margin: 0 0 20px 0; text-align: center;">Please enter your username and new password:</p>
           <input type="text" id="userName" name="username" placeholder="Username" required>
           <input type="password" id="newPassword" name="password" placeholder="Enter New Password" required>
-          <img src="{{ asset('build/assets/icons8-blind-30.jpg') }}" id="eye-icon-confirm" onclick="togglePasswordVisibility('password')">
+          <img src="{{ asset('storage/assets/icons8-blind-30.jpg') }}" id="eye-icon-confirm" onclick="togglePasswordVisibility('password')">
           <button class="btnn" type="submit" style="margin-top: 25px;">SUBMIT</button>
           @if(session('status'))
             <div style="color: green; text-align: center; margin-top: 10px;">{{ session('status') }}</div>
@@ -841,10 +841,10 @@ function performSearch() {
     if (passwordField && eyeIcon) {
         if (passwordField.type === "password") {
             passwordField.type = "text";
-            eyeIcon.src = '{{ asset('build/assets/icons8-eye-24.jpg') }}'; 
+            eyeIcon.src = '{{ asset('storage/assets/icons8-eye-24.jpg') }}'; 
         } else {
             passwordField.type = "password";
-            eyeIcon.src = '{{ asset('build/assets/icons8-blind-30.jpg') }}'; 
+            eyeIcon.src = '{{ asset('storage/assets/icons8-blind-30.jpg') }}'; 
         }
     }
 };

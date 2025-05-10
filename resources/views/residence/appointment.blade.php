@@ -1,6 +1,6 @@
 <html lang="en">
     <head>
-    <link rel="icon" type="image/x-icon" href="{{ asset('build/assets/civil_registry_logo.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -258,7 +258,7 @@
       margin: 0;
       padding: 0;
       background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),
-      url('build/assets/appointment_bg.jpg') no-repeat center center fixed;;
+      url('storage/assets/appointment_bg.jpg') no-repeat center center fixed;;
       background-size: cover;
       background-attachment: fixed;
       background-repeat: no-repeat;
@@ -280,7 +280,7 @@
        margin: 0;
        padding: 0;
        background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),
-              url('build/assets/appointment_bg.jpg') no-repeat center center fixed;
+              url('storage/assets/appointment_bg.jpg') no-repeat center center fixed;
        background-size: cover;
        background-attachment: fixed;
        background-repeat: no-repeat;
@@ -573,7 +573,7 @@
     <body>
         <nav>
             <div class="image-container">
-                <img src="build/assets/civil_registry_logo.png"> </div>
+                <img src="storage/assets/civil_registry_logo.png"> </div>
     
             <div class="logo-name">
                 <b> Civil Registry <br/> <a> Mandaluyong City </a> </b> </div>

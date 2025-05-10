@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="{{ asset('build/assets/civil_registry_logo.png') }}">
+  <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
@@ -258,7 +258,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url('{{ asset('build/assets/appointment_bg.jpg') }}') center 40% fixed;
+      background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url('{{ asset('storage/assets/appointment_bg.jpg') }}') center 40% fixed;
       background-size: cover;
       background-repeat: no-repeat;
       margin: 0;
@@ -549,7 +549,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url({{ asset('build/assets/appointment_bg.jpg') }}) center 40% fixed;
+      background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url({{ asset('storage/assets/appointment_bg.jpg') }}) center 40% fixed;
       background-size: cover;
       background-repeat: no-repeat;
       margin: 0;
@@ -744,7 +744,7 @@
 <body>
 	<nav>
         <div class="image-container">
-            <img src="{{ asset('build/assets/civil_registry_logo.png') }}"> </div>
+            <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
 
         <div class="logo-name">
             <b> Civil Registry <br/> <a> Mandaluyong City </a> </b> </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="{{ asset('build/assets/civil_registry_logo.png') }}">
+  <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Profile - Residence View</title>
@@ -67,7 +67,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: url('{{ asset('build/assets/appointment_bg.jpg') }}') no-repeat center center fixed;
+      background: url('{{ asset('storage/assets/appointment_bg.jpg') }}') no-repeat center center fixed;
       background-size: cover;
       filter: blur(20px);
       opacity: 0.7;
@@ -309,7 +309,7 @@
 
 <body>
   <div class="image-container">
-    <img src="{{ asset('build/assets/civil_registry_logo.png') }}" alt="Civil Registry Logo">
+    <img src="{{ asset('storage/assets/civil_registry_logo.png') }}" alt="Civil Registry Logo">
   </div>
 
   <section></section>

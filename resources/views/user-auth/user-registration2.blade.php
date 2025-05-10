@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="{{ asset('build/assets/civil_registry_logo.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration - Step 2</title>
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -45,7 +45,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('{{ asset("build/assets/appointment_bg.jpg") }}') no-repeat center center fixed;
+            background: url('{{ asset("storage/assets/appointment_bg.jpg") }}') no-repeat center center fixed;
             background-size: cover;
             filter: blur(20px);
             z-index: -1;
@@ -244,7 +244,7 @@
 <body>
     <nav>
         <div class="image-container">
-            <img src="{{ asset('build/assets/civil_registry_logo.png') }}">
+            <img src="{{ asset('storage/assets/civil_registry_logo.png') }}">
         </div>
     </nav>
 
