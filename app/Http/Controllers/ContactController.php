@@ -78,7 +78,8 @@ class ContactController extends Controller
     public function showAdminContact()
     {
         $contact = Contact::first();
-        return view('admin.admin-contact', compact('contact'));
+        $feedbacks = Feedback::all();
+        return view('admin.admin-contact', compact('contact', 'feedbacks'));
     }
 
     public function updateContact(Request $request)

@@ -986,10 +986,17 @@
   </div>
 
   <i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
-  <div id="accountDropdown" class="absolute hidden">
-    <a href="#"> Profile </a>
-    <a href="#"> Settings </a>
-    <a href="{{ route('admin.logout') }} " id="logoutLink"> Logout </a> </div>
+  <div id="accountDropdown">
+  <div style="padding: 16px 0 8px 0; text-align: center;">
+    <div style="font-size: 40px; color: #e0e0e0; margin-bottom: 4px;">
+      <i class="fas fa-user-circle"></i>
+    </div>
+    <div style="font-weight: bold; font-size: 18px;">Admin</div>
+    <div style="font-size: 14px; color: #757575; word-break: break-all;">city.registrar@<br>mandaluyong.gov.ph</div>
+  </div>
+  <a href="#">Settings</a>
+  <a href="{{ route('admin.logout') }}" id="logoutLink">Logout</a>
+</div>
 
     <button class="menu-toggle"> </button>
   </nav>
@@ -1007,7 +1014,12 @@
     <div class="announcement-section">
   <div class="announcement-header">
     <h2> <i class="fa fa-bullhorn" aria-hidden="true"></i> Announcement & News Update </h2>
-    <p id="datetime"> </p>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <p id="datetime"> </p>
+      <button id="addAnnouncementBtn" style="background: #426DDC; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif;">
+        <i class="fas fa-plus"></i> Add Announcement
+      </button>
+    </div>
   </div>
 
   <div class="announcement-body">
@@ -1161,8 +1173,6 @@
       <p>&copy; 2025 Civil Registry Department. All Rights Reserved.</p>
   </div>
 </footer>
-
-
 
 <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 <script type="text/javascript">
@@ -1437,6 +1447,38 @@ document.getElementById('customFileInput').addEventListener('change', function(e
 });
 
 </script>
+
+<!-- Add Announcement Modal -->
+<div id="addAnnouncementModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;">
+  <div style="background: white; padding: 32px; border-radius: 12px; width: 90%; max-width: 600px; position: relative;">
+    <h2 style="margin-bottom: 24px; color: #333; font-size: 24px;">Add New Announcement</h2>
+    <form action="{{ route('admin.announcements.store') }}" method="POST" enctype="multipart/form-data">
+      @csrf
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 8px; color: #555;">Title</label>
+        <input type="text" name="title" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+      </div>
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 8px; color: #555;">Content</label>
+        <textarea name="content" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 100px;"></textarea>
+      </div>
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 8px; color: #555;">Image</label>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <label class="custom-file-label">
+            <input type="file" name="image" accept="image/*" id="customFileInput" required>
+            <span>Choose File</span>
+          </label>
+          <span id="fileName" style="color: #666;">No file chosen</span>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 12px;">
+        <button type="button" onclick="closeAddAnnouncementModal()" style="padding: 8px 16px; border: 1px solid #ddd; border-radius: 4px; background: #f5f5f5; cursor: pointer;">Cancel</button>
+        <button type="submit" style="padding: 8px 16px; border: none; border-radius: 4px; background: #426DDC; color: white; cursor: pointer;">Add Announcement</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 </body>
 </html>

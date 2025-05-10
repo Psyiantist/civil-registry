@@ -618,35 +618,12 @@
           
           <!--icons-->
           <div class="grid grid-cols-2 gap-6 mb-10">
-            <div onclick="showChecklist('birth')" class="transition-transform transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-400 p-6 bg-white rounded-xl flex flex-col items-center text-blue-500 cursor-pointer">
-              <img src="{{ asset('build/assets/docreq.png') }}" class="h-32 w-32 mb-3" alt="Birth Icon" />
-              <span>Birth Certificate<i class="fas fa-chevron-right text-gray-500 mt-2"></i></span>
+            @foreach($requirements as $requirement)
+            <div onclick="showChecklist('{{ $requirement->id }}')" class="transition-transform transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-400 p-6 bg-white rounded-xl flex flex-col items-center text-blue-500 cursor-pointer">
+              <img src="{{ asset('build/assets/docreq.png') }}" class="h-32 w-32 mb-3" alt="{{ $requirement->title }} Icon" />
+              <span>{{ $requirement->title }}<i class="fas fa-chevron-right text-gray-500 mt-2"></i></span>
             </div>
-  
-            <div onclick="showChecklist('marriage')" class="transition-transform transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-400 p-6 bg-white rounded-xl flex flex-col items-center text-blue-500 cursor-pointer">
-              <img src="{{ asset('build/assets/docreq.png') }}" class="h-32 w-32 mb-3" alt="Marriage Icon" />
-              <span>Marriage Certificate<i class="fas fa-chevron-right text-gray-500 mt-2"></i></span>
-            </div>
-
-            <div onclick="showChecklist('license')" class="transition-transform transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-400 p-6 bg-white rounded-xl flex flex-col items-center text-blue-500 cursor-pointer">
-                <img src="{{ asset('build/assets/docreq.png') }}" class="h-32 w-32 mb-3" alt="Marraige License Icon" />
-                <span>Marriage License<i class="fas fa-chevron-right text-gray-500 mt-2"></i></span>
-            </div>
-  
-            <div onclick="showChecklist('death')" class="transition-transform transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-400 p-6 bg-white rounded-xl flex flex-col items-center text-blue-500 cursor-pointer">
-              <img src="{{ asset('build/assets/docreq.png') }}" class="h-32 w-32 mb-3" alt="Death Icon" />
-              <span>Death Certificate<i class="fas fa-chevron-right text-gray-500 mt-2"></i></span>
-            </div>
-
-            <div onclick="showChecklist('ra9048')" class="transition-transform transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-400 p-6 bg-white rounded-xl flex flex-col items-center text-blue-500 cursor-pointer">
-                <img src="{{ asset('build/assets/docreq.png') }}" class="h-32 w-32 mb-3" alt="RA 9048 Icon" />
-                <span>RA 9048 (CORRECTION) <i class="fas fa-chevron-right text-gray-500 mt-2"></i></span>
-            </div>
-
-            <div onclick="showChecklist('ra9255')" class="transition-transform transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-400 p-6 bg-white rounded-xl flex flex-col items-center text-blue-500 cursor-pointer">
-                <img src="{{ asset('build/assets/docreq.png') }}" class="h-32 w-32 mb-3" alt="RA 9255 Icon" />
-                <span>RA 9255 (LEGITIMATION) <i class="fas fa-chevron-right text-gray-500 mt-2"></i></span>
-            </div>
+            @endforeach
           </div>
   
           <!-- CHECKLIST -->
@@ -717,15 +694,7 @@ if (button && menu) {
     };
 }
 
-const logoutLink = document.getElementById("logoutLink");
 
-if (logoutLink) {
-    logoutLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        alert("You have been logged out.");
-        window.location.href = "Home Page.html";
-    });
-}
 
     function performSearch() {
       const input = document.getElementById("searchInput").value.trim().toLowerCase();
@@ -757,87 +726,33 @@ if (logoutLink) {
     });
 
     const checklistData = {
-    birth: [
-      "Negative Results/Certification",
-      "Baptismal Certificate",
-      "Medical Records",
-      "Voter's Affidavit/Certification",
-      "School Records",
-      "SSS, GSIS, ITR, NBI",
-      "Driver's License",
-      "Barangay Clearance",
-      "Sworn Statement of Mother (Notarized)",
-      "Marriage Contract of parents, if married",
-      "Affidavit of two disinterested persons",
-      "Representative"
-    ],
-    marriage: [
-      "Marriage Application Form",
-      "Valid IDs of both parties",
-      "Certificate of No Marriage (CENOMAR)",
-      "Birth Certificate (both parties)",
-      "Parental Consent (if under 25)",
-      "Marriage Counseling Certificate"
-    ],
-    license: [
-        "Birth Certificate",
-        "Baptismal Certificate",
-        "Resident Certificate",
-        "Barangay Clearance or Proof of Billing",
-        "CENOMAR (Certificate of No Marraige) Both parties",
-        "2 pcs of 1x1 ID picture",
-        "If Annuled (Certificate of True Copy of Decision, Finality, Decree of Absolute Nullity of Marraige, Certificate of Authenticity, Certificate of Registration)",
-        "Consent of Parents for 18-20 years old",
-        "Advice of Parents for Consent of Parents for 18-20 years old",
-        "1. Advice of Parents for 21-24 years old",
-        "2. Seminars Certificate", 
-        "For Foreigners: Legal Capacity (to be issued by their respective Embassy in the Philippines) If Divorced , Divorce Certificate/Decree Passport, Original and Xerox "
-    ],
-    ra9048: [
-      "Petition Form",
-      "Supporting Affidavit",
-      "Valid IDs",
-      "Original and corrected documents",
-      "Barangay Certification",
-      "Other relevant documents"
-    ],
-    death: [
-      "Death Certificate",
-      "Medical Certificate of Death",
-      "Affidavit of Delayed Registration (if late)",
-      "Valid ID of the informant",
-      "Funeral Contract",
-      "Certificate from Hospital/Doctor"
-    ],
-    ra9255: [
-        " Authenticated Birth Certificate of the Child ",
-        "Affidavit to Use the Surname of the Father (To be executed by the mother if the child is 0-6 years old; by the child himself with attestation of the mother if 7-17 years old and by the child himself if of age, 18 and above.",
-        "If not acknowledged, or if the name of the father is not entered in the COLB Submit ",
-        "Proof of Filiation like SSS/GSIS, ITR. Philhealth, Pag-IBIG Insurance Policy, Employment Record ",
-        "Affidavit of Admission of Paternity",
-        "Personal Appearance of both parents"
-    ]
-  };
+      @foreach($requirements as $requirement)
+        '{{ $requirement->id }}': {!! json_encode(explode("\n", $requirement->description)) !!},
+      @endforeach
+    };
 
-  function showChecklist(type) {
-    const checklist = checklistData[type];
-    const checklistEl = document.getElementById("checklist");
-    const title = document.getElementById("checklistTitle");
+    function showChecklist(type) {
+      const checklist = checklistData[type];
+      const checklistEl = document.getElementById("checklist");
+      const title = document.getElementById("checklistTitle");
+      const requirement = @json($requirements).find(r => r.id == type);
 
-    // Update title
-    title.textContent = `REQUIREMENTS FOR ${type.toUpperCase()} CERTIFICATE`;
+      // Update title
+      title.textContent = `REQUIREMENTS FOR ${requirement.title.toUpperCase()}`;
 
-    // Clear and populate checklist
-    checklistEl.innerHTML = "";
-    checklist.forEach(item => {
-      const li = document.createElement("li");
-      li.textContent = item;
-      checklistEl.appendChild(li);
-    });
+      // Clear and populate checklist
+      checklistEl.innerHTML = "";
+      checklist.forEach(item => {
+        if (item.trim()) {  // Only add non-empty items
+          const li = document.createElement("li");
+          li.textContent = item.trim();
+          checklistEl.appendChild(li);
+        }
+      });
 
-    // Smooth scroll to checklist
-    title.scrollIntoView({ behavior: "smooth" });
-  }
+      // Smooth scroll to checklist
+      title.scrollIntoView({ behavior: "smooth" });
+    }
   </script>
 </body>
 </html>

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Announcement;
 use App\Models\Contact;
 use App\Models\Faq;
+use App\Models\Requirement;
+
 class ResidenceController extends Controller
 {
     public function showResidenceHomepage()
@@ -38,7 +40,8 @@ class ResidenceController extends Controller
 
     public function showResidenceRequirements()
     {
-        return view('residence.requirements');
+        $requirements = Requirement::all();
+        return view('residence.requirements', compact('requirements'));
     }
 
     public function showProfile()

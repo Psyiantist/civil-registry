@@ -76,7 +76,7 @@
             <p>Your account has been <b>approved</b></p>
         </div>
         <div class="content">
-            <h2>Dear {{ first_name ??  'Valued User' }},</h2>
+            <h2>Dear {{ $first_name ??  'Valued User' }},</h2>
             <div class="welcome-box">
                 We are delighted to inform you that your account has been formally accepted and you are now a valued member of the Civil Registry website.
             </div>

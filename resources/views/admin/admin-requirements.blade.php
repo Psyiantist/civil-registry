@@ -1,8 +1,9 @@
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="civil registry logo.png">
+  <link rel="icon" type="image/x-icon" href="{{ asset('build/assets/civil_registry_logo.png') }}">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title> Requirements Page - Admin View </title>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -593,28 +594,28 @@
 <body>
         <nav>
             <div class="image-container">
-                <img src="civil registry logo.png"> </div>
+                <img src="{{ asset('build/assets/civil_registry_logo.png') }}"> </div>
     
             <div class="logo-name">
                 <b> Civil Registry <br/> <a> Mandaluyong City </a> </b> </div>
     
             <div class="menu">
                 <ul>
-                    <li> <a href="Home Page - Admin View.html"> Home </a> </li>
+                    <li> <a href="{{ route('admin.homepage') }}"> Home </a> </li>
     
             <li> <a class="active" href="#"> Services <i class="fas fa-caret-down"> </i> </a> 
     
             <div class="dropdown_menuuu">
               <ul>
-            <li> <a href="Appointment Page - Admin View.html"> Appointment </a> </li>
-            <li> <a class="active" href="Requirements Page - Admin View.html"> Requirements </a> </li>
+            <li> <a href="{{ route('admin.appointment') }}"> Appointment </a> </li>
+            <li> <a class="active" href="{{ route('admin.requirements') }}"> Requirements </a> </li>
                </ul>
             </div>
             </li>
     
-                    <li> <a href="FAQs Page - Admin View.html"> FAQs </a> </li>
-                    <li> <a href="About Us Page - Admin View.html"> About Us </a> </li>
-                    <li> <a href="Contact Us Page - Admin View.html"> Contact Us </a> </li>
+                    <li> <a href="{{ route('admin.faqs') }}"> FAQs </a> </li>
+                    <li> <a href="{{ route('admin.about') }}"> About Us </a> </li>
+                    <li> <a href="{{ route('admin.contact') }}"> Contact Us </a> </li>
                 </ul>
         </div>
     
@@ -623,133 +624,106 @@
   <i class="fa fa-search" onclick="performSearch()"> </i>
   </div>
         
-      <i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
-    <div id="accountDropdown" class="absolute hidden">
-        <a href="#"> Profile </a>
-        <a href="#"> Settings </a>
-        <a href="#" id="logoutLink"> Logout </a> </div>
-      
-        <button class="menu-toggle"> </button>
+  <i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
+  <div id="accountDropdown">
+  <div style="padding: 16px 0 8px 0; text-align: center;">
+    <div style="font-size: 40px; color: #e0e0e0; margin-bottom: 4px;">
+      <i class="fas fa-user-circle"></i>
+    </div>
+    <div style="font-weight: bold; font-size: 18px;">Admin</div>
+    <div style="font-size: 14px; color: #757575; word-break: break-all;">city.registrar@<br>mandaluyong.gov.ph</div>
+  </div>
+  <a href="#">Settings</a>
+  <a href="{{ route('admin.logout') }}" id="logoutLink">Logout</a>
+</div>
       </nav>
 
   <!--MAIN SECTION --> 
-      <section class="pt-10">
+
         <div class="details">
       <div class="relative z-10 pt-12 px-8 pb-20 flex flex-col items-center text-white min-h-screen">
         <h1 class="text-4xl font-bold bg-white text-blue-800 py-2 px-6 rounded-lg mb-10 shadow-lg">REQUIREMENTS</h1>
-  
-        <div class="flex flex-col lg:flex-row gap-10 items-start justify-center">
+        <div class="flex flex-col lg:flex-row gap-10 items-start justify-center"></div>
 
-        <!-- ICONS -->
-        <div class="grid grid-cols-2 gap-6 mb-10">
-          <!-- BIRTH -->
-          <div onclick="showChecklist('birth')" class="transition-transform transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-400 p-6 bg-white rounded-xl flex flex-col items-center text-blue-500 cursor-pointer">
-            <img src="docreq.png" class="h-32 w-32 mb-3" alt="Birth Icon" />
-            <div class="flex items-center justify-center">
-              <span id="birthText" contenteditable="true">Birth Certificate</span>
-              <i class="fas fa-edit text-gray-500 ml-2 cursor-pointer" onclick="event.stopPropagation(); toggleEdit('birthText', this)"></i>
-              <i class="fas fa-chevron-right text-gray-500 mt-2"></i>
+
+<!-- REQUIREMENTS MANAGEMENT SECTION -->
+<div class="flex gap-8 justify-center mt-10 px-4">
+    <!-- Add Requirement Container -->
+    <div class="bg-white p-8 rounded-lg shadow-md w-1/2 max-w-xl">
+        <h2 class="text-2xl font-bold text-blue-800 mb-6">Add Requirement</h2>
+        <form action="{{ route('admin.requirements.store') }}" method="POST" class="mb-8">
+            @csrf
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2">Title</label>
+                <input type="text" name="title" class="w-full border rounded px-3 py-2 text-gray-900" required>
             </div>
-          </div>
-
-          <!-- MARRIAGE -->
-          <div onclick="showChecklist('marriage')" class="transition-transform transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-400 p-6 bg-white rounded-xl flex flex-col items-center text-blue-500 cursor-pointer">
-            <img src="docreq.png" class="h-32 w-32 mb-3" alt="Marriage Icon" />
-            <div class="flex items-center justify-center">
-              <span id="marriageText" contenteditable="true">Marriage Certificate</span>
-              <i class="fas fa-edit text-gray-500 ml-2 cursor-pointer" onclick="event.stopPropagation(); toggleEdit('marriageText', this)"></i>
-              <i class="fas fa-chevron-right text-gray-500 mt-2"></i>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2">Description (you can use bullets or paragraphs)</label>
+                <textarea name="description" rows="6" class="w-full border rounded px-3 py-2 text-gray-900" placeholder="• Bullet 1&#10;• Bullet 2" required></textarea>
             </div>
-          </div>
-
-          <!-- LICENSE -->
-          <div onclick="showChecklist('license')" class="transition-transform transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-400 p-6 bg-white rounded-xl flex flex-col items-center text-blue-500 cursor-pointer">
-            <img src="docreq.png" class="h-32 w-32 mb-3" alt="Marriage License Icon" />
-            <div class="flex items-center justify-center">
-              <span id="licenseText" contenteditable="true">Marriage License</span>
-              <i class="fas fa-edit text-gray-500 ml-2 cursor-pointer" onclick="event.stopPropagation(); toggleEdit('licenseText', this)"></i>
-              <i class="fas fa-chevron-right text-gray-500 mt-2"></i>
-            </div>
-          </div>
-
-          <!-- DEATH -->
-          <div onclick="showChecklist('death')" class="transition-transform transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-400 p-6 bg-white rounded-xl flex flex-col items-center text-blue-500 cursor-pointer">
-            <img src="docreq.png" class="h-32 w-32 mb-3" alt="Death Icon" />
-            <div class="flex items-center justify-center">
-              <span id="deathText" contenteditable="true">Death Certificate</span>
-              <i class="fas fa-edit text-gray-500 ml-2 cursor-pointer" onclick="event.stopPropagation(); toggleEdit('deathText', this)"></i>
-              <i class="fas fa-chevron-right text-gray-500 mt-2"></i>
-            </div>
-          </div>
-
-          <!-- RA9048 -->
-          <div onclick="showChecklist('ra9048')" class="transition-transform transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-400 p-6 bg-white rounded-xl flex flex-col items-center text-blue-500 cursor-pointer">
-            <img src="docreq.png" class="h-32 w-32 mb-3" alt="RA 9048 Icon" />
-            <div class="flex items-center justify-center">
-              <span id="ra9048Text" contenteditable="true">RA 9048 (CORRECTION)</span>
-              <i class="fas fa-edit text-gray-500 ml-2 cursor-pointer" onclick="event.stopPropagation(); toggleEdit('ra9048Text', this)"></i>
-              <i class="fas fa-chevron-right text-gray-500 mt-2"></i>
-            </div>
-          </div>
-
-          <!-- RA9255 -->
-          <div onclick="showChecklist('ra9255')" class="transition-transform transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-400 p-6 bg-white rounded-xl flex flex-col items-center text-blue-500 cursor-pointer">
-            <img src="docreq.png" class="h-32 w-32 mb-3" alt="RA 9255 Icon" />
-            <div class="flex items-center justify-center">
-              <span id="ra9255Text" contenteditable="true">RA 9255 (LEGITIMATION)</span>
-              <i class="fas fa-edit text-gray-500 ml-2 cursor-pointer" onclick="event.stopPropagation(); toggleEdit('ra9255Text', this)"></i>
-              <i class="fas fa-chevron-right text-gray-500 mt-2"></i>
-            </div>
-          </div>
-        </div>
-
-        <!-- CHECKLIST -->
-        <div class="bg-white p-6 rounded-lg shadow-md text-black max-w-md">
-          <h2 class="text-xl font-bold text-gray-800 mb-4">
-            <span id="checklistTitle" contenteditable="true">CHECKLIST OF REQUIREMENTS</span>
-            <i class="fas fa-edit text-gray-500 ml-2 cursor-pointer" onclick="toggleEdit('checklistTitle', this)"></i>
-          </h2>
-          <ul id="checklist" class="list-disc list-inside text-gray-700 space-y-1"></ul>
-        </div>
-
-      </div>
+            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Add Requirement</button>
+        </form>
     </div>
-  </div>
-</section>
 
-
-
-      <footer>
-    <div class="container">
-        <div class="footer-content">
-            <h3>Contact Us</h3>
-            <p><a href="mailto:city.registrar@mandaluyong.gov.ph">Email: city.registrar@mandaluyong.gov.ph</a></p>
-            <p>Phone: 8533-28-21</p>
-            <p>Address: <a href="https://maps.app.goo.gl/BqivjAUx2r4DJitu5" target="_blank">Maysilo, Mandaluyong</a></p>
+    <!-- Existing Requirements Container -->
+    <div class="bg-white p-8 rounded-lg shadow-md w-1/2 max-w-xl">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-blue-800">Existing Requirements</h2>
         </div>
-        <div class="footer-content">
-            <h3>Our Location</h3>
-            <div class="map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.374156967718!2d121.0337266!3d14.5777433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c84b4d7d8847%3A0x3cc947be6455c07a!2sMandaluyong%20City%20Hall!5e0!3m2!1sen!2sph!4v1745828287728!5m2!1sen!2sph" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </div>
-        <div class="footer-content">
-            <h3>Follow Us</h3>
-            <ul class="social-icons">
-                <li><a href="https://www.facebook.com/p/Mandaluyong-City-Civil-Registry-100064760288454/" target="_blank"><i class="fab fa-facebook"></i></a></li>
-                <li><a href="mailto:city.registrar@mandaluyong.gov.ph"><i class="fas fa-envelope"></i></a></li>
-                <li><a href="https://mandaluyong.gov.ph/government/departments/city-civil-registry-department/"><i class="fas fa-paperclip"></i></a></li>
-                <li><a href="https://x.com/MandaluyongPIO"><i class="fab fa-twitter"></i></a></li>
-            </ul>
+
+        <div id="requirements-list" class="max-h-[600px] overflow-y-auto">
+            @foreach($requirements as $requirement)
+                <div class="requirement-item border-b py-4" data-id="{{ $requirement->id }}">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-900">{{ $requirement->title }}</h3>
+                        <div class="requirement-actions flex items-center gap-4">
+                            <!-- Edit Button: Opens Modal -->
+                            <button class="fas fa-edit text-blue-600 hover:text-blue-800 cursor-pointer bg-transparent border-none" type="button" onclick="openEditModal({{ $requirement->id }}, '{{ addslashes($requirement->title) }}', `{{ addslashes($requirement->description) }}`)"></button>
+                            <!-- Delete Form -->
+                            <form action="{{ route('admin.requirements.destroy', $requirement->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this requirement?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="fas fa-trash text-red-600 hover:text-red-800 cursor-pointer bg-transparent border-none"></button>
+                            </form>
+                            <button class="dropdown-btn bg-blue-600 text-white px-3 py-1 rounded hover:bg-bludsadsae-700 flex items-center gap-2" onclick="toggleDescription({{ $requirement->id }})">
+                                <span>View</span>
+                                <i class="fas fa-chevron-down transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="requirement-description mt-4 hidden">
+                        <div class="text-gray-700 whitespace-pre-line">{!! nl2br(e($requirement->description)) !!}</div>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
-    <div class="bottom-bar">
-        <p>&copy; 2025 Civil Registry Department. All Rights Reserved.</p>
-    </div>
-</footer>
-  
+</div>
 
-  <script>
+<!-- Edit Modal (hidden by default) -->
+<div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white p-8 rounded-lg max-w-lg w-full">
+        <h2 class="text-xl font-bold mb-4">Edit Requirement</h2>
+        <form id="editForm" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2">Title</label>
+                <input type="text" id="editTitle" name="title" class="w-full border rounded px-3 py-2 text-gray-900" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2">Description</label>
+                <textarea id="editDescription" name="description" rows="6" class="w-full border rounded px-3 py-2 text-gray-900" required></textarea>
+            </div>
+            <div class="flex justify-end gap-2">
+                <button type="button" onclick="closeEditModal()" class="bg-gray-400 text-white px-4 py-2 rounded">Cancel</button>
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
 function toggleDropdown() {
     const dropdown = document.getElementById("accountDropdown");
     dropdown.classList.toggle("show");
@@ -773,16 +747,6 @@ if (button && menu) {
     };
 }
 
-const logoutLink = document.getElementById("logoutLink");
-
-if (logoutLink) {
-    logoutLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        alert("You have been logged out.");
-        window.location.href = "Home Page.html";
-    });
-}
-
 function performSearch() {
     const inputField = document.getElementById("searchInput");
     const input = inputField.value.trim().toLowerCase();
@@ -791,17 +755,17 @@ function performSearch() {
         alert("Please enter a search term.");
     } else {
         if (input === "home page" || input === "homepage" || input === "home") {
-            window.location.href = "Home page - Residence View.html";
+            window.location.href = "{{ route('admin.homepage') }}";
         } else if (input === "faqs" || input === "facts" || input === "help") {
-            window.location.href = "FAQs Page - Residence View.html";
+            window.location.href = "{{ route('admin.faqs') }}";
         } else if (input === "about" || input === "about civil") {
-            window.location.href = "About Us Page - Residence View.html";
+            window.location.href = "{{ route('admin.about') }}";
         } else if (input === "appointment" || input === "appointments" || input === "schedule" || input === "schedules") {
-            window.location.href = "Appointment Page - Residence View.html";
+            window.location.href = "{{ route('admin.appointment') }}";
         } else if (input === "reqs" || input === "requirements" || input === "requirement") {
-            window.location.href = "Requirements Page - Residence View.html";
+            window.location.href = "{{ route('admin.requirements') }}";
         } else if (input === "contact" || input === "number" || input === "email") {
-            window.location.href = "Contact Us Page - Residence View.html";
+            window.location.href = "{{ route('admin.contact') }}";
         } else {
             alert("No results found.");
             inputField.value = "";
@@ -815,92 +779,24 @@ document.getElementById("searchInput").addEventListener("keypress", function(e) 
     }
 });
 
-const checklistData = {
-    birth: [
-        "Negative Results/Certification",
-        "Baptismal Certificate",
-        "Medical Records",
-        "Voter’s Affidavit/Certification",
-        "School Records",
-        "SSS, GSIS, ITR, NBI",
-        "Driver’s License",
-        "Barangay Clearance",
-        "Sworn Statement of Mother (Notarized)",
-        "Marriage Contract of parents, if married",
-        "Affidavit of two disinterested persons",
-        "Representative"
-    ],
-    marriage: [
-        "Marriage Application Form",
-        "Valid IDs of both parties",
-        "Certificate of No Marriage (CENOMAR)",
-        "Birth Certificate (both parties)",
-        "Parental Consent (if under 25)",
-        "Marriage Counseling Certificate"
-    ],
-    license: [
-        "Birth Certificate",
-        "Baptismal Certificate",
-        "Resident Certificate",
-        "Barangay Clearance or Proof of Billing",
-        "CENOMAR (Certificate of No Marriage) Both parties",
-        "2 pcs of 1x1 ID picture",
-        "If Annulled (Certificate of True Copy of Decision, Finality, Decree of Absolute Nullity of Marriage, Certificate of Authenticity, Certificate of Registration)",
-        "Consent of Parents for 18-20 years old",
-        "Advice of Parents for 18-20 years old",
-        "1. Advice of Parents for 21-24 years old",
-        "2. Seminars Certificate", 
-        "For Foreigners: Legal Capacity (to be issued by their respective Embassy in the Philippines) If Divorced , Divorce Certificate/Decree Passport, Original and Xerox "
-    ],
-    ra9048: [
-        "Petition Form",
-        "Supporting Affidavit",
-        "Valid IDs",
-        "Original and corrected documents",
-        "Barangay Certification",
-        "Other relevant documents"
-    ],
-    death: [
-        "Death Certificate",
-        "Medical Certificate of Death",
-        "Affidavit of Delayed Registration (if late)",
-        "Valid ID of the informant",
-        "Funeral Contract",
-        "Certificate from Hospital/Doctor"
-    ],
-    ra9255: [
-        "Authenticated Birth Certificate of the Child",
-        "Affidavit to Use the Surname of the Father (executed by the mother if the child is 0-6; by the child with mother’s attestation if 7-17; by the child alone if 18+)",
-        "If not acknowledged or name of the father is not entered in COLB Submit",
-        "Proof of Filiation: SSS/GSIS, ITR, Philhealth, Pag-IBIG, Insurance Policy, Employment Record",
-        "Affidavit of Admission of Paternity",
-        "Personal Appearance of both parents"
-    ]
-};
+function openEditModal(id, title, description) {
+    document.getElementById('editModal').classList.remove('hidden');
+    document.getElementById('editTitle').value = title;
+    document.getElementById('editDescription').value = description.replace(/\\n/g, "\n");
+    document.getElementById('editForm').action = '/admin/requirements/' + id;
+}
 
-function showChecklist(type) {
-    const checklist = checklistData[type];
-    const checklistEl = document.getElementById("checklist");
-    const title = document.getElementById("checklistTitle");
+function closeEditModal() {
+    document.getElementById('editModal').classList.add('hidden');
+}
 
-
-    title.textContent = `REQUIREMENTS FOR ${type.toUpperCase()} CERTIFICATE`;
-
-
-    checklistEl.innerHTML = "";
-    checklist.forEach((item, index) => {
-        const li = document.createElement("li");
-        li.textContent = item;
-        li.contentEditable = true; 
-        li.style.outline = "none";
-        li.addEventListener("blur", () => {
-            checklistData[type][index] = li.textContent.trim();
-            console.log(`Updated ${type} [${index}] ->`, checklistData[type][index]);
-        });
-        checklistEl.appendChild(li);
-    });
-
-    title.scrollIntoView({ behavior: "smooth" });
+function toggleDescription(id) {
+    const requirementItem = document.querySelector(`.requirement-item[data-id="${id}"]`);
+    const description = requirementItem.querySelector('.requirement-description');
+    const button = requirementItem.querySelector('.dropdown-btn');
+    const chevron = button.querySelector('.fa-chevron-down');
+    description.classList.toggle('hidden');
+    chevron.style.transform = description.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
 }
 </script>
 

@@ -77,7 +77,7 @@
             <p>We regret to inform you</p>
         </div>
         <div class="content">
-            <h2>Dear {{ first_name ?? 'Applicant' }},</h2>
+            <h2>Dear {{ $first_name ?? 'Applicant' }},</h2>
             <p>
                 Thank you for your interest in joining the Civil Registry website. After careful review, we regret to inform you that your account application has not been approved at this time.
             </p>

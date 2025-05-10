@@ -94,7 +94,7 @@ class AuthController extends Controller
             return redirect()->back()->withErrors(['password' => 'Invalid password']);
         }
 
-        Auth::login($employee);
+        Auth::guard('employee')->login($employee);
         return redirect()->route('admin.homepage')->with('success', 'Login successful');
     }
 
@@ -114,5 +114,11 @@ class AuthController extends Controller
         $employee->save();
 
         return redirect()->back()->with('status', 'Password updated successfully.');
+    }
+
+    public function adminLogout()
+    {
+        Auth::guard('employee')->logout();
+        return redirect()->route('admin.login')->with('success', 'Logout successful');
     }
 }

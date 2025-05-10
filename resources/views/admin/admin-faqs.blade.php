@@ -174,6 +174,7 @@
       z-index: 1000;
       padding: 8px 0;
       font-weight: bold;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
     #accountDropdown.show {
@@ -184,15 +185,17 @@
       display: block;
       padding: 10px 16px;
       color: #333;
-      text-align: center;
+      text-align: left;
       text-decoration: none;
       font-size: 14px;
       font-family: "Poppins", sans-serif;
+      transition: background-color 0.3s ease;
     }
 
     #accountDropdown a:hover {
-    color: #426DDC;
-    transition: 0.3s ease; 
+      color: #426DDC;
+      background-color: #f5f5f5;
+      transition: 0.3s ease; 
     }
 
     nav .search-container {
@@ -391,16 +394,16 @@
    .faq-question i {
       margin-left: auto;
       transition: transform 0.3s ease;
-    }
+   }
 
-   .faq-question.active i {
+   .faq-question.active i.fa-chevron-down {
       transform: rotate(180deg);
    }
 
    .faq-answer {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.3s ease;
+      transition: max-height 0.3s ease-out;
       font-size: 14px;
       font-weight: 400;
       color: #555;
@@ -408,11 +411,37 @@
       line-height: 1.6;
       margin-top: 10px;
       padding: 0 5px;
-    }
+      opacity: 0;
+      transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+   }
 
    .faq-answer.show {
       max-height: 500px;
+      opacity: 1;
+      padding: 10px 5px;
+   }
+
+   .faq-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
     }
+
+   .faq-actions i {
+      cursor: pointer;
+      font-size: 16px;
+      color: #666;
+      transition: color 0.3s ease;
+    }
+
+   .faq-actions i:hover {
+      color: #426DDC;
+    }
+
+   .faq-actions i.fa-edit,
+   .faq-actions i.fa-trash {
+      transform: none !important;
+   }
 
 
 
@@ -738,6 +767,85 @@
       font-size: 17px;
       color: black;
     }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      margin: 15% auto;
+      padding: 20px;
+      width: 50%;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      color: #003366;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .modal-form input,
+    .modal-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .modal-form textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .modal-actions {
+      text-align: right;
+    }
+
+    .modal-actions button {
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .cancel-btn {
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      margin-right: 10px;
+    }
+
+    .submit-btn {
+      background: #426DDC;
+      color: white;
+      border: none;
+    }
 	</style>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 </head>
@@ -776,10 +884,16 @@
   </div>
 	
   <i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
-<div id="accountDropdown" class="absolute hidden">
-    <a href="#"> Profile </a>
-    <a href="#"> Settings </a>
-    <a href="{{ route('logout') }}"> Logout </a> </div>
+  <div id="accountDropdown">
+  <div style="padding: 16px 0 8px 0; text-align: center;">
+    <div style="font-size: 40px; color: #e0e0e0; margin-bottom: 4px;">
+      <i class="fas fa-user-circle"></i>
+    </div>
+    <div style="font-weight: bold; font-size: 18px;">Admin</div>
+    <div style="font-size: 14px; color: #757575; word-break: break-all;">city.registrar@<br>mandaluyong.gov.ph</div>
+  </div>
+  <a href="#">Settings</a>
+  <a href="{{ route('admin.logout') }}" id="logoutLink">Logout</a>
 </div>
   
     <button class="menu-toggle"> </button>
@@ -800,7 +914,7 @@
             <h2 class="faq-title">Frequently Asked Questions</h2>
             
             <div class="faq-actions" style="margin-bottom: 20px; text-align: right;">
-                <button onclick="showAddFaqModal()" class="btn btn-primary" style="background: #426DDC; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+                <button onclick="document.getElementById('addFaqModal').style.display='block'" class="btn btn-primary" style="background: #426DDC; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
                     <i class="fas fa-plus"></i> Add New FAQ
                 </button>
             </div>
@@ -809,7 +923,7 @@
                 @foreach($faqs as $faq)
                 <div class="faq-item" data-id="{{ $faq->id }}">
                     <div class="faq-question">
-                        <span contenteditable="true" onblur="updateFaq({{ $faq->id }}, this, 'question')">{{ $faq->question }}</span>
+                        <span>{{ $faq->question }}</span>
                         <div class="faq-actions">
                             <i class="fas fa-edit" title="Edit" onclick="editFaq({{ $faq->id }})"></i>
                             <i class="fas fa-trash" title="Delete" onclick="deleteFaq({{ $faq->id }})"></i>
@@ -817,7 +931,7 @@
                         </div>
                     </div>
                     <div class="faq-answer">
-                        <span contenteditable="true" onblur="updateFaq({{ $faq->id }}, this, 'answer')">{!! nl2br(e($faq->answer)) !!}</span>
+                        <span>{!! nl2br(e($faq->answer)) !!}</span>
                     </div>
                 </div>
                 @endforeach
@@ -826,7 +940,6 @@
     </div>
   </section>
 </center>
-
               <footer>
                 <div class="container">
                     <div class="footer-content">
@@ -855,8 +968,6 @@
                     <p>&copy; 2025 Civil Registry Department. All Rights Reserved.</p>
                 </div>
             </footer>
-
-
 
 
 <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
@@ -905,172 +1016,221 @@
              dropdown.classList.toggle("show");
         }
 
-        const faqQuestions = document.querySelectorAll('.faq-question');
-
-        faqQuestions.forEach(question => {
-        question.addEventListener('click', () => {
-        const answer = question.nextElementSibling;
-        const icon = question.querySelector('i');
-
-        document.querySelectorAll('.faq-answer').forEach(ans => {
-                if (ans !== answer) ans.classList.remove('show');
-        });
-        document.querySelectorAll('.faq-question i').forEach(ic => {
-                if (ic !== icon) ic.classList.remove('active');
-        });
-
-            question.classList.toggle('active');
+        function toggleAnswer(element) {
+            const answer = element.nextElementSibling;
             answer.classList.toggle('show');
-            icon?.classList.toggle('active');
-        });
-        });
-
-function showAddFaqModal() {
-    document.getElementById('addFaqModal').style.display = 'block';
-}
-
-function closeAddFaqModal() {
-    document.getElementById('addFaqModal').style.display = 'none';
-}
-
-// Close modal when clicking outside
-window.onclick = function(event) {
-    var modal = document.getElementById('addFaqModal');
-    if (event.target === modal) {
-        modal.style.display = 'none';
-    }
-}
-
-// Function to update FAQ
-async function updateFaq(id, element, field) {
-    const value = element.textContent;
-    try {
-        const response = await fetch(`/admin/faqs/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({
-                [field]: value
-            })
-        });
-        
-        if (!response.ok) {
-            throw new Error('Failed to update FAQ');
         }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to update FAQ');
-    }
-}
 
-// Function to edit FAQ
-function editFaq(id) {
-    const questionElement = document.querySelector(`.faq-item[data-id="${id}"] .faq-question span`);
-    const answerElement = document.querySelector(`.faq-item[data-id="${id}"] .faq-answer span`);
-    
-    questionElement.contentEditable = true;
-    answerElement.contentEditable = true;
-    
-    questionElement.focus();
-}
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function(e) {
+                    if (e.target.closest('.fa-edit') || e.target.closest('.fa-trash')) {
+                        return;
+                    }
+                    
+                    // Toggle active class on the clicked question
+                    question.classList.toggle('active');
+                    
+                    // Get the answer element
+                    const answer = question.nextElementSibling;
+                    const chevronIcon = question.querySelector('.fa-chevron-down');
 
-// Function to delete FAQ
-async function deleteFaq(id) {
-    if (!confirm('Are you sure you want to delete this FAQ?')) {
-        return;
-    }
-    
-    try {
-        const response = await fetch(`/admin/faqs/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    // Close all other answers
+                    faqQuestions.forEach(otherQuestion => {
+                        if (otherQuestion !== question) {
+                            otherQuestion.classList.remove('active');
+                            otherQuestion.querySelector('.fa-chevron-down')?.classList.remove('active');
+                            otherQuestion.nextElementSibling.classList.remove('show');
+                        }
+                    });
+
+                    // Toggle the clicked answer
+                    answer.classList.toggle('show');
+                    chevronIcon?.classList.toggle('active');
+                });
+            });
+
+            // Initialize Sortable for FAQ reordering
+            new Sortable(document.getElementById('faq-list'), {
+                animation: 150,
+                onEnd: async function(evt) {
+                    const items = Array.from(evt.to.children).map((item, index) => ({
+                        id: item.dataset.id,
+                        order: index
+                    }));
+                    
+                    try {
+                        const response = await fetch('{{ route("admin.faqs.reorder") }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            },
+                            body: JSON.stringify({ faqs: items })
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error('Failed to reorder FAQs');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Failed to reorder FAQs');
+                    }
+                }
+            });
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('addFaqModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
             }
-        });
-        
-        if (response.ok) {
-            const faqItem = document.querySelector(`.faq-item[data-id="${id}"]`);
-            faqItem.remove();
-        } else {
-            throw new Error('Failed to delete FAQ');
         }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to delete FAQ');
-    }
-}
 
-// Initialize FAQ question click handlers
-document.addEventListener('DOMContentLoaded', function() {
-    const faqQuestions = document.querySelectorAll('.faq-question');
-    faqQuestions.forEach(question => {
-        question.addEventListener('click', () => {
-            const answer = question.nextElementSibling;
-            const icon = question.querySelector('i');
+        // Function to edit FAQ
+        function editFaq(id) {
+            const faqItem = document.querySelector(`.faq-item[data-id="${id}"]`);
+            const questionElement = faqItem.querySelector('.faq-question span');
+            const answerElement = faqItem.querySelector('.faq-answer span');
+            const editButton = faqItem.querySelector('.fa-edit');
+            
+            // Disable edit button
+            editButton.style.pointerEvents = 'none';
+            editButton.style.opacity = '0.5';
+            
+            questionElement.contentEditable = true;
+            answerElement.contentEditable = true;
+            
+            questionElement.focus();
+            
+            // Add save button
+            const saveButton = document.createElement('button');
+            saveButton.textContent = 'Save';
+            saveButton.style.marginLeft = '10px';
+            saveButton.style.padding = '5px 10px';
+            saveButton.style.backgroundColor = '#426DDC';
+            saveButton.style.color = 'white';
+            saveButton.style.border = 'none';
+            saveButton.style.borderRadius = '4px';
+            saveButton.style.cursor = 'pointer';
+            
+            const actionsDiv = faqItem.querySelector('.faq-actions');
+            actionsDiv.appendChild(saveButton);
+            
+            saveButton.onclick = async () => {
+                try {
+                    const response = await fetch(`/admin/faqs/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            question: questionElement.textContent.trim(),
+                            answer: answerElement.textContent.trim()
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to update FAQ');
+                    }
+                    
+                    // Show success message
+                    const successMessage = document.createElement('div');
+                    successMessage.style.position = 'fixed';
+                    successMessage.style.top = '20px';
+                    successMessage.style.right = '20px';
+                    successMessage.style.padding = '10px 20px';
+                    successMessage.style.backgroundColor = '#4CAF50';
+                    successMessage.style.color = 'white';
+                    successMessage.style.borderRadius = '4px';
+                    successMessage.style.zIndex = '1000';
+                    successMessage.textContent = 'FAQ updated successfully';
+                    document.body.appendChild(successMessage);
+                    
+                    setTimeout(() => {
+                        successMessage.remove();
+                    }, 3000);
 
-            document.querySelectorAll('.faq-answer').forEach(ans => {
-                if (ans !== answer) ans.classList.remove('show');
-            });
-            document.querySelectorAll('.faq-question i').forEach(ic => {
-                if (ic !== icon) ic.classList.remove('active');
-            });
+                    // Reset edit state
+                    questionElement.contentEditable = false;
+                    answerElement.contentEditable = false;
+                    editButton.style.pointerEvents = 'auto';
+                    editButton.style.opacity = '1';
+                    saveButton.remove();
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Failed to update FAQ');
+                }
+            };
+        }
 
-            question.classList.toggle('active');
-            answer.classList.toggle('show');
-            icon?.classList.toggle('active');
-        });
-    });
-
-    // Initialize Sortable for FAQ reordering
-    new Sortable(document.getElementById('faq-list'), {
-        animation: 150,
-        onEnd: async function(evt) {
-            const items = Array.from(evt.to.children).map((item, index) => ({
-                id: item.dataset.id,
-                order: index
-            }));
+        // Function to delete FAQ
+        async function deleteFaq(id) {
+            if (!confirm('Are you sure you want to delete this FAQ?')) {
+                return;
+            }
             
             try {
-                const response = await fetch('{{ route("admin.faqs.reorder") }}', {
-                    method: 'POST',
+                const response = await fetch(`/admin/faqs/${id}`, {
+                    method: 'DELETE',
                     headers: {
-                        'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({ faqs: items })
+                    }
                 });
                 
-                if (!response.ok) {
-                    throw new Error('Failed to reorder FAQs');
+                if (response.ok) {
+                    const faqItem = document.querySelector(`.faq-item[data-id="${id}"]`);
+                    faqItem.remove();
+                    
+                    // Show success message
+                    const successMessage = document.createElement('div');
+                    successMessage.style.position = 'fixed';
+                    successMessage.style.top = '20px';
+                    successMessage.style.right = '20px';
+                    successMessage.style.padding = '10px 20px';
+                    successMessage.style.backgroundColor = '#4CAF50';
+                    successMessage.style.color = 'white';
+                    successMessage.style.borderRadius = '4px';
+                    successMessage.style.zIndex = '1000';
+                    successMessage.textContent = 'FAQ deleted successfully';
+                    document.body.appendChild(successMessage);
+                    
+                    setTimeout(() => {
+                        successMessage.remove();
+                    }, 3000);
+                } else {
+                    throw new Error('Failed to delete FAQ');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Failed to reorder FAQs');
+                alert('Failed to delete FAQ');
             }
         }
-    });
-});
 </script>
 
-<!-- Add FAQ Modal -->
-<div id="addFaqModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
-    <div class="modal-content" style="background: white; margin: 15% auto; padding: 20px; width: 50%; border-radius: 8px;">
-        <h3>Add New FAQ</h3>
-        <form action="{{ route('admin.faqs.store') }}" method="POST">
+<div id="addFaqModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Add New FAQ</h3>
+            <button class="close-modal" onclick="document.getElementById('addFaqModal').style.display='none'">&times;</button>
+        </div>
+        <form action="{{ route('admin.faqs.store') }}" method="POST" class="modal-form">
             @csrf
-            <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px;">Question:</label>
-                <input type="text" name="question" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            <div>
+                <label>Question:</label>
+                <input type="text" name="question" required>
             </div>
-            <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px;">Answer:</label>
-                <textarea name="answer" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 100px;"></textarea>
+            <div>
+                <label>Answer:</label>
+                <textarea name="answer" required></textarea>
             </div>
-            <div style="text-align: right;">
-                <button type="button" onclick="closeAddFaqModal()" style="margin-right: 10px; padding: 8px 16px; border: 1px solid #ddd; border-radius: 4px; background: #f5f5f5; cursor: pointer;">Cancel</button>
-                <button type="submit" style="padding: 8px 16px; border: none; border-radius: 4px; background: #426DDC; color: white; cursor: pointer;">Add FAQ</button>
+            <div class="modal-actions">
+                <button type="button" class="cancel-btn" onclick="document.getElementById('addFaqModal').style.display='none'">Cancel</button>
+                <button type="submit" class="submit-btn">Add FAQ</button>
             </div>
         </form>
     </div>

@@ -11,7 +11,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\FaqController;
-
+use App\Http\Controllers\RequirementController;
 Route::get('/', function () {
     return view('homepage');
 });
@@ -53,21 +53,19 @@ Route::get('/residence-requirements', [ResidenceController::class, 'showResidenc
 Route::get('/residence/profile', [ProfileController::class, 'getUser'])->middleware('auth')->name('residence.profile');
 Route::put('/residence/profile/update', [ProfileController::class, 'updateProfile'])->middleware('auth')->name('residence.profile.update');
 Route::post('/residence/profile/remove-image', [ProfileController::class, 'removeProfileImage'])->middleware('auth')->name('residence.profile.remove-image');
-
 Route::post('/residence/appointment/store', [AppointmentController::class, 'storeAppointment'])->middleware('auth')->name('residence.appointment.store');
 
 // ADMIN ROUTES
 Route::get('/admin/login', [AuthController::class, 'showEmployeeLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AuthController::class, 'employeeLoginHandler'])->name('admin.login.handler');
-Route::get('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
+Route::get('/admin/logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
 Route::post('/admin/password', [AuthController::class, 'updateAdminPassword'])->name('admin.password.update');
+    
 
-Route::get('/admin/appointment', [EmployeeController::class, 'showAdminAppointment'])->middleware('auth')->name('admin.appointment');
-Route::get('/admin/about', [EmployeeController::class, 'showAdminAbout'])->middleware('auth')->name('admin.about');
-
-
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth:employee'])->group(function () {
     Route::get('/admin/homepage', [EmployeeController::class, 'showAdminHomepage'])->name('admin.homepage');
+    Route::get('/admin/appointment', [EmployeeController::class, 'showAdminAppointment'])->name('admin.appointment');
+    Route::get('/admin/about', [EmployeeController::class, 'showAdminAbout'])->name('admin.about');
     Route::put('/admin/announcements/{announcement}', [AnnouncementController::class, 'update'])->name('admin.announcements.update');
     Route::post('/admin/announcements/{announcement}/image', [AnnouncementController::class, 'updateImage'])->name('admin.announcements.updateImage');
     Route::post('/admin/announcements', [AnnouncementController::class, 'store'])->name('admin.announcements.store');
@@ -79,18 +77,20 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/faqs/{faq}', [FaqController::class, 'destroy'])->name('admin.faqs.destroy');
     Route::post('/admin/faqs/reorder', [FaqController::class, 'reorder'])->name('admin.faqs.reorder');
 
-    // Contact Routes
+    // Contact Routes and Feedback Routes
     Route::get('/admin/contact', [ContactController::class, 'showAdminContact'])->name('admin.contact');
     Route::post('/admin/contact/update', [ContactController::class, 'updateContact'])->name('contact.update');
     Route::get('/contact/get', [ContactController::class, 'getContact'])->name('contact.get');
 
     // User Acceptance Routes 
-    Route::post('/admin/accept-user/{user}', [EmployeeController::class, 'acceptUser'])->middleware('auth')->name('admin.accept-user');
-    Route::post('/admin/reject-user/{user}', [EmployeeController::class, 'rejectUser'])->middleware('auth')->name('admin.reject-user');
+    Route::post('/admin/accept-user/{user}', [EmployeeController::class, 'acceptUser'])->name('admin.accept-user');
+    Route::post('/admin/reject-user/{user}', [EmployeeController::class, 'rejectUser'])->name('admin.reject-user');
 
     // Requirements Routes 
-    Route::get('/admin/requirements', [EmployeeController::class, 'showAdminRequirements'])->middleware('auth')->name('admin.requirements');
-
+    Route::get('/admin/requirements', [RequirementController::class, 'index'])->name('admin.requirements');
+    Route::post('/admin/requirements', [RequirementController::class, 'store'])->name('admin.requirements.store');
+    Route::put('/admin/requirements/{requirement}', [RequirementController::class, 'update'])->name('admin.requirements.update');
+    Route::delete('/admin/requirements/{requirement}', [RequirementController::class, 'destroy'])->name('admin.requirements.destroy');
 });
 
 // Public Routes
