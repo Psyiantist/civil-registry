@@ -215,10 +215,10 @@
     }
 
     .details h5 {
-      font-size: 65px;
-      margin: 0 0 -30px 0;
+      font-size: 55px;
+      margin: 0 0 -25px 0;
       font-weight: bolder;
-      letter-spacing: 20px;
+      letter-spacing: 15px;
       color: white;
       text-shadow:
                1px 1px 0px white,
@@ -227,13 +227,14 @@
               -1px 1px 0px white,
                0 0 50px black;
       font-family: "Poppins", sans-serif;
+      padding-left: 20px;
     }
 
     .details h4 {
-      font-size: 35px;
+      font-size: 30px;
       margin: 0 0 10px 0;
       font-weight: bolder;
-      letter-spacing: 5px;
+      letter-spacing: 4px;
       color: white;
       text-shadow:
                1px 1px 0px white,
@@ -319,7 +320,8 @@
       display: block;
     }
     .form input[type="text"],
-    .form input[type="password"] {
+    .form input[type="password"],
+    .form input[type="text"].password-field {
       width: 100%;
       height: 38px;
       background: transparent;
@@ -346,20 +348,39 @@
       align-items: center;
       margin-bottom: 18px;
     }
-    .input-group input[type="password"] {
-      width: 100%;
-      padding-right: 35px;
-      margin-bottom: 0;
+    .input-group input[type="password"],
+    .input-group input[type="text"] {
+      font-family: 'Poppins', sans-serif !important;
+      letter-spacing: 1px !important;
+      line-height: 38px !important;
+      height: 38px !important;
+      vertical-align: middle !important;
+      box-sizing: border-box;
     }
-    .input-group img.eye-icon {
+    .input-group .eye-icon {
       position: absolute;
       right: 10px;
-      top: 50%;
+      top: 40%;
       transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
+      font-size: 20px;
+      color: #426DDC;
       cursor: pointer;
       z-index: 2;
+      opacity: 0.8;
+      transition: color 0.2s;
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      min-height: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      pointer-events: auto;
+    }
+    .input-group .eye-icon:hover {
+      opacity: 1;
+      color: #344CB7;
     }
     .form .row-remember-forgot {
       display: flex;
@@ -396,6 +417,7 @@
       font-weight: 500;
       text-decoration: none;
       transition: color 0.2s;
+      font-family: "Poppins", sans-serif;
     }
     .form .forgot a:hover {
       color: #344CB7;
@@ -703,17 +725,23 @@
     }
     .input-group input[type="password"] {
       width: 100%;
-      padding-right: 35px;
+      padding-right: 40px;
     }
-    .input-group img.eye-icon {
+    .input-group .eye-icon {
       position: absolute;
       right: 10px;
-      top: 50%;
+      top: 40%;
       transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
+      font-size: 20px;
+      color: #426DDC;
       cursor: pointer;
       z-index: 2;
+      opacity: 0.8;
+      transition: color 0.2s;
+    }
+    .input-group .eye-icon:hover {
+      opacity: 1;
+      color: #344CB7;
     }
 
   </style>
@@ -765,13 +793,10 @@
       @endif
       <form action="{{ route('admin.login') }}" method="POST" id="loginForm">
         @csrf
-
-        <label for="username">Username</label>
         <input type="text" id="username" name="username" placeholder="Username" required>
-        <label for="password">Password</label>
         <div class="input-group">
-          <input type="password" name="password" placeholder="Password" required>
-          <img src="{{ asset('storage/assets/icons8-blind-30.jpg') }}" id="eye-icon" class="eye-icon" onclick="togglePasswordVisibility('password')">
+          <input type="password" name="password" id="password" placeholder="Password" required>
+          <i class="fa fa-eye-slash eye-icon" id="eye-icon" onclick="togglePasswordVisibility('password')"></i>
         </div>
         <div class="row-remember-forgot">
           <div class="remember-forgot">
@@ -794,43 +819,28 @@
         @endif
         <button type="submit" class="btnn">SIGN IN</button>
       </form>
-      <p class="link"> Don't have an account yet?
-        <a href="{{ route('register') }}"> Register here</a>
-      </p>
-      <div class="divider"><span></span><p>or Log in with</p><span></span></div>
-      <div class="icons">
-        <a href="#"> <ion-icon name="logo-facebook"></ion-icon> </a>
-        <a href="#"> <ion-icon name="logo-google"></ion-icon> </a>
-      </div>
     </div>
     <div id="forgotPasswordContainer" class="form" style="display: none;">
+      <h3 style="text-align:center; font-size: 22px; font-weight: bold; margin-bottom: 8px; margin-top: 0;">Forgot Password</h3>
+      <p class="link" style="margin-bottom: 18px; font-size: 16px;">Please enter your username and new password:</p>
       <form id="forgotPasswordForm" action="{{ route('admin.password.update') }}" method="POST">
         @csrf
-        @if($errors->has('username'))
-          <div style="color: red;">{{ $errors->first('username') }}</div>
-        @endif
-        <p class="link" style="margin: 0 0 20px 0; text-align: center;">Please enter your username and new password:</p>
         <input type="text" id="userName" name="username" placeholder="Username" required>
         <input type="password" id="newPassword" name="password" placeholder="Enter New Password" required>
-        <img src="{{ asset('storage/assets/icons8-blind-30.jpg') }}" id="eye-icon-confirm" onclick="togglePasswordVisibility('password')">
-        <button class="btnn" type="submit" style="margin-top: 25px;">SUBMIT</button>
+        <button class="btnn" type="submit">SUBMIT</button>
         @if(session('status'))
           <div style="color: green; text-align: center; margin-top: 10px;">{{ session('status') }}</div>
         @endif
         @if($errors->has('username'))
-          <div style="color: red; text-align: center; margin-top: 10px;">
-            {{ $errors->first('username') }}
-          </div>
+          <div style="color: red; text-align: center; margin-top: 10px;">{{ $errors->first('username') }}</div>
         @endif
         @if($errors->has('password'))
-          <div style="color: red; text-align: center; margin-top: 10px;">
-            {{ $errors->first('password') }}
-          </div>
+          <div style="color: red; text-align: center; margin-top: 10px;">{{ $errors->first('password') }}</div>
         @endif
-        <p class="link" style="margin-top: 20px; text-align: center;">Remembered your password?
-          <a href="#" onclick="hideForgotPassword()">Back to Login</a>
-        </p>
       </form>
+      <p class="link" style="margin-top: 18px;">Remembered your password?
+        <a href="#" onclick="hideForgotPassword()">Back to Login</a>
+      </p>
     </div>
   </section>
 
@@ -877,23 +887,17 @@ function performSearch() {
 
     window.togglePasswordVisibility = function (inputName = "password") {
     const passwordField = document.querySelector(`input[name="${inputName}"]`);
-    let eyeIconId = "eye-icon"; 
-
-    if (inputName === "newPassword") {
-        eyeIconId = "eye-icon-new";
-    } else if (inputName === "confirmPassword") {
-        eyeIconId = "eye-icon-confirm";
-    }
-
-    const eyeIcon = document.getElementById(eyeIconId);
-
+    const eyeIcon = document.getElementById('eye-icon');
+    
     if (passwordField && eyeIcon) {
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            eyeIcon.src = '{{ asset('storage/assets/icons8-eye-24.jpg') }}'; 
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            eyeIcon.classList.add('fa-eye');
+            eyeIcon.classList.remove('fa-eye-slash');
         } else {
-            passwordField.type = "password";
-            eyeIcon.src = '{{ asset('storage/assets/icons8-blind-30.jpg') }}'; 
+            passwordField.type = 'password';
+            eyeIcon.classList.add('fa-eye-slash');
+            eyeIcon.classList.remove('fa-eye');
         }
     }
 };

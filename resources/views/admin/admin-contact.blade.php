@@ -778,7 +778,7 @@
                     <input type="hidden" name="field" value="address">
                     <div class="form-group">
                         <label for="address"><strong>Address:</strong></label>
-                        <input type="text" id="address" name="address" value="{{ $contact->address }}" required>
+                        <input type="text" id="address" name="address" value="{{ $contact->address ?? '2/F Left Wing Executive Building City Government Complex, Maysilo Circle, Plainview, Mandaluyong City' }}" required>
                         <button type="submit">Save</button>
                     </div>
                 </form>
@@ -788,7 +788,7 @@
                     <input type="hidden" name="field" value="phone">
                     <div class="form-group">
                         <label for="phone"><strong>Phone:</strong></label>
-                        <input type="text" id="phone" name="phone" value="{{ $contact->phone }}" required>
+                        <input type="text" id="phone" name="phone" value="{{ $contact->phone ?? 8533-28-21 }}" required>
                         <button type="submit">Save</button>
                     </div>
                 </form>
@@ -798,7 +798,7 @@
                     <input type="hidden" name="field" value="email">
                     <div class="form-group">
                         <label for="email"><strong>Email:</strong></label>
-                        <input type="email" id="email" name="email" value="{{ $contact->email }}" required>
+                        <input type="email" id="email" name="email" value="{{ $contact->email ?? 'city.registrar@mandaluyong.gov.ph' }}" required>
                         <button type="submit">Save</button>
                     </div>
                 </form>
@@ -808,7 +808,7 @@
                     <input type="hidden" name="field" value="office_hours">
                     <div class="form-group">
                         <label for="office_hours"><strong>Office Hours:</strong></label>
-                        <input type="text" id="office_hours" name="office_hours" value="{{ $contact->office_hours }}" required>
+                        <input type="text" id="office_hours" name="office_hours" value="{{ $contact->office_hours ?? 'Monday to Friday: 8:00 AM - 5:00 PM' }}" required>
                         <button type="submit">Save</button>
                     </div>
                 </form>
@@ -824,6 +824,13 @@
                             <i class="fas fa-user-circle feedback-icon"></i>
                             <span class="feedback-name">{{ $feedback->name }}</span>
                             <span class="feedback-email">{{ $feedback->email }}</span>
+                            <form method="POST" action="{{ route('admin.contact.feedback.delete', $feedback->id) }}" style="display:inline; margin-left:8px;" onsubmit="return confirm('Are you sure you want to delete this feedback?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" style="background: none; border: none; cursor: pointer; color: #f87171; font-size: 18px; margin-left: 4px;" title="Delete Feedback">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
                         </div>
                         <div class="feedback-message">"{{ $feedback->feedback }}"</div>
                     </div>

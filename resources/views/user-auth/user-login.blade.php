@@ -213,10 +213,10 @@
     }
 
     .details h5 {
-      font-size: 65px;
-      margin: 0 0 -30px 0;
+      font-size: 55px;
+      margin: 0 0 -25px 0;
       font-weight: bolder;
-      letter-spacing: 20px;
+      letter-spacing: 15px;
       color: white;
       text-shadow:
                1px 1px 0px white,
@@ -225,13 +225,14 @@
               -1px 1px 0px white,
                0 0 50px black;
       font-family: "Poppins", sans-serif;
+      padding-left: 20px;
     }
 
     .details h4 {
-      font-size: 35px;
+      font-size: 30px;
       margin: 0 0 10px 0;
       font-weight: bolder;
-      letter-spacing: 5px;
+      letter-spacing: 4px;
       color: white;
       text-shadow:
                1px 1px 0px white,
@@ -317,7 +318,8 @@
       display: block;
     }
     .form input[type="email"],
-    .form input[type="password"] {
+    .form input[type="password"],
+    .form input[type="text"] {
       width: 100%;
       height: 38px;
       background: transparent;
@@ -333,7 +335,8 @@
       color: #222;
     }
     .form input[type="email"]:focus,
-    .form input[type="password"]:focus {
+    .form input[type="password"]:focus,
+    .form input[type="text"]:focus {
       outline: none;
       border-bottom: 2px solid #426DDC;
     }
@@ -344,20 +347,36 @@
       align-items: center;
       margin-bottom: 18px;
     }
-    .input-group input[type="password"] {
+    .input-group input[type="password"],
+    .input-group input[type="text"] {
       width: 100%;
-      padding-right: 35px;
+      padding-right: 40px;
       margin-bottom: 0;
     }
-    .input-group img.eye-icon {
+    .input-group .eye-icon {
       position: absolute;
       right: 10px;
       top: 50%;
       transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
+      font-size: 20px;
+      color: #426DDC;
       cursor: pointer;
       z-index: 2;
+      opacity: 0.8;
+      transition: color 0.2s;
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      min-height: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      vertical-align: middle;
+    }
+    .input-group .eye-icon:hover {
+      opacity: 1;
+      color: #344CB7;
     }
     .form .row-remember-forgot {
       display: flex;
@@ -394,6 +413,7 @@
       font-weight: 500;
       text-decoration: none;
       transition: color 0.2s;
+      font-family: "Poppins", sans-serif;
     }
     .form .forgot a:hover {
       color: #344CB7;
@@ -735,17 +755,32 @@
     }
     .input-group input[type="password"] {
       width: 100%;
-      padding-right: 35px;
+      padding-right: 40px;
     }
-    .input-group img.eye-icon {
+    .input-group .eye-icon {
       position: absolute;
       right: 10px;
       top: 50%;
       transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
+      font-size: 20px;
+      color: #426DDC;
       cursor: pointer;
       z-index: 2;
+      opacity: 0.8;
+      transition: color 0.2s;
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      min-height: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      vertical-align: middle;
+    }
+    .input-group .eye-icon:hover {
+      opacity: 1;
+      color: #344CB7;
     }
 
   </style>
@@ -802,15 +837,13 @@
       @endif
       <form method="POST" action="{{ route('login') }}">
         @csrf
-        <label for="email">Email Address</label>
         <input type="email" id="email" name="email" placeholder="Email Address" value="{{ old('email') }}" class="{{ $errors->has('email') ? 'input-error' : '' }}" required>
         @error('email')
             <span class="error-message">{{ $message }}</span>
         @enderror
-        <label for="password">Password</label>
         <div class="input-group">
           <input type="password" id="password" name="password" placeholder="Password" class="{{ $errors->has('password') ? 'input-error' : '' }}" required>
-          <img src="{{ asset('storage/assets/icons8-blind-30.jpg')}}" id="eye-icon" class="eye-icon" onclick="togglePasswordVisibility('password')">
+          <i class="fa fa-eye-slash eye-icon" id="eye-icon" onclick="togglePasswordVisibility('password')"></i>
         </div>
         @error('password')
             <span class="error-message">{{ $message }}</span>
@@ -836,15 +869,15 @@
       </form>
     </div>
     <!-- FORGOT PASSWORD CONTAINER -->
-    <div id="forgotPasswordContainer" class="form" style="display: none; position: relative; margin-left: 0; margin-top: 0; left: 0; top: 0; transform: none;">
-      <h3 style="margin-left: 0;"> Forgot Password </h3>
-      <p class="link">Please enter your email address to reset your password:</p>
+    <div id="forgotPasswordContainer" class="form" style="display: none;">
+      <h3 style="text-align:center; font-size: 22px; font-weight: bold; margin-bottom: 8px; margin-top: 0;">Forgot Password</h3>
+      <p class="link" style="margin-bottom: 18px; font-size: 16px;">Please enter your email address to reset your password:</p>
       <form method="POST" action="{{ route('forget.password') }}">
         @csrf
-        <input type="email" name="email" placeholder="Email Address" required>
-        <button class="btnn">SUBMIT</button>
+        <input type="email" id="forgot-email" name="email" placeholder="Email Address" required>
+        <button class="btnn" type="submit">SUBMIT</button>
       </form>
-      <p class="link">Remembered your password?
+      <p class="link" style="margin-top: 18px;">Remembered your password?
         <a href="#" onclick="hideForgotPassword()">Back to Login</a>
       </p>
     </div>
@@ -895,14 +928,16 @@ function performSearch() {
     window.togglePasswordVisibility = function (inputName) {
         const passwordField = document.querySelector(`input[name="${inputName}"]`);
         const eyeIcon = document.getElementById('eye-icon');
-
+        
         if (passwordField && eyeIcon) {
-            if (passwordField.type === "password") {
-                passwordField.type = "text";
-                eyeIcon.src = "{{ asset('storage/assets/icons8-eye-24.jpg') }}";
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                eyeIcon.classList.add('fa-eye');
+                eyeIcon.classList.remove('fa-eye-slash');
             } else {
-                passwordField.type = "password";
-                eyeIcon.src = "{{ asset('storage/assets/icons8-blind-30.jpg') }}";
+                passwordField.type = 'password';
+                eyeIcon.classList.add('fa-eye-slash');
+                eyeIcon.classList.remove('fa-eye');
             }
         }
     };

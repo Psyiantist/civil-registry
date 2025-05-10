@@ -120,4 +120,11 @@ class ContactController extends Controller
         $contact = Contact::first();
         return view('contact', compact('contact'));
     }
+
+    public function deleteFeedback($id)
+    {
+        $feedback = Feedback::find($id);
+        $feedback->delete();
+        return redirect()->back()->with('success', 'Feedback deleted successfully.');
+    }
 }

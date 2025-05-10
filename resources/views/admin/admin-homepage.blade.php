@@ -471,6 +471,10 @@
       cursor: pointer;
     }
 
+    .custom-file-label span {
+      color: white !important;
+    }
+
     .file-name-display {
       color: #222;
       font-size: 15px;
@@ -1040,9 +1044,10 @@
           @csrf
           @method('PUT')
           <label class="custom-file-label" style="margin-bottom: 0;">
-            <input type="file" name="image" accept="image/*" required>
+            <input type="file" name="image" accept="image/*" class="announcement-file-input" required>
             <span>Choose File</span>
           </label>
+          <span class="file-name-display">No file chosen</span>
           <button type="submit" class="save-button" style="background: #426DDC; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif;">Save Changes</button>
         </form>
         <form action="{{ url('/admin/announcements/' . $announcement->id) }}" method="POST" style="margin: 0;">
@@ -1442,9 +1447,13 @@ window.onclick = function(event) {
   }
 };
 
-document.getElementById('customFileInput').addEventListener('change', function(e) {
-  const fileName = e.target.files[0] ? e.target.files[0].name : 'No file chosen';
-  document.getElementById('fileName').textContent = fileName;
+// Update file name display for each announcement file input
+const fileInputs = document.querySelectorAll('.announcement-file-input');
+fileInputs.forEach(input => {
+  input.addEventListener('change', function(e) {
+    const fileNameSpan = input.closest('label').nextElementSibling;
+    fileNameSpan.textContent = input.files[0] ? input.files[0].name : 'No file chosen';
+  });
 });
 
 </script>

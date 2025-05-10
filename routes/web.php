@@ -84,6 +84,7 @@ Route::middleware(['auth:employee'])->group(function () {
     Route::get('/admin/contact', [ContactController::class, 'showAdminContact'])->name('admin.contact');
     Route::post('/admin/contact/update', [ContactController::class, 'updateContact'])->name('contact.update');
     Route::get('/contact/get', [ContactController::class, 'getContact'])->name('contact.get');
+    Route::delete('/admin/contact/feedback/{id}', [ContactController::class, 'deleteFeedback'])->name('admin.contact.feedback.delete');
 
     // User Acceptance Routes 
     Route::post('/admin/accept-user/{user}', [EmployeeController::class, 'acceptUser'])->name('admin.accept-user');

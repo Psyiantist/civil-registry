@@ -1,11 +1,11 @@
 <html lang="en">
 <head>
-<link rel="icon" type="image/x-icon" href="/storage/assets/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="/storage/">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title> Requirements Page - Admin View </title>
-
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <link rel="icon" type="image/x-icon" href="/storage/assets/favicon.ico">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
@@ -247,7 +247,9 @@
 
         html, body {
         overflow-x: hidden;
-        height: 100%;
+        /* height: 100%; */
+        min-height: 100vh;
+        overflow-y: auto;
         margin: 0;
         padding: 0;
         background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),
@@ -594,7 +596,7 @@
 <body>
         <nav>
             <div class="image-container">
-                <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
+                <img src="/storage/assets/civil_registry_logo.png"> </div>
     
             <div class="logo-name">
                 <b> Civil Registry <br/> <a> Mandaluyong City </a> </b> </div>
@@ -636,22 +638,19 @@
   <a href="#">Settings</a>
   <a href="{{ route('admin.logout') }}" id="logoutLink">Logout</a>
 </div>
+      
+        <button class="menu-toggle"> </button>
       </nav>
 
-  <!--MAIN SECTION --> 
-
-        <div class="details">
-      <div class="relative z-10 pt-12 px-8 pb-20 flex flex-col items-center text-white min-h-screen">
-        <h1 class="text-4xl font-bold bg-white text-blue-800 py-2 px-6 rounded-lg mb-10 shadow-lg">REQUIREMENTS</h1>
-        <div class="flex flex-col lg:flex-row gap-10 items-start justify-center"></div>
-
-
 <!-- REQUIREMENTS MANAGEMENT SECTION -->
-<div class="flex gap-8 justify-center mt-10 px-4">
+<div class="w-full flex justify-center pt-24 px-4">
+  <div class="w-full max-w-5xl bg-blue-800 text-white text-3xl font-bold rounded-lg shadow-md py-4 text-center mb-8 tracking-wide">REQUIREMENTS</div>
+</div>
+<div class="flex gap-6 justify-center mt-0 px-4 pb-16">
     <!-- Add Requirement Container -->
-    <div class="bg-white p-8 rounded-lg shadow-md w-1/2 max-w-xl">
-        <h2 class="text-2xl font-bold text-blue-800 mb-6">Add Requirement</h2>
-        <form action="{{ route('admin.requirements.store') }}" method="POST" class="mb-8">
+    <div class="bg-white p-6 rounded-lg shadow-md w-[45%] max-w-lg min-h-[600px]">
+        <h2 class="text-2xl font-bold text-blue-800 mb-4">Add Requirement</h2>
+        <form action="{{ route('admin.requirements.store') }}" method="POST" class="mb-6">
             @csrf
             <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2">Title</label>
@@ -666,8 +665,8 @@
     </div>
 
     <!-- Existing Requirements Container -->
-    <div class="bg-white p-8 rounded-lg shadow-md w-1/2 max-w-xl">
-        <div class="flex justify-between items-center mb-6">
+    <div class="bg-white p-6 rounded-lg shadow-md w-[45%] max-w-lg min-h-[600px]">
+        <div class="flex justify-between items-center mb-4">
             <h2 class="text-2xl font-bold text-blue-800">Existing Requirements</h2>
         </div>
 
@@ -723,7 +722,39 @@
     </div>
 </div>
 
-<script>
+
+
+      <footer>
+    <div class="container">
+        <div class="footer-content">
+            <h3>Contact Us</h3>
+            <p><a href="mailto:city.registrar@mandaluyong.gov.ph">Email: city.registrar@mandaluyong.gov.ph</a></p>
+            <p>Phone: 8533-28-21</p>
+            <p>Address: <a href="https://maps.app.goo.gl/BqivjAUx2r4DJitu5" target="_blank">Maysilo, Mandaluyong</a></p>
+        </div>
+        <div class="footer-content">
+            <h3>Our Location</h3>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.374156967718!2d121.0337266!3d14.5777433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c84b4d7d8847%3A0x3cc947be6455c07a!2sMandaluyong%20City%20Hall!5e0!3m2!1sen!2sph!4v1745828287728!5m2!1sen!2sph" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+        <div class="footer-content">
+            <h3>Follow Us</h3>
+            <ul class="social-icons">
+                <li><a href="https://www.facebook.com/p/Mandaluyong-City-Civil-Registry-100064760288454/" target="_blank"><i class="fab fa-facebook"></i></a></li>
+                <li><a href="mailto:city.registrar@mandaluyong.gov.ph"><i class="fas fa-envelope"></i></a></li>
+                <li><a href="https://mandaluyong.gov.ph/government/departments/city-civil-registry-department/"><i class="fas fa-paperclip"></i></a></li>
+                <li><a href="https://x.com/MandaluyongPIO"><i class="fab fa-twitter"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="bottom-bar">
+        <p>&copy; 2025 Civil Registry Department. All Rights Reserved.</p>
+    </div>
+</footer>
+  
+
+  <script>
 function toggleDropdown() {
     const dropdown = document.getElementById("accountDropdown");
     dropdown.classList.toggle("show");
@@ -746,6 +777,7 @@ if (button && menu) {
         button.classList.toggle('expand-icon');
     };
 }
+
 
 function performSearch() {
     const inputField = document.getElementById("searchInput");
@@ -779,11 +811,37 @@ document.getElementById("searchInput").addEventListener("keypress", function(e) 
     }
 });
 
+function showChecklist(type) {
+    const checklist = checklistData[type];
+    const checklistEl = document.getElementById("checklist");
+    const title = document.getElementById("checklistTitle");
+
+
+    title.textContent = `REQUIREMENTS FOR ${type.toUpperCase()} CERTIFICATE`;
+
+
+    checklistEl.innerHTML = "";
+    checklist.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        li.contentEditable = true; 
+        li.style.outline = "none";
+        li.addEventListener("blur", () => {
+            checklistData[type][index] = li.textContent.trim();
+            console.log(`Updated ${type} [${index}] ->`, checklistData[type][index]);
+        });
+        checklistEl.appendChild(li);
+    });
+
+    title.scrollIntoView({ behavior: "smooth" });
+}
+
 function openEditModal(id, title, description) {
     document.getElementById('editModal').classList.remove('hidden');
     document.getElementById('editTitle').value = title;
-    document.getElementById('editDescription').value = description.replace(/\\n/g, "\n");
-    document.getElementById('editForm').action = '/admin/requirements/' + id;
+    document.getElementById('editDescription').value = description;
+    // Set the form action dynamically
+    document.getElementById('editForm').action = `/admin/requirements/${id}`;
 }
 
 function closeEditModal() {
@@ -791,12 +849,15 @@ function closeEditModal() {
 }
 
 function toggleDescription(id) {
-    const requirementItem = document.querySelector(`.requirement-item[data-id="${id}"]`);
-    const description = requirementItem.querySelector('.requirement-description');
-    const button = requirementItem.querySelector('.dropdown-btn');
-    const chevron = button.querySelector('.fa-chevron-down');
-    description.classList.toggle('hidden');
-    chevron.style.transform = description.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+    const item = document.querySelector(`.requirement-item[data-id='${id}'] .requirement-description`);
+    if (item) {
+        item.classList.toggle('hidden');
+        // Optionally toggle chevron rotation
+        const chevron = document.querySelector(`.requirement-item[data-id='${id}'] .fa-chevron-down`);
+        if (chevron) {
+            chevron.classList.toggle('rotate-180');
+        }
+    }
 }
 </script>
 

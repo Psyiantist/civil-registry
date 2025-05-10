@@ -721,7 +721,7 @@
     <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
       <h2 class="text-xl font-bold mb-4 text-center text-green-700">Appointment Confirmed!</h2>
       <p class="text-gray-700 text-center mb-6">
-        📌 Please make sure you're available and attend your appointment on time.<br><br>
+        📌 Your appointment is subject to approval. Wait for the confirmation email before attending your appointment.<br><br>
         Thank you!
       </p>
       <div class="flex justify-center">
@@ -951,17 +951,17 @@ if (button && menu) {
         alert("Please enter a search term.");
     } else {
         if (input === "home page" || input === "homepage" || input === "home") {
-            window.location.href = "Home page - Residence View.html";
+            window.location.href = "{{ route('residence-homepage') }}";
         } else if (input === "faqs" || input === "facts" || input === "help") {
-            window.location.href = "FAQs Page - Residence View.html";
+            window.location.href = "{{ route('residence-faqs') }}";
         } else if (input === "about" || input === "about civil") {
-            window.location.href = "About Us Page - Residence View.html";
+            window.location.href = "{{ route('residence-about-us') }}";
         } else if (input === "appointment" || input === "appointments" || input === "schedule" || input === "schedules") {
-            window.location.href = "Appointment Page - Residence View.html";
+            window.location.href = "{{ route('residence-appointment') }}";
         } else if (input === "reqs" || input === "requirements" || input === "requirement") {
-            window.location.href = "Requirements Page - Residence View.html";
+            window.location.href = "{{ route('residence-requirements') }}";
         } else if (input === "contact" || input === "number" || input === "email") {
-            window.location.href = "Contact Us Page - Residence View.html";
+            window.location.href = "{{ route('residence-contact-us') }}";
         } else {
                 alert("No results found.");
                 inputField.value = "";
@@ -977,10 +977,9 @@ if (button && menu) {
         function showConfirmationModal(date, time) {
             const confirmationModal = document.getElementById("confirmationModal");
             const confirmationMessage = document.querySelector("#confirmationModal p");
-            confirmationMessage.innerHTML = `Your appointment has been successfully booked!<br><br>
+            confirmationMessage.innerHTML = `Your appointment is subject to approval. Wait for the confirmation email before attending your appointment.<br><br>
                 📅 Date: ${date}<br>
                 ⏰ Time: ${time}<br><br>
-                📌 Please make sure you're available and attend your appointment on time.<br><br>
                 Thank you!`;
 
             confirmationModal.classList.remove("hidden");
