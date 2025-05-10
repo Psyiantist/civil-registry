@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>Home Page - Admin View</title>
+  
+  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
-	<title> Home Page - Admin View </title>
-	<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-	<style type="text/css">
+  
+  <!-- External CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <style type="text/css">
 
     body {
             font-family: 'Poppins';
