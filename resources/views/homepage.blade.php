@@ -194,7 +194,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url('{{ asset('build/assets/appointment_bg.jpg') }}') center 40% fixed;
+      background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url('/resources/images/assets/appointment_bg.jpg')
+      center 40% fixed;
       background-size: cover;
       background-repeat: no-repeat;
       margin: 0;
