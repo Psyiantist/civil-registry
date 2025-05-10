@@ -8,6 +8,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegistrationMail;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+
 class RegisterController extends Controller
 {
     public function showStep1()
@@ -43,45 +46,60 @@ class RegisterController extends Controller
 
     public function postStep2(Request $request)
     {
-        $request->validate([
-            'id_type' => 'required|string|max:255',
-            'id_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'years_residency' => 'required|integer|min:0',
-            'current_address' => 'required|string|max:255',
-            'permanent_address' => 'required|string|max:255',
-            'date_of_birth' => 'required|date',
-        ]);
+        try {
+            $request->validate([
+                'id_type' => 'required|string|max:255',
+                'id_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'years_residency' => 'required|integer|min:0',
+                'current_address' => 'required|string|max:255',
+                'permanent_address' => 'required|string|max:255',
+                'date_of_birth' => 'required|date',
+            ]);
 
-        $filename = null;
-        if($request->hasFile('id_image')){
-            $file = $request->file('id_image');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('uploads', $filename, 'public');
+            $filename = null;
+            if($request->hasFile('id_image')){
+                $file = $request->file('id_image');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                
+                // Store in public/storage/uploads
+                $path = $file->storeAs('uploads', $filename, 'public');
+                
+                if (!$path) {
+                    Log::error('Failed to store file: ' . $filename);
+                    return redirect()->back()->withErrors(['id_image' => 'Failed to upload image. Please try again.']);
+                }
+            }
+
+            $step1Data = [
+                'first_name' => session('register.first_name'),
+                'last_name' => session('register.last_name'),
+                'email' => session('register.email'),
+                'password' => session('register.password'),
+                'receive_notifications' => session('register.receive_notifications'),
+            ];
+
+            $registrationData = array_merge($step1Data, [
+                'id_type' => $request->input('id_type'),
+                'id_image' => $filename,
+                'years_residency' => $request->input('years_residency'),
+                'current_address' => $request->input('current_address'),
+                'permanent_address' => $request->input('permanent_address'),
+                'date_of_birth' => $request->input('date_of_birth'),
+                'is_verified' => 0,
+                'status' => 'Pending'
+            ]);
+
+            $user = User::create($registrationData);
+
+            session()->forget('register');
+
+            Mail::to($registrationData['email'])->send(new RegistrationMail($registrationData['first_name']));
+
+            return redirect()->route('login')->with('success', 'Registration successful! Please wait for admin approval.');
+
+        } catch (\Exception $e) {
+            Log::error('Registration error: ' . $e->getMessage());
+            return redirect()->back()->withErrors(['error' => 'An error occurred during registration. Please try again.']);
         }
-
-        $step1Data = [
-            'first_name' => session('register.first_name'),
-            'last_name' => session('register.last_name'),
-            'email' => session('register.email'),
-            'password' => session('register.password'),
-            'receive_notifications' => session('register.receive_notifications'),
-        ];
-
-        $registrationData = array_merge($step1Data, [
-            'id_type' => $request->input('id_type'),
-            'id_image' => $filename,
-            'years_residency' => $request->input('years_residency'),
-            'current_address' => $request->input('current_address'),
-            'permanent_address' => $request->input('permanent_address'),
-            'date_of_birth' => $request->input('date_of_birth'),
-        ]);
-
-        User::create($registrationData);
-
-        session()->forget('register');
-
-        Mail::to($registrationData['email'])->send(new RegistrationMail($registrationData['first_name']));
-
-        return redirect()->route('login');
     }
 }
