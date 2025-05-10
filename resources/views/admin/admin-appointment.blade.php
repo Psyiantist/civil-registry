@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
+<link rel="icon" type="image/x-icon" href="/storage/assets/favicon.ico">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title> Requirements Page - Admin View </title>
