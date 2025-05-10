@@ -59,6 +59,7 @@
             margin: 80px auto;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             animation: popUp 0.7s ease-out;
+            min-height: fit-content;
         }
 
         @keyframes popUp {
@@ -122,10 +123,12 @@
 
         #uploadedImage {
             max-width: 100%;
+            max-height: 300px;
             margin-top: 10px;
             display: none;
             border: 1px solid #ccc;
             padding: 5px;
+            object-fit: contain;
         }
 
         .note {
