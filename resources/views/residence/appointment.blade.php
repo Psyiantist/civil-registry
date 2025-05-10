@@ -3,7 +3,8 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('build/assets/civil_registry_logo.png') }}">
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <title> Appointment Page - Residence View </title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title> Appointment Page - Residence View </title>
     
     <script src="https://cdn.tailwindcss.com"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
@@ -651,11 +652,9 @@
             <label class="block text-gray-600 mb-2"> Choose document type </label>
             <select name="document_type" class="w-full border rounded py-2 px-3 text-gray-600" required>
                 <option value="">Select document type</option>
-                <option value="Birth Certificate"> Birth Certificate </option>
-                <option value="Marriage Certificate"> Marriage Certificate </option>
-                <option value="Marriage License"> Marriage License </option>
-                <option value="Death Certificate"> Death Certificate </option>
-                <option value="Affidavit Papers"> Affidavit Papers </option>
+                @foreach($requirements as $requirement)
+                    <option value="{{ $requirement->title }}">{{ $requirement->title }}</option>
+                @endforeach
             </select>
             </div>
             </div>
@@ -923,16 +922,23 @@ if (button && menu) {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                     }
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     if (data.success) {
                         showConfirmationModal(selectedDate, selectedTime);
                         this.reset();
+                        generateCalendar(); // Refresh calendar after successful submission
                     } else {
                         showCancellationModal();
                     }
                 })
                 .catch(error => {
+                    console.error('Error:', error);
                     showCancellationModal();
                 });
             });
@@ -966,29 +972,6 @@ if (button && menu) {
         performSearch();
     }
     });
-
-
-        document.getElementById("confirmBtn").addEventListener("click", function () {
-            const selectedDate = document.querySelector(".selected-date");
-            const selectedTime = document.querySelector(".selected-time");
-
-        if (!selectedDate || !selectedTime) {
-            let missing = [];
-            if (!selectedDate) missing.push("date");
-            if (!selectedTime) missing.push("time");
-            alert("Please select a " + missing.join(" and ") + " before confirming your appointment.");
-            return;
-        }
-
-        const confirmAction = confirm("Are you sure you want to confirm this appointment?");
-        if (confirmAction) {
-        // Show confirmation with selected date/time
-        showConfirmationModal(selectedDate.textContent, selectedTime.textContent);
-        } else {
-        // Show cancellation
-        showCancellationModal();
-        }
-        });
 
         // confirm
         function showConfirmationModal(date, time) {

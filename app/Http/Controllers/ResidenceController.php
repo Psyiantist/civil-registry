@@ -35,7 +35,8 @@ class ResidenceController extends Controller
     
     public function showResidenceAppointment()
     {
-        return view('residence.appointment');
+        $requirements = Requirement::all();
+        return view('residence.appointment', compact('requirements'));
     }
 
     public function showResidenceRequirements()

@@ -22,16 +22,10 @@ return new class extends Migration
                 'Late Registration of Document',
                 'Requirement Submission'
             ]);
-            $table->enum('document_type', [
-                'Birth Certificate',
-                'Marriage Certificate',
-                'Marriage License',
-                'Death Certificate',
-                'Affidavit Papers'
-            ]);
+            $table->string('document_type');
             $table->date('appointment_date');
             $table->time('appointment_time');
-            $table->enum('status', ['Pending', 'Approved', 'Cancelled', 'Completed'])->default('Pending');
+            $table->enum('status', ['Pending', 'Approved', 'Declined', 'Cancelled', 'Completed'])->default('Pending');
             $table->timestamps();
         });
     }

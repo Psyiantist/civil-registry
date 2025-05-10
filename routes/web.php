@@ -39,21 +39,23 @@ Route::post('/forget-password', [AuthController::class, 'forgetPassword'])->name
 Route::view('/forget-password/confirmation', 'temporary-views.password-reset-confirmation')->name('password-reset-confirmation');
 
 // Residence Routes
-Route::get('/residence-homepage', [ResidenceController::class, 'showResidenceHomepage'])->middleware('auth')->name('residence-homepage');
-Route::get('/residence-appointment', [ResidenceController::class, 'showResidenceAppointment'])->middleware('auth')->name('residence-appointment');
-Route::get('/residence-requirements', [ResidenceController::class, 'showResidenceRequirements'])->middleware('auth')->name('residence-requirements');
-Route::get('/residence-faqs', [ResidenceController::class, 'showResidenceFaqs'])->middleware('auth')->name('residence-faqs');
-Route::get('/residence-about-us', [ResidenceController::class, 'showResidenceAboutUs'])->middleware('auth')->name('residence-about-us');
-Route::get('/residence-contact-us', [ResidenceController::class, 'showResidenceContactUs'])->middleware('auth')->name('residence-contact-us');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/residence-homepage', [ResidenceController::class, 'showResidenceHomepage'])->name('residence-homepage');
+    Route::get('/residence-appointment', [ResidenceController::class, 'showResidenceAppointment'])->name('residence-appointment');
+    Route::get('/residence-requirements', [ResidenceController::class, 'showResidenceRequirements'])->name('residence-requirements');
+    Route::get('/residence-faqs', [ResidenceController::class, 'showResidenceFaqs'])->name('residence-faqs');
+    Route::get('/residence-about-us', [ResidenceController::class, 'showResidenceAboutUs'])->name('residence-about-us');
+    Route::get('/residence-contact-us', [ResidenceController::class, 'showResidenceContactUs'])->name('residence-contact-us');
 
 
-Route::get('/residence-appointment', [ResidenceController::class, 'showResidenceAppointment'])->middleware('auth')->name('residence-appointment');
-Route::get('/residence-requirements', [ResidenceController::class, 'showResidenceRequirements'])->middleware('auth')->name('residence-requirements');
+    Route::get('/residence-appointment', [ResidenceController::class, 'showResidenceAppointment'])->name('residence-appointment');
+    Route::get('/residence-requirements', [ResidenceController::class, 'showResidenceRequirements'])->name('residence-requirements');
 
-Route::get('/residence/profile', [ProfileController::class, 'getUser'])->middleware('auth')->name('residence.profile');
-Route::put('/residence/profile/update', [ProfileController::class, 'updateProfile'])->middleware('auth')->name('residence.profile.update');
-Route::post('/residence/profile/remove-image', [ProfileController::class, 'removeProfileImage'])->middleware('auth')->name('residence.profile.remove-image');
-Route::post('/residence/appointment/store', [AppointmentController::class, 'storeAppointment'])->middleware('auth')->name('residence.appointment.store');
+    Route::get('/residence/profile', [ProfileController::class, 'getUser'])->name('residence.profile');
+    Route::put('/residence/profile/update', [ProfileController::class, 'updateProfile'])->name('residence.profile.update');
+    Route::post('/residence/profile/remove-image', [ProfileController::class, 'removeProfileImage'])->name('residence.profile.remove-image');
+    Route::post('/residence/appointment/store', [AppointmentController::class, 'storeAppointment'])->name('residence.appointment.store');
+});
 
 // ADMIN ROUTES
 Route::get('/admin/login', [AuthController::class, 'showEmployeeLoginForm'])->name('admin.login');
@@ -64,8 +66,9 @@ Route::post('/admin/password', [AuthController::class, 'updateAdminPassword'])->
 
 Route::middleware(['auth:employee'])->group(function () {
     Route::get('/admin/homepage', [EmployeeController::class, 'showAdminHomepage'])->name('admin.homepage');
-    Route::get('/admin/appointment', [EmployeeController::class, 'showAdminAppointment'])->name('admin.appointment');
     Route::get('/admin/about', [EmployeeController::class, 'showAdminAbout'])->name('admin.about');
+
+    // Announcement Routes
     Route::put('/admin/announcements/{announcement}', [AnnouncementController::class, 'update'])->name('admin.announcements.update');
     Route::post('/admin/announcements/{announcement}/image', [AnnouncementController::class, 'updateImage'])->name('admin.announcements.updateImage');
     Route::post('/admin/announcements', [AnnouncementController::class, 'store'])->name('admin.announcements.store');
@@ -91,6 +94,10 @@ Route::middleware(['auth:employee'])->group(function () {
     Route::post('/admin/requirements', [RequirementController::class, 'store'])->name('admin.requirements.store');
     Route::put('/admin/requirements/{requirement}', [RequirementController::class, 'update'])->name('admin.requirements.update');
     Route::delete('/admin/requirements/{requirement}', [RequirementController::class, 'destroy'])->name('admin.requirements.destroy');
+
+    // Appointment Routes
+    Route::get('/admin/appointment', [AppointmentController::class, 'showAppointments'])->name('admin.appointment');
+    Route::put('/admin/appointments/{appointment}/status', [AppointmentController::class, 'updateStatus'])->name('admin.appointments.status');
 });
 
 // Public Routes

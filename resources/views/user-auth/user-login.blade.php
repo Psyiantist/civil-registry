@@ -294,7 +294,7 @@
       top: 220px;
       left: 700px;
       width: 350px;
-      height: 350px;
+      min-height: 350px;
       padding: 25px;
       margin-top: -5px;
       margin-left: 25px;
@@ -768,6 +768,15 @@
         color: #155724;
         background-color: #d4edda;
         border-color: #c3e6cb;
+        font-size: 16px !important;  
+        font-weight: bold;
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 10px 15px;
+        border-radius: 6px;
+        box-shadow: none;
+        width: 100%;
     }
 
   </style>

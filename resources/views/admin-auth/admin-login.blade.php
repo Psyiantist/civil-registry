@@ -294,14 +294,14 @@
       top: 220px;
       left: 700px;
       width: 350px;
-      height: 350px;
+      min-height: 350px;
       padding: 25px;
       margin-top: -5px;
       margin-left: 25px;
       position: fixed;
       border-radius: 10px;
       background-color: white;
-      transform: translate(0%,-5%);                                               
+      transform: translate(0%,-5%);                                                
     }      
 
     .form h2{
@@ -664,6 +664,21 @@
     border: 2px solid red;
     }
 
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        font-size: 16px !important;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 10px 15px;
+        border-radius: 6px;
+        box-shadow: none;
+        width: 100%;
+    }
+
   </style>
 </head>
 
@@ -707,7 +722,11 @@
       </div>
       <div id="loginContainer" class="form" style="position: relative; margin-left: 0; margin-top: 0; left: 0; top: 0; transform: none;">
         <h2> LOGIN </h2> 
-
+        @if(session('success'))
+            <div class="alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <form action="{{ route('admin.login') }}" method="POST" id="loginForm">
           @csrf
 
