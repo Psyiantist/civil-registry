@@ -8,4 +8,12 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    build: {
+        assetsDir: 'assets',
+        rollupOptions: {
+            output: {
+                assetFileNames: 'assets/[name][extname]'
+            }
+        }
+    }
 });
