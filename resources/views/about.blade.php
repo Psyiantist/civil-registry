@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>About Us</title>
+  <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 65px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: white;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      padding: 0 30px;
+    }
+
+    .image-container img {
+      width: 50px;
+      height: 45px;
+      margin-top: 5px;
+      margin-left: 20px;
+      position: relative;
+      border-radius: 50%;
+    }
+
+    .logo-name {
+      font-size: 15px;
+      margin-left: 30px;
+      white-space: nowrap;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .logo-name a {
+      margin-left: -16px;
+      font-family: "Poppins", sans-serif;
+    }
+
+    nav button {
+      display: none;
+    }
+
+    nav .menu {
+      width: 100%;            
+      margin-top: -5px;
+      margin-left: 100px;
+      text-align: center;     
+      justify-content: center; 
+      align-items: center;    
+  
+    }
+
+    nav .menu ul li {
+      padding: -5px;
+      font-size: 17px;
+      list-style: none;
+      font-weight: bold;
+      margin-right: 30px; 
+      display: inline-block;
+      position: relative;
+      font-family: "Poppins", sans-serif;
+
+    }
+
+    nav .menu ul:nth-child(2) li {
+      top: -8px;
+      left: 10px;
+      color: #757575;
+      position: relative;
+    }
+
+
+    nav .menu ul li a{
+      color: black;
+      text-decoration: none;
+    }
+
+    nav .menu .active,
+    .a:hover {
+     color: #426DDC;
+     font-size: 18px;
+    }
+
+
+    nav .menu ul li a:hover {
+      color: #426DDC;
+      transition: 0.3s ease; 
+    }
+
+
+    nav .search-container {
+      position: relative;
+      margin-left: auto;
+      margin-right: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    nav .search-container input[type="text"] {
+      padding: 8px 35px 8px 15px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      font-family: "Poppins", sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.3s ease;
+      width: 180px;
+    }
+
+    nav .search-container input[type="text"]:focus {
+      border-color: #426DDC;
+      box-shadow: 0 0 5px rgba(66, 109, 220, 0.5);
+    }
+
+    nav .search-container .fa-search,  button.search-button {
+      position: absolute;
+      border: none;
+      background: none;
+      right: 12px;
+      color: rgb(0, 0, 0);
+      font-size: 16px;
+      pointer-events: auto;
+    }
+
+    nav .search-container .fa-search:hover {
+      color: #426DDC;
+      transition: 0.3s ease; 
+    }
+
+    .user-icon {
+      font-size: 24px;
+      color: #333;
+      margin-left: 20px;
+      cursor: pointer;
+    }
+
+    #accountDropdown {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      border-radius: 6px;
+      right: 10px;
+      top: 60px;
+      min-width: 160px;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    #accountDropdown.show {
+      display: block;
+    }
+
+    #accountDropdown a {
+      display: block;
+      padding: 10px 16px;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    #accountDropdown a:hover {
+      color: #426DDC;
+    }
+
+
+
+    .header-image {
+  position: relative;
+  width: 100%;
+  height: 550px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(10, 89, 173, 0.9), rgba(10, 89, 173, 0.4));
+  z-index: 0;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  padding: 40px 100px;
+  animation: fadeInUp 1s ease forwards;
+  opacity: 0;
+}
+
+.header-text {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.header-text h1 {
+  font-size: 50px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.header-text p {
+  font-size: 20px;
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+.header-image-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.header-image-right img {
+  width: 90%;
+  height: 90%;
+  object-fit: cover;
+ border-radius: 5px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.header-image-right img::after {
+  width: 90%;
+  height: 90%;
+  object-fit: cover;
+ 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+      margin-top: 80px;
+    }
+
+    .about-section {
+      display: flex;
+      margin-top: 30px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 50px;
+      gap: 40px;
+
+    }
+
+    .about-section.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .about-section .text,
+    .about-section .image {
+      flex: 1;
+      min-width: 300px;
+      height: 100%;
+    }
+
+    .about-section .image img {
+      width: 100%;
+      border-radius: 12px;
+      height: auto;
+    }
+
+    h2 {
+      color: #426DDC;
+      margin-bottom: 15px;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .service-item {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .service-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .service-item i {
+      font-size: 28px;
+      color: #005baa;
+    }
+
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #005baa;
+      color: white;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+
+    <div class="image-container">
+      <img src="{{ asset('storage/assets/civil_registry_logo.png') }}">
+    </div>
+    <div class="logo-name">
+      <b>Civil Registry <br/> <a>Mandaluyong City</a></b>
+    </div>
+  
+    <div class="menu">
+      <ul>
+        <li><a href="{{ route('home') }}">Home</a></li>
+        <!-- <li><a href="#">Services</a></li> -->
+        <li><a href="{{ route('faqs') }}">FAQs</a></li>
+        <li><a class="active" href="{{ route('about') }}">About Us</a></li>
+        <li><a href="{{ route('contact') }}">Contact Us</a></li>
+      </ul>
+    </div>
+  
+    <div class="search-container">
+      <input type="text" placeholder="Search" />
+      <i class="fa fa-search"></i>
+    </div>
+  
+    <i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
+    <div id="accountDropdown">
+      <a href="#">Profile</a>
+      <a href="#">Settings</a>
+      <a href="#" id="logoutLink">Logout</a>
+    </div>
+  </nav>
+ 
+  <header class="header-image">
+    <div class="header-overlay"></div>
+    <div class="header-content animated">
+      <div class="header-text">
+        <h1>About Civil Registry</h1>
+        <p>The Civil Registry Office of Mandaluyong City is responsible for the recording, maintenance, and issuance of vital documents such as birth certificates, marriage certificates, death certificates, and other civil registry records.</p>
+      </div>
+      <div class="header-image-right">
+        <img src="blue building.jpg" alt="Banner" />
+      </div>
+    </div>
+  </header>
+  
+  
+  <div class="container">
+    <section class="about-section">
+      <div class="text">
+        <h2>Our Mission</h2>
+        <p>
+          Our mission is to make civil registry services accessible, timely, and reliable for the people of Mandaluyong City. Whether you're registering a birth, marriage, or need a certified copy of a vital document, we’re here to serve you. We are committed to providing a seamless online experience, ensuring your requests are handled with care, transparency, and professionalism. No matter where you are, we’re just a click away to assist you with all your civil registry needs.
+        </p>
+      </div>
+      <div class="image">
+        <img src="123.jpg" alt="Mission Image" />
+      </div>
+    </section>
+
+    <section class="about-section reverse">
+      <div class="text">
+        <h2>What We Do</h2>
+        <p>
+          We handle a wide range of civil registry services to ensure the residents of Mandaluyong City have access to vital records when they need them. Our services include processing registrations for births, marriages, and deaths, along with providing certified true copies of these records. We also assist with other essential civil registry functions such as corrections of clerical errors, late registrations, and the legitimation of children.
+
+
+        </p>
+      </div>
+      <div class="image">
+        <img src="mbg.jpg" alt="What We Do Image" />
+      </div>
+    </section>
+
+    <section>
+      <h2>Our Services</h2>
+      <div class="services">
+        <div class="service-item"><i class="fas fa-baby"></i> <span>Birth Registration and Certification</span></div>
+        <div class="service-item"><i class="fas fa-ring"></i> <span>Marriage Registration and Certificate Issuance</span></div>
+        <div class="service-item"><i class="fas fa-cross"></i> <span>Death Registration and Certification</span></div>
+        <div class="service-item"><i class="fas fa-edit"></i> <span>Correction of Clerical Errors (RA 9048)</span></div>
+        <div class="service-item"><i class="fas fa-clock"></i> <span>Late Registration of Civil Documents</span></div>
+        <div class="service-item"><i class="fas fa-user-check"></i> <span>Legitimation and Acknowledgment of Paternity</span></div>
+        <div class="service-item"><i class="fas fa-file-upload"></i> <span>Endorsement to PSA</span></div>
+        <div class="service-item"><i class="fas fa-copy"></i> <span>Certified True Copies and Transcription Services</span></div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    &copy; 2025 Civil Registry Office - Mandaluyong City. All rights reserved.
+  </footer>
+
+  <script>
+    function toggleDropdown() {
+      document.getElementById("accountDropdown").classList.toggle("show");
+    }
+
+    window.onclick = function(event) {
+      if (!event.target.matches('.user-icon')) {
+        const dropdown = document.getElementById("accountDropdown");
+        if (dropdown.classList.contains('show')) {
+          dropdown.classList.remove('show');
+        }
+      }
+    };
+  </script>
+</body>
+</html>

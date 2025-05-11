@@ -346,6 +346,38 @@
       color: white;
       margin-top: 60px;
     }
+
+    .dropdown_menuuu {
+      display: none;
+      position: absolute;
+      left: -55%;
+      top: 100%;
+      min-height: 90px;
+      background-color: white;
+      z-index: 1000;
+      min-width: 130px;
+    }
+
+    .menu ul li:hover .dropdown_menuuu,
+    .dropdown_menuuu:hover {
+       display: block;
+       border-radius: 5px;
+       font-size: 18px;
+    }
+
+    .dropdown_menuuu ul {
+       list-style: none;
+       padding: 0;
+       margin-top: 15px;
+       margin-left: 25px; 
+       margin-bottom: 9px;
+    }
+
+    .dropdown_menuuu ul li {
+       width: 130px;
+       padding: 7px;
+       white-space: nowrap;
+    }
   </style>
 </head>
 <body>
@@ -361,11 +393,19 @@
   
     <div class="menu">
       <ul>
-        <li><a href="{{ route('home') }}">Home</a></li>
-        <!-- <li><a href="#">Services</a></li> -->
-        <li><a href="{{ route('faqs') }}">FAQs</a></li>
-        <li><a class="active" href="{{ route('about') }}">About Us</a></li>
-        <li><a href="{{ route('contact') }}">Contact Us</a></li>
+        <li><a href="{{ route('admin.homepage') }}">Home</a></li>
+        <li> <a href="#"> Services <i class="fas fa-caret-down"> </i> </a> 
+
+        <div class="dropdown_menuuu">
+          <ul>
+        <li> <a href="{{ route('admin.appointment') }}"> Appointment </a> </li>
+        <li> <a href="{{ route('admin.requirements') }}"> Requirements </a> </li>
+           </ul>
+        </div>
+        </li>
+        <li><a href="{{ route('admin.faqs') }}">FAQs</a></li>
+        <li><a class="active" href="{{ route('admin.about') }}">About Us</a></li>
+        <li><a href="{{ route('admin.contact') }}">Contact Us</a></li>
       </ul>
     </div>
   
@@ -374,16 +414,19 @@
       <i class="fa fa-search"></i>
     </div>
   
-    @php
-        $user = Auth::user();
-        $profileImage = $user->profile_image
-          ? asset('storage/profiles/' . $user->profile_image)
-          : asset('storage/profiles/default-profile.jpg');
-      @endphp
-      <img src="{{ $profileImage }}" alt="Profile Picture" class="user-icon" onclick="toggleDropdown()" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer; object-fit: cover; object-position: center; border: 2px solid #426DDC; aspect-ratio: 1/1; margin-right: 23px;">
-    <div id="accountDropdown" class="absolute hidden">
-        <a href="{{ route('residence.profile') }}"> Profile </a>
-        <a href="{{ route('logout') }}" id="logoutLink"> Logout </a> </div>
+    <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" onclick="toggleDropdown()" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-right: 23px;">
+        <div id="accountDropdown">
+            <div style="padding: 16px 0 8px 0; text-align: center;">
+                <div style="font-size: 40px; color: #e0e0e0; margin-bottom: 4px;">
+                <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-left:15px;">
+                </div>
+                <div style="font-weight: bold; font-size: 18px;">Admin</div>
+                <div style="font-size: 14px; color: #757575; word-break: break-all;">city.registrar@<br>mandaluyong.gov.ph</div>
+            </div>
+            <a href="{{ route('admin.logout') }}" id="logoutLink">Logout</a>
+        </div>
+      
+        <button class="menu-toggle"> </button>
   </nav>
  
   <header class="header-image">
@@ -405,7 +448,7 @@
       <div class="text">
         <h2>Our Mission</h2>
         <p>
-          Our mission is to make civil registry services accessible, timely, and reliable for the people of Mandaluyong City. Whether you're registering a birth, marriage, or need a certified copy of a vital document, we’re here to serve you. We are committed to providing a seamless online experience, ensuring your requests are handled with care, transparency, and professionalism. No matter where you are, we’re just a click away to assist you with all your civil registry needs.
+          Our mission is to make civil registry services accessible, timely, and reliable for the people of Mandaluyong City. Whether you're registering a birth, marriage, or need a certified copy of a vital document, we're here to serve you. We are committed to providing a seamless online experience, ensuring your requests are handled with care, transparency, and professionalism. No matter where you are, we're just a click away to assist you with all your civil registry needs.
         </p>
       </div>
       <div class="image">
