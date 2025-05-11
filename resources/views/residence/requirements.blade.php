@@ -599,7 +599,7 @@
           ? asset('storage/profiles/' . $user->profile_image)
           : asset('storage/profiles/default-profile.jpg');
       @endphp
-      <img src="{{ $profileImage }}" alt="Profile Picture" class="user-icon" onclick="toggleDropdown()" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer; object-fit: cover;">
+      <img src="{{ $profileImage }}" alt="Profile Picture" class="user-icon" onclick="toggleDropdown()" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer; object-fit: cover; object-position: center; border: 2px solid #426DDC; aspect-ratio: 1/1; margin-right: 23px;">
     <div id="accountDropdown" class="absolute hidden">
         <a href="{{ route('residence.profile') }}"> Profile </a>
         <a href="#"> Settings </a>
