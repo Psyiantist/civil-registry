@@ -719,10 +719,10 @@
     }
 
     .alert-danger {
-        color: #dc3545 !important;   
+        color: #dc3545 !important;
         background-color: #f8d7da;
         border-color: #f5c6cb;
-        font-size: 16px !important;  
+        font-size: 16px !important;
         font-weight: bold;
         text-align: center;
         margin-top: 10px;
@@ -736,7 +736,7 @@
         color: #155724;
         background-color: #d4edda;
         border-color: #c3e6cb;
-        font-size: 16px !important;  
+        font-size: 16px !important;
         font-weight: bold;
         text-align: center;
         margin-top: 10px;
@@ -870,7 +870,7 @@
     </div>
     <!-- FORGOT PASSWORD CONTAINER -->
     <div id="forgotPasswordContainer" class="form" style="display: none;">
-      <h3 style="text-align:center; font-size: 22px; font-weight: bold; margin-bottom: 8px; margin-top: 0;">Forgot Password</h3>
+      <h3 style="text-align:center; font-size: 22px; font-weight: bold; margin-bottom: 8px; margin-top: 0; font-family: Poppins;">Forgot Password</h3>
       <p class="link" style="margin-bottom: 18px; font-size: 16px;">Please enter your email address to reset your password:</p>
       <form method="POST" action="{{ route('forget.password') }}">
         @csrf
@@ -928,7 +928,7 @@ function performSearch() {
     window.togglePasswordVisibility = function (inputName) {
         const passwordField = document.querySelector(`input[name="${inputName}"]`);
         const eyeIcon = document.getElementById('eye-icon');
-        
+
         if (passwordField && eyeIcon) {
             if (passwordField.type === 'password') {
                 passwordField.type = 'text';

@@ -54,12 +54,12 @@
     }
 
     nav .menu {
-      width: 100%;            
+      width: 100%;
       margin-top: -5px;
       margin-left: 30px;
-      text-align: center;     
-      justify-content: center; 
-      align-items: center;    
+      text-align: center;
+      justify-content: center;
+      align-items: center;
     }
 
     nav .menu ul li {
@@ -67,7 +67,7 @@
       font-size: 17px;
       list-style: none;
       font-weight: bold;
-      margin-right: 50px; 
+      margin-right: 50px;
       display: inline-block;
       position: relative;
       font-family: "Poppins", sans-serif;
@@ -96,7 +96,7 @@
 
     nav .menu ul li a:hover {
       color: #426DDC;
-      transition: 0.3s ease; 
+      transition: 0.3s ease;
     }
 
     nav form {
@@ -162,7 +162,7 @@
 
     nav .search-container .fa-search:hover {
       color: #426DDC;
-      transition: 0.3s ease; 
+      transition: 0.3s ease;
     }
 
     nav .user-icon {
@@ -614,7 +614,7 @@
       width: 100%;
       position: relative;
       padding: 0 20px;
-      flex-direction: column; 
+      flex-direction: column;
     }
 
     nav .search-container {
@@ -622,7 +622,7 @@
       margin: 0 auto;
       justify-content: center;
       width: 100%;
-      max-width: 500px; 
+      max-width: 500px;
       padding: 10px 20px;
       display: flex;
       align-items: center;
@@ -683,7 +683,7 @@
       color: #333;
       position: relative;
       margin-left: 20px;
-    }  
+    }
 
     nav .menu-toggle:hover {
       color: #426DDC;
@@ -771,7 +771,7 @@
 
 <i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
 </div>
-  
+
     <button class="menu-toggle"> </button>
   </nav>
 
@@ -785,7 +785,7 @@
       </div>
     </div>
     <div id="loginContainer" class="form">
-      <h2> LOGIN </h2> 
+      <h2> LOGIN </h2>
       @if(session('success'))
           <div class="alert-success">
               {{ session('success') }}
@@ -821,7 +821,7 @@
       </form>
     </div>
     <div id="forgotPasswordContainer" class="form" style="display: none;">
-      <h3 style="text-align:center; font-size: 22px; font-weight: bold; margin-bottom: 8px; margin-top: 0;">Forgot Password</h3>
+      <h3 style="text-align:center; font-size: 22px; font-weight: bold; margin-bottom: 8px; margin-top: 0; font-family: Poppins">Forgot Password</h3>
       <p class="link" style="margin-bottom: 18px; font-size: 16px;">Please enter your username and new password:</p>
       <form id="forgotPasswordForm" action="{{ route('admin.password.update') }}" method="POST">
         @csrf
@@ -888,7 +888,7 @@ function performSearch() {
     window.togglePasswordVisibility = function (inputName = "password") {
     const passwordField = document.querySelector(`input[name="${inputName}"]`);
     const eyeIcon = document.getElementById('eye-icon');
-    
+
     if (passwordField && eyeIcon) {
         if (passwordField.type === 'password') {
             passwordField.type = 'text';
