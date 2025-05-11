@@ -375,11 +375,6 @@
     </div>
   
     <i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
-    <div id="accountDropdown">
-      <a href="#">Profile</a>
-      <a href="#">Settings</a>
-      <a href="#" id="logoutLink">Logout</a>
-    </div>
   </nav>
  
   <header class="header-image">
@@ -458,8 +453,10 @@
 
   <script>
     function toggleDropdown() {
-      document.getElementById("accountDropdown").classList.toggle("show");
-    }
+            const dropdown = document.getElementById("accountDropdown");
+            alert("Please choose a user mode that best describes you.");
+            dropdown.classList.toggle("show");
+            }
 
     window.onclick = function(event) {
       if (!event.target.matches('.user-icon')) {
