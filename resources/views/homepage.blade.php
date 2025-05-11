@@ -714,7 +714,7 @@
 	<section>
     <div class="details">
       <div>
-        <h5 style="letter-spacing: 15px;"><center>SCHEDULE</center></h5>
+        <h5 style="letter-spacing: 15px; font-size: 100px;"><center>SCHEDULE</center></h5>
         <div style="display: flex; flex-direction: column; align-items: center;">
           <h4 style="white-space: nowrap; text-align: center;">AN APPOINTMENT NOW! <i class="fa fa-calendar-week" aria-hidden="true"></i></h4>
           <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">

@@ -820,7 +820,7 @@
   <section>
     <div class="details">
       <div>
-        <h5 style="letter-spacing: 15px;"><center>SCHEDULE</center></h5>
+        <h5 style="letter-spacing: 15px; font-size: 100px;"><center>SCHEDULE</center></h5>
         <div style="display: flex; flex-direction: column; align-items: center;">
           <h4 style="white-space: nowrap; text-align: center;">AN APPOINTMENT NOW! <i class="fa fa-calendar-week" aria-hidden="true"></i></h4>
           <p style="display: block; margin: 18px auto; background: #fff; color: #222; font-size: 22px; font-style: italic; font-weight: 600; border-radius: 30px; padding: 12px 36px; width: fit-content; white-space: nowrap; text-align: center; box-shadow: 0 2px 8px rgba(66, 109, 220, 0.07); letter-spacing: 0.5px;">"Convenience you can count on, appointments you can trust."</p>
