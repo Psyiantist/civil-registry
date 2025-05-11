@@ -626,11 +626,11 @@
   <i class="fa fa-search" onclick="performSearch()"> </i>
   </div>
         
-  <i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
+  <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" onclick="toggleDropdown()" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-right: 23px;">
   <div id="accountDropdown">
   <div style="padding: 16px 0 8px 0; text-align: center;">
     <div style="font-size: 40px; color: #e0e0e0; margin-bottom: 4px;">
-      <i class="fas fa-user-circle"></i>
+    <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-left:60px;">
     </div>
     <div style="font-weight: bold; font-size: 18px;">Admin</div>
     <div style="font-size: 14px; color: #757575; word-break: break-all;">city.registrar@<br>mandaluyong.gov.ph</div>
