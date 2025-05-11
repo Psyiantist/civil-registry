@@ -176,21 +176,21 @@
     nav .user-icon:hover {
       color: #426DDC;
     }
-
-
-
     /* Main content below the NAV BAR */
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
-      overflow-x: auto;
       overflow-y: auto;
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
       align-items: center;
     }
 
     section {
-      width: 100vw;
+      width: 100%;
+      max-width: 100vw;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -204,11 +204,12 @@
       box-sizing: border-box;
       position: relative;
       overflow-y: auto;
+      overflow-x: hidden;
     }
 
     .details {
-      width: 400px;
-      max-width: 90vw;
+      width: 100%;
+      max-width: 1100px;
       margin: 0 auto;
       position: relative;
       text-align: center;
@@ -568,7 +569,7 @@
       background: white;
       top: 60px;
       transition: 0.5s;
-      overflow: hidden;
+      /* overflow: hidden; */
     }
 
     nav .menu ul {
@@ -778,9 +779,11 @@
   <section>
     <div class="details">
       <div>
-        <h5><center>SCHEDULE</center></h5>
-        <h4>AN APPOINTMENT NOW! <i class="fa fa-calendar-week" aria-hidden="true"></i></h4>
-        <p><i>"Convenience you can count on, appointments you can trust."</i></p>
+        <h5 style="letter-spacing: 15px;"><center>SCHEDULE</center></h5>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+          <h4 style="white-space: nowrap; text-align: center;">AN APPOINTMENT NOW! <i class="fa fa-calendar-week" aria-hidden="true"></i></h4>
+          <p style="display: block; margin: 18px auto; background: #fff; color: #222; font-size: 22px; font-style: italic; font-weight: 600; border-radius: 30px; padding: 12px 36px; width: fit-content; white-space: nowrap; text-align: center; box-shadow: 0 2px 8px rgba(66, 109, 220, 0.07); letter-spacing: 0.5px;">"Convenience you can count on, appointments you can trust."</p>
+        </div>
         <a href="#learn-more" class="learn-button">Learn more</a>
       </div>
     </div>

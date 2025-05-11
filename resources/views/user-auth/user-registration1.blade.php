@@ -366,13 +366,6 @@
                     <a href="{{ route('login') }}">Login here</a>
                 </p>
 
-                <p class="liw">━━━━━━━ or Register with ━━━━━━━</p>
-                <div class="icons">
-                    <center>
-                        <a><ion-icon name="logo-facebook"></ion-icon></a>
-                        <a><ion-icon name="logo-google"></ion-icon></a>
-                    </center>
-                </div>
             </form>
         </div>
     </section>

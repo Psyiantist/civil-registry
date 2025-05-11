@@ -14,6 +14,9 @@
     body {
       font-family: 'Poppins';
       margin-bottom: 60px;
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
     }
 
     *{
@@ -265,6 +268,25 @@
         padding: 2rem;
         position: relative;
         z-index: 1;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+        }
+
+        .overflow-x-auto {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        .max-h-\[600px\] {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        table {
+            width: 100%;
+            max-width: 100%;
         }
 
         /* Zoom-in screen orientation layout */
