@@ -59,13 +59,13 @@
     }
 
     nav .menu {
-      width: 100%;            
+      width: 100%;
       margin-top: -5px;
       margin-left: 100px;
-      text-align: center;     
-      justify-content: center; 
-      align-items: center;    
-  
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+
     }
 
     nav .menu ul li {
@@ -73,7 +73,7 @@
       font-size: 17px;
       list-style: none;
       font-weight: bold;
-      margin-right: 30px; 
+      margin-right: 30px;
       display: inline-block;
       position: relative;
       font-family: "Poppins", sans-serif;
@@ -102,7 +102,7 @@
 
     nav .menu ul li a:hover {
       color: #426DDC;
-      transition: 0.3s ease; 
+      transition: 0.3s ease;
     }
 
 
@@ -142,7 +142,7 @@
 
     nav .search-container .fa-search:hover {
       color: #426DDC;
-      transition: 0.3s ease; 
+      transition: 0.3s ease;
     }
 
     .user-icon {
@@ -253,7 +253,7 @@
   width: 90%;
   height: 90%;
   object-fit: cover;
- 
+
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
@@ -369,7 +369,7 @@
        list-style: none;
        padding: 0;
        margin-top: 15px;
-       margin-left: 25px; 
+       margin-left: 25px;
        margin-bottom: 9px;
     }
 
@@ -390,11 +390,11 @@
     <div class="logo-name">
       <b>Civil Registry <br/> <a>Mandaluyong City</a></b>
     </div>
-  
+
     <div class="menu">
       <ul>
         <li><a href="{{ route('admin.homepage') }}">Home</a></li>
-        <li> <a href="#"> Services <i class="fas fa-caret-down"> </i> </a> 
+        <li> <a href="#"> Services <i class="fas fa-caret-down"> </i> </a>
 
         <div class="dropdown_menuuu">
           <ul>
@@ -408,12 +408,12 @@
         <li><a href="{{ route('admin.contact') }}">Contact Us</a></li>
       </ul>
     </div>
-  
+
     <div class="search-container">
       <input type="text" placeholder="Search" />
       <i class="fa fa-search"></i>
     </div>
-  
+
     <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" onclick="toggleDropdown()" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-right: 23px;">
         <div id="accountDropdown">
             <div style="padding: 16px 0 8px 0; text-align: center;">
@@ -425,10 +425,10 @@
             </div>
             <a href="{{ route('admin.logout') }}" id="logoutLink">Logout</a>
         </div>
-      
+
         <button class="menu-toggle"> </button>
   </nav>
- 
+
   <header class="header-image">
     <div class="header-overlay"></div>
     <div class="header-content animated">
@@ -437,12 +437,12 @@
         <p>The Civil Registry Office of Mandaluyong City is responsible for the recording, maintenance, and issuance of vital documents such as birth certificates, marriage certificates, death certificates, and other civil registry records.</p>
       </div>
       <div class="header-image-right">
-        <img src="blue building.jpg" alt="Banner" />
+        <img src="{{ asset('storage/assets/blue_building.jpg') }}" alt="Banner" />
       </div>
     </div>
   </header>
-  
-  
+
+
   <div class="container">
     <section class="about-section">
       <div class="text">
@@ -452,7 +452,7 @@
         </p>
       </div>
       <div class="image">
-        <img src="123.jpg" alt="Mission Image" />
+        <img src="{{ asset('storage/assets/mission.jpg') }}" alt="Mission Image" />
       </div>
     </section>
 
@@ -466,7 +466,21 @@
         </p>
       </div>
       <div class="image">
-        <img src="mbg.jpg" alt="What We Do Image" />
+        <img src="{{ asset('storage/assets/what_we_do.jpg') }}" alt="What We Do Image" />
+      </div>
+    </section>
+
+    <section style="background: #dbe8f4; border-radius: 12px; margin-bottom: 40px; padding: 32px 0 24px 0; box-shadow: 0 2px 8px rgba(66, 109, 220, 0.07);">
+      <h2 style="text-align: center; color: #26324B; font-size: 2rem; font-weight: bold; margin-bottom: 18px;"><i class="fas fa-user"></i> Meet Our Department Head</h2>
+      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div style="width: 220px; height: 220px; border-radius: 18px; overflow: hidden; border: 2px solid #e0e7ef; background: #fff; margin-bottom: 18px;">
+          <img src="{{ asset('storage/assets/department_head.jpg') }}" alt="Department Head" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" />
+        </div>
+        <hr style="width: 220px; margin: 0 0 12px 0; border: none; border-top: 1.5px solid #e0e7ef;">
+        <div style="text-align: center;">
+          <div style="font-size: 1.3rem; font-weight: bold; color: #26324B; margin-bottom: 4px;">Atty. Gabriel P. Corton</div>
+          <div style="font-size: 1.05rem; font-style: italic; color: #26324B;">Mandaluyong City Civil Registry Department Head</div>
+        </div>
       </div>
     </section>
 

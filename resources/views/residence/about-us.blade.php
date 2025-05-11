@@ -394,7 +394,7 @@
         <p>The Civil Registry Office of Mandaluyong City is responsible for the recording, maintenance, and issuance of vital documents such as birth certificates, marriage certificates, death certificates, and other civil registry records.</p>
       </div>
       <div class="header-image-right">
-        <img src="blue building.jpg" alt="Banner" />
+        <img src="{{ asset('storage/assets/blue_building.jpg') }}" alt="Banner" />
       </div>
     </div>
   </header>
@@ -405,11 +405,11 @@
       <div class="text">
         <h2>Our Mission</h2>
         <p>
-          Our mission is to make civil registry services accessible, timely, and reliable for the people of Mandaluyong City. Whether you're registering a birth, marriage, or need a certified copy of a vital document, we’re here to serve you. We are committed to providing a seamless online experience, ensuring your requests are handled with care, transparency, and professionalism. No matter where you are, we’re just a click away to assist you with all your civil registry needs.
+          Our mission is to make civil registry services accessible, timely, and reliable for the people of Mandaluyong City. Whether you're registering a birth, marriage, or need a certified copy of a vital document, we're here to serve you. We are committed to providing a seamless online experience, ensuring your requests are handled with care, transparency, and professionalism. No matter where you are, we're just a click away to assist you with all your civil registry needs.
         </p>
       </div>
       <div class="image">
-        <img src="123.jpg" alt="Mission Image" />
+        <img src="{{ asset('storage/assets/mission.jpg') }}" alt="Mission Image" />
       </div>
     </section>
 
@@ -423,7 +423,21 @@
         </p>
       </div>
       <div class="image">
-        <img src="mbg.jpg" alt="What We Do Image" />
+        <img src="{{ asset('storage/assets/what_we_do.jpg') }}" alt="What We Do Image" />
+      </div>
+    </section>
+
+    <section style="background: #dbe8f4; border-radius: 12px; margin-bottom: 40px; padding: 32px 0 24px 0; box-shadow: 0 2px 8px rgba(66, 109, 220, 0.07);">
+      <h2 style="text-align: center; color: #26324B; font-size: 2rem; font-weight: bold; margin-bottom: 18px;"><i class="fas fa-user"></i> Meet Our Department Head</h2>
+      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div style="width: 220px; height: 220px; border-radius: 18px; overflow: hidden; border: 2px solid #e0e7ef; background: #fff; margin-bottom: 18px;">
+          <img src="{{ asset('storage/assets/department_head.jpg') }}" alt="Department Head" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" />
+        </div>
+        <hr style="width: 220px; margin: 0 0 12px 0; border: none; border-top: 1.5px solid #e0e7ef;">
+        <div style="text-align: center;">
+          <div style="font-size: 1.3rem; font-weight: bold; color: #26324B; margin-bottom: 4px;">Atty. Gabriel P. Corton</div>
+          <div style="font-size: 1.05rem; font-style: italic; color: #26324B;">Mandaluyong City Civil Registry Department Head</div>
+        </div>
       </div>
     </section>
 
