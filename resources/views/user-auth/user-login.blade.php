@@ -826,12 +826,12 @@
     <div id="loginContainer" class="form">
       <h2>LOGIN</h2>
       @if(session('error'))
-          <div class="alert alert-danger">
+          <div style="font-family: 'Poppins', sans-serif;" class="alert alert-danger">
               {{ session('error') }}
           </div>
       @endif
       @if(session('success'))
-          <div class="alert alert-success">
+          <div style="font-family: 'Poppins', sans-serif;" class="alert alert-success">
               {{ session('success') }}
           </div>
       @endif

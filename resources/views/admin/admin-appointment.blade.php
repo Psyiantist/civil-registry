@@ -621,7 +621,6 @@
                 <div style="font-weight: bold; font-size: 18px;">Admin</div>
                 <div style="font-size: 14px; color: #757575; word-break: break-all;">city.registrar@<br>mandaluyong.gov.ph</div>
             </div>
-            <a href="#">Settings</a>
             <a href="{{ route('admin.logout') }}" id="logoutLink">Logout</a>
         </div>
       

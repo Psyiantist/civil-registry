@@ -787,7 +787,7 @@
     <div id="loginContainer" class="form">
       <h2> LOGIN </h2>
       @if(session('success'))
-          <div class="alert-success">
+          <div style="font-family: 'Poppins', sans-serif;" class="alert-success">
               {{ session('success') }}
           </div>
       @endif
@@ -808,12 +808,12 @@
           </div>
         </div>
         @if($errors->has('username'))
-          <div style="color: red; text-align: center; margin-top: 10px;">
+          <div style="font-family: 'Poppins', sans-serif; color: red; text-align: center; margin-top: 10px;">
             {{ $errors->first('username') }}
           </div>
         @endif
         @if($errors->has('password'))
-          <div style="color: red; text-align: center; margin-top: 10px;">
+          <div style="font-family: 'Poppins', sans-serif; color: red; text-align: center; margin-top: 10px;">
             {{ $errors->first('password') }}
           </div>
         @endif

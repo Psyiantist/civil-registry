@@ -783,7 +783,7 @@
   <img src="{{ $profileImage }}" alt="Profile Picture" class="user-icon" onclick="toggleDropdown()" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer; object-fit: cover; object-position: center; border: 2px solid #426DDC; aspect-ratio: 1/1;">
   <div id="accountDropdown" class="absolute hidden">
     <a href="{{ route('residence.profile') }}"> Profile </a>
-    <a href="#"> Settings </a>
+
     <a href="{{ route('logout') }}" id="logoutLink"> Logout </a> 
   </div>
 
