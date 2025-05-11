@@ -100,6 +100,8 @@ Route::middleware(['auth:employee'])->group(function () {
     // Appointment Routes
     Route::get('/admin/appointment', [AppointmentController::class, 'showAppointments'])->name('admin.appointment');
     Route::put('/admin/appointments/{appointment}/status', [AppointmentController::class, 'updateStatus'])->name('admin.appointments.status');
+    Route::delete('/admin/appointments/{appointment}', [AppointmentController::class, 'destroy'])->name('admin.appointments.destroy');
+    
 });
 
 // Public Routes

@@ -140,4 +140,10 @@ class AppointmentController extends Controller
             return redirect()->back()->with('error', 'Failed to update appointment status: ' . $e->getMessage());
         }
     }
+
+    public function destroy(Appointment $appointment)
+    {
+        $appointment->delete();
+        return redirect()->back()->with('success', 'Appointment deleted successfully');
+    }
 }

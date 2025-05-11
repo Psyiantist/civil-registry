@@ -657,6 +657,7 @@
                                 <th class="py-3 px-4 text-left">Date & Time</th>
                                 <th class="py-3 px-4 text-left">Status</th>
                                 <th class="py-3 px-4 text-left">Action</th>
+                                <th class="py-3 px-4 text-left">Delete</th>
                             </tr>
                         </thead>
                         <tbody id="appointmentTable">
@@ -699,6 +700,11 @@
                                         </select>
                                     @endif
                                 </td>
+                                <td class="py-3 px-4">
+                                    <button onclick="showDeleteModal({{ $appointment->id }})" class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -723,6 +729,22 @@
                 <div class="flex justify-end space-x-3">
                     <button type="button" onclick="closeCancellationModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Cancel</button>
                     <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Confirm Cancellation</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
+            <h2 class="text-xl font-bold mb-4 text-center text-red-700">Delete Appointment</h2>
+            <p class="text-gray-600 mb-4 text-center">Are you sure you want to delete this appointment? This action cannot be undone.</p>
+            <form id="deleteForm" method="POST">
+                @csrf
+                @method('DELETE')
+                <div class="flex justify-end space-x-3">
+                    <button type="button" onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Delete Appointment</button>
                 </div>
             </form>
         </div>
@@ -830,6 +852,18 @@ if (button && menu) {
         const modal = document.getElementById('cancellationModal');
         modal.classList.add('hidden');
         document.getElementById('cancellation_reason').value = '';
+    }
+
+    function showDeleteModal(appointmentId) {
+        const modal = document.getElementById('deleteModal');
+        const form = document.getElementById('deleteForm');
+        form.action = `/admin/appointments/${appointmentId}`;
+        modal.classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+        const modal = document.getElementById('deleteModal');
+        modal.classList.add('hidden');
     }
   </script>
 </body>

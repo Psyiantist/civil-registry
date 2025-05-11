@@ -182,7 +182,6 @@
       height: 100%;
       margin: 0;
       padding: 0;
-      overflow-x: auto;
       overflow-y: auto;
       align-items: center;
     }
@@ -506,7 +505,6 @@
 
     html, body {
      align-items: center;
-     overflow-x: hidden;
      overflow-y: hidden;
      width: 100%;
      max-width: 100%;
