@@ -212,8 +212,8 @@
     }
 
     .details h5 {
-      font-size: 55px;
-      margin: 0 0 -25px 0;
+      font-size: 65px;
+      margin: 0 0 -20px -10px;
       font-weight: bolder;
       letter-spacing: 15px;
       color: white;
@@ -224,11 +224,11 @@
               -1px 1px 0px white,
                0 0 50px black;
       font-family: "Poppins", sans-serif;
-      padding-left: 20px;
+
     }
 
     .details h4 {
-      font-size: 30px;
+      font-size: 40px;
       margin: 0 0 10px 0;
       font-weight: bolder;
       letter-spacing: 4px;
