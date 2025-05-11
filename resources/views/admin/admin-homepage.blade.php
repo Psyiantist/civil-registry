@@ -1055,6 +1055,13 @@
           <input type="hidden" name="reset_to_default" value="1">
           <button type="submit" class="reset-button" style="background: #426DDC; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif; width: 220px; margin: 0 auto; display: block;">Reset to Default Photo</button>
         </form>
+        <form action="{{ route('admin.announcements.destroy', $announcement->id) }}" method="POST" style="margin-top: 10px;">
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="delete-button" style="background: #f87171; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif; width: 220px; margin: 0 auto; display: block;" onclick="return confirm('Are you sure you want to delete this announcement?');">
+            Delete Announcement
+          </button>
+        </form>
       </div>
       <div class="announcement-text" style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 24px 32px; background: #fff; border-radius: 0 0 16px 16px; box-shadow: 0 2px 8px rgba(66, 109, 220, 0.07); display: flex; flex-direction: column; align-items: center;">
         <form action="{{ url('/admin/announcements/' . $announcement->id) }}" method="POST" style="margin-bottom: 20px; width: 100%;">

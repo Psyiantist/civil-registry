@@ -76,4 +76,16 @@ class AnnouncementController extends Controller
 
         return redirect()->back()->with('success', 'Announcement added successfully!');
     }
+
+    public function destroy(Announcement $announcement)
+    {
+        if ($announcement->image_path && $announcement->image_path !== 'default-announcement.png') {
+            $oldImagePath = public_path('storage/announcements/' . $announcement->image_path);
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
+        }
+        $announcement->delete();
+        return redirect()->back()->with('success', 'Announcement deleted successfully!');
+    }
 } 
