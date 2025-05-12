@@ -361,11 +361,11 @@
   
     <div class="menu">
       <ul>
-        <li><a href="{{ route('home') }}">Home</a></li>
+        <li><a href="{{ route('residence-homepage') }}">Home</a></li>
         <!-- <li><a href="#">Services</a></li> -->
-        <li><a href="{{ route('faqs') }}">FAQs</a></li>
-        <li><a class="active" href="{{ route('about') }}">About Us</a></li>
-        <li><a href="{{ route('contact') }}">Contact Us</a></li>
+        <li><a href="{{ route('residence-faqs') }}">FAQs</a></li>
+        <li><a class="active" href="{{ route('residence-about-us') }}">About Us</a></li>
+        <li><a href="{{ route('residence-contact-us') }}">Contact Us</a></li>
       </ul>
     </div>
   
