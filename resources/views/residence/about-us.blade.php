@@ -362,7 +362,17 @@
     <div class="menu">
       <ul>
         <li><a href="{{ route('residence-homepage') }}">Home</a></li>
-        <!-- <li><a href="#">Services</a></li> -->
+        
+        <li> <a class="active" href="#"> Services <i class="fas fa-caret-down"> </i> </a> 
+    
+        <div class="dropdown_menuuu">
+          <ul>
+        <li> <a class="active" href="{{ route('residence-appointment') }}"> Appointment </a> </li>
+        <li> <a href="{{ route('residence-requirements') }}"> Requirements </a> </li>
+          </ul>
+        </div>
+        </li>
+
         <li><a href="{{ route('residence-faqs') }}">FAQs</a></li>
         <li><a class="active" href="{{ route('residence-about-us') }}">About Us</a></li>
         <li><a href="{{ route('residence-contact-us') }}">Contact Us</a></li>
