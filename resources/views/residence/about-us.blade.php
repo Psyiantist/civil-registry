@@ -20,17 +20,16 @@
     }
 
     nav {
-      position: sticky;
       top: 0;
       width: 100%;
       height: 65px;
       z-index: 9999;
       display: flex;
+      position: sticky;
       align-items: center;
-      justify-content: space-between;
+      justify-content: left;
       background-color: white;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-      padding: 0 30px;
     }
 
     .image-container img {
@@ -61,11 +60,10 @@
     nav .menu {
       width: 100%;            
       margin-top: -5px;
-      margin-left: 100px;
+      margin-left: 20px;
       text-align: center;     
       justify-content: center; 
       align-items: center;    
-  
     }
 
     nav .menu ul li {
@@ -77,7 +75,6 @@
       display: inline-block;
       position: relative;
       font-family: "Poppins", sans-serif;
-
     }
 
     nav .menu ul:nth-child(2) li {
@@ -87,7 +84,6 @@
       position: relative;
     }
 
-
     nav .menu ul li a{
       color: black;
       text-decoration: none;
@@ -96,15 +92,13 @@
     nav .menu .active,
     .a:hover {
      color: #426DDC;
-     font-size: 18px;
+     font-size: 20px;
     }
-
 
     nav .menu ul li a:hover {
       color: #426DDC;
       transition: 0.3s ease; 
     }
-
 
     nav .search-container {
       position: relative;
@@ -135,7 +129,7 @@
       border: none;
       background: none;
       right: 12px;
-      color: rgb(0, 0, 0);
+      color: gray;
       font-size: 16px;
       pointer-events: auto;
     }
@@ -145,11 +139,16 @@
       transition: 0.3s ease; 
     }
 
-    .user-icon {
-      font-size: 24px;
+    nav .user-icon {
+      font-size: 28px;
       color: #333;
-      margin-left: 20px;
+      margin-right: 23px;
       cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    nav .user-icon:hover {
+      color: #426DDC;
     }
 
     #accountDropdown {
@@ -179,8 +178,6 @@
     #accountDropdown a:hover {
       color: #426DDC;
     }
-
-
 
     .header-image {
   position: relative;
@@ -269,8 +266,6 @@
   }
 }
 
-
-
     .container {
       max-width: 1100px;
       margin: 40px auto;
@@ -338,7 +333,6 @@
       color: #005baa;
     }
 
-
     footer {
       text-align: center;
       padding: 20px;
@@ -394,11 +388,11 @@
       <ul>
         <li><a href="{{ route('residence-homepage') }}">Home</a></li>
         
-        <li> <a class="active" href="#"> Services <i class="fas fa-caret-down"> </i> </a> 
+        <li> <a href="#"> Services <i class="fas fa-caret-down"> </i> </a> 
     
         <div class="dropdown_menuuu">
           <ul>
-        <li> <a class="active" href="{{ route('residence-appointment') }}"> Appointment </a> </li>
+        <li> <a href="{{ route('residence-appointment') }}"> Appointment </a> </li>
         <li> <a href="{{ route('residence-requirements') }}"> Requirements </a> </li>
           </ul>
         </div>
