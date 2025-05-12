@@ -346,6 +346,37 @@
       color: white;
       margin-top: 60px;
     }
+
+    .dropdown_menuuu {
+      display: none;
+      position: absolute;
+      left: -55%;
+      top: 100%;
+      min-height: 90px;
+      background-color: white;
+      z-index: 1000;
+      min-width: 130px;
+    }
+
+    .menu ul li:hover .dropdown_menuuu,
+    .dropdown_menuuu:hover {
+       display: block;
+       border-radius: 5px;
+       font-size: 18px;
+    }
+
+    .dropdown_menuuu ul {
+       list-style: none;
+       padding: 0;
+       margin-top: 15px;
+       margin-left: 25px;
+       margin-bottom: 9px;
+    }
+
+    .dropdown_menuuu ul li {
+       width: 130px;
+       padding: 7px;
+       white-space: nowrap;
   </style>
 </head>
 <body>
