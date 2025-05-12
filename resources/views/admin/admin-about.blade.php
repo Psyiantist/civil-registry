@@ -20,17 +20,16 @@
     }
 
     nav {
-      position: sticky;
       top: 0;
       width: 100%;
       height: 65px;
       z-index: 9999;
       display: flex;
+      position: fixed;
       align-items: center;
-      justify-content: space-between;
+      justify-content: left;
       background-color: white;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-      padding: 0 30px;
     }
 
     .image-container img {
@@ -59,13 +58,10 @@
     }
 
     nav .menu {
-      width: 100%;
+      width: 60%;
       margin-top: -5px;
-      margin-left: 100px;
       text-align: center;
-      justify-content: center;
-      align-items: center;
-
+      margin-left: 30px;
     }
 
     nav .menu ul li {
@@ -77,7 +73,6 @@
       display: inline-block;
       position: relative;
       font-family: "Poppins", sans-serif;
-
     }
 
     nav .menu ul:nth-child(2) li {
@@ -87,24 +82,22 @@
       position: relative;
     }
 
-
-    nav .menu ul li a{
+    nav .menu ul li a {
       color: black;
       text-decoration: none;
     }
 
     nav .menu .active,
     .a:hover {
-     color: #426DDC;
-     font-size: 18px;
+      color: #426DDC;
+      font-size: 20px;
+      margin-left: -5px;
     }
-
 
     nav .menu ul li a:hover {
       color: #426DDC;
       transition: 0.3s ease;
     }
-
 
     nav .search-container {
       position: relative;
@@ -135,7 +128,7 @@
       border: none;
       background: none;
       right: 12px;
-      color: rgb(0, 0, 0);
+      color: gray;
       font-size: 16px;
       pointer-events: auto;
     }
@@ -145,11 +138,16 @@
       transition: 0.3s ease;
     }
 
-    .user-icon {
-      font-size: 24px;
+    nav .user-icon {
+      font-size: 28px;
       color: #333;
-      margin-left: 20px;
+      margin-right: 23px;
       cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    nav .user-icon:hover {
+      color: #426DDC;
     }
 
     #accountDropdown {
@@ -180,96 +178,91 @@
       color: #426DDC;
     }
 
-
-
     .header-image {
-  position: relative;
-  width: 100%;
-  height: 550px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+      position: relative;
+      width: 100%;
+      height: 550px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.header-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, rgba(10, 89, 173, 0.9), rgba(10, 89, 173, 0.4));
-  z-index: 0;
-}
+    .header-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(10, 89, 173, 0.9), rgba(10, 89, 173, 0.4));
+      z-index: 0;
+    }
 
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  height: 100%;
-  width: 100%;
-  position: relative;
-  z-index: 1;
-  padding: 40px 100px;
-  animation: fadeInUp 1s ease forwards;
-  opacity: 0;
-}
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      height: 100%;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      padding: 40px 100px;
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+    }
 
-.header-text {
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  flex: 1;
-}
+    .header-text {
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      flex: 1;
+    }
 
-.header-text h1 {
-  font-size: 50px;
-  margin-bottom: 20px;
-  font-weight: 700;
-}
+    .header-text h1 {
+      font-size: 50px;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
 
-.header-text p {
-  font-size: 20px;
-  line-height: 1.6;
-  max-width: 600px;
-}
+    .header-text p {
+      font-size: 20px;
+      line-height: 1.6;
+      max-width: 600px;
+    }
 
-.header-image-right {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
+    .header-image-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
 
-.header-image-right img {
-  width: 90%;
-  height: 90%;
-  object-fit: cover;
- border-radius: 5px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-.header-image-right img::after {
-  width: 90%;
-  height: 90%;
-  object-fit: cover;
+    .header-image-right img {
+      width: 90%;
+      height: 90%;
+      object-fit: cover;
+      border-radius: 5px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
 
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
+    .header-image-right img::after {
+      width: 90%;
+      height: 90%;
+      object-fit: cover;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
 
-/* Animation */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
     .container {
       max-width: 1100px;
@@ -285,7 +278,6 @@
       flex-wrap: wrap;
       margin-bottom: 50px;
       gap: 40px;
-
     }
 
     .about-section.reverse {
@@ -338,7 +330,6 @@
       color: #005baa;
     }
 
-
     footer {
       text-align: center;
       padding: 20px;
@@ -360,30 +351,29 @@
 
     .menu ul li:hover .dropdown_menuuu,
     .dropdown_menuuu:hover {
-       display: block;
-       border-radius: 5px;
-       font-size: 18px;
+      display: block;
+      border-radius: 5px;
+      font-size: 18px;
     }
 
     .dropdown_menuuu ul {
-       list-style: none;
-       padding: 0;
-       margin-top: 15px;
-       margin-left: 25px;
-       margin-bottom: 9px;
+      list-style: none;
+      padding: 0;
+      margin-top: 15px;
+      margin-left: 25px;
+      margin-bottom: 9px;
     }
 
     .dropdown_menuuu ul li {
-       width: 130px;
-       padding: 7px;
-       white-space: nowrap;
+      width: 130px;
+      padding: 7px;
+      white-space: nowrap;
     }
   </style>
 </head>
 <body>
 
   <nav>
-
     <div class="image-container">
       <img src="{{ asset('storage/assets/civil_registry_logo.png') }}">
     </div>
@@ -398,9 +388,9 @@
 
         <div class="dropdown_menuuu">
           <ul>
-        <li> <a href="{{ route('admin.appointment') }}"> Appointment </a> </li>
-        <li> <a href="{{ route('admin.requirements') }}"> Requirements </a> </li>
-           </ul>
+            <li> <a href="{{ route('admin.appointment') }}"> Appointment </a> </li>
+            <li> <a href="{{ route('admin.requirements') }}"> Requirements </a> </li>
+          </ul>
         </div>
         </li>
         <li><a href="{{ route('admin.faqs') }}">FAQs</a></li>
@@ -415,18 +405,18 @@
     </div>
 
     <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" onclick="toggleDropdown()" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-right: 23px;">
-        <div id="accountDropdown">
-            <div style="padding: 16px 0 8px 0; text-align: center;">
-                <div style="font-size: 40px; color: #e0e0e0; margin-bottom: 4px;">
-                <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-left:15px;">
-                </div>
-                <div style="font-weight: bold; font-size: 18px;">Admin</div>
-                <div style="font-size: 14px; color: #757575; word-break: break-all;">city.registrar@<br>mandaluyong.gov.ph</div>
-            </div>
-            <a href="{{ route('admin.logout') }}" id="logoutLink">Logout</a>
+    <div id="accountDropdown">
+      <div style="padding: 16px 0 8px 0; text-align: center;">
+        <div style="font-size: 40px; color: #e0e0e0; margin-bottom: 4px;">
+          <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-left:15px;">
         </div>
+        <div style="font-weight: bold; font-size: 18px;">Admin</div>
+        <div style="font-size: 14px; color: #757575; word-break: break-all;">city.registrar@<br>mandaluyong.gov.ph</div>
+      </div>
+      <a href="{{ route('admin.logout') }}" id="logoutLink">Logout</a>
+    </div>
 
-        <button class="menu-toggle"> </button>
+    <button class="menu-toggle"> </button>
   </nav>
 
   <header class="header-image">
@@ -441,7 +431,6 @@
       </div>
     </div>
   </header>
-
 
   <div class="container">
     <section class="about-section">
@@ -461,8 +450,6 @@
         <h2>What We Do</h2>
         <p>
           We handle a wide range of civil registry services to ensure the residents of Mandaluyong City have access to vital records when they need them. Our services include processing registrations for births, marriages, and deaths, along with providing certified true copies of these records. We also assist with other essential civil registry functions such as corrections of clerical errors, late registrations, and the legitimation of children.
-
-
         </p>
       </div>
       <div class="image">

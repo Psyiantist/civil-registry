@@ -26,11 +26,11 @@
       height: 65px;
       z-index: 9999;
       display: flex;
+      position: sticky;
       align-items: center;
-      justify-content: space-between;
+      justify-content: left;
       background-color: white;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-      padding: 0 30px;
     }
 
     .image-container img {
@@ -59,13 +59,12 @@
     }
 
     nav .menu {
-      width: 100%;            
+      width: 100%;
       margin-top: -5px;
-      margin-left: 100px;
-      text-align: center;     
-      justify-content: center; 
-      align-items: center;    
-  
+      margin-left: 30px;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
     }
 
     nav .menu ul li {
@@ -73,11 +72,10 @@
       font-size: 17px;
       list-style: none;
       font-weight: bold;
-      margin-right: 30px; 
+      margin-right: 50px;
       display: inline-block;
       position: relative;
       font-family: "Poppins", sans-serif;
-
     }
 
     nav .menu ul:nth-child(2) li {
@@ -87,7 +85,6 @@
       position: relative;
     }
 
-
     nav .menu ul li a{
       color: black;
       text-decoration: none;
@@ -96,15 +93,13 @@
     nav .menu .active,
     .a:hover {
      color: #426DDC;
-     font-size: 18px;
+     font-size: 20px;
     }
-
 
     nav .menu ul li a:hover {
       color: #426DDC;
-      transition: 0.3s ease; 
+      transition: 0.3s ease;
     }
-
 
     nav .search-container {
       position: relative;
@@ -135,141 +130,244 @@
       border: none;
       background: none;
       right: 12px;
-      color: rgb(0, 0, 0);
+      color: gray;
       font-size: 16px;
       pointer-events: auto;
     }
 
     nav .search-container .fa-search:hover {
       color: #426DDC;
-      transition: 0.3s ease; 
+      transition: 0.3s ease;
     }
 
-    .user-icon {
-      font-size: 24px;
+    nav .user-icon {
+      font-size: 28px;
       color: #333;
-      margin-left: 20px;
+      margin-right: 23px;
       cursor: pointer;
+      transition: color 0.3s ease;
     }
 
-    #accountDropdown {
-      display: none;
-      position: absolute;
-      background-color: #fff;
-      border-radius: 6px;
-      right: 10px;
-      top: 60px;
-      min-width: 160px;
-      z-index: 1000;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    #accountDropdown.show {
-      display: block;
-    }
-
-    #accountDropdown a {
-      display: block;
-      padding: 10px 16px;
-      color: #333;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    #accountDropdown a:hover {
+    nav .user-icon:hover {
       color: #426DDC;
     }
 
+    /* Mobile menu styles */
+    @media(max-width: 1000px) {
+      nav button {
+        display: none;
+        width: 30px;
+        height: 25px;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        background: #757575;
+      }
 
+      nav button:before,
+      nav button:after {
+        position: absolute;
+        content: '';
+        z-index: 0;
+        background-color: white;
+        width: 30px;
+        height: 5px;
+        top: 5px;
+        left: 0;
+        transition: 0.5s;
+      }
+
+      nav button:after {
+        top: 15px;
+      }
+
+      nav button.expand-icon {
+        background: transparent;
+      }
+
+      nav button.expand-icon:before,
+      nav button.expand-icon:after {
+        transform: rotate(45deg);
+        background: #757575;
+        top: 10px;
+      }
+
+      nav button.expand-icon:after {
+        transform: rotate(-45deg);
+      }
+
+      nav .menu {
+        position: absolute;
+        margin: auto;
+        width: 100%;
+        height: 0;
+        background: white;
+        top: 60px;
+        transition: 0.5s;
+        overflow: hidden;
+      }
+
+      nav .menu.expand-mobile {
+        height: 700px;
+      }
+
+      nav .menu ul li {
+        width: 100%;
+        display: block;
+        font-size: 1rem;
+        text-align: left;
+        padding: 10px 15px;
+        box-sizing: border-box;
+      }
+
+      nav .menu ul:nth-child(2) li {
+        top: 0;
+        left: 0;
+      }
+
+      nav .nav-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        position: relative;
+        padding: 0 20px;
+        flex-direction: column;
+      }
+
+      nav .search-container {
+        position: relative;
+        margin: 0 auto;
+        justify-content: center;
+        width: 100%;
+        max-width: 500px;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        z-index: 10;
+      }
+
+      nav .search-container input[type="text"] {
+        padding: 8px 35px 8px 15px;
+        border-radius: 20px;
+        border: 1px solid #ccc;
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        outline: none;
+        width: 100%;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+      }
+
+      .user-icon {
+        display: none;
+      }
+
+      nav .menu-toggle {
+        display: flex;
+        top: auto;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 24px;
+        color: #333;
+        position: relative;
+        margin-left: 20px;
+      }
+
+      nav .menu-toggle:hover {
+        color: #426DDC;
+      }
+    }
 
     .header-image {
-  position: relative;
-  width: 100%;
-  height: 550px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+      position: relative;
+      width: 100%;
+      height: 550px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.header-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, rgba(10, 89, 173, 0.9), rgba(10, 89, 173, 0.4));
-  z-index: 0;
-}
+    .header-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(10, 89, 173, 0.9), rgba(10, 89, 173, 0.4));
+      z-index: 0;
+    }
 
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  height: 100%;
-  width: 100%;
-  position: relative;
-  z-index: 1;
-  padding: 40px 100px;
-  animation: fadeInUp 1s ease forwards;
-  opacity: 0;
-}
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      height: 100%;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      padding: 40px 100px;
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+    }
 
-.header-text {
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  flex: 1;
-}
+    .header-text {
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      flex: 1;
+    }
 
-.header-text h1 {
-  font-size: 50px;
-  margin-bottom: 20px;
-  font-weight: 700;
-}
+    .header-text h1 {
+      font-size: 50px;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
 
-.header-text p {
-  font-size: 20px;
-  line-height: 1.6;
-  max-width: 600px;
-}
+    .header-text p {
+      font-size: 20px;
+      line-height: 1.6;
+      max-width: 600px;
+    }
 
-.header-image-right {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
+    .header-image-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
 
-.header-image-right img {
-  width: 90%;
-  height: 90%;
-  object-fit: cover;
- border-radius: 5px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-.header-image-right img::after {
-  width: 90%;
-  height: 90%;
-  object-fit: cover;
- 
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
+    .header-image-right img {
+      width: 90%;
+      height: 90%;
+      object-fit: cover;
+      border-radius: 5px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .header-image-right img::after {
+      width: 90%;
+      height: 90%;
+      object-fit: cover;
+     
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
 
-/* Animation */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
+    /* Animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
     .container {
       max-width: 1100px;
@@ -285,7 +383,6 @@
       flex-wrap: wrap;
       margin-bottom: 50px;
       gap: 40px;
-
     }
 
     .about-section.reverse {
@@ -338,7 +435,6 @@
       color: #005baa;
     }
 
-
     footer {
       text-align: center;
       padding: 20px;
@@ -351,7 +447,6 @@
 <body>
 
   <nav>
-
     <div class="image-container">
       <img src="{{ asset('storage/assets/civil_registry_logo.png') }}">
     </div>
@@ -361,19 +456,18 @@
   
     <div class="menu">
       <ul>
-        <li><a href="{{ route('home') }}">Home</a></li>
-        <!-- <li><a href="#">Services</a></li> -->
-        <li><a href="{{ route('faqs') }}">FAQs</a></li>
-        <li><a class="active" href="{{ route('about') }}">About Us</a></li>
-        <li><a href="{{ route('contact') }}">Contact Us</a></li>
+        <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}">Home</a></li>
+        <li><a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs') }}">FAQs</a></li>
+        <li><a class="{{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}">About Us</a></li>
+        <li><a class="{{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact Us</a></li>
       </ul>
     </div>
   
     <div class="search-container">
-      <input type="text" placeholder="Search" />
-      <i class="fa fa-search"></i>
+      <input type="text" id="searchInput" placeholder="Search">
+      <i class="fa fa-search" onclick="performSearch()"></i>
     </div>
-  
+    
     <i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
   </nav>
  
@@ -452,19 +546,62 @@
   </footer>
 
   <script>
-    function toggleDropdown() {
-            const dropdown = document.getElementById("accountDropdown");
-            alert("Please choose a user mode that best describes you.");
-            dropdown.classList.toggle("show");
+    function performSearch() {
+        const routes = {
+            home: "{{ route('home') }}",
+            faqs: "{{ route('faqs') }}",
+            about: "{{ route('about') }}",
+            contact: "{{ route('contact') }}"
+        };
+
+        const input = document.getElementById("searchInput").value.trim().toLowerCase();
+
+        if (input === "") {
+            alert("Please enter a search term.");
+        } else {
+            if (["home page", "homepage", "home"].includes(input)) {
+                window.location.href = routes.home;
+            } else if (["faqs", "facts", "help", "faq", "question"].includes(input)) {
+                window.location.href = routes.faqs;
+            } else if (["about", "about civil"].includes(input)) {
+                window.location.href = routes.about;
+            } else if (["contact", "number", "email"].includes(input)) {
+                window.location.href = routes.contact;
+            } else {
+                alert("No results found.");
+                inputField.value = "";
             }
+        }
+    }
+
+    document.getElementById("searchInput").addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+            performSearch();
+        }
+    });
+
+    const button = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('.menu');
+    if (button && menu) {
+        button.onclick = () => {
+            menu.classList.toggle('expand-mobile');
+            button.classList.toggle('expand-icon');
+        };
+    }
+
+    function toggleDropdown() {
+        const dropdown = document.getElementById("accountDropdown");
+        alert("Please choose a user mode that best describes you.");
+        dropdown.classList.toggle("show");
+    }
 
     window.onclick = function(event) {
-      if (!event.target.matches('.user-icon')) {
-        const dropdown = document.getElementById("accountDropdown");
-        if (dropdown.classList.contains('show')) {
-          dropdown.classList.remove('show');
+        if (!event.target.matches('.user-icon')) {
+            const dropdown = document.getElementById("accountDropdown");
+            if (dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+            }
         }
-      }
     };
   </script>
 </body>
