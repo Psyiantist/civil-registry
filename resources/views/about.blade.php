@@ -309,7 +309,7 @@
       width: 100%;
       position: relative;
       z-index: 1;
-      padding: 40px 100px;
+      padding: 40px;
       animation: fadeInUp 1s ease forwards;
       opacity: 0;
     }
@@ -333,6 +333,113 @@
       font-size: 20px;
       line-height: 1.6;
       max-width: 600px;
+    }
+
+    @media screen and (max-width: 800px) {
+      .header-content {
+        flex-direction: column;
+        padding: 20px;
+      }
+
+      .header-text {
+        text-align: center;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+
+      .header-text h1 {
+        font-size: 36px;
+        margin-bottom: 15px;
+      }
+
+      .header-text p {
+        font-size: 16px;
+        line-height: 1.5;
+        max-width: 100%;
+      }
+
+      .header-image-right {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .header-image-right img {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+      }
+
+      .header-image {
+        height: auto;
+        min-height: 500px;
+      }
+
+      .about-section {
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      .about-section.reverse {
+        flex-direction: column;
+      }
+
+      .about-section .text,
+      .about-section .image {
+        min-width: 100%;
+      }
+
+      .services {
+        grid-template-columns: 1fr;
+      }
+
+      .service-item {
+        padding: 15px;
+      }
+
+      .service-item i {
+        font-size: 24px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .header-text h1 {
+        font-size: 28px;
+        margin-bottom: 12px;
+      }
+
+      .header-text p {
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .header-image {
+        min-height: 400px;
+      }
+
+      .container {
+        padding: 0 15px;
+        margin-top: 40px;
+      }
+
+      .about-section {
+        gap: 20px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+
+      .service-item {
+        padding: 12px;
+      }
+
+      .service-item i {
+        font-size: 20px;
+      }
+
+      .service-item span {
+        font-size: 14px;
+      }
     }
 
     .header-image-right {
@@ -451,7 +558,7 @@
       <img src="{{ asset('storage/assets/civil_registry_logo.png') }}">
     </div>
     <div class="logo-name">
-      <b>Civil Registry <br/> <a>Mandaluyong City</a></b>
+    <b> Mandaluyong City <br/> <a> Civil Registry</a> </b> </div>
     </div>
   
     <div class="menu">

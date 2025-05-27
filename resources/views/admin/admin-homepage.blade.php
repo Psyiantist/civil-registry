@@ -963,7 +963,8 @@
             <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
 
         <div class="logo-name">
-            <b> Civil Registry <br/> <a> Mandaluyong City </a> </b> </div>
+             <b> Mandaluyong City <br/> <a> Civil Registry</a> </b> </div>
+
 
 		<div class="menu">
 			<ul>
@@ -1138,16 +1139,20 @@
               <span class="status-badge status-pending">Pending</span>
             </td>
             <td style="padding: 12px;">
-              <div style="display: flex; gap: 8px;">
-                <form method="POST" action="{{ route('admin.accept-user', $user->id) }}" class="approval-action-form" style="display:inline;">
-                  @csrf
-                  <button type="submit" class="approve-btn" style="background: #4ade80; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Approve</button>
-                </form>
-                <form method="POST" action="{{ route('admin.reject-user', $user->id) }}" class="approval-action-form" style="display:inline;">
-                  @csrf
-                  <button type="submit" class="reject-btn" style="background: #f87171; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Reject</button>
-                </form>
-              </div>
+              @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
+                <div style="display: flex; gap: 8px;">
+                  <form method="POST" action="{{ route('admin.accept-user', $user->id) }}" class="approval-action-form" style="display:inline;">
+                    @csrf
+                    <button type="submit" class="approve-btn" style="background: #4ade80; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Approve</button>
+                  </form>
+                  <form method="POST" action="{{ route('admin.reject-user', $user->id) }}" class="approval-action-form" style="display:inline;">
+                    @csrf
+                    <button type="submit" class="reject-btn" style="background: #f87171; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Reject</button>
+                  </form>
+                </div>
+              @else
+                <span style="color: #666; font-style: italic;">Only admin1 can approve accounts</span>
+              @endif
             </td>
           </tr>
         @endforeach
@@ -1156,6 +1161,61 @@
   </table>
 </div>
 <!-- END ACCOUNT APPROVAL SECTION -->
+
+<!-- USER ACTIVITY SECTION -->
+<div class="account-approval-container" style="max-width: 1200px; margin: 40px auto 60px auto; background: #f7faff; border-radius: 12px; box-shadow: 0 4px 16px rgba(30,99,233,0.07); overflow: hidden; min-height: 400px; max-height: 800px; overflow-y: auto;">
+  <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">USER ACTIVITY</h2>
+  <table id="userActivityTable" style="width: 100%; border-collapse: collapse; font-family: 'Poppins', sans-serif; background: white;">
+    <thead style="background-color: #1E63E9; color: white;">
+      <tr>
+        <th style="padding: 12px;">User Name</th>
+        <th style="padding: 12px;">Email Address</th>
+        <th style="padding: 12px;">Last Login</th>
+        <th style="padding: 12px;">Status</th>
+        <th style="padding: 12px;">Action</th>
+      </tr>
+    </thead>
+    <tbody id="userActivityTableBody">
+      @if($users->isEmpty())
+        <tr>
+          <td colspan="5" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">No users found.</td>
+        </tr>
+      @else
+        @foreach($users as $user)
+          <tr style="background-color: white;">
+            <td style="padding: 12px;">{{ $user->first_name }} {{ $user->last_name }}</td>
+            <td style="padding: 12px;">{{ $user->email }}</td>
+            <td style="padding: 12px;">{{ $user->last_login ? $user->last_login->format('M d, Y h:i A') : 'Never' }}</td>
+            <td style="padding: 12px;">
+              @php
+                $isActive = $user->last_login && $user->last_login->diffInDays(now()) <= 14;
+              @endphp
+              <span class="status-badge {{ $isActive ? 'status-approved' : 'status-declined' }}">
+                {{ $isActive ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td style="padding: 12px;">
+              @if(!$isActive)
+                @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
+                  <form method="POST" action="{{ route('admin.delete-user', $user->id) }}" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="delete-btn" style="background: #f87171; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;" onclick="return confirm('Are you sure you want to delete this inactive user?')">
+                      Delete Account
+                    </button>
+                  </form>
+                @else
+                  <span style="color: #666; font-style: italic;">Only admin1 can delete accounts</span>
+                @endif
+              @endif
+            </td>
+          </tr>
+        @endforeach
+      @endif
+    </tbody>
+  </table>
+</div>
+<!-- END USER ACTIVITY SECTION -->
 
 <footer>
   <div class="container">

@@ -253,14 +253,6 @@
       transform: scale(1.02);
     }
 
-    /* Responsive */
-    @media (max-width: 900px) {
-      .contact-section {
-        grid-template-columns: 1fr;
-        padding: 40px 20px;
-      }
-    }
-
     .contact-info-box {
       margin-top: 30px;
       padding: 20px;
@@ -291,7 +283,6 @@
     @media(max-width: 1000px) {
       .contact-section {
       display: grid;
-      grid-template-columns: 1fr 1fr;
       gap: 40px;
       padding: 80px 10%;
       align-items: center;
@@ -474,7 +465,6 @@
     footer {
       background: #fff;
       padding-top: 20px;
-      padding-bottom: 5px;
     }
 
     .container {
@@ -568,6 +558,17 @@
       padding: 8px;
     }
 
+    @media (max-width: 900px) {
+      .contact-section {
+        grid-template-columns: 1fr;
+        padding: 40px 20px;
+      }
+
+      .container {
+        display: block;
+        height: 400px;
+      }
+    }
   </style>
 </head>
 
@@ -577,7 +578,8 @@
             <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
 
         <div class="logo-name">
-            <b> Civil Registry <br/> <a> Mandaluyong City </a> </b> </div>
+             <b> Mandaluyong City <br/> <a> Civil Registry</a> </b> </div>
+
 
 		<div class="menu">
 			<ul>

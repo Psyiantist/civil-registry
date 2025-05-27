@@ -23,23 +23,29 @@
       display: flex;
       position: sticky;
       align-items: center;
-      justify-content: left;
+      justify-content: space-between;
       background-color: white;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      padding: 0 20px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
     }
 
     .image-container img {
       width: 50px;
       height: 45px;
       margin-top: 5px;
-      margin-left: 20px;
       position: relative;
       border-radius: 50%;
     }
 
     .logo-name {
       font-size: 15px;
-      margin-left: 30px;
+      margin-left: 15px;
       white-space: nowrap;
       font-family: "Poppins", sans-serif;
     }
@@ -49,92 +55,46 @@
       font-family: "Poppins", sans-serif;
     }
 
-    nav button {
-      display: none;
-    }
-
     nav .menu {
-      width: 100%;
-      margin-top: -5px;
-      margin-left: 30px;
-      text-align: center;
-      justify-content: center;
-      align-items: center;
-    }
-
-    nav .menu ul li {
-      padding: -5px;
-      font-size: 17px;
-      list-style: none;
-      font-weight: bold;
-      margin-right: 50px;
-      display: inline-block;
-      position: relative;
-      font-family: "Poppins", sans-serif;
-
-    }
-
-    nav .menu ul:nth-child(2) li {
-      top: -8px;
-      left: 10px;
-      color: #757575;
-      position: relative;
-    }
-
-
-    nav .menu ul li a{
-      color: black;
-      text-decoration: none;
-    }
-
-    nav .menu .active,
-    .a:hover {
-     color: #426DDC;
-     font-size: 20px;
-    }
-
-
-    nav .menu ul li a:hover {
-      color: #426DDC;
-      transition: 0.3s ease;
-    }
-
-    nav form {
-      left: 25%;
-      top: 65px;
-      width: 60%;
-      position: relative;
-    }
-
-    nav form input {
-      top: -45px;
-      width: 92%;
-      border: none;
-      color: black;
-      outline: none;
-      transition: 0.5s;
-      padding: 10px 0px;
-      position: relative;
-      transform: scaleX(0);
-      transform-origin: right;
-      border-bottom: solid 2px;
-      font-family: "Poppins", sans-serif;
-    }
-
-    nav form input::placeholder {
-      font-size: 16px;
-      font-family: "Poppins", sans-serif;
-    }
-
-    nav .search-container {
-      position: relative;
-      margin-left: auto;
-      margin-right: 20px;
       display: flex;
       align-items: center;
     }
 
-    nav .search-container input[type="text"] {
+    nav .menu ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav .menu ul li {
+      padding: 0;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 30px;
+      position: relative;
+      font-family: "Poppins", sans-serif;
+    }
+
+    nav .menu ul li a {
+      color: black;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    nav .menu ul li a:hover,
+    nav .menu .active {
+      color: #426DDC;
+    }
+
+    .search-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+    }
+
+    .search-container input[type="text"] {
       padding: 8px 35px 8px 15px;
       border-radius: 20px;
       border: 1px solid #ccc;
@@ -145,37 +105,51 @@
       width: 180px;
     }
 
-    nav .search-container input[type="text"]:focus {
+    .search-container input[type="text"]:focus {
       border-color: #426DDC;
       box-shadow: 0 0 5px rgba(66, 109, 220, 0.5);
     }
 
-    nav .search-container .fa-search,  button.search-button {
+    .search-container .fa-search {
       position: absolute;
-      border: none;
-      background: none;
       right: 12px;
       color: gray;
       font-size: 16px;
-      pointer-events: auto;
+      cursor: pointer;
     }
 
-    nav .search-container .fa-search:hover {
+    .search-container .fa-search:hover {
       color: #426DDC;
-      transition: 0.3s ease;
     }
 
-    nav .user-icon {
+    .user-icon {
       font-size: 28px;
       color: #333;
-      margin-right: 23px;
       cursor: pointer;
       transition: color 0.3s ease;
     }
 
-    nav .user-icon:hover {
+    .user-icon:hover {
       color: #426DDC;
     }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: #333;
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+
     /* Main content below the NAV BAR */
     html, body {
       height: 100%;
@@ -298,6 +272,7 @@
       flex-direction: column;
       align-items: stretch;
     }
+
     .form h2 {
       width: 100%;
       font-family: "Poppins", sans-serif;
@@ -310,16 +285,7 @@
       padding: 7px 0;
       letter-spacing: 1px;
     }
-    .form label {
-      font-family: "Poppins", sans-serif;
-      font-size: 16px;
-      color: #222;
-      margin-bottom: 2px;
-      margin-left: 2px;
-      font-weight: 500;
-      text-align: left;
-      display: block;
-    }
+
     .form input[type="text"],
     .form input[type="password"],
     .form input[type="text"].password-field {
@@ -337,366 +303,224 @@
       padding-left: 0;
       color: #222;
     }
-    .form input[type="text"]:focus,
-    .form input[type="password"]:focus {
-      outline: none;
-      border-bottom: 2px solid #426DDC;
-    }
-    .input-group {
-      position: relative;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      margin-bottom: 18px;
-    }
-    .input-group input[type="password"],
-    .input-group input[type="text"] {
-      font-family: 'Poppins', sans-serif !important;
-      letter-spacing: 1px !important;
-      line-height: 38px !important;
-      height: 38px !important;
-      vertical-align: middle !important;
-      box-sizing: border-box;
-    }
-    .input-group .eye-icon {
-      position: absolute;
-      right: 10px;
-      top: 40%;
-      transform: translateY(-50%);
-      font-size: 20px;
-      color: #426DDC;
-      cursor: pointer;
-      z-index: 2;
-      opacity: 0.8;
-      transition: color 0.2s;
-      width: 28px;
-      height: 28px;
-      min-width: 28px;
-      min-height: 28px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      pointer-events: auto;
-    }
-    .input-group .eye-icon:hover {
-      opacity: 1;
-      color: #344CB7;
-    }
-    .form .row-remember-forgot {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 22px;
-      margin-top: -8px;
-    }
-    .form .remember-forgot {
-      display: flex;
-      align-items: center;
-      margin: 0;
-    }
-    .form .remember-forgot input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      margin-right: 7px;
-      accent-color: #426DDC;
-    }
-    .form .remember-forgot label {
-      font-size: 14px;
-      color: #aaa;
-      font-style: italic;
-      font-weight: 400;
-      margin: 0;
-      position: static;
-    }
-    .form .forgot {
-      margin: 0;
-    }
-    .form .forgot a {
-      color: #426DDC;
-      font-size: 15px;
-      font-weight: 500;
-      text-decoration: none;
-      transition: color 0.2s;
-      font-family: "Poppins", sans-serif;
-    }
-    .form .forgot a:hover {
-      color: #344CB7;
-      text-decoration: underline;
-    }
+
     .form .btnn {
       width: 100%;
-      height: 44px;
+      height: 45px;
       background: #426DDC;
       border: none;
-      margin: 0 0 18px 0;
-      font-size: 22px;
-      border-radius: 12px;
+      margin-top: 25px;
+      font-size: 18px;
+      border-radius: 5px;
       cursor: pointer;
-      color: #fff;
+      color: white;
+      transition: 0.4s ease;
       font-weight: bold;
-      font-family: "Poppins", sans-serif;
-      letter-spacing: 1px;
-      transition: background 0.3s;
-      display: block;
     }
+
     .form .btnn:hover {
       background: #344CB7;
     }
+
     .form .link {
-      color: #111;
-      font-size: 15px;
+      color: black;
+      font-weight: bold;
+      font-size: 12px;
+      padding-top: 10px;
       text-align: center;
-      margin: 0 0 8px 0;
+      margin-top: 15px;
       font-family: "Poppins", sans-serif;
-      font-weight: 500;
     }
+
     .form .link a {
       color: #426DDC;
       text-decoration: none;
       margin-left: 5px;
-      font-weight: 600;
     }
+
     .form .link a:hover {
       text-decoration: underline;
       color: #344CB7;
     }
-    .form .liw {
-      margin: 10px 0 0 0;
-      text-align: center;
-      font-size: 15px;
-      color: #111;
-      font-weight: 500;
-      font-family: "Poppins", sans-serif;
+
+    .row-remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
     }
-    .form .divider {
+
+    .remember-forgot {
       display: flex;
       align-items: center;
-      margin: 10px 0 18px 0;
+      gap: 5px;
     }
-    .form .divider span {
-      flex: 1;
-      height: 1px;
-      background: #222;
-      opacity: 0.5;
-    }
-    .form .divider p {
-      margin: 0 10px;
-      color: #222;
-      font-size: 15px;
-      font-family: "Poppins", sans-serif;
-    }
-    .icons {
-      display: flex;
-      justify-content: center;
-      gap: 60px;
-      margin-top: 10px;
-    }
-    .icons a {
-      text-decoration: none;
-    }
-    .icons ion-icon {
-      color: #426DDC;
-      font-size: 48px;
+
+    .remember-forgot input[type="checkbox"] {
       margin: 0;
-      padding: 0;
-      transition: color 0.2s;
     }
-    .icons ion-icon:hover {
+
+    .remember-forgot label {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .forgot a {
+      color: #426DDC;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .forgot a:hover {
+      text-decoration: underline;
       color: #344CB7;
     }
 
-    /* Zoom-in screen orientation layout */
-    @media(max-width: 1000px) {
+    /* Mobile Responsive Styles */
+    @media screen and (max-width: 768px) {
+      nav {
+        padding: 0 15px;
+      }
 
-    html, body {
-     align-items: center;
-     overflow-x: hidden;
-     overflow-y: hidden;
-     width: 100%;
-     max-width: 100%;
+      nav .menu {
+        position: fixed;
+        top: 65px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 65px);
+        background: white;
+        flex-direction: column;
+        transition: 0.3s ease;
+        padding: 20px;
+      }
+
+      nav .menu.active {
+        left: 0;
+      }
+
+      nav .menu ul {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      nav .menu ul li {
+        width: 100%;
+        margin: 10px 0;
+        text-align: center;
+      }
+
+      .search-container {
+        display: none;
+      }
+
+      .user-icon {
+        display: none;
+      }
+
+      .logo-name {
+        font-size: 13px;
+        margin-left: 10px;
+      }
+
+      .image-container img {
+        width: 40px;
+        height: 35px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .details h5 {
+        font-size: 50px;
+        letter-spacing: 10px;
+        margin: 0;
+        padding: 0 10px;
+        white-space: normal;
+        word-wrap: break-word;
+      }
+
+      .details h4 {
+        font-size: 30px;
+        letter-spacing: 2px;
+        margin: 10px 0;
+        padding: 0 10px;
+        white-space: normal;
+        word-wrap: break-word;
+      }
+
+      .details p {
+        font-size: 16px;
+        padding: 10px 20px;
+        margin: 10px auto;
+        max-width: 90%;
+        width: auto;
+        white-space: normal;
+        word-wrap: break-word;
+      }
+
+      .form {
+        width: 90%;
+        padding: 25px 20px;
+        margin: 20px auto;
+      }
+
+      .form h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
     }
 
-    nav button {
-      display: none;
-      width: 30px;
-      height: 25px;
-      top: 20px;
-      right: 20px;
-      cursor: pointer;
-      border: none;
-      outline: none;
-      background: #757575;
-    }
+    @media screen and (max-width: 480px) {
+      nav {
+        padding: 0 10px;
+      }
 
-    nav  button:before,
-    nav  button:after {
-      position: absolute;
-      content: '';
-      z-index: 0;
-      background-color: white;
-      width: 30px;
-      height: 5px;
-      top: 5px;
-      left: 0;
-      transition: 0.5s;
-    }
+      .logo-name {
+        font-size: 12px;
+      }
 
-    nav button:after {
-      top: 15px;
-    }
+      .image-container img {
+        width: 35px;
+        height: 30px;
+      }
 
-    nav button.expand-icon {
-      background: transparent;
-    }
+      .details h5 {
+        font-size: 36px;
+        letter-spacing: 8px;
+        padding: 0 15px;
+        margin: 0;
+      }
 
-    nav button.expand-icon:before,
-    nav button.expand-icon:after {
-      transform: rotate(45deg);
-      background: #757575;
-      top: 10px;
-    }
+      .details h4 {
+        font-size: 24px;
+        letter-spacing: 1px;
+        padding: 0 15px;
+        margin: 10px 0;
+      }
 
-    nav button.expand-icon:after {
-      transform: rotate(-45deg);
-    }
+      .details p {
+        font-size: 14px;
+        padding: 8px 15px;
+        margin: 8px auto;
+        width: 90%;
+        max-width: 400px;
+      }
 
-    nav .menu {
-      position: absolute;
-      margin: auto;
-      width: 100%;
-      height: 0;
-      background: white;
-      top: 60px;
-      transition: 0.5s;
-      /* overflow: hidden; */
-    }
+      .learn-button {
+        padding: 8px 20px;
+        font-size: 16px;
+      }
 
-    nav .menu ul {
-      padding: 0;
-      margin: 0;
-      list-style: none;
-    }
+      .form {
+        width: 95%;
+        padding: 20px 15px;
+      }
 
-    nav .menu.expand-mobile {
-      height: 700px;
-    }
-
-    nav .menu ul li {
-      width: 100%;
-      display: block;
-      font-size: 1rem;
-      text-align: left;
-      padding: 10px 15px;
-      box-sizing: border-box;
-    }
-
-    .dropdown_menu ul {
-      list-style: none;
-      padding: 0;
-      margin-left: 250px;
-    }
-
-    .dropdown_menu ul li {
-      width: 130px;
-      padding: 5px;
-      white-space: nowrap;
-    }
-
-    nav .menu ul:nth-child(2) li {
-      top: 0;
-      left: 0;
-    }
-
-    nav .nav-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      position: relative;
-      padding: 0 20px;
-      flex-direction: column;
-    }
-
-    nav .search-container {
-      position: relative;
-      margin: 0 auto;
-      justify-content: center;
-      width: 100%;
-      max-width: 500px;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      z-index: 10;
-    }
-
-    nav .search-container input[type="text"] {
-      padding: 8px 35px 8px 15px;
-      border-radius: 20px;
-      border: 1px solid #ccc;
-      font-family: "Poppins", sans-serif;
-      font-size: 14px;
-      outline: none;
-      width: 100%;
-      box-sizing: border-box;
-      transition: all 0.3s ease;
-    }
-
-    nav .search-container input[type="text"]:focus {
-      border-color: #426DDC;
-      box-shadow: 0 0 5px rgba(66, 109, 220, 0.5);
-    }
-
-    nav .search-container .fa-search {
-      position: absolute;
-      right: 35px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #888;
-      border: none;
-      font-size: 16px;
-      pointer-events: auto;
-    }
-
-    ::placeholder {
-      color: #888;
-      font-size: 15px;
-      margin-left: 30px;
-      font-family: "Poppins", sans-serif;
-    }
-
-    nav .search-container i .fa-search:hover {
-      color: #426DDC;
-      transition: 0.3s ease;
-    }
-
-    .user-icon {
-      display: none;
-    }
-
-    nav .menu-toggle {
-      display: flex;
-      top: auto;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 24px;
-      color: #333;
-      position: relative;
-      margin-left: 20px;
-    }
-
-    nav .menu-toggle:hover {
-      color: #426DDC;
-    }
-
-    .form {
-      display: none;
-    }
-
-    .details {
-     display: none;
-    }
+      .form h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+      }
     }
 
     input.error {
@@ -750,39 +574,45 @@
 
 <body>
   <nav>
-        <div class="image-container">
-            <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
-
-        <div class="logo-name">
-            <b> Civil Registry <br/> <a> Mandaluyong City </a> </b> </div>
+    <div class="nav-left">
+      <div class="image-container">
+        <img src="{{ asset('storage/assets/civil_registry_logo.png') }}" alt="Logo">
+      </div>
+      <div class="logo-name">
+        <b>Mandaluyong City<br/><a>Civil Registry</a></b>
+      </div>
+    </div>
 
     <div class="menu">
       <ul>
-          <li> <a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}"> Home </a> </li>
-          <li> <a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs') }}"> FAQs </a> </li>
-          <li> <a class="{{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}"> About Us </a> </li>
-          <li> <a class="{{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}"> Contact Us </a> </li>
+        <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}">Home</a></li>
+        <li><a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs') }}">FAQs</a></li>
+        <li><a class="{{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}">About Us</a></li>
+        <li><a class="{{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact Us</a></li>
       </ul>
     </div>
 
-  <div class="search-container">
-  <input type="text" id="searchInput" placeholder="Search">
-  <i class="fa fa-search" onclick="performSearch()"> </i>
-  </div>
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search">
+      <i class="fa fa-search" onclick="performSearch()"></i>
+    </div>
 
-<i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
-</div>
+    <i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
 
-    <button class="menu-toggle"> </button>
+    <button class="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
 
   <section>
     <div class="details">
       <div>
-        <h5 style="letter-spacing: 15px; font-size: 100px;"><center>SCHEDULE</center></h5>
+        <h5>SCHEDULE</h5>
         <div style="display: flex; flex-direction: column; align-items: center;">
-          <h4 style="white-space: nowrap; text-align: center;">AN APPOINTMENT NOW! <i class="fa fa-calendar-week" aria-hidden="true"></i></h4>
-          <p style="display: block; margin: 18px auto; background: #fff; color: #222; font-size: 22px; font-style: italic; font-weight: 600; border-radius: 30px; padding: 12px 36px; width: fit-content; white-space: nowrap; text-align: center; box-shadow: 0 2px 8px rgba(66, 109, 220, 0.07); letter-spacing: 0.5px;">"Convenience you can count on, appointments you can trust."</p>
+          <h4>AN APPOINTMENT NOW! <i class="fa fa-calendar-week" aria-hidden="true"></i></h4>
+          <p>"Convenience you can count on, appointments you can trust."</p>
         </div>
         <a href="#learn-more" class="learn-button">Learn more</a>
       </div>
@@ -821,6 +651,9 @@
           </div>
         @endif
         <button type="submit" class="btnn">SIGN IN</button>
+        <p class="link">Don't have an account yet?
+          <a href="{{ route('admin.register') }}">Register here</a>
+        </p>
       </form>
     </div>
     <div id="forgotPasswordContainer" class="form" style="display: none;">
@@ -874,12 +707,13 @@ function performSearch() {
     }
     });
 
-    const button = document.querySelector('.menu-toggle');
+    const menuToggle = document.querySelector('.menu-toggle');
     const menu = document.querySelector('.menu');
-    if (button && menu) {
-        button.addEventListener("click", () => {
-            menu.classList.toggle('expand-mobile');
-            button.classList.toggle('expand-icon');
+    
+    if (menuToggle && menu) {
+        menuToggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
         });
     }
     window.toggleDropdown = function () {

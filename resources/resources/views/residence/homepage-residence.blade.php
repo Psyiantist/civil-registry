@@ -747,7 +747,8 @@
             <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
 
         <div class="logo-name">
-            <b> Civil Registry <br/> <a> Mandaluyong City </a> </b> </div>
+             <b> Mandaluyong City <br/> <a> Civil Registry</a> </b> </div>
+
 
 		<div class="menu">
 			<ul>

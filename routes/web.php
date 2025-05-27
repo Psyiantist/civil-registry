@@ -12,6 +12,8 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\RequirementController;
+use App\Http\Controllers\AdminRegisterController;
+
 Route::get('/', function () {
     return view('homepage');
 });
@@ -66,7 +68,14 @@ Route::post('/admin/password', [AuthController::class, 'updateAdminPassword'])->
 
 Route::middleware(['auth:employee'])->group(function () {
     Route::get('/admin/homepage', [EmployeeController::class, 'showAdminHomepage'])->name('admin.homepage');
+    Route::get('/admin/appointment', [EmployeeController::class, 'showAdminAppointment'])->name('admin.appointment');
+    Route::get('/admin/requirements', [EmployeeController::class, 'showAdminRequirements'])->name('admin.requirements');
+    Route::get('/admin/faqs', [EmployeeController::class, 'showAdminFaqs'])->name('admin.faqs');
     Route::get('/admin/about', [EmployeeController::class, 'showAdminAbout'])->name('admin.about');
+    Route::get('/admin/contact', [EmployeeController::class, 'showAdminContact'])->name('admin.contact');
+    Route::post('/admin/accept-user/{user}', [EmployeeController::class, 'acceptUser'])->name('admin.accept-user');
+    Route::post('/admin/reject-user/{user}', [EmployeeController::class, 'rejectUser'])->name('admin.reject-user');
+    Route::delete('/admin/delete-user/{user}', [EmployeeController::class, 'deleteUser'])->name('admin.delete-user');
 
     // Announcement Routes
     Route::put('/admin/announcements/{announcement}', [AnnouncementController::class, 'update'])->name('admin.announcements.update');
@@ -86,10 +95,6 @@ Route::middleware(['auth:employee'])->group(function () {
     Route::post('/admin/contact/update', [ContactController::class, 'updateContact'])->name('contact.update');
     Route::get('/contact/get', [ContactController::class, 'getContact'])->name('contact.get');
     Route::delete('/admin/contact/feedback/{id}', [ContactController::class, 'deleteFeedback'])->name('admin.contact.feedback.delete');
-
-    // User Acceptance Routes 
-    Route::post('/admin/accept-user/{user}', [EmployeeController::class, 'acceptUser'])->name('admin.accept-user');
-    Route::post('/admin/reject-user/{user}', [EmployeeController::class, 'rejectUser'])->name('admin.reject-user');
 
     // Requirements Routes 
     Route::get('/admin/requirements', [RequirementController::class, 'index'])->name('admin.requirements');
@@ -112,4 +117,8 @@ Route::get('/faqs', [FaqController::class, 'publicFaqs'])->name('faqs');
 
 // Public Contact route 
 Route::get('/contact-info', [ContactController::class, 'getContact'])->name('contact.get');
+
+// Admin Registration Routes
+Route::get('/admin/register', [AdminRegisterController::class, 'showRegistrationForm'])->name('admin.register');
+Route::post('/admin/register', [AdminRegisterController::class, 'register']);
 

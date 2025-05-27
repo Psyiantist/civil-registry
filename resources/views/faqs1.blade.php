@@ -650,6 +650,216 @@
       padding: 8px;
     }
 
+    /* Mobile Responsive Styles */
+    @media screen and (max-width: 1000px) {
+      nav {
+        padding: 0 15px;
+      }
+
+      nav .menu {
+        position: fixed;
+        top: 65px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 65px);
+        background: white;
+        flex-direction: column;
+        transition: 0.3s ease;
+        padding: 20px;
+      }
+
+      nav .menu.active {
+        left: 0;
+      }
+
+      nav .menu ul {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      nav .menu ul li {
+        width: 100%;
+        margin: 10px 0;
+        text-align: center;
+      }
+
+      .search-container {
+        display: none;
+      }
+
+      .user-icon {
+        display: none;
+      }
+
+      .logo-name {
+        font-size: 13px;
+        margin-left: 10px;
+      }
+
+      .image-container img {
+        width: 40px;
+        height: 35px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      section {
+        height: auto;
+        min-height: 100vh;
+        padding: 20px 0;
+      }
+
+      .search-section {
+        width: 100%;
+        padding: 0 15px;
+      }
+
+      .hcwhy h3 {
+        font-size: 24px;
+        margin-left: 0;
+        text-align: center;
+      }
+
+      .search-container2 {
+        width: 100%;
+        max-width: 500px;
+        margin: 20px auto;
+      }
+
+      .faq-container {
+        width: 100%;
+        max-width: 500px;
+        margin: 30px auto;
+      }
+
+      .faq-title {
+        font-size: 20px;
+      }
+
+      .faq-question {
+        font-size: 15px;
+        padding: 10px 5px;
+      }
+
+      .faq-answer {
+        font-size: 13px;
+        padding: 0 5px;
+      }
+
+      .container {
+        width: 100%;
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+      }
+
+      .footer-content {
+        width: 100%;
+        margin: 15px 0;
+        text-align: center;
+      }
+
+      .footer-content p {
+        width: 100%;
+        margin: 5px 0;
+      }
+
+      .map-container {
+        height: 200px;
+        margin: 15px 0;
+      }
+
+      .social-icons {
+        margin: 15px 0;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .logo-name {
+        font-size: 12px;
+      }
+
+      .image-container img {
+        width: 35px;
+        height: 30px;
+      }
+
+      .hcwhy h3 {
+        font-size: 20px;
+      }
+
+      .search-container2 {
+        height: 35px;
+      }
+
+      .search-container2 input {
+        font-size: 13px;
+      }
+
+      .faq-container {
+        padding: 5px;
+      }
+
+      .faq-title {
+        font-size: 18px;
+        margin: 5px 0 15px 0;
+      }
+
+      .faq-question {
+        font-size: 14px;
+        padding: 8px 5px;
+      }
+
+      .faq-answer {
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      .container {
+        padding: 15px;
+      }
+
+      .footer-content h3 {
+        font-size: 14px;
+      }
+
+      .footer-content p {
+        font-size: 12px;
+      }
+
+      .social-icons i {
+        font-size: 20px;
+      }
+
+      .bottom-bar p {
+        font-size: 12px;
+      }
+    }
+
+    /* Fix for FAQ items on mobile */
+    @media screen and (max-width: 768px) {
+      .faq-item {
+        padding: 10px 0;
+        margin-left: 0;
+      }
+
+      .faq-question {
+        width: 100%;
+        padding: 0 10px;
+      }
+
+      .faq-answer {
+        margin-left: 10px;
+        padding: 0 10px;
+      }
+
+      .faq-answer.show {
+        padding: 10px;
+      }
+    }
+
 	</style>
 </head>
 
@@ -659,7 +869,8 @@
             <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
 
         <div class="logo-name">
-            <b> Civil Registry <br/> <a> Mandaluyong City </a> </b> </div>
+             <b> Mandaluyong City <br/> <a> Civil Registry</a> </b> </div>
+
 
 		<div class="menu">
 			<ul>

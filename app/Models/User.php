@@ -30,7 +30,8 @@ class User extends Authenticatable
         'permanent_address',
         'date_of_birth',
         'is_verified',
-        'status'
+        'status',
+        'last_login'
     ];
 
     /**
@@ -53,6 +54,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'last_login' => 'datetime',
         ];
     }
 }

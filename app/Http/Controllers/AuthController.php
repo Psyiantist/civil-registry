@@ -121,4 +121,31 @@ class AuthController extends Controller
         Auth::guard('employee')->logout();
         return redirect()->route('admin.login')->with('success', 'Logout successful');
     }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        $employee = Employee::where('username', $credentials['username'])->first();
+
+        if ($employee && Hash::check($credentials['password'], $employee->password)) {
+            // Update last_login timestamp in users table
+            $user = User::where('email', $employee->username)->first();
+            if ($user) {
+                $user->update(['last_login' => now()]);
+            }
+            
+            // Store employee info in session
+            session(['employee' => $employee]);
+            
+            return redirect()->route('admin.homepage');
+        }
+
+        return back()->withErrors([
+            'username' => 'The provided credentials do not match our records.',
+        ]);
+    }
 }
