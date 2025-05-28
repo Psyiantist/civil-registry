@@ -18,6 +18,9 @@ return new class extends Migration
             if (!Schema::hasColumn('employees', 'id_card_image')) {
                 $table->string('id_card_image')->nullable();
             }
+            if (!Schema::hasColumn('employees', 'birthday')) {
+                $table->date('birthday')->nullable();
+            }
         });
     }
 
@@ -29,6 +32,7 @@ return new class extends Migration
         Schema::table('employees', function (Blueprint $table) {
             $table->string('employee_id')->unique()->nullable();
             $table->dropColumn('id_card_image');
+            $table->dropColumn('birthday');
         });
     }
 }; 
