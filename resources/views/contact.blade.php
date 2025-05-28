@@ -8,17 +8,14 @@
 	<title> Contact Us Page </title>
 	<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 	<style type="text/css">
-
-    body {
-            font-family: 'Poppins';
-        }
-    *{
+    .contact-page {
+      font-family: 'Poppins';
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    nav{
+    .contact-page nav{
       top: 0;
       width: 100%;
       height: 65px;
@@ -31,7 +28,7 @@
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
     }
 
-    .image-container img {
+    .contact-page .image-container img {
       width: 50px;
       height: 45px;
       margin-top: 5px;
@@ -40,23 +37,23 @@
       border-radius: 50%;
     }
 
-    .logo-name {
+    .contact-page .logo-name {
       font-size: 15px;
       margin-left: 30px;
       white-space: nowrap;
       font-family: "Poppins", sans-serif;
     }
 
-    .logo-name a {
+    .contact-page .logo-name a {
       margin-left: -16px;
       font-family: "Poppins", sans-serif;
     }
 
-    nav button {
+    .contact-page nav button {
       display: none;
     }
 
-    nav .menu {
+    .contact-page nav .menu {
       width: 100%;
       margin-top: -5px;
       margin-left: 30px;
@@ -65,7 +62,7 @@
       align-items: center;
     }
 
-    nav .menu ul li {
+    .contact-page nav .menu ul li {
       padding: -5px;
       font-size: 17px;
       list-style: none;
@@ -74,42 +71,39 @@
       display: inline-block;
       position: relative;
       font-family: "Poppins", sans-serif;
-
     }
 
-    nav .menu ul:nth-child(2) li {
+    .contact-page nav .menu ul:nth-child(2) li {
       top: -8px;
       left: 10px;
       color: #757575;
       position: relative;
     }
 
-
-    nav .menu ul li a{
+    .contact-page nav .menu ul li a{
       color: black;
       text-decoration: none;
     }
 
-    nav .menu .active,
-    .a:hover {
+    .contact-page nav .menu .active,
+    .contact-page .a:hover {
      color: #426DDC;
      font-size: 20px;
     }
 
-
-    nav .menu ul li a:hover {
+    .contact-page nav .menu ul li a:hover {
       color: #426DDC;
       transition: 0.3s ease;
     }
 
-    nav form {
+    .contact-page nav form {
       left: 25%;
       top: 65px;
       width: 60%;
       position: relative;
     }
 
-    nav form input {
+    .contact-page nav form input {
       top: -45px;
       width: 92%;
       border: none;
@@ -124,12 +118,12 @@
       font-family: "Poppins", sans-serif;
     }
 
-    nav form input::placeholder {
+    .contact-page nav form input::placeholder {
       font-size: 16px;
       font-family: "Poppins", sans-serif;
     }
 
-    nav .search-container {
+    .contact-page nav .search-container {
       position: relative;
       margin-left: auto;
       margin-right: 20px;
@@ -137,7 +131,7 @@
       align-items: center;
     }
 
-    nav .search-container input[type="text"] {
+    .contact-page nav .search-container input[type="text"] {
       padding: 8px 35px 8px 15px;
       border-radius: 20px;
       border: 1px solid #ccc;
@@ -148,12 +142,12 @@
       width: 180px;
     }
 
-    nav .search-container input[type="text"]:focus {
+    .contact-page nav .search-container input[type="text"]:focus {
       border-color: #426DDC;
       box-shadow: 0 0 5px rgba(66, 109, 220, 0.5);
     }
 
-    nav .search-container .fa-search,  button.search-button {
+    .contact-page nav .search-container .fa-search,  button.search-button {
       position: absolute;
       border: none;
       background: none;
@@ -163,12 +157,12 @@
       pointer-events: auto;
     }
 
-    nav .search-container .fa-search:hover {
+    .contact-page nav .search-container .fa-search:hover {
       color: #426DDC;
       transition: 0.3s ease;
     }
 
-    nav .user-icon {
+    .contact-page nav .user-icon {
       font-size: 28px;
       color: #333;
       margin-right: 23px;
@@ -176,10 +170,11 @@
       transition: color 0.3s ease;
     }
 
-    nav .user-icon:hover {
+    .contact-page nav .user-icon:hover {
       color: #426DDC;
     }
-    .contact-section {
+
+    .contact-page .contact-section {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 40px;
@@ -188,37 +183,37 @@
       background-color: #d8e4f0;
     }
 
-    .contact-text {
+    .contact-page .contact-text {
       max-width: 500px;
     }
 
-    .contact-text h1 {
+    .contact-page .contact-text h1 {
       font-size: 30px;
       color: #2c3e50;
       margin-bottom: 20px;
     }
 
-    .contact-text p {
+    .contact-page .contact-text p {
       font-size: 16px;
       color: #555;
       line-height: 1.6;
     }
 
-    .contact-form {
+    .contact-page .contact-form {
       background: #fff;
       padding: 40px;
       border-radius: 16px;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
     }
 
-    .contact-form h2 {
+    .contact-page .contact-form h2 {
       margin-bottom: 20px;
       font-size: 24px;
       color: #2c3e50;
     }
 
-    .contact-form input,
-    .contact-form textarea {
+    .contact-page .contact-form input,
+    .contact-page .contact-form textarea {
       width: 100%;
       padding: 12px 16px;
       margin-bottom: 20px;
@@ -229,13 +224,13 @@
       transition: border-color 0.3s;
     }
 
-    .contact-form input:focus,
-    .contact-form textarea:focus {
+    .contact-page .contact-form input:focus,
+    .contact-page .contact-form textarea:focus {
       border-color: #426DDC;
       outline: none;
     }
 
-    .contact-form button {
+    .contact-page .contact-form button {
       padding: 12px 24px;
       background: #426DDC;
       color: #fff;
@@ -248,12 +243,12 @@
       transition: background 0.3s, transform 0.2s;
     }
 
-    .contact-form button:hover {
+    .contact-page .contact-form button:hover {
       background: #274aa6;
       transform: scale(1.02);
     }
 
-    .contact-info-box {
+    .contact-page .contact-info-box {
       margin-top: 30px;
       padding: 20px;
       border-radius: 12px;
@@ -262,212 +257,40 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .contact-info-box:hover {
+    .contact-page .contact-info-box:hover {
       transform: translateY(-5px) scale(1.02);
       box-shadow: 0 12px 25px rgba(66, 109, 220, 0.25);
     }
 
-    .contact-info-box h3 {
+    .contact-page .contact-info-box h3 {
       margin-bottom: 12px;
       font-weight: bold;
       font-size: 20px;
       color: #2c3e50;
     }
 
-    .contact-info-box p {
+    .contact-page .contact-info-box p {
       font-size: 14px;
       color: #333;
       margin-bottom: 8px;
     }
 
     @media(max-width: 1000px) {
-      .contact-section {
-      display: grid;
-      gap: 40px;
-      padding: 80px 10%;
-      align-items: center;
-      background-color: #d8e4f0;
-    }
-      nav button {
-      display: none;
-      width: 30px;
-      height: 25px;
-      top: 20px;
-      right: 20px;
-      cursor: pointer;
-      border: none;
-      outline: none;
-      background: #757575;
+      .contact-page .contact-section {
+        display: grid;
+        gap: 40px;
+        padding: 80px 10%;
+        align-items: center;
+        background-color: #d8e4f0;
+      }
     }
 
-    nav  button:before,
-    nav  button:after {
-      position: absolute;
-      content: '';
-      z-index: 0;
-      background-color: white;
-      width: 30px;
-      height: 5px;
-      top: 5px;
-      left: 0;
-      transition: 0.5s;
-    }
-
-    nav button:after {
-      top: 15px;
-    }
-
-    nav button.expand-icon {
-      background: transparent;
-    }
-
-    nav button.expand-icon:before,
-    nav button.expand-icon:after {
-      transform: rotate(45deg);
-      background: #757575;
-      top: 10px;
-    }
-
-    nav button.expand-icon:after {
-      transform: rotate(-45deg);
-    }
-
-    nav .menu {
-      position: absolute;
-      margin: auto;
-      width: 100%;
-      height: 0;
-      background: white;
-      top: 60px;
-      transition: 0.5s;
-      overflow: hidden;
-    }
-
-    nav .menu ul {
-      padding: 0;
-      margin: 0;
-      list-style: none;
-    }
-
-    nav .menu.expand-mobile {
-      height: 700px;
-    }
-
-    nav .menu ul li {
-      width: 100%;
-      display: block;
-      font-size: 1rem;
-      text-align: left;
-      padding: 10px 15px;
-      box-sizing: border-box;
-    }
-
-    .dropdown_menu ul {
-      list-style: none;
-      padding: 0;
-      margin-left: 250px;
-    }
-
-    .dropdown_menu ul li {
-      width: 130px;
-      padding: 5px;
-      white-space: nowrap;
-    }
-
-    nav .menu ul:nth-child(2) li {
-      top: 0;
-      left: 0;
-    }
-
-    nav .nav-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      position: relative;
-      padding: 0 20px;
-      flex-direction: column;
-    }
-
-    nav .search-container {
-      position: relative;
-      margin: 0 auto;
-      justify-content: center;
-      width: 100%;
-      max-width: 500px;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      z-index: 10;
-    }
-
-    nav .search-container input[type="text"] {
-      padding: 8px 35px 8px 15px;
-      border-radius: 20px;
-      border: 1px solid #ccc;
-      font-family: "Poppins", sans-serif;
-      font-size: 14px;
-      outline: none;
-      width: 100%;
-      box-sizing: border-box;
-      transition: all 0.3s ease;
-    }
-
-    nav .search-container input[type="text"]:focus {
-      border-color: #426DDC;
-      box-shadow: 0 0 5px rgba(66, 109, 220, 0.5);
-    }
-
-    nav .search-container .fa-search {
-      position: absolute;
-      right: 35px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #888;
-      border: none;
-      font-size: 16px;
-      pointer-events: auto;
-    }
-
-    ::placeholder {
-      color: #888;
-      font-size: 15px;
-      margin-left: 30px;
-      font-family: "Poppins", sans-serif;
-    }
-
-    nav .search-container i .fa-search:hover {
-      color: #426DDC;
-      transition: 0.3s ease;
-    }
-
-    .user-icon {
-      display: none;
-    }
-
-    nav .menu-toggle {
-      display: flex;
-      top: auto;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 24px;
-      color: #333;
-      position: relative;
-      margin-left: 20px;
-    }
-
-    nav .menu-toggle:hover {
-      color: #426DDC;
-    }
-    }
-
-    footer {
+    .contact-page footer {
       background: #fff;
       padding-top: 20px;
     }
 
-    .container {
+    .contact-page .container {
       margin-left: 20px;
       margin-right: 20px;
       height: 110px;
@@ -476,7 +299,7 @@
       justify-content: space-between;
     }
 
-    .footer-content {
+    .contact-page .footer-content {
       margin-left: 20px;
       margin-right: 20px;
       width: 33.3%;
@@ -486,7 +309,7 @@
       margin: 0 10px;
     }
 
-    footer iframe {
+    .contact-page footer iframe {
       margin-left: 20px;
       width: 100%;
       height: 100%;
@@ -494,12 +317,12 @@
       margin: 0;
     }
 
-    .map-container {
+    .contact-page .map-container {
       flex-grow: 1;
       height: 100%;
     }
 
-    h3 {
+    .contact-page h3 {
       margin-left: 20px;
       margin-right: 20px;
       font-weight: 100;
@@ -509,49 +332,49 @@
       color: #3247df;
     }
 
-    .footer-content p {
+    .contact-page .footer-content p {
       width: 190px;
       margin-left: 5px;
       padding: 2px;
     }
 
-    .social-icons {
+    .contact-page .social-icons {
       text-align: center;
       padding: 0;
     }
 
-    .social-icons li {
+    .contact-page .social-icons li {
       display: inline-block;
       text-align: center;
       padding: 5px;
     }
 
-    .social-icons i {
+    .contact-page .social-icons i {
       color: rgb(3, 3, 3);
       font-size: 25px;
     }
 
-    a {
+    .contact-page a {
       color: #333;
       text-decoration: none;
     }
 
-    a:hover {
+    .contact-page a:hover {
       color: #3247df;
     }
 
-    .social-icons i:hover {
+    .contact-page .social-icons i:hover {
       color: #3247df;
     }
 
-    .bottom-bar {
+    .contact-page .bottom-bar {
       background: #3247df;
       text-align: center;
       padding: 0px 0;
       margin-top: 50px;
     }
 
-    .bottom-bar p {
+    .contact-page .bottom-bar p {
       color: #f7f7f7;
       margin: 0;
       font-size: 16px;
@@ -559,12 +382,12 @@
     }
 
     @media (max-width: 900px) {
-      .contact-section {
+      .contact-page .contact-section {
         grid-template-columns: 1fr;
         padding: 40px 20px;
       }
 
-      .container {
+      .contact-page .container {
         display: block;
         height: 400px;
       }
@@ -572,7 +395,7 @@
   </style>
 </head>
 
-<body>
+<body class="contact-page">
 	@include('layouts.public-navbar')
 
 	<section class="contact-section">

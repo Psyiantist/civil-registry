@@ -8,7 +8,6 @@
 	<title> FAQs Page </title>
 	<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 	<style type="text/css">
-
     body {
             font-family: 'Poppins';
         }
@@ -27,39 +26,46 @@
     }
 
     section {
-      width: 100vw;
-      height: 110vh;
+      width: 100%;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: flex-start;
       align-items: center;
       background-color: #d8e4f0;
       background-size: cover;
       background-repeat: no-repeat;
       margin: 0;
-      padding: 0;
+      padding: 20px;
       box-sizing: border-box;
       position: relative;
     }
 
     .hcwhy h3{
       color: #2c3e50;
-      font-size: 30px;
+      font-size: clamp(20px, 5vw, 30px);
       font-weight: bold;
-      margin-left: 50px;
+      margin: 20px 0;
+      text-align: center;
       font-family: "Poppins", sans-serif;
     }
 
     .search-section {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .search-container2 {
       border: 2px solid #426DDC;
       display: flex;
-      margin-top: 35px;
+      margin: 20px 0;
       align-items: center;
-      width: 600px;
+      width: 100%;
+      max-width: 600px;
       height: 40px;
       padding: 15px;
       background: #f9f9f9;
@@ -68,14 +74,14 @@
     }
 
     .search-container2:hover {
-      box-shadow: 0 0 7px white;
+      box-shadow: 0 0 7px white;      
     }
 
     .search-container2 input {
       flex: 1;
       border: none;
       outline: none;
-      font-size: 15px;
+      font-size: clamp(14px, 2vw, 15px);
       padding: 10px;
       border-radius: 30px;
       background: transparent;
@@ -96,21 +102,11 @@
       color: #007bff;
     }
 
-    @media (max-width: 600px) {
-      .search-container2 {
-                max-width: 90%;
-      }
-            .search-container2 input {
-                font-size: 14px;
-            }
-      }
-
-
     .faq-container {
-      margin-top: 55px;
-      padding: 10px;
-      width: 600px;
-      max-width: 80vw;
+      margin: 20px 0;
+      padding: 20px;
+      width: 100%;
+      max-width: 800px;
       background: #fff;
       border-radius: 16px;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
@@ -119,216 +115,124 @@
       font-family: "Poppins", sans-serif;
     }
 
-   .faq-title {
+    .faq-title {
       text-align: center;
-      font-size: 23px;
+      font-size: clamp(20px, 4vw, 23px);
       color: #003366;
-      margin-top: 10px;
-      margin-bottom: 25px;
+      margin: 10px 0 25px;
     }
 
-   .faq-item {
+    .faq-item {
       border-bottom: 1px solid #ddd;
       text-align: left;
       padding: 15px 0;
       display: flex;
-      margin-left: 5px;
+      margin: 0 5px;
       flex-direction: column;
-      width: 100%;
+      width: calc(100% - 10px);
     }
 
-   .faq-item:last-child {
+    .faq-item:last-child {
       border-bottom: none;
     }
 
-   .faq-question {
+    .faq-question {
       display: flex;
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
-      font-size: 17px;
+      font-size: clamp(15px, 2vw, 17px);
       font-weight: 600;
       color: #003366;
       padding: 0 5px;
-      width: calc(100% - 20px);
+      width: 100%;
       transition: 0.3s ease;
     }
 
-   .faq-question:hover {
+    .faq-question:hover {
       color: #0055aa;
     }
 
-   .faq-question i {
-      margin-left: auto;
+    .faq-question i {
+      margin-left: 10px;
       transition: transform 0.3s ease;
+      flex-shrink: 0;
     }
 
-   .faq-question.active i {
+    .faq-question.active i {
       transform: rotate(180deg);
-   }
+    }
 
-   .faq-answer {
+    .faq-answer {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.3s ease-out;
-      font-size: 14px;
+      transition: max-height 0.3s ease;
+      font-size: clamp(13px, 1.8vw, 14px);
       font-weight: 400;
       color: #555;
-      margin-left: 15px;
+      margin: 10px 15px 0;
       line-height: 1.6;
-      margin-top: 10px;
       padding: 0 5px;
-      opacity: 0;
-      transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
-   }
-
-   .faq-answer.show {
-      max-height: 500px;
-      opacity: 1;
-      padding: 10px 5px;
-   }
-
-
-
-    /* Zoom-in screen orientation layout */
-    @media(max-width: 1000px) {
-        html, body {
-            overflow-x: hidden;
-            overflow-y: auto;
-            width: 100%;
-            max-width: 100%;
-        }
-
-        section {
-            width: 100vw;
-            height: 120vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #d8e4f0;
-            background-size: cover;
-            background-repeat: no-repeat;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            position: relative;
-        }
-
-        .search-section {
-            width: 100%;
-            padding: 0 15px;
-        }
-
-        .hcwhy h3 {
-            font-size: 24px;
-            margin-left: 0;
-            text-align: center;
-        }
-
-        .search-container2 {
-            width: 100%;
-            max-width: 500px;
-            margin: 20px auto;
-        }
-
-        .faq-container {
-            width: 100%;
-            max-width: 500px;
-            margin: 30px auto;
-        }
-
-        .faq-title {
-            font-size: 20px;
-        }
-
-        .faq-question {
-            font-size: 15px;
-            padding: 10px 5px;
-        }
-
-        .faq-answer {
-            font-size: 13px;
-            padding: 0 5px;
-        }
     }
 
+    .faq-answer.show {
+      max-height: 500px;
+    }
+
+    /* Footer Styles */
     footer {
       background: #fff;
-      padding-top: 20px;
-      padding-bottom: 5px;
+      padding: 20px 0 5px;
+      width: 100%;
     }
 
     .container {
-      margin-left: 20px;
-      margin-right: 20px;
-      height: 110px;
-      width: 1140px;
+      margin: 0 auto;
+      padding: 0 20px;
+      max-width: 1140px;
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
+      gap: 20px;
     }
 
     .footer-content {
-      margin-left: 20px;
-      margin-right: 20px;
-      width: 33.3%;
+      flex: 1;
+      min-width: 250px;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      margin: 0 10px;
-    }
-
-    footer iframe {
-      margin-left: 20px;
-      width: 100%;
-      height: 100%;
-      border: 0;
-      margin: 0;
+      align-items: center;
+      text-align: center;
     }
 
     .map-container {
-      flex-grow: 1;
+      width: 100%;
+      height: 200px;
+      margin: 10px 0;
+    }
+
+    footer iframe {
+      width: 100%;
       height: 100%;
-    }
-
-    h3 {
-      margin-left: 20px;
-      margin-right: 20px;
-      font-weight: 100;
-      font-size: 16px;
-      margin-bottom: 5px;
-      text-align: center;
-      color: #3247df;
-    }
-
-    .footer-content p {
-      width: 190px;
-      margin-left: 5px;
-      padding: 2px;
+      border: 0;
     }
 
     .social-icons {
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
       padding: 0;
+      list-style: none;
     }
 
     .social-icons li {
       display: inline-block;
-      text-align: center;
-      padding: 5px;
     }
 
     .social-icons i {
       color: rgb(3, 3, 3);
       font-size: 25px;
-    }
-
-    a {
-      color: #333;
-      text-decoration: none;
-    }
-
-    a:hover {
-      color: #3247df;
+      transition: color 0.3s ease;
     }
 
     .social-icons i:hover {
@@ -338,118 +242,58 @@
     .bottom-bar {
       background: #3247df;
       text-align: center;
-      padding: 0px 0;
-      margin-top: 50px;
+      padding: 8px 0;
+      margin-top: 20px;
     }
 
     .bottom-bar p {
       color: #f7f7f7;
       margin: 0;
-      font-size: 16px;
+      font-size: 14px;
       padding: 8px;
     }
 
-    /* Mobile Responsive Styles */
-    @media screen and (max-width: 1000px) {
-      section {
-        height: auto;
-        min-height: 100vh;
-        padding: 20px 0;
+    /* Media Queries */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
       }
 
-      .search-section {
+      .footer-content {
         width: 100%;
-        padding: 0 15px;
+        margin: 10px 0;
       }
 
-      .hcwhy h3 {
-        font-size: 24px;
-        margin-left: 0;
-        text-align: center;
+      .map-container {
+        height: 150px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      section {
+        padding: 10px;
       }
 
       .search-container2 {
-        width: 100%;
-        max-width: 500px;
-        margin: 20px auto;
+        margin: 10px 0;
+        height: auto;
+        padding: 10px;
       }
 
       .faq-container {
-        width: 100%;
-        max-width: 500px;
-        margin: 30px auto;
-      }
-
-      .faq-title {
-        font-size: 20px;
+        padding: 15px;
       }
 
       .faq-question {
         font-size: 15px;
-        padding: 10px 5px;
       }
 
       .faq-answer {
         font-size: 13px;
-        padding: 0 5px;
+        margin: 5px 10px 0;
       }
     }
-
-    @media screen and (max-width: 480px) {
-      .hcwhy h3 {
-        font-size: 20px;
-      }
-
-      .search-container2 {
-        height: 35px;
-      }
-
-      .search-container2 input {
-        font-size: 13px;
-      }
-
-      .faq-container {
-        padding: 5px;
-      }
-
-      .faq-title {
-        font-size: 18px;
-        margin: 5px 0 15px 0;
-      }
-
-      .faq-question {
-        font-size: 14px;
-        padding: 8px 5px;
-      }
-
-      .faq-answer {
-        font-size: 12px;
-        line-height: 1.4;
-      }
-    }
-
-    /* Fix for FAQ items on mobile */
-    @media screen and (max-width: 768px) {
-      .faq-item {
-        padding: 10px 0;
-        margin-left: 0;
-      }
-
-      .faq-question {
-        width: 100%;
-        padding: 0 10px;
-      }
-
-      .faq-answer {
-        margin-left: 10px;
-        padding: 0 10px;
-      }
-
-      .faq-answer.show {
-        padding: 10px;
-      }
-    }
-
 	</style>
 </head>
 
@@ -489,87 +333,65 @@
 
               @include('layouts.footer')
 
+<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 <script type="text/javascript">
-    // Search functionality
-    const searchInput = document.getElementById("searchInput");
-    const routes = {
-        home: "{{ route('home') }}",
-        faqs: "{{ route('faqs') }}",
-        about: "{{ route('about') }}",
-        contact: "{{ route('contact') }}"
-    };
-
     function performSearch() {
-        const input = searchInput.value.trim().toLowerCase();
+        const input = document.getElementById("searchInput").value.trim().toLowerCase();
 
         if (input === "") {
             alert("Please enter a search term.");
         } else {
-            if (["home page", "homepage", "home"].includes(input)) {
-                window.location.href = routes.home;
-            } else if (["faqs", "facts", "help", "faq", "question"].includes(input)) {
-                window.location.href = routes.faqs;
-            } else if (["about", "about civil"].includes(input)) {
-                window.location.href = routes.about;
-            } else if (["contact", "number", "email"].includes(input)) {
-                window.location.href = routes.contact;
+            if (input === "home page" || input === "homepage" || input === "home") {
+                window.location.href = "{{ route('home') }}";
+            } else if (input === "faqs" || input === "facts" || input === "help") {
+                window.location.href = "{{ route('faqs') }}";
+            } else if (input === "about" || input === "about civil") {
+                window.location.href = "{{ route('about') }}";
+            } else if (input === "contact" || input === "number" || input === "email") {
+                window.location.href = "{{ route('contact') }}";
             } else {
                 alert("No results found.");
-                searchInput.value = "";
+                inputField.value = "";
             }
         }
     }
 
-    if (searchInput) {
-        searchInput.addEventListener("keypress", function(e) {
-            if (e.key === "Enter") {
-                performSearch();
-            }
-        });
-    }
+    document.getElementById("searchInput").addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+            performSearch();
+        }
+    });
 
-    // Menu toggle functionality
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('.menu');
-    
-    if (menuToggle && navMenu) {
-        menuToggle.onclick = () => {
-            navMenu.classList.toggle('expand-mobile');
-            menuToggle.classList.toggle('expand-icon');
+    const button = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('.menu');
+    if (button && menu) {
+        button.onclick = () => {
+            menu.classList.toggle('expand-mobile');
+            button.classList.toggle('expand-icon');
         };
     }
 
-    // Dropdown functionality
     function toggleDropdown() {
         const dropdown = document.getElementById("accountDropdown");
-        if (dropdown) {
-            alert("Please login or register your account first.");
-            dropdown.classList.toggle("show");
-        }
+        alert("Please login or register your account first.");
+        dropdown.classList.toggle("show");
     }
 
-    // FAQ functionality
     const faqQuestions = document.querySelectorAll('.faq-question');
 
     faqQuestions.forEach(question => {
         question.addEventListener('click', () => {
-            // Toggle active class on the clicked question
-            question.classList.toggle('active');
-            
-            // Get the answer element
             const answer = question.nextElementSibling;
             const icon = question.querySelector('i');
 
-            // Close all other answers
-            faqQuestions.forEach(otherQuestion => {
-                if (otherQuestion !== question) {
-                    otherQuestion.classList.remove('active');
-                    otherQuestion.querySelector('i')?.classList.remove('active');
-                    otherQuestion.nextElementSibling.classList.remove('show');
-                }
+            document.querySelectorAll('.faq-answer').forEach(ans => {
+                if (ans !== answer) ans.classList.remove('show');
+            });
+            document.querySelectorAll('.faq-question i').forEach(ic => {
+                if (ic !== icon) ic.classList.remove('active');
             });
 
-            // Toggle the clicked answer
+            question.classList.toggle('active');
             answer.classList.toggle('show');
             icon?.classList.toggle('active');
         });
