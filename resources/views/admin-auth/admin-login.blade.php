@@ -9,6 +9,99 @@
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
   <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+  <script>
+    // Define functions before they're used
+    function togglePasswordVisibility(inputId) {
+        const passwordField = document.getElementById(inputId);
+        const eyeIcon = passwordField.nextElementSibling;
+
+        if (passwordField && eyeIcon) {
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            } else {
+                passwordField.type = 'password';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            }
+        }
+    }
+
+    function showForgotPassword() {
+        document.getElementById('loginContainer').style.display = 'none';
+        document.getElementById('forgotPasswordContainer').style.display = 'block';
+    }
+
+    function hideForgotPassword() {
+        document.getElementById('forgotPasswordContainer').style.display = 'none';
+        document.getElementById('loginContainer').style.display = 'block';
+    }
+
+    // Initialize functions when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        const usernameInput = document.querySelector('input[name="username"]');
+        const passwordInput = document.querySelector('input[name="password"]');
+        const rememberMeCheckbox = document.getElementById("remember-me");
+        const loginButton = document.querySelector(".btnn");
+
+        if (usernameInput && passwordInput && loginButton && rememberMeCheckbox) {
+            if (localStorage.getItem("rememberMe") === "true") {
+                usernameInput.value = localStorage.getItem("username") || "";
+                passwordInput.value = localStorage.getItem("password") || "";
+                rememberMeCheckbox.checked = true;
+            }
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById("searchInput");
+        if (searchInput) {
+            searchInput.addEventListener("keypress", function(e) {
+                if (e.key === "Enter") {
+                    performSearch();
+                }
+            });
+        }
+
+        // Menu toggle functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const menu = document.querySelector('.menu');
+        
+        if (menuToggle && menu) {
+            menuToggle.addEventListener('click', () => {
+                menu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+        }
+    });
+
+    function performSearch() {
+        const input = document.getElementById("searchInput").value.trim().toLowerCase();
+
+        if (input === "") {
+            alert("Please enter a search term.");
+        } else {
+            if (input === "home page" || input === "homepage" || input === "home") {
+                window.location.href = "{{ route('admin.homepage') }}";
+            } else if (input === "faqs" || input === "facts" || input === "help") {
+                window.location.href = "{{ route('admin.faqs') }}";
+            } else if (input === "about" || input === "about civil") {
+                window.location.href = "{{ route('admin.about') }}";
+            } else if (input === "contact" || input === "number" || input === "email") {
+                window.location.href = "{{ route('admin.contact') }}";
+            } else {
+                alert("No results found.");
+                document.getElementById("searchInput").value = "";
+            }
+        }
+    }
+
+    window.toggleDropdown = function () {
+        const dropdown = document.getElementById("accountDropdown");
+        alert("Please login or register your account first.");
+        if (dropdown) dropdown.classList.toggle("show");
+    };
+  </script>
   <style type="text/css">
     html, body {
       margin: 0;
@@ -454,87 +547,5 @@
   </div>
 
 <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
-<script>
-function performSearch() {
-    const input = document.getElementById("searchInput").value.trim().toLowerCase();
-
-    if (input === "") {
-        alert("Please enter a search term.");
-    } else {
-        if (input === "home page" || input === "homepage" || input === "home") {
-            window.location.href = "{{ route('admin.homepage') }}";
-        } else if (input === "faqs" || input === "facts" || input === "help") {
-            window.location.href = "{{ route('admin.faqs') }}";
-        } else if (input === "about" || input === "about civil") {
-            window.location.href = "{{ route('admin.about') }}";
-        } else if (input === "contact" || input === "number" || input === "email") {
-            window.location.href = "{{ route('admin.contact') }}";
-        } else {
-          alert("No results found.");
-          inputField.value = "";
-        }
-      }}
-    document.getElementById("searchInput").addEventListener("keypress", function(e) {
-        if (e.key === "Enter") {
-        performSearch();
-    }
-    });
-
-    const menuToggle = document.querySelector('.menu-toggle');
-    const menu = document.querySelector('.menu');
-    
-    if (menuToggle && menu) {
-        menuToggle.addEventListener('click', () => {
-            menu.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-        });
-    }
-    window.toggleDropdown = function () {
-        const dropdown = document.getElementById("accountDropdown");
-        alert("Please login or register your account first.");
-        if (dropdown) dropdown.classList.toggle("show");
-    };
-
-    function togglePasswordVisibility(inputId) {
-        const passwordField = document.getElementById(inputId);
-        const eyeIcon = passwordField.nextElementSibling;
-
-        if (passwordField && eyeIcon) {
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
-                eyeIcon.classList.remove('fa-eye-slash');
-                eyeIcon.classList.add('fa-eye');
-            } else {
-                passwordField.type = 'password';
-                eyeIcon.classList.remove('fa-eye');
-                eyeIcon.classList.add('fa-eye-slash');
-            }
-        }
-    }
-
-    function showForgotPassword() {
-        document.getElementById('loginContainer').style.display = 'none';
-        document.getElementById('forgotPasswordContainer').style.display = 'block';
-    }
-
-    function hideForgotPassword() {
-        document.getElementById('forgotPasswordContainer').style.display = 'none';
-        document.getElementById('loginContainer').style.display = 'block';
-    }
-
-    const usernameInput = document.querySelector('input[name="username"]');
-    const passwordInput = document.querySelector('input[name="password"]');
-    const rememberMeCheckbox = document.getElementById("remember-me");
-    const loginButton = document.querySelector(".btnn");
-
-    if (usernameInput && passwordInput && loginButton && rememberMeCheckbox) {
-    if (localStorage.getItem("rememberMe") === "true") {
-        usernameInput.value = localStorage.getItem("username") || "";
-        passwordInput.value = localStorage.getItem("password") || "";
-        rememberMeCheckbox.checked = true;
-    }
-    }
-</script>
-
 </body>
 </html>
