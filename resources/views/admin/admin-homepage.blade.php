@@ -292,6 +292,10 @@
 
     .details {
       margin-top: -130px;
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 20px;
+      text-align: center;
     }
 
 		h5 {
@@ -308,6 +312,7 @@
               -1px 1px 0px white,
                0 0 50px black;
 			font-family: "Poppins", sans-serif;
+      line-height: 1.2;
     }
 
 		h4 {
@@ -324,6 +329,7 @@
                0 0 50px black;
       letter-spacing: 4px;
 			font-family: "Poppins", sans-serif;
+      line-height: 1.3;
 		}
 
     .details p {
@@ -336,30 +342,34 @@
       background-color: white;
       border-radius: 10px;
       font-family: "Poppins", sans-serif;
+      padding: 15px 25px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .learn-button {
-      left: 230px;
+      display: inline-block;
       border: none;
-      bottom: -40px;
       color: black;
       cursor: pointer;
       font-size: 17px;
       font-weight: bold;
-      padding: 10px 30px;
+      padding: 12px 30px;
       border-radius: 10px;
-      position: relative;
       text-decoration: none;
       background-color: #f9f5ed;
-      transform: translateX(-50%);
       font-family: "Poppins", sans-serif;
-      transition: background-color 0.3s ease;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .learn-button:hover {
       color: #426DDC;
-      transition: 0.5s ease;
-      box-shadow: 0 0 7px white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
       background-color: #EAEAEA;
     }
 
@@ -643,7 +653,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url('appointment_bg.jpg') center 40% fixed;
+      background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url('{{ asset('storage/assets/appointment_bg.jpg') }}') center 40% fixed;
       background-size: cover;
       background-repeat: no-repeat;
       margin: 0;
@@ -920,63 +930,274 @@
       overflow-y: auto;
       margin-top: 40px;
       margin-bottom: 60px;
-    }
-    #approvalTable th, #approvalTable td {
-      text-align: left;
-      font-size: 1rem;
-      border-bottom: 1px solid #e3e8f0;
-    }
-    #approvalTable tr:last-child td {
-      border-bottom: none;
-    }
-    #approvalTable tr {
-      transition: background 0.2s;
-    }
-    #approvalTable tr:hover {
-      background: #f0f6ff;
-    }
-    .status-badge {
-      display: inline-block;
-      padding: 6px 18px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      letter-spacing: 1px;
-      background: #ffe066;
-      color: #333;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-    }
-    .status-approved {
-      background: #4ade80;
-      color: #065f46;
-    }
-    .status-declined {
-      background: #f87171;
-      color: #991b1b;
-    }
-    .status-pending {
-      background: #ffe066;
-      color: #b45309;
-    }
-    .account-approval-container select {
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid #bcd0ee;
-      font-size: 1rem;
-      background: #f7faff;
-      color: #333;
-      outline: none;
-      transition: border 0.2s;
-    }
-    .account-approval-container select:focus {
-      border: 1.5px solid #1E63E9;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
-    /* Add responsive styles for details section */
+    #approvalTable, #userActivityTable {
+      width: 100%;
+      min-width: 800px;
+      border-collapse: collapse;
+      font-family: 'Poppins', sans-serif;
+      background: white;
+    }
+
+    #approvalTable th, #approvalTable td,
+    #userActivityTable th, #userActivityTable td {
+      padding: 12px;
+      text-align: left;
+      font-size: 0.95rem;
+      border-bottom: 1px solid #e3e8f0;
+      white-space: nowrap;
+    }
+
+    #approvalTable th, #userActivityTable th {
+      background-color: #1E63E9;
+      color: white;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    #approvalTable tr:last-child td,
+    #userActivityTable tr:last-child td {
+      border-bottom: none;
+    }
+
+    #approvalTable tr,
+    #userActivityTable tr {
+      transition: background 0.2s;
+    }
+
+    #approvalTable tr:hover,
+    #userActivityTable tr:hover {
+      background: #f0f6ff;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    /* Responsive styles for tables */
+    @media screen and (max-width: 1024px) {
+      .account-approval-container {
+        margin: 20px 10px;
+        border-radius: 8px;
+      }
+
+      #approvalTable th, #approvalTable td,
+      #userActivityTable th, #userActivityTable td {
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+
+      .status-badge {
+        padding: 4px 10px;
+        font-size: 0.8rem;
+      }
+
+      .approve-btn, .reject-btn, .delete-btn {
+        padding: 4px 8px;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Mobile-first table styles */
+    @media screen and (max-width: 768px) {
+      .account-approval-container {
+        margin: 15px 5px;
+        border-radius: 6px;
+        overflow: visible;
+      }
+
+      #approvalTable, #userActivityTable {
+        display: block;
+        min-width: 100%;
+      }
+
+      #approvalTable thead, #userActivityTable thead {
+        display: none;
+      }
+
+      #approvalTable tbody, #userActivityTable tbody {
+        display: block;
+        width: 100%;
+      }
+
+      #approvalTable tr, #userActivityTable tr {
+        display: block;
+        margin-bottom: 15px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 12px;
+      }
+
+      #approvalTable td, #userActivityTable td {
+        display: flex;
+        padding: 8px 0;
+        border: none;
+        font-size: 0.9rem;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      #approvalTable td:before, #userActivityTable td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #1E63E9;
+        margin-right: 10px;
+        flex: 0 0 40%;
+      }
+
+      #approvalTable td:last-child, #userActivityTable td:last-child {
+        border-bottom: none;
+      }
+
+      .status-badge {
+        padding: 4px 8px;
+        font-size: 0.8rem;
+        margin-left: auto;
+      }
+
+      .approve-btn, .reject-btn, .delete-btn {
+        width: 100%;
+        margin: 5px 0;
+        padding: 8px;
+        font-size: 0.9rem;
+      }
+
+      /* Action buttons container */
+      #approvalTable td:last-child, #userActivityTable td:last-child {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+
+      /* Add labels for mobile view */
+      #approvalTable td[data-label], #userActivityTable td[data-label] {
+        position: relative;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .account-approval-container {
+        margin: 10px 0;
+        border-radius: 4px;
+      }
+
+      #approvalTable th, #approvalTable td,
+      #userActivityTable th, #userActivityTable td {
+        padding: 6px;
+        font-size: 0.8rem;
+      }
+
+      .status-badge {
+        padding: 2px 6px;
+        font-size: 0.7rem;
+      }
+
+      .approve-btn, .reject-btn, .delete-btn {
+        padding: 2px 4px;
+        font-size: 0.7rem;
+      }
+
+      h2 {
+        font-size: 1.2rem;
+        padding: 10px;
+      }
+    }
+
+    /* Add horizontal scroll indicator */
+    .account-approval-container::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 30px;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.9));
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .account-approval-container:hover::after {
+      opacity: 1;
+    }
+
+    /* Improve table header visibility */
+    #approvalTable th, #userActivityTable th {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Add responsive table wrapper */
+    .table-responsive {
+      position: relative;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 1rem;
+    }
+
+    /* Improve button styles for better touch targets */
+    .approve-btn, .reject-btn, .delete-btn {
+      min-width: 80px;
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .approve-btn:hover, .reject-btn:hover, .delete-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive styles for details section */
+    @media screen and (max-width: 1024px) {
+      .details {
+        margin-top: -100px;
+        padding: 0 15px;
+      }
+
+      h5 {
+        font-size: 70px;
+        letter-spacing: 20px;
+        margin-top: 50px;
+      }
+
+      h4 {
+        font-size: 32px;
+        letter-spacing: 3px;
+        margin-top: -20px;
+      }
+
+      .details p {
+        font-size: 16px;
+        padding: 12px 20px;
+        max-width: 500px;
+      }
+
+      .learn-button {
+        font-size: 16px;
+        padding: 10px 25px;
+      }
+    }
+
     @media screen and (max-width: 768px) {
       .details {
         margin-top: -80px;
-        padding: 0 20px;
+        padding: 0 12px;
       }
 
       h5 {
@@ -993,21 +1214,20 @@
 
       .details p {
         font-size: 14px;
-        padding: 8px 15px;
-        margin-top: 15px;
+        padding: 10px 15px;
+        max-width: 400px;
       }
 
       .learn-button {
-        left: 50%;
         font-size: 14px;
         padding: 8px 20px;
-        bottom: -30px;
       }
     }
 
     @media screen and (max-width: 480px) {
       .details {
         margin-top: -60px;
+        padding: 0 10px;
       }
 
       h5 {
@@ -1019,11 +1239,13 @@
       h4 {
         font-size: 20px;
         letter-spacing: 1px;
+        margin-top: -10px;
       }
 
       .details p {
         font-size: 12px;
-        padding: 6px 12px;
+        padding: 8px 12px;
+        max-width: 300px;
       }
 
       .learn-button {
@@ -1032,94 +1254,24 @@
       }
     }
 
-    /* Add responsive table styles */
-    @media screen and (max-width: 1024px) {
-      .account-approval-container {
-        margin: 20px 10px;
-        overflow-x: auto;
-      }
-
-      #approvalTable, #userActivityTable {
-        min-width: 800px;
-      }
-
-      #approvalTable th, #approvalTable td,
-      #userActivityTable th, #userActivityTable td {
-        padding: 8px;
-        font-size: 0.9rem;
-      }
-
-      .status-badge {
-        padding: 4px 12px;
-        font-size: 0.85rem;
-      }
-
-      .approve-btn, .reject-btn, .delete-btn {
-        padding: 4px 8px;
-        font-size: 0.85rem;
-      }
+    /* Add smooth transitions */
+    .details * {
+      transition: all 0.3s ease;
     }
 
-    @media screen and (max-width: 768px) {
-      .account-approval-container {
-        margin: 15px 5px;
-      }
-
-      #approvalTable, #userActivityTable {
-        min-width: 700px;
-      }
-
-      #approvalTable th, #approvalTable td,
-      #userActivityTable th, #userActivityTable td {
-        padding: 6px;
-        font-size: 0.85rem;
-      }
-
-      .status-badge {
-        padding: 3px 10px;
-        font-size: 0.8rem;
-      }
-
-      .approve-btn, .reject-btn, .delete-btn {
-        padding: 3px 6px;
-        font-size: 0.8rem;
-      }
-
-      h2 {
-        font-size: 1.5rem;
-        padding: 12px;
-      }
+    /* Improve text readability */
+    .details p {
+      backdrop-filter: blur(5px);
+      background-color: rgba(255, 255, 255, 0.95);
     }
 
-    @media screen and (max-width: 480px) {
-      .account-approval-container {
-        margin: 10px 0;
-      }
-
-      #approvalTable, #userActivityTable {
-        min-width: 600px;
-      }
-
-      #approvalTable th, #approvalTable td,
-      #userActivityTable th, #userActivityTable td {
-        padding: 4px;
-        font-size: 0.8rem;
-      }
-
-      .status-badge {
-        padding: 2px 8px;
-        font-size: 0.75rem;
-      }
-
-      .approve-btn, .reject-btn, .delete-btn {
-        padding: 2px 4px;
-        font-size: 0.75rem;
-      }
-
-      h2 {
-        font-size: 1.2rem;
-        padding: 10px;
-      }
+    /* Add container for better centering */
+    .details > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
     }
 
 	</style>
@@ -1224,120 +1376,124 @@
   </div>
 
   <!-- ACCOUNT APPROVAL SECTION (Backend-Driven) -->
-  <div class="account-approval-container" style="max-width: 1200px; margin: 40px auto 60px auto; background: #f7faff; border-radius: 12px; box-shadow: 0 4px 16px rgba(30,99,233,0.07); overflow: hidden; min-height: 400px; max-height: 800px; overflow-y: auto;">
+  <div class="account-approval-container">
     <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">ACCOUNT APPROVAL</h2>
-    <table id="approvalTable" style="width: 100%; border-collapse: collapse; font-family: 'Poppins', sans-serif; background: white;">
-      <thead style="background-color: #1E63E9; color: white;">
-        <tr>
-          <th style="padding: 12px;">User Name</th>
-          <th style="padding: 12px;">Email Address</th>
-          <th style="padding: 12px;">ID Type</th>
-          <th style="padding: 12px;">ID Uploaded</th>
-          <th style="padding: 12px;">Current/Permanent Address</th>
-          <th style="padding: 12px;">Date of Birth</th>
-          <th style="padding: 12px;">Status</th>
-          <th style="padding: 12px;">Action</th>
-        </tr>
-      </thead>
-      <tbody id="approvalTableBody">
-        @if($pending_users->isEmpty())
+    <div class="table-responsive">
+      <table id="approvalTable">
+        <thead>
           <tr>
-            <td colspan="8" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">No pending users for approval.</td>
+            <th>User Name</th>
+            <th>Email Address</th>
+            <th>ID Type</th>
+            <th>ID Uploaded</th>
+            <th>Current/Permanent Address</th>
+            <th>Date of Birth</th>
+            <th>Status</th>
+            <th>Action</th>
           </tr>
-        @else
-          @foreach($pending_users as $user)
-            <tr style="background-color: white;">
-              <td style="padding: 12px;">{{ $user->first_name }} {{ $user->last_name }}</td>
-              <td style="padding: 12px;">{{ $user->email }}</td>
-              <td style="padding: 12px;">{{ $user->id_type }}</td>
-              <td style="padding: 12px;">
-                @if($user->id_image)
-                  <a href="{{ asset('storage/uploads/' . $user->id_image) }}" target="_blank" style="color: #1E63E9; text-decoration: underline;">View ID</a>
-                @else
-                  <span style="color: #aaa;">No ID</span>
-                @endif
-              </td>
-              <td style="padding: 12px;">{{ $user->current_address }}</td>
-              <td style="padding: 12px;">{{ $user->date_of_birth }}</td>
-              <td style="padding: 12px;">
-                <span class="status-badge status-pending">Pending</span>
-              </td>
-              <td style="padding: 12px;">
-                @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
-                  <div style="display: flex; gap: 8px;">
-                    <form method="POST" action="{{ route('admin.accept-user', $user->id) }}" class="approval-action-form" style="display:inline;">
-                      @csrf
-                      <button type="submit" class="approve-btn" style="background: #4ade80; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Approve</button>
-                    </form>
-                    <form method="POST" action="{{ route('admin.reject-user', $user->id) }}" class="approval-action-form" style="display:inline;">
-                      @csrf
-                      <button type="submit" class="reject-btn" style="background: #f87171; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Reject</button>
-                    </form>
-                  </div>
-                @else
-                  <span style="color: #666; font-style: italic;">Only admin1 can approve accounts</span>
-                @endif
-              </td>
+        </thead>
+        <tbody>
+          @if($pending_users->isEmpty())
+            <tr>
+              <td colspan="8" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">No pending users for approval.</td>
             </tr>
-          @endforeach
-        @endif
-      </tbody>
-    </table>
+          @else
+            @foreach($pending_users as $user)
+              <tr>
+                <td data-label="User Name">{{ $user->first_name }} {{ $user->last_name }}</td>
+                <td data-label="Email Address">{{ $user->email }}</td>
+                <td data-label="ID Type">{{ $user->id_type }}</td>
+                <td data-label="ID Uploaded">
+                  @if($user->id_image)
+                    <a href="{{ asset('storage/uploads/' . $user->id_image) }}" target="_blank" style="color: #1E63E9; text-decoration: underline;">View ID</a>
+                  @else
+                    <span style="color: #aaa;">No ID</span>
+                  @endif
+                </td>
+                <td data-label="Current/Permanent Address">{{ $user->current_address }}</td>
+                <td data-label="Date of Birth">{{ $user->date_of_birth }}</td>
+                <td data-label="Status">
+                  <span class="status-badge status-pending">Pending</span>
+                </td>
+                <td data-label="Action">
+                  @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                      <form method="POST" action="{{ route('admin.accept-user', $user->id) }}" class="approval-action-form">
+                        @csrf
+                        <button type="submit" class="approve-btn">Approve</button>
+                      </form>
+                      <form method="POST" action="{{ route('admin.reject-user', $user->id) }}" class="approval-action-form">
+                        @csrf
+                        <button type="submit" class="reject-btn">Reject</button>
+                      </form>
+                    </div>
+                  @else
+                    <span style="color: #666; font-style: italic;">Only admin1 can approve accounts</span>
+                  @endif
+                </td>
+              </tr>
+            @endforeach
+          @endif
+        </tbody>
+      </table>
+    </div>
   </div>
   <!-- END ACCOUNT APPROVAL SECTION -->
 
   <!-- USER ACTIVITY SECTION -->
-  <div class="account-approval-container" style="max-width: 1200px; margin: 40px auto 60px auto; background: #f7faff; border-radius: 12px; box-shadow: 0 4px 16px rgba(30,99,233,0.07); overflow: hidden; min-height: 400px; max-height: 800px; overflow-y: auto;">
+  <div class="account-approval-container">
     <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">USER ACTIVITY</h2>
-    <table id="userActivityTable" style="width: 100%; border-collapse: collapse; font-family: 'Poppins', sans-serif; background: white;">
-      <thead style="background-color: #1E63E9; color: white;">
-        <tr>
-          <th style="padding: 12px;">User Name</th>
-          <th style="padding: 12px;">Email Address</th>
-          <th style="padding: 12px;">Last Login</th>
-          <th style="padding: 12px;">Status</th>
-          <th style="padding: 12px;">Action</th>
-        </tr>
-      </thead>
-      <tbody id="userActivityTableBody">
-        @if($users->isEmpty())
+    <div class="table-responsive">
+      <table id="userActivityTable">
+        <thead>
           <tr>
-            <td colspan="5" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">No users found.</td>
+            <th>User Name</th>
+            <th>Email Address</th>
+            <th>Last Login</th>
+            <th>Status</th>
+            <th>Action</th>
           </tr>
-        @else
-          @foreach($users as $user)
-            <tr style="background-color: white;">
-              <td style="padding: 12px;">{{ $user->first_name }} {{ $user->last_name }}</td>
-              <td style="padding: 12px;">{{ $user->email }}</td>
-              <td style="padding: 12px;">{{ $user->last_login ? $user->last_login->format('M d, Y h:i A') : 'Never' }}</td>
-              <td style="padding: 12px;">
-                @php
-                  $isActive = $user->last_login && $user->last_login->diffInDays(now()) <= 14;
-                @endphp
-                <span class="status-badge {{ $isActive ? 'status-approved' : 'status-declined' }}">
-                  {{ $isActive ? 'Active' : 'Inactive' }}
-                </span>
-              </td>
-              <td style="padding: 12px;">
-                @if(!$isActive)
-                  @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
-                    <form method="POST" action="{{ route('admin.delete-user', $user->id) }}" style="display: inline;">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="delete-btn" style="background: #f87171; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;" onclick="return confirm('Are you sure you want to delete this inactive user?')">
-                        Delete Account
-                      </button>
-                    </form>
-                  @else
-                    <span style="color: #666; font-style: italic;">Only admin1 can delete accounts</span>
-                  @endif
-                @endif
-              </td>
+        </thead>
+        <tbody>
+          @if($users->isEmpty())
+            <tr>
+              <td colspan="5" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">No users found.</td>
             </tr>
-          @endforeach
-        @endif
-      </tbody>
-    </table>
+          @else
+            @foreach($users as $user)
+              <tr>
+                <td data-label="User Name">{{ $user->first_name }} {{ $user->last_name }}</td>
+                <td data-label="Email Address">{{ $user->email }}</td>
+                <td data-label="Last Login">{{ $user->last_login ? $user->last_login->format('M d, Y h:i A') : 'Never' }}</td>
+                <td data-label="Status">
+                  @php
+                    $isActive = $user->last_login && $user->last_login->diffInDays(now()) <= 14;
+                  @endphp
+                  <span class="status-badge {{ $isActive ? 'status-approved' : 'status-declined' }}">
+                    {{ $isActive ? 'Active' : 'Inactive' }}
+                  </span>
+                </td>
+                <td data-label="Action">
+                  @if(!$isActive)
+                    @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
+                      <form method="POST" action="{{ route('admin.delete-user', $user->id) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this inactive user?')">
+                          Delete Account
+                        </button>
+                      </form>
+                    @else
+                      <span style="color: #666; font-style: italic;">Only admin1 can delete accounts</span>
+                    @endif
+                  @endif
+                </td>
+              </tr>
+            @endforeach
+          @endif
+        </tbody>
+      </table>
+    </div>
   </div>
   <!-- END USER ACTIVITY SECTION -->
 
