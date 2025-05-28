@@ -3,6 +3,7 @@
 <link rel="icon" type="image/x-icon" href="/storage/assets/favicon.ico">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title> Requirements Page - Admin View </title>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -606,8 +607,9 @@
             <div class="image-container">
                 <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
     
-            <div class="logo-name">
-                 <b> Mandaluyong City <br/> <a> Civil Registry</a> </b> </div>
+                <div class="logo-name">
+             <p> Mandaluyong City <br> Civil Registry</p > 
+            </div>
 
     
             <div class="menu">
@@ -670,10 +672,11 @@
                     <p class="text-gray-500 text-lg">No appointments have been made yet.</p>
                 </div>
             @else
-                <div class="max-h-[600px] overflow-y-auto">
+                <div class="max-h-[600px] overflow-y-auto relative">
                     <table class="min-w-full bg-white shadow rounded-lg overflow-hidden">
                         <thead class="bg-blue-600 text-white">
                             <tr>
+                                <th class="py-3 px-4 text-left">Reference #</th>
                                 <th class="py-3 px-4 text-left">User Name</th>
                                 <th class="py-3 px-4 text-left">Appointment Type</th>
                                 <th class="py-3 px-4 text-left">Document Type</th>
@@ -686,6 +689,7 @@
                         <tbody id="appointmentTable">
                             @foreach($appointments as $appointment)
                             <tr class="border-b">
+                                <td class="py-3 px-4">{{ $appointment->reference_number }}</td>
                                 <td class="py-3 px-4">{{ $appointment->user->first_name }} {{ $appointment->user->last_name }}</td>
                                 <td class="py-3 px-4">{{ $appointment->appointment_type }}</td>
                                 <td class="py-3 px-4">{{ $appointment->document_type }}</td>
@@ -731,6 +735,18 @@
                             </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="8" class="py-3 px-4 text-right">
+                                    @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
+                                        <button onclick="showLogsModal()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-2 inline-flex">
+                                            <i class="fas fa-history"></i>
+                                            <span>View All Logs</span>
+                                        </button>
+                                    @endif
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             @endif
@@ -770,6 +786,32 @@
                     <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Delete Appointment</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Logs Modal -->
+    <div id="logsModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-4xl w-full">
+            <h2 class="text-xl font-bold mb-4 text-center text-blue-700">Appointment Activity Logs</h2>
+            <div class="max-h-[500px] overflow-y-auto">
+                <table class="min-w-full bg-white">
+                    <thead class="bg-blue-600 text-white">
+                        <tr>
+                            <th class="py-2 px-4 text-left">Date & Time</th>
+                            <th class="py-2 px-4 text-left">Employee</th>
+                            <th class="py-2 px-4 text-left">Action</th>
+                            <th class="py-2 px-4 text-left">Status Change</th>
+                            <th class="py-2 px-4 text-left">Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logsTableBody">
+                        <!-- Logs will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex justify-end mt-4">
+                <button onclick="closeLogsModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Close</button>
+            </div>
         </div>
     </div>
 
@@ -880,13 +922,92 @@ if (button && menu) {
     function showDeleteModal(appointmentId) {
         const modal = document.getElementById('deleteModal');
         const form = document.getElementById('deleteForm');
-        form.action = `/admin/appointments/${appointmentId}`;
+        form.action = `{{ url('admin/appointments') }}/${appointmentId}`;
         modal.classList.remove('hidden');
     }
 
     function closeDeleteModal() {
         const modal = document.getElementById('deleteModal');
         modal.classList.add('hidden');
+    }
+
+    function showLogsModal() {
+        const logsModal = document.getElementById('logsModal');
+        logsModal.classList.remove('hidden');
+        
+        // Fetch all logs
+        fetch('{{ route("admin.appointments.all-logs") }}', {
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            credentials: 'same-origin'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    const logsTableBody = document.getElementById('logsTableBody');
+                    logsTableBody.innerHTML = '';
+                    
+                    data.logs.forEach(log => {
+                        const row = document.createElement('tr');
+                        row.className = 'border-b hover:bg-gray-50';
+                        
+                        const date = new Date(log.created_at).toLocaleString();
+                        
+                        // Convert action to user-friendly text
+                        let actionText = log.action;
+                        switch(log.action) {
+                            case 'status_update':
+                                actionText = 'Updated Status';
+                                break;
+                            case 'delete':
+                                actionText = 'Deleted Appointment';
+                                break;
+                            case 'create':
+                                actionText = 'Created Appointment';
+                                break;
+                        }
+                        
+                        // Convert status changes to user-friendly text
+                        let statusChange = '';
+                        if (log.action === 'status_update') {
+                            const oldStatus = log.old_status ? log.old_status.charAt(0).toUpperCase() + log.old_status.slice(1) : 'Unknown';
+                            const newStatus = log.new_status ? log.new_status.charAt(0).toUpperCase() + log.new_status.slice(1) : 'Unknown';
+                            statusChange = `Changed from ${oldStatus} to ${newStatus}`;
+                        } else if (log.action === 'delete') {
+                            statusChange = 'Appointment was removed';
+                        } else if (log.action === 'create') {
+                            statusChange = 'New appointment was created';
+                        }
+                        
+                        row.innerHTML = `
+                            <td class="py-2 px-4">${date}</td>
+                            <td class="py-2 px-4">${log.employee ? log.employee.first_name + ' ' + log.employee.last_name : 'Unknown'}</td>
+                            <td class="py-2 px-4">${actionText}</td>
+                            <td class="py-2 px-4">${statusChange}</td>
+                            <td class="py-2 px-4">${log.reason || 'No reason provided'}</td>
+                        `;
+                        
+                        logsTableBody.appendChild(row);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching logs:', error);
+                alert('Failed to load logs. Please try again.');
+            });
+    }
+
+    function closeLogsModal() {
+        const logsModal = document.getElementById('logsModal');
+        logsModal.classList.add('hidden');
     }
   </script>
 </body>

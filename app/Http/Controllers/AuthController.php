@@ -90,6 +90,13 @@ class AuthController extends Controller
             return redirect()->back()->withErrors(['username' => 'Invalid username']);
         }
 
+        // Check if the password is already hashed
+        if (strlen($employee->password) < 60) {
+            // If not hashed, hash it now
+            $employee->password = Hash::make($employee->password);
+            $employee->save();
+        }
+
         if (!Hash::check($request->password, $employee->password)) {
             return redirect()->back()->withErrors(['password' => 'Invalid password']);
         }
@@ -132,12 +139,6 @@ class AuthController extends Controller
         $employee = Employee::where('username', $credentials['username'])->first();
 
         if ($employee && Hash::check($credentials['password'], $employee->password)) {
-            // Update last_login timestamp in users table
-            $user = User::where('email', $employee->username)->first();
-            if ($user) {
-                $user->update(['last_login' => now()]);
-            }
-            
             // Store employee info in session
             session(['employee' => $employee]);
             

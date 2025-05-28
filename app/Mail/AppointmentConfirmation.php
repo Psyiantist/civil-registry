@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AppointmentMail extends Mailable
+class AppointmentConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,6 +18,8 @@ class AppointmentMail extends Mailable
 
     /**
      * Create a new message instance.
+     *
+     * @return void
      */
     public function __construct($appointment, $user)
     {
@@ -26,12 +28,27 @@ class AppointmentMail extends Mailable
     }
 
     /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->view('emails.appointment-confirmation')
+                    ->subject('Appointment Confirmation - Mandaluyong City Civil Registry')
+                    ->with([
+                        'appointment' => $this->appointment,
+                        'user' => $this->user,
+                    ]);
+    }
+
+    /**
      * Get the message envelope.
      */
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Appointment Confirmation - Mandaluyong City Civil Registry',
+            subject: 'Appointment Confirmation',
         );
     }
 
@@ -41,11 +58,7 @@ class AppointmentMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.appointment-confirmation',
-            with: [
-                'appointment' => $this->appointment,
-                'user' => $this->user,
-            ],
+            view: 'view.name',
         );
     }
 

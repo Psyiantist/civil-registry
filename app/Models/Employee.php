@@ -19,7 +19,9 @@ class Employee extends Authenticatable
      */
     protected $fillable = [
         'username',
-        'password'
+        'password',
+        'first_name',
+        'last_name'
     ];
 
     /**

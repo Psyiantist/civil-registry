@@ -11,11 +11,13 @@ class Appointment extends Model
 
     protected $fillable = [
         'user_id',
+        'reference_number',
         'appointment_type',
         'document_type',
         'appointment_date',
         'appointment_time',
         'status',
+        'cancellation_reason'
     ];
 
     protected $casts = [

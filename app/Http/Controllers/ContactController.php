@@ -9,6 +9,8 @@ use App\Mail\ContactMail;
 use App\Mail\FeedbackMail;
 use App\Models\Feedback;
 use App\Models\Contact;
+use App\Mail\FeedbackReply;
+use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
@@ -126,5 +128,41 @@ class ContactController extends Controller
         $feedback = Feedback::find($id);
         $feedback->delete();
         return redirect()->back()->with('success', 'Feedback deleted successfully.');
+    }
+
+    public function replyToFeedback(Request $request)
+    {
+        try {
+            $request->validate([
+                'recipient_email' => 'required|email',
+                'subject' => 'required|string|max:255',
+                'message' => 'required|string',
+                'recipient_name' => 'required|string|max:255',
+            ]);
+
+            // Send email using the new template
+            Mail::to($request->recipient_email)->send(new FeedbackReply(
+                $request->subject,
+                $request->message,
+                $request->recipient_name
+            ));
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Reply sent successfully'
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to send feedback reply: ' . $e->getMessage(), [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'request_data' => $request->all(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile()
+            ]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to send reply: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

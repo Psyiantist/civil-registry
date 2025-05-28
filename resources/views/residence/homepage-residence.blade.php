@@ -438,7 +438,6 @@
     footer {
       background: #fff;
       padding-top: 20px;
-      padding-bottom: 5px;
     }
 
     .container {
@@ -738,6 +737,216 @@
 
     }
 
+    /* Responsive Styles for Main Content */
+    @media (max-width: 1200px) {
+        .container {
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .slider-container {
+            width: 90%;
+        }
+    }
+
+    @media (max-width: 992px) {
+        h5 {
+            font-size: 70px;
+            letter-spacing: 20px;
+        }
+
+        h4 {
+            font-size: 32px;
+            letter-spacing: 3px;
+        }
+
+        .details p {
+            font-size: 16px;
+            padding: 8px 15px;
+        }
+
+        .announcement-section {
+            margin: 20px;
+            padding: 15px 20px;
+        }
+
+        .slider-container {
+            width: 95%;
+        }
+
+        .slide img {
+            max-width: 100%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        h5 {
+            font-size: 50px;
+            letter-spacing: 15px;
+            margin-top: 40px;
+        }
+
+        h4 {
+            font-size: 28px;
+            letter-spacing: 2px;
+            margin-top: -15px;
+        }
+
+        .details p {
+            font-size: 14px;
+            padding: 6px 12px;
+        }
+
+        .announcement-header {
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+        }
+
+        .announcement-header h2 {
+            font-size: 20px;
+        }
+
+        #datetime {
+            font-size: 13px;
+        }
+
+        .announcement-body p {
+            font-size: 14px;
+        }
+
+        .prev, .next {
+            padding: 8px 12px;
+            font-size: 20px;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+     .container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: auto;
+}
+
+        .footer-content {
+            width: 100%;
+            margin: 10px 0;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .map-container {
+            height: 200px;
+            margin: 10px 0;
+        }
+
+        .social-icons {
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .social-icons li {
+            margin: 0 10px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        h5 {
+            font-size: 36px;
+            letter-spacing: 10px;
+            margin-top: 30px;
+        }
+
+        h4 {
+            font-size: 22px;
+            letter-spacing: 1px;
+            margin-top: -10px;
+        }
+
+        .details p {
+            font-size: 12px;
+            padding: 5px 10px;
+        }
+
+        .announcement-section {
+            margin: 15px;
+            padding: 12px 15px;
+        }
+
+        .announcement-header h2 {
+            font-size: 18px;
+        }
+
+        #datetime {
+            font-size: 12px;
+        }
+
+        .announcement-body p {
+            font-size: 13px;
+        }
+
+        .prev, .next {
+            padding: 6px 10px;
+            font-size: 18px;
+        }
+
+        .footer-content h3 {
+            font-size: 14px;
+        }
+
+        .footer-content p {
+            font-size: 12px;
+        }
+
+        .social-icons i {
+            font-size: 20px;
+        }
+
+        .bottom-bar p {
+            font-size: 12px;
+        }
+    }
+
+    /* Smooth Transitions */
+    .announcement-section,
+    .slider-container,
+    .footer-content {
+        transition: all 0.3s ease;
+    }
+
+    /* Hover Effects */
+    .announcement-section:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .social-icons a:hover {
+        transform: translateY(-3px);
+    }
+
+    /* Animation for Header Content */
+    .details {
+        animation: fadeInUp 1s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
 	</style>
 </head>
 
@@ -746,8 +955,10 @@
         <div class="image-container">
             <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
 
-        <div class="logo-name">
-            <b>Mandaluyong City<br/><a>Civil Registry</a></b>
+            <div class="logo-name">
+             <p> Mandaluyong City <br> Civil Registry</p > 
+            
+            </div>
         </div>
 
 		<div class="menu">

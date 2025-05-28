@@ -9,843 +9,790 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 	<style type="text/css">
-
-    body {
+        body {
             font-family: 'Poppins';
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
         }
 
-    *{
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    nav{
-      top: 0;
-      width: 100%;
-      height: 65px;
-      z-index: 9999;
-      display: flex;
-      position: sticky;
-      align-items: center;
-      justify-content: left;
-      background-color: white;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-    }
+        /* Navigation Styles */
+        nav {
+            top: 0;
+            width: 100%;
+            height: 65px;
+            z-index: 9999;
+            display: flex;
+            position: sticky;
+            align-items: center;
+            justify-content: left;
+            background-color: white;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
 
-    .image-container img {
-      width: 50px;
-      height: 45px;
-      margin-top: 5px;
-      margin-left: 20px;
-      position: relative;
-      border-radius: 50%;
-    }
+        .image-container img {
+            width: 50px;
+            height: 45px;
+            margin-top: 5px;
+            margin-left: 20px;
+            position: relative;
+            border-radius: 50%;
+        }
 
-    .logo-name {
-      font-size: 15px;
-      margin-left: 30px;
-      white-space: nowrap;
-      font-family: "Poppins", sans-serif;
-    }
+        .logo-name {
+            font-size: 15px;
+            margin-left: 30px;
+            white-space: nowrap;
+            font-family: "Poppins", sans-serif;
+        }
 
-    .logo-name a {
-      margin-left: -16px;
-      font-family: "Poppins", sans-serif;
-    }
+        .logo-name a {
+            margin-left: -16px;
+            font-family: "Poppins", sans-serif;
+        }
 
-    nav button {
-      display: none;
-    }
+        nav .menu {
+            width: 100%;            
+            margin-top: -5px;
+            margin-left: 20px;
+            text-align: center;     
+            justify-content: center; 
+            align-items: center;    
+        }
 
-    nav .menu {
-      width: 100%;            
-      margin-top: -5px;
-      margin-left: 20px;
-      text-align: center;     
-      justify-content: center; 
-      align-items: center;    
-    }
+        nav .menu ul li {
+            padding: -5px;
+            font-size: 17px;
+            list-style: none;
+            font-weight: bold;
+            margin-right: 30px; 
+            display: inline-block;
+            position: relative;
+            font-family: "Poppins", sans-serif;
+        }
 
-    nav .menu ul li {
-      padding: -5px;
-      font-size: 17px;
-      list-style: none;
-      font-weight: bold;
-      margin-right: 30px; 
-      display: inline-block;
-      position: relative;
-      font-family: "Poppins", sans-serif;
+        nav .menu ul li a {
+            color: black;
+            text-decoration: none;
+        }
 
-    }
+        nav .menu .active,
+        .a:hover {
+            color: #426DDC;
+            font-size: 20px;
+        }
 
-    nav .menu ul:nth-child(2) li {
-      top: -8px;
-      left: 10px;
-      color: #757575;
-      position: relative;
-    }
+        nav .menu ul li a:hover {
+            color: #426DDC;
+            transition: 0.3s ease; 
+        }
 
+        .dropdown_menuuu {
+            display: none;
+            position: absolute;
+            left: -55%;
+            top: 100%;
+            min-height: 90px;
+            background-color: white;
+            z-index: 1000;
+            min-width: 130px;
+        }
 
-    nav .menu ul li a{
-      color: black;
-      text-decoration: none;
-    }
+        .menu ul li:hover .dropdown_menuuu,
+        .dropdown_menuuu:hover {
+            display: block;
+            border-radius: 5px;
+            font-size: 18px;
+        }
 
-    nav .menu .active,
-    .a:hover {
-     color: #426DDC;
-     font-size: 20px;
-    }
+        .dropdown_menuuu ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+            margin-left: 25px; 
+            margin-bottom: 9px;
+        }
 
+        .dropdown_menuuu ul li {
+            width: 130px;
+            padding: 7px;
+            white-space: nowrap;
+        }
 
-    nav .menu ul li a:hover {
-      color: #426DDC;
-      transition: 0.3s ease; 
-    }
+        #accountDropdown {
+            display: none; 
+            position: absolute;
+            background-color: #fff;
+            border-radius: 6px;
+            right: 10px;
+            top: 55px;
+            min-width: 160px;
+            z-index: 1000;
+            padding: 8px 0;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-    nav form {
-      left: 25%;
-      top: 65px;
-      width: 60%;
-      position: relative;
-    }
+        #accountDropdown.show {
+            display: block;
+        }
 
-    nav form input {
-      top: -45px;
-      width: 92%;
-      border: none;
-      color: black;
-      outline: none;
-      transition: 0.5s;
-      padding: 10px 0px;
-      position: relative;
-      transform: scaleX(0);
-      transform-origin: right;
-      border-bottom: solid 2px;
-      font-family: "Poppins", sans-serif;
-    }
+        #accountDropdown a {
+            display: block;
+            padding: 10px 16px;
+            color: #333;
+            text-align: left;
+            text-decoration: none;
+            font-size: 14px;
+            font-family: "Poppins", sans-serif;
+            transition: background-color 0.3s ease;
+        }
 
-    nav form input::placeholder {
-      font-size: 16px;
-      font-family: "Poppins", sans-serif;
-    }
+        #accountDropdown a:hover {
+            color: #426DDC;
+            background-color: #f5f5f5;
+            transition: 0.3s ease; 
+        }
 
-    .dropdown_menuuu {
-      display: none;
-      position: absolute;
-      left: -55%;
-      top: 100%;
-      min-height: 90px;
-      background-color: white;
-      z-index: 1000;
-      min-width: 130px;
-    }
+        nav .search-container {
+            position: relative;
+            margin-left: auto;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
 
-    .menu ul li:hover .dropdown_menuuu,
-    .dropdown_menuuu:hover {
-       display: block;
-       border-radius: 5px;
-       font-size: 18px;
-    }
+        nav .search-container input[type="text"] {
+            padding: 8px 35px 8px 15px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            font-family: "Poppins", sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+            width: 180px;
+        }
 
-    .dropdown_menuuu ul {
-       list-style: none;
-       padding: 0;
-       margin-top: 15px;
-       margin-left: 25px; 
-       margin-bottom: 9px;
-    }
+        nav .search-container input[type="text"]:focus {
+            border-color: #426DDC;
+            box-shadow: 0 0 5px rgba(66, 109, 220, 0.5);
+        }
 
-    .dropdown_menuuu ul li {
-       width: 130px;
-       padding: 7px;
-       white-space: nowrap;
-    }
+        nav .search-container .fa-search {
+            position: absolute;
+            right: 12px;
+            color: gray;
+            font-size: 16px;
+            pointer-events: auto;
+        }
 
-    #accountDropdown {
-      display: none; 
-      position: absolute;
-      background-color: #fff;
-      border-radius: 6px;
-      right: 10px;
-      top: 55px;
-      min-width: 160px;
-      z-index: 1000;
-      padding: 8px 0;
-      font-weight: bold;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
+        nav .search-container .fa-search:hover {
+            color: #426DDC;
+            transition: 0.3s ease; 
+        }
 
-    #accountDropdown.show {
-      display: block;
-    }
+        nav .user-icon {
+            font-size: 28px;
+            color: #333;
+            margin-right: 23px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
 
-    #accountDropdown a {
-      display: block;
-      padding: 10px 16px;
-      color: #333;
-      text-align: left;
-      text-decoration: none;
-      font-size: 14px;
-      font-family: "Poppins", sans-serif;
-      transition: background-color 0.3s ease;
-    }
+        nav .user-icon:hover {
+            color: #426DDC;
+        }
 
-    #accountDropdown a:hover {
-      color: #426DDC;
-      background-color: #f5f5f5;
-      transition: 0.3s ease; 
-    }
+        /* Search Section Styles */
+        .search-section {
+            width: 100%;
+            padding: 40px 20px;
+            background-color: #f8f9fa;
+        }
 
-    nav .search-container {
-      position: relative;
-      margin-left: auto;
-      margin-right: 20px;
-      display: flex;
-      align-items: center;
-    }
+        .hcwhy h3 {
+            color: #2c3e50;
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-family: "Poppins", sans-serif;
+        }
 
-    nav .search-container input[type="text"] {
-      padding: 8px 35px 8px 15px;
-      border-radius: 20px;
-      border: 1px solid #ccc;
-      font-family: "Poppins", sans-serif;
-      font-size: 14px;
-      outline: none;
-      transition: all 0.3s ease;
-      width: 180px;
-    }
+        .search-container2 {
+            border: 2px solid #426DDC;
+            display: flex;
+            margin: 20px auto;
+            align-items: center;
+            width: 90%;
+            max-width: 600px;
+            height: 40px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
 
-    nav .search-container input[type="text"]:focus {
-      border-color: #426DDC;
-      box-shadow: 0 0 5px rgba(66, 109, 220, 0.5);
-    }
+        .search-container2:hover {
+            box-shadow: 0 0 7px rgba(66, 109, 220, 0.3);      
+        }
 
-    nav .search-container .fa-search,  button.search-button {
-      position: absolute;
-      border: none;
-      background: none;
-      right: 12px;
-      color: gray;
-      font-size: 16px;
-      pointer-events: auto;
-    }
+        .search-container2 input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 15px;
+            padding: 10px;
+            border-radius: 30px;
+            background: transparent;
+            font-family: "Poppins", sans-serif;
+            width: 100%;
+        }
 
-    nav .search-container .fa-search:hover {
-      color: #426DDC;
-      transition: 0.3s ease; 
-    }
+        .search-container2 button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 18px;
+            color: #555;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    nav .user-icon {
-      font-size: 28px;
-      color: #333;
-      margin-right: 23px;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
+        .search-container2 button:hover {
+            color: #426DDC;
+        }
 
-    nav .user-icon:hover {
-      color: #426DDC;
-    }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
 
+        .modal-content {
+            background: white;
+            margin: 15% auto;
+            padding: 20px;
+            width: 50%;
+            border-radius: 8px;
+            position: relative;
+        }
 
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-    /* Main content below the NAV BAR */
-    html, body {
-      height: 100%; 
-      margin: 0; 
-      padding: 0; 
-      overflow-x: hidden; 
-    }
+        .modal-header h3 {
+            margin: 0;
+            color: #2c3e50;
+        }
 
-    section {
-      width: 100vw;
-      height: 110vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #d8e4f0;
-      background-size: cover;
-      background-repeat: no-repeat;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      position: relative;
-    }
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
 
-    .hcwhy h3{
-      color: #2c3e50;
-      font-size: 30px;
-      font-weight: bold;
-      margin-left: 50px;
-      font-family: "Poppins", sans-serif;
-    }
+        .modal-form input,
+        .modal-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    .search-section {
-      display: flex;
-      justify-content: center;
-    }
+        .modal-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
 
-    .search-container2 {
-      border: 2px solid #426DDC;
-      display: flex;
-      margin-top: 35px;
-      align-items: center;
-      width: 600px;
-      height: 40px;
-      padding: 15px;
-      background: #f9f9f9;
-      border-radius: 20px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
+        .modal-actions {
+            text-align: right;
+        }
 
-    .search-container2:hover {
-      box-shadow: 0 0 7px white;      
-    }
+        .modal-actions button {
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    .search-container2 input {
-      flex: 1;
-      border: none;
-      outline: none;
-      font-size: 15px;
-      padding: 10px;
-      border-radius: 30px;
-      background: transparent;
-      font-family: "Poppins", sans-serif;
-    }
+        .cancel-btn {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            margin-right: 10px;
+        }
 
-    .search-container2 button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 10px;
-      font-size: 18px;
-      color: #555;
-      margin-right: 10px;
-    }
+        .submit-btn {
+            background: #426DDC;
+            color: white;
+            border: none;
+        }
 
-    .search-container2 button:hover {
-      color: #007bff;
-    }
+        /* FAQ Section Styles */
+        .faq-section {
+            flex: 1;
+            padding: 40px 5%;
+            background-color: #f8f9fa;
+        }
 
-    @media (max-width: 600px) {
-      .search-container2 {
-                max-width: 90%;
-      }
-            .search-container2 input {
+        .faq-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .faq-header h1 {
+            color: #2c3e50;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .faq-header p {
+            color: #666;
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .faq-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+        }
+
+        .faq-question h3 {
+            color: #2c3e50;
+            font-size: 18px;
+            margin: 0;
+            flex: 1;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .faq-answer p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px 0;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-item.active .faq-question {
+            background: #426DDC;
+        }
+
+        .faq-item.active .faq-question h3 {
+            color: white;
+        }
+
+        .toggle-icon {
+            color: #426DDC;
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .toggle-icon {
+            transform: rotate(180deg);
+            color: white;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: #fff;
+            padding: 40px 0 0 0;
+            margin-top: auto;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            align-items: start;
+        }
+
+        .footer-content {
+            padding: 0 15px;
+        }
+
+        .footer-content h3 {
+            color: #426DDC;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .footer-content p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .footer-content a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-content a:hover {
+            color: #426DDC;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            justify-content: flex-start;
+        }
+
+        .social-icons li {
+            list-style: none;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f5f5f5;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: #426DDC;
+            transform: translateY(-3px);
+        }
+
+        .social-icons i {
+            color: #666;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover i {
+            color: #fff;
+        }
+
+        .bottom-bar {
+            background: #426DDC;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 40px;
+        }
+
+        .bottom-bar p {
+            color: #fff;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .faq-section {
+                padding: 30px 4%;
+            }
+
+            .faq-header h1 {
+                font-size: 28px;
+            }
+
+            .container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .footer-content:last-child {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .faq-section {
+                padding: 20px 15px;
+            }
+
+            .faq-header h1 {
+                font-size: 24px;
+                margin-bottom: 15px;
+            }
+
+            .faq-header p {
                 font-size: 14px;
             }
-      }
-
-
-    .faq-container {
-      margin-top: 55px;
-      padding: 10px;
-      width: 600px; 
-      max-width: 80vw; 
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      font-family: "Poppins", sans-serif;
-    }
-
-   .faq-title {
-      text-align: center;
-      font-size: 23px;
-      color: #003366;
-      margin-top: 10px;
-      margin-bottom: 25px;
-    }
-
-   .faq-item {
-      border-bottom: 1px solid #ddd;
-      text-align: left;
-      padding: 15px 0;
-      display: flex;
-      margin-left: 5px;
-      flex-direction: column;
-      width: 100%;
-    }
-
-   .faq-item:last-child {
-      border-bottom: none;
-    }
-
-   .faq-question {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      font-size: 17px;
-      font-weight: 600;
-      color: #003366;
-      padding: 0 5px;
-      width: calc(100% - 20px);
-      transition: 0.3s ease;
-    }
-
-   .faq-question:hover {
-      color: #0055aa;
-    }
-
-   .faq-question i {
-      margin-left: auto;
-      transition: transform 0.3s ease;
-   }
-
-   .faq-question.active i.fa-chevron-down {
-      transform: rotate(180deg);
-   }
-
-   .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease-out;
-      font-size: 14px;
-      font-weight: 400;
-      color: #555;
-      margin-left: 15px;
-      line-height: 1.6;
-      margin-top: 10px;
-      padding: 0 5px;
-      opacity: 0;
-      transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
-   }
-
-   .faq-answer.show {
-      max-height: 500px;
-      opacity: 1;
-      padding: 10px 5px;
-   }
-
-   .faq-actions {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-   .faq-actions i {
-      cursor: pointer;
-      font-size: 16px;
-      color: #666;
-      transition: color 0.3s ease;
-    }
-
-   .faq-actions i:hover {
-      color: #426DDC;
-    }
-
-   .faq-actions i.fa-edit,
-   .faq-actions i.fa-trash {
-      transform: none !important;
-   }
-
-
-
-    /* Zoom-in screen orientation layout */
-    @media(max-width: 1000px) {
-
-    html, body {
-     overflow-x: hidden;
-     overflow-y: auto;
-     width: 100%;
-     max-width: 100%;
-    }
-
-    section {
-      width: 100vw;
-      height: 120vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #d8e4f0;
-      background-size: cover;
-      background-repeat: no-repeat;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      position: relative;
-    }
-
-    nav button {
-      display: none;
-      width: 30px;
-      height: 25px;
-      top: 20px;
-      right: 20px;
-      cursor: pointer;
-      border: none;
-      outline: none;
-      background: #757575;
-    }
-
-    nav  button:before,
-    nav  button:after {
-      position: absolute;
-      content: '';
-      z-index: 0;
-      background-color: white;
-      width: 30px;
-      height: 5px;
-      top: 5px;
-      left: 0;
-      transition: 0.5s;
-    }
-
-    nav button:after {
-      top: 15px;
-    }
-
-    nav button.expand-icon {
-      background: transparent;
-    }
-
-    nav button.expand-icon:before,
-    nav button.expand-icon:after {
-      transform: rotate(45deg);
-      background: #757575;
-      top: 10px;
-    }
-
-    nav button.expand-icon:after {
-      transform: rotate(-45deg);
-    }
-
-    nav .menu {
-      position: absolute;
-      margin: auto;
-      width: 100%;
-      height: 0;
-      background: white;
-      top: 60px;
-      transition: 0.5s;
-      overflow: hidden;
-    }
-
-    nav .menu ul {
-      padding: 0;
-      margin: 0;
-      list-style: none;
-    }
-
-    nav .menu.expand-mobile {
-      height: 700px;
-    }
-
-    nav .menu ul li {
-      width: 100%;
-      display: block;
-      font-size: 1rem;
-      text-align: left;
-      padding: 10px 15px;
-      box-sizing: border-box;
-    }
-
-    .dropdown_menu ul {
-      list-style: none;
-      padding: 0;
-      margin-left: 250px;
-    }
-
-    .dropdown_menu ul li {
-      width: 130px;
-      padding: 5px;
-      white-space: nowrap;
-    }
-
-    nav .menu ul:nth-child(2) li {
-      top: 0;
-      left: 0;
-    }
-
-    nav .nav-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      position: relative;
-      padding: 0 20px;
-      flex-direction: column; 
-    }
-
-    nav .search-container {
-      position: relative;
-      margin: 0 auto;
-      justify-content: center;
-      width: 100%;
-      max-width: 500px; 
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      z-index: 10;
-    }
-
-    nav .search-container input[type="text"] {
-      padding: 8px 35px 8px 15px;
-      border-radius: 20px;
-      border: 1px solid #ccc;
-      font-family: "Poppins", sans-serif;
-      font-size: 14px;
-      outline: none;
-      width: 100%;
-      box-sizing: border-box;
-      transition: all 0.3s ease;
-    }
-
-    nav .search-container input[type="text"]:focus {
-      border-color: #426DDC;
-      box-shadow: 0 0 5px rgba(66, 109, 220, 0.5);
-    }
-
-    nav .search-container .fa-search {
-      position: absolute;
-      right: 35px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #888;
-      border: none;
-      font-size: 16px;
-      pointer-events: auto;
-    }
-
-    ::placeholder {
-      color: #888;
-      font-size: 15px;
-      margin-left: 30px;
-      font-family: "Poppins", sans-serif;
-    }
-
-    nav .search-container i .fa-search:hover {
-      color: #426DDC;
-      transition: 0.3s ease;
-    }
-
-    .user-icon {
-      display: none;
-    }
-
-    nav .menu-toggle {
-      display: flex;
-      top: auto;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 24px;
-      color: #333;
-      position: relative;
-      margin-left: 20px;
-    }  
-
-    nav .menu-toggle:hover {
-      color: #426DDC;
-    }
-    }
-
-    footer {
-      background: #fff;
-      padding-top: 20px;
-      padding-bottom: 5px;
-    }
-
-    .container {
-      margin-left: 20px;
-      margin-right: 20px;
-      height: 110px;
-      width: 1140px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .footer-content {
-      margin-left: 20px;
-      margin-right: 20px;
-      width: 33.3%;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start; 
-      margin: 0 10px;
-    }
-
-    footer iframe {
-      margin-left: 20px;
-      width: 100%;
-      height: 100%;
-      border: 0;
-      margin: 0;
-    }
-
-    .map-container {
-      flex-grow: 1; 
-      height: 100%; 
-    }
-
-    h3 {
-      margin-left: 20px;
-      margin-right: 20px;
-      font-weight: 100;
-      font-size: 16px;
-      margin-bottom: 5px;
-      text-align: center;
-      color: #3247df;
-    }
-
-    .footer-content p {
-      width: 190px;
-      margin-left: 15px;
-      padding: 2px;
-    }
-
-    .social-icons {
-      text-align: center;
-      padding: 0;
-    }
-
-    .social-icons li {
-      display: inline-block;
-      text-align: center;
-      padding: 5px;
-    }
-
-    .social-icons i {
-      color: rgb(3, 3, 3);
-      font-size: 25px;
-    }
-
-    a {
-      color: #333;
-      text-decoration: none;
-    }
-
-    a:hover {
-      color: #3247df;
-    }
-
-    .social-icons i:hover {
-      color: #3247df;
-    }
-
-    .bottom-bar {
-      background: #3247df;
-      text-align: center;
-      padding: 0px 0;
-      margin-top: 50px;
-    }
-
-    .bottom-bar p {
-      color: #f7f7f7;
-      margin: 0;
-      font-size: 16px;
-      padding: 8px;
-    }
-
-    [contenteditable="true"]:focus {
-      border-radius: 10px;
-      outline: 3px solid black;
-      box-shadow: 0 0 20px white;
-      cursor: text;
-    }
-
-    [contenteditable="true"]:hover {
-     border-radius: 10px;
-     cursor: text;
-    }
-
-    .editable-wrapper {
-      display: flex;
-      align-items: center;
-      position: relative;
-      justify-content: center;
-      gap: 8px; 
-    }
-
-    .edit-icon {
-      pointer-events: none; 
-      user-select: none;
-      font-size: 17px;
-      color: black;
-    }
-
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-    }
-
-    .modal-content {
-      background: white;
-      margin: 15% auto;
-      padding: 20px;
-      width: 50%;
-      border-radius: 8px;
-      position: relative;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .modal-header h3 {
-      margin: 0;
-      color: #003366;
-    }
-
-    .close-modal {
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      color: #666;
-    }
-
-    .modal-form input,
-    .modal-form textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .modal-form textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .modal-actions {
-      text-align: right;
-    }
-
-    .modal-actions button {
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .cancel-btn {
-      background: #f8f9fa;
-      border: 1px solid #ddd;
-      margin-right: 10px;
-    }
-
-    .submit-btn {
-      background: #426DDC;
-      color: white;
-      border: none;
-    }
+
+            .faq-question h3 {
+                font-size: 16px;
+            }
+
+            .faq-answer p {
+                font-size: 14px;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-content {
+                text-align: center;
+                padding: 0;
+            }
+
+            .footer-content h3 {
+                text-align: center;
+            }
+
+            .footer-content p {
+                text-align: center;
+            }
+
+            .map-container {
+                height: 250px;
+                margin: 0 auto;
+                max-width: 500px;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+
+            .bottom-bar {
+                margin-top: 30px;
+            }
+
+            .search-container2 {
+                width: 95%;
+                height: 45px;
+                padding: 10px;
+            }
+
+            .search-container2 input {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .search-container2 button {
+                padding: 8px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .faq-section {
+                padding: 15px 10px;
+            }
+
+            .faq-header h1 {
+                font-size: 22px;
+            }
+
+            .faq-question {
+                padding: 15px;
+            }
+
+            .faq-question h3 {
+                font-size: 15px;
+            }
+
+            .faq-answer {
+                padding: 0 15px;
+            }
+
+            .faq-answer p {
+                font-size: 13px;
+                padding: 15px 0;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+
+            .footer-content h3 {
+                font-size: 16px;
+            }
+
+            .footer-content p {
+                font-size: 13px;
+            }
+
+            .social-icons a {
+                width: 35px;
+                height: 35px;
+            }
+
+            .social-icons i {
+                font-size: 18px;
+            }
+
+            .bottom-bar p {
+                font-size: 12px;
+            }
+
+            .search-container2 {
+                width: 100%;
+                height: 40px;
+                padding: 8px;
+            }
+
+            .search-container2 input {
+                font-size: 13px;
+                padding: 6px;
+            }
+
+            .search-container2 button {
+                padding: 6px;
+                font-size: 15px;
+            }
+        }
+
+        /* Navigation Responsive Styles */
+        @media (max-width: 768px) {
+            nav {
+                height: auto;
+                padding: 10px 0;
+            }
+
+            .image-container img {
+                width: 40px;
+                height: 35px;
+                margin-left: 10px;
+            }
+
+            .logo-name {
+                font-size: 13px;
+                margin-left: 15px;
+            }
+
+            .search-container {
+                margin: 10px auto;
+                width: 90%;
+            }
+
+            .search-container input[type="text"] {
+                width: 100%;
+            }
+
+            nav .menu {
+                display: none;
+                position: absolute;
+                top: 65px;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 20px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            nav .menu.active {
+                display: block;
+            }
+
+            nav .menu ul li {
+                display: block;
+                margin: 10px 0;
+                text-align: left;
+            }
+
+            .dropdown_menuuu {
+                position: static;
+                display: none;
+                width: 100%;
+                margin-top: 10px;
+                padding-left: 20px;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+                font-size: 24px;
+                color: #333;
+                cursor: pointer;
+            }
+        }
 	</style>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 </head>

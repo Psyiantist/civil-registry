@@ -253,7 +253,7 @@
         margin: 0;
         padding: 0;
         background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),
-              url('appointment_bg.jpg') no-repeat center center fixed;
+              url('{{ asset('storage/assets/appointment_bg.jpg') }}') no-repeat center center fixed;
         background-size: cover;
         background-attachment: fixed;
         background-repeat: no-repeat;
@@ -275,7 +275,7 @@
         margin: 0;
         padding: 0;
         background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),
-              url('appointment_bg.jpg') no-repeat center center fixed;
+              url('{{ asset('storage/assets/appointment_bg.jpg') }}') no-repeat center center fixed;
         background-size: cover;
         background-attachment: fixed;
         background-repeat: no-repeat;
@@ -596,10 +596,11 @@
 <body>
         <nav>
             <div class="image-container">
-                <img src="/storage/assets/civil_registry_logo.png"> </div>
+            <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
     
-            <div class="logo-name">
-                 <b> Mandaluyong City <br/> <a> Civil Registry</a> </b> </div>
+                <div class="logo-name">
+             <p> Mandaluyong City <br> Civil Registry</p > 
+            </div>
 
     
             <div class="menu">
@@ -643,13 +644,13 @@
       </nav>
 
 <!-- REQUIREMENTS MANAGEMENT SECTION -->
-<div class="w-full flex justify-center pt-24 px-4">
-  <div class="w-full max-w-5xl bg-blue-800 text-white text-3xl font-bold rounded-lg shadow-md py-4 text-center mb-8 tracking-wide">REQUIREMENTS</div>
+<div class="w-full flex flex-col md:flex-row justify-center pt-24 px-4">
+  <div class="w-full md:w-[45%] max-w-lg bg-blue-800 text-white text-2xl md:text-3xl font-bold rounded-lg shadow-md py-4 text-center mb-8 tracking-wide">REQUIREMENTS</div>
 </div>
-<div class="flex gap-6 justify-center mt-0 px-4 pb-16">
+<div class="flex flex-col md:flex-row gap-6 justify-center mt-0 px-4 pb-16">
     <!-- Add Requirement Container -->
-    <div class="bg-white p-6 rounded-lg shadow-md w-[45%] max-w-lg min-h-[600px]">
-        <h2 class="text-2xl font-bold text-blue-800 mb-4">Add Requirement</h2>
+    <div class="bg-white p-4 md:p-6 rounded-lg shadow-md w-full md:w-[45%] max-w-lg min-h-[600px] mb-6 md:mb-0">
+        <h2 class="text-xl md:text-2xl font-bold text-blue-800 mb-4">Add Requirement</h2>
         <form action="{{ route('admin.requirements.store') }}" method="POST" class="mb-6">
             @csrf
             <div class="mb-4">
@@ -660,22 +661,22 @@
                 <label class="block text-gray-700 font-bold mb-2">Description (you can use bullets or paragraphs)</label>
                 <textarea name="description" rows="6" class="w-full border rounded px-3 py-2 text-gray-900" placeholder="• Bullet 1&#10;• Bullet 2" required></textarea>
             </div>
-            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Add Requirement</button>
+            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 w-full md:w-auto">Add Requirement</button>
         </form>
     </div>
 
     <!-- Existing Requirements Container -->
-    <div class="bg-white p-6 rounded-lg shadow-md w-[45%] max-w-lg min-h-[600px]">
+    <div class="bg-white p-4 md:p-6 rounded-lg shadow-md w-full md:w-[45%] max-w-lg min-h-[600px]">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-bold text-blue-800">Existing Requirements</h2>
+            <h2 class="text-xl md:text-2xl font-bold text-blue-800">Existing Requirements</h2>
         </div>
 
         <div id="requirements-list" class="max-h-[600px] overflow-y-auto">
             @foreach($requirements as $requirement)
                 <div class="requirement-item border-b py-4" data-id="{{ $requirement->id }}">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-semibold text-gray-900">{{ $requirement->title }}</h3>
-                        <div class="requirement-actions flex items-center gap-4">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+                        <h3 class="text-base md:text-lg font-semibold text-gray-900">{{ $requirement->title }}</h3>
+                        <div class="requirement-actions flex items-center gap-2 md:gap-4">
                             <!-- Edit Button: Opens Modal -->
                             <button class="fas fa-edit text-blue-600 hover:text-blue-800 cursor-pointer bg-transparent border-none" type="button" onclick="openEditModal({{ $requirement->id }}, '{{ addslashes($requirement->title) }}', `{{ addslashes($requirement->description) }}`)"></button>
                             <!-- Delete Form -->
@@ -684,14 +685,14 @@
                                 @method('DELETE')
                                 <button type="submit" class="fas fa-trash text-red-600 hover:text-red-800 cursor-pointer bg-transparent border-none"></button>
                             </form>
-                            <button class="dropdown-btn bg-blue-600 text-white px-3 py-1 rounded hover:bg-bludsadsae-700 flex items-center gap-2" onclick="toggleDescription({{ $requirement->id }})">
+                            <button class="dropdown-btn bg-blue-600 text-white px-2 md:px-3 py-1 rounded hover:bg-blue-700 flex items-center gap-2 text-sm md:text-base" onclick="toggleDescription({{ $requirement->id }})">
                                 <span>View</span>
                                 <i class="fas fa-chevron-down transition-transform"></i>
                             </button>
                         </div>
                     </div>
                     <div class="requirement-description mt-4 hidden">
-                        <div class="text-gray-700 whitespace-pre-line">{!! nl2br(e($requirement->description)) !!}</div>
+                        <div class="text-gray-700 whitespace-pre-line text-sm md:text-base">{!! nl2br(e($requirement->description)) !!}</div>
                     </div>
                 </div>
             @endforeach
@@ -700,9 +701,9 @@
 </div>
 
 <!-- Edit Modal (hidden by default) -->
-<div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-    <div class="bg-white p-8 rounded-lg max-w-lg w-full">
-        <h2 class="text-xl font-bold mb-4">Edit Requirement</h2>
+<div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4">
+    <div class="bg-white p-4 md:p-8 rounded-lg w-full max-w-lg">
+        <h2 class="text-lg md:text-xl font-bold mb-4">Edit Requirement</h2>
         <form id="editForm" method="POST">
             @csrf
             @method('PUT')
@@ -714,9 +715,9 @@
                 <label class="block text-gray-700 font-bold mb-2">Description</label>
                 <textarea id="editDescription" name="description" rows="6" class="w-full border rounded px-3 py-2 text-gray-900" required></textarea>
             </div>
-            <div class="flex justify-end gap-2">
-                <button type="button" onclick="closeEditModal()" class="bg-gray-400 text-white px-4 py-2 rounded">Cancel</button>
-                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Save</button>
+            <div class="flex flex-col md:flex-row justify-end gap-2">
+                <button type="button" onclick="closeEditModal()" class="bg-gray-400 text-white px-4 py-2 rounded w-full md:w-auto mb-2 md:mb-0">Cancel</button>
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 w-full md:w-auto">Save</button>
             </div>
         </form>
     </div>

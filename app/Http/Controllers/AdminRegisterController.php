@@ -34,6 +34,8 @@ class AdminRegisterController extends Controller
             'birthday' => $request->birthday,
             'address' => $request->address,
             'employee_id' => $request->employee_id,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
         ]);
 
         // Send welcome email

@@ -95,6 +95,7 @@ Route::middleware(['auth:employee'])->group(function () {
     Route::post('/admin/contact/update', [ContactController::class, 'updateContact'])->name('contact.update');
     Route::get('/contact/get', [ContactController::class, 'getContact'])->name('contact.get');
     Route::delete('/admin/contact/feedback/{id}', [ContactController::class, 'deleteFeedback'])->name('admin.contact.feedback.delete');
+    Route::post('/admin/contact/feedback/reply', [ContactController::class, 'replyToFeedback'])->name('admin.contact.feedback.reply');
 
     // Requirements Routes 
     Route::get('/admin/requirements', [RequirementController::class, 'index'])->name('admin.requirements');
@@ -106,7 +107,12 @@ Route::middleware(['auth:employee'])->group(function () {
     Route::get('/admin/appointment', [AppointmentController::class, 'showAppointments'])->name('admin.appointment');
     Route::put('/admin/appointments/{appointment}/status', [AppointmentController::class, 'updateStatus'])->name('admin.appointments.status');
     Route::delete('/admin/appointments/{appointment}', [AppointmentController::class, 'destroy'])->name('admin.appointments.destroy');
+    Route::get('/admin/appointments/{id}/logs', [AppointmentController::class, 'getLogs'])->name('admin.appointments.logs');
+    Route::get('/admin/appointments/logs', [AppointmentController::class, 'getAllLogs'])->name('admin.appointments.all-logs');
     
+    // Email Tester Route
+    Route::get('/admin/email-tester', [AppointmentController::class, 'showEmailTester'])->name('admin.email-tester');
+    Route::post('/admin/email-tester/send', [AppointmentController::class, 'sendTestEmail'])->name('admin.email-tester.send');
 });
 
 // Public Routes

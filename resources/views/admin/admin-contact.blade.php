@@ -8,6 +8,8 @@
     <link rel="icon" type="image/x-icon" href="/storage/assets/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <!-- Add Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- External JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -237,6 +239,11 @@
                 background: #757575;
             }
 
+            .logo-name a {
+      margin-left: -16px;
+      font-family: "Poppins", sans-serif;
+      padding-left: 30px;
+    }
             nav button:before,
             nav button:after {
                 position: absolute;
@@ -409,6 +416,205 @@
             flex-grow: 1;
             align-items: stretch;
             min-height: 600px;
+        }
+
+        @media (max-width: 1200px) {
+            .contact-section {
+                padding: 60px 5%;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .contact-section {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 40px 5%;
+            }
+
+            .contact-text {
+                max-width: 100%;
+            }
+
+            .contact-info-box {
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .contact-section {
+                padding: 30px 20px;
+            }
+
+            .contact-text h1 {
+                font-size: 24px;
+            }
+
+            .contact-form {
+                padding: 20px;
+            }
+
+            .contact-form h2 {
+                font-size: 20px;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                padding: 10px;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .button-group button {
+                width: 100%;
+            }
+        }
+
+        /* Modal Responsive Styles */
+        @media (max-width: 640px) {
+            .modal-content {
+                margin: 0.5rem;
+                padding: 1rem;
+                width: 95%;
+            }
+
+            .modal-title {
+                font-size: 1.1rem;
+            }
+
+            .form-label {
+                font-size: 0.8rem;
+            }
+
+            .form-input,
+            .form-textarea {
+                font-size: 0.8rem;
+                padding: 0.4rem;
+            }
+
+            .btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Feedback Section Responsive Styles */
+        @media (max-width: 768px) {
+            .feedback-scroll-container {
+                max-height: 300px;
+            }
+
+            .feedback-item {
+                padding: 10px;
+            }
+
+            .feedback-header {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            .feedback-name,
+            .feedback-email {
+                font-size: 12px;
+            }
+
+            .feedback-message {
+                font-size: 13px;
+                padding: 8px 12px;
+            }
+        }
+
+        /* Footer Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+                padding: 20px;
+            }
+
+            .footer-content {
+                width: 100%;
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .map-container {
+                height: 200px;
+                margin: 10px 0;
+            }
+
+            .social-icons {
+                justify-content: center;
+                margin-top: 10px;
+            }
+
+            .social-icons li {
+                margin: 0 10px;
+            }
+        }
+
+        /* Navigation Responsive Styles */
+        @media (max-width: 768px) {
+            nav {
+                height: auto;
+                padding: 10px 0;
+            }
+
+            .image-container img {
+        width: 70px;
+        height: 35px;
+        margin-left: 10px;
+           }
+
+            .logo-name {
+                font-size: 13px;
+                margin-left: 15px;
+            }
+
+            .search-container {
+                margin: 10px auto;
+                width: 90%;
+            }
+
+            .search-container input[type="text"] {
+                width: 100%;
+            }
+        }
+
+        /* Contact Info Box Responsive Styles */
+        @media (max-width: 768px) {
+            .contact-info-box {
+                padding: 15px;
+            }
+
+            .contact-info-box h3 {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+
+            .contact-form {
+                margin-bottom: 15px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group label {
+                font-size: 14px;
+            }
+
+            .form-group input {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+
+            .form-group button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
         }
 
         .contact-text {
@@ -602,114 +808,316 @@
         /* Footer Styles */
         footer {
             background: #fff;
-            padding-top: 20px;
-            padding-bottom: 5px;
+            padding: 40px 0 0 0;
+            margin-top: auto;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .container {
-            margin-left: 20px;
-            margin-right: 20px;
-            height: 110px;
-            width: 1140px;
-            display: flex;
-            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            align-items: start;
         }
 
         .footer-content {
-            margin-left: 20px;
-            margin-right: 20px;
-            width: 33.3%;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            margin: 0 10px;
+            padding: 0 15px;
         }
 
-        footer iframe {
-            margin-left: 20px;
-            width: 100%;
-            height: 100%;
-            border: 0;
-            margin: 0;
-        }
-
-        .map-container {
-            flex-grow: 1;
-            height: 100%;
-        }
-
-        h3 {
-            margin-left: 20px;
-            margin-right: 20px;
-            font-weight: 100;
-            font-size: 16px;
-            margin-bottom: 5px;
-            text-align: center;
-            color: #3247df;
+        .footer-content h3 {
+            color: #426DDC;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: left;
         }
 
         .footer-content p {
-            width: 190px;
-            margin-left: 15px;
-            padding: 2px;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .footer-content a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-content a:hover {
+            color: #426DDC;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         .social-icons {
-            text-align: center;
-            padding: 0;
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            justify-content: flex-start;
         }
 
         .social-icons li {
-            display: inline-block;
-            text-align: center;
-            padding: 5px;
+            list-style: none;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f5f5f5;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: #426DDC;
+            transform: translateY(-3px);
         }
 
         .social-icons i {
-            color: rgb(3, 3, 3);
-            font-size: 25px;
+            color: #666;
+            font-size: 20px;
+            transition: color 0.3s ease;
         }
 
-        a {
-            color: #333;
-            text-decoration: none;
-        }
-
-        a:hover {
-            color: #3247df;
-        }
-
-        .social-icons i:hover {
-            color: #3247df;
+        .social-icons a:hover i {
+            color: #fff;
         }
 
         .bottom-bar {
-            background: #3247df;
+            background: #426DDC;
             text-align: center;
-            padding: 0px 0;
-            margin-top: 50px;
+            padding: 15px 0;
+            margin-top: 40px;
         }
 
         .bottom-bar p {
-            color: #f7f7f7;
+            color: #fff;
             margin: 0;
-            font-size: 16px;
-            padding: 8px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .footer-content:last-child {
+                grid-column: span 2;
+            }
         }
 
         @media (max-width: 768px) {
+            footer {
+                padding: 30px 0 0 0;
+            }
+
             .container {
-                flex-direction: column;
-                gap: 20px;
+                grid-template-columns: 1fr;
+                gap: 30px;
             }
 
             .footer-content {
                 text-align: center;
+                padding: 0;
+            }
+
+            .footer-content h3 {
+                text-align: center;
+            }
+
+            .footer-content p {
+                text-align: center;
+            }
+
+            .map-container {
+                height: 250px;
+                margin: 0 auto;
+                max-width: 500px;
             }
 
             .social-icons {
                 justify-content: center;
             }
+
+            .bottom-bar {
+                margin-top: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .footer-content h3 {
+                font-size: 16px;
+            }
+
+            .footer-content p {
+                font-size: 13px;
+            }
+
+            .social-icons a {
+                width: 35px;
+                height: 35px;
+            }
+
+            .social-icons i {
+                font-size: 18px;
+            }
+
+            .bottom-bar p {
+                font-size: 12px;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            max-width: 32rem;
+            margin: 1rem;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .modal-close {
+            color: #6b7280;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .modal-close:hover {
+            color: #374151;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #426DDC;
+            box-shadow: 0 0 0 3px rgba(66, 109, 220, 0.1);
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            min-height: 8rem;
+            resize: vertical;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #426DDC;
+            box-shadow: 0 0 0 3px rgba(66, 109, 220, 0.1);
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e5e7eb;
+        }
+
+        .btn-primary {
+            background-color: #426DDC;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #274aa6;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-top: 1rem;
         }
     </style>
 </head>
@@ -720,8 +1128,9 @@
         <div class="image-container">
             <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
 
-        <div class="logo-name">
-             <b> Mandaluyong City <br/> <a> Civil Registry</a> </b> </div>
+            <div class="logo-name">
+             <p> Mandaluyong City <br> Civil Registry</p > 
+            </div>
 
 
         <div class="menu">
@@ -824,6 +1233,9 @@
                             <i class="fas fa-user-circle feedback-icon"></i>
                             <span class="feedback-name">{{ $feedback->name }}</span>
                             <span class="feedback-email">{{ $feedback->email }}</span>
+                            <button onclick="openReplyModal('{{ $feedback->id }}', '{{ $feedback->name }}', '{{ $feedback->email }}')" class="text-blue-600 hover:text-blue-800" style="background: none; border: none; cursor: pointer; margin-left: 8px;" title="Reply to Feedback">
+                                <i class="fas fa-reply"></i>
+                            </button>
                             <form method="POST" action="{{ route('admin.contact.feedback.delete', $feedback->id) }}" style="display:inline; margin-left:8px;" onsubmit="return confirm('Are you sure you want to delete this feedback?');">
                                 @csrf
                                 @method('DELETE')
@@ -842,6 +1254,43 @@
             </div>
         </div>
     </section>
+
+    <!-- Reply Modal -->
+    <div id="replyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Reply to Feedback</h3>
+                <button onclick="closeReplyModal()" class="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="replyForm" method="POST" action="{{ route('admin.contact.feedback.reply') }}">
+                @csrf
+                <input type="hidden" id="feedbackId" name="feedback_id">
+                <div class="form-group">
+                    <label class="form-label">To:</label>
+                    <input type="text" id="recipientName" name="recipient_name" class="form-input" readonly>
+                    <input type="email" id="recipientEmail" name="recipient_email" class="form-input mt-2" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="subject" class="form-label">Subject:</label>
+                    <input type="text" id="subject" name="subject" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="message" class="form-label">Message:</label>
+                    <textarea id="message" name="message" class="form-textarea" required></textarea>
+                </div>
+                <div class="button-group">
+                    <button type="button" onclick="closeReplyModal()" class="btn btn-secondary">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Send Reply
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -926,6 +1375,61 @@
             if (e.key === "Enter") {
                 performSearch();
             }
+        });
+
+        function openReplyModal(feedbackId, name, email) {
+            const modal = document.getElementById('replyModal');
+            modal.classList.add('show');
+            document.getElementById('feedbackId').value = feedbackId;
+            document.getElementById('recipientName').value = name;
+            document.getElementById('recipientEmail').value = email;
+            document.getElementById('subject').value = 'Re: Your Feedback - Mandaluyong City Civil Registry';
+        }
+
+        function closeReplyModal() {
+            const modal = document.getElementById('replyModal');
+            modal.classList.remove('show');
+            document.getElementById('replyForm').reset();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('replyModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeReplyModal();
+            }
+        });
+
+        // Prevent form submission from closing modal
+        document.getElementById('replyForm').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Add this new code for form submission
+        document.getElementById('replyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Reply sent successfully!');
+                    closeReplyModal();
+                } else {
+                    alert('Failed to send reply: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while sending the reply. Please try again.');
+            });
         });
     </script>
 </body>

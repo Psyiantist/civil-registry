@@ -9,20 +9,22 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AppointmentMail extends Mailable
+class FeedbackReply extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $appointment;
-    public $user;
+    public $subject;
+    public $messageContent;
+    public $recipientName;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($appointment, $user)
+    public function __construct($subject, $messageContent, $recipientName)
     {
-        $this->appointment = $appointment;
-        $this->user = $user;
+        $this->subject = $subject;
+        $this->messageContent = $messageContent;
+        $this->recipientName = $recipientName;
     }
 
     /**
@@ -31,7 +33,7 @@ class AppointmentMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Appointment Confirmation - Mandaluyong City Civil Registry',
+            subject: $this->subject,
         );
     }
 
@@ -41,10 +43,11 @@ class AppointmentMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.appointment-confirmation',
+            view: 'emails.feedback-reply',
             with: [
-                'appointment' => $this->appointment,
-                'user' => $this->user,
+                'subject' => $this->subject,
+                'messageContent' => $this->messageContent,
+                'recipientName' => $this->recipientName,
             ],
         );
     }
@@ -58,4 +61,4 @@ class AppointmentMail extends Mailable
     {
         return [];
     }
-}
+} 

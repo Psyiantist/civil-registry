@@ -472,7 +472,6 @@
     footer {
       background: #fff;
       padding-top: 20px;
-      padding-bottom: 5px;
     }
 
     .container {
@@ -566,6 +565,223 @@
       padding: 8px;
     }
 
+    /* Responsive Styles for Appointment Page */
+    @media (max-width: 1200px) {
+        .container {
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .bg-white {
+            max-width: 90%;
+            margin: 0 auto;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .bg-white {
+            padding: 1.5rem;
+        }
+
+        .grid-cols-2 {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .grid-cols-7 {
+            gap: 0.5rem;
+        }
+
+        .grid-cols-7 div {
+            font-size: 0.9rem;
+            padding: 0.5rem;
+        }
+
+        .grid-cols-2 button {
+            font-size: 0.9rem;
+            padding: 0.5rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .bg-white {
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        .text-2xl {
+            font-size: 1.25rem;
+        }
+
+        .grid-cols-7 {
+            grid-template-columns: repeat(7, 1fr);
+        }
+
+        .grid-cols-7 div {
+            font-size: 0.8rem;
+            padding: 0.4rem;
+        }
+
+        .grid-cols-2 button {
+            font-size: 0.8rem;
+            padding: 0.4rem;
+        }
+
+        .container {
+            flex-direction: column;
+            height: auto;
+            padding: 20px;
+        }
+
+        .footer-content {
+            width: 100%;
+            margin: 10px 0;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .map-container {
+            height: 200px;
+            margin: 10px 0;
+        }
+
+        .social-icons {
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .social-icons li {
+            margin: 0 10px;
+        }
+
+        /* Modal Responsive Styles */
+        .max-w-md {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .p-6 {
+            padding: 1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .bg-white {
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+        }
+
+        .text-2xl {
+            font-size: 1.1rem;
+        }
+
+        .grid-cols-7 div {
+            font-size: 0.7rem;
+            padding: 0.3rem;
+        }
+
+        .grid-cols-2 button {
+            font-size: 0.7rem;
+            padding: 0.3rem;
+        }
+
+        .footer-content h3 {
+            font-size: 14px;
+        }
+
+        .footer-content p {
+            font-size: 12px;
+        }
+
+        .social-icons i {
+            font-size: 20px;
+        }
+
+        .bottom-bar p {
+            font-size: 12px;
+        }
+
+        /* Modal Responsive Styles */
+        .max-w-md {
+            width: 95%;
+        }
+
+        .p-6 {
+            padding: 0.75rem;
+        }
+
+        .text-xl {
+            font-size: 1.1rem;
+        }
+    }
+
+    /* Smooth Transitions */
+    .bg-white,
+    .grid-cols-2 button,
+    .grid-cols-7 div {
+        transition: all 0.3s ease;
+    }
+
+    /* Hover Effects */
+    .grid-cols-2 button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .grid-cols-7 div:hover:not(.text-gray-400) {
+        transform: scale(1.1);
+    }
+
+    /* Animation for Form Elements */
+    .bg-white {
+        animation: fadeInUp 0.5s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Calendar Navigation Buttons */
+    .text-gray-600 {
+        transition: color 0.3s ease;
+    }
+
+    .text-gray-600:hover {
+        color: #426DDC;
+    }
+
+    /* Form Input Focus Styles */
+    select:focus,
+    input:focus {
+        outline: none;
+        border-color: #426DDC;
+        box-shadow: 0 0 0 2px rgba(66, 109, 220, 0.2);
+    }
+
+    /* Submit Button Styles */
+    #confirmBtn {
+        transition: all 0.3s ease;
+    }
+
+    #confirmBtn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
     </style>
     </head>
@@ -575,8 +791,9 @@
             <div class="image-container">
                 <img src="storage/assets/civil_registry_logo.png"> </div>
     
-            <div class="logo-name">
-                <b>Mandaluyong City<br/><a>Civil Registry</a></b>
+                <div class="logo-name">
+             <p> Mandaluyong City <br> Civil Registry</p > 
+            
             </div>
     
             <div class="menu">
@@ -919,27 +1136,31 @@ if (button && menu) {
                     method: 'POST',
                     body: formData,
                     headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
                     }
                 })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                        return response.json().then(data => {
+                            throw new Error(data.message || 'Network response was not ok');
+                        });
                     }
                     return response.json();
                 })
                 .then(data => {
                     if (data.success) {
-                        showConfirmationModal(selectedDate, selectedTime);
+                        showConfirmationModal(selectedDate, selectedTime, data);
                         this.reset();
                         generateCalendar(); // Refresh calendar after successful submission
                     } else {
-                        showCancellationModal();
+                        showCancellationModal(data.message);
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    showCancellationModal();
+                    showCancellationModal(error.message);
                 });
             });
         });
@@ -974,23 +1195,26 @@ if (button && menu) {
     });
 
         // confirm
-        function showConfirmationModal(date, time) {
+        function showConfirmationModal(date, time, data) {
             const confirmationModal = document.getElementById("confirmationModal");
             const confirmationMessage = document.querySelector("#confirmationModal p");
             confirmationMessage.innerHTML = `Your appointment is subject to approval. Wait for the confirmation email before attending your appointment.<br><br>
                 📅 Date: ${date}<br>
-                ⏰ Time: ${time}<br><br>
+                ⏰ Time: ${time}<br>
+                🔖 Reference Number: ${data.reference_number}<br><br>
+                Please check your email for further details.<br>
+                If you need to cancel due to an error or change of mind, kindly email us as soon as possible.<br><br>
                 Thank you!`;
 
             confirmationModal.classList.remove("hidden");
         }
 
         // cancel
-        function showCancellationModal() {
+        function showCancellationModal(errorMessage) {
             const cancellationModal = document.getElementById("cancellationModal");
             const cancellationMessage = document.querySelector("#cancellationModal p");
             cancellationMessage.innerHTML = `There was an error processing your appointment request.<br><br>
-                Please try again or contact our support team for assistance.<br><br>
+                ${errorMessage || 'Please try again or contact our support team for assistance.'}<br><br>
                 Thank you for your understanding.`;
 
             cancellationModal.classList.remove("hidden");

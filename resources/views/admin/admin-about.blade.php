@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
   <style>
+    /* Reset and Base Styles */
     * {
       margin: 0;
       padding: 0;
@@ -16,16 +17,19 @@
     }
 
     body {
-      background-color: #f5f7fa;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
+    /* Navigation Styles */
     nav {
       top: 0;
       width: 100%;
       height: 65px;
       z-index: 9999;
       display: flex;
-      position: fixed;
+      position: sticky;
       align-items: center;
       justify-content: left;
       background-color: white;
@@ -58,10 +62,12 @@
     }
 
     nav .menu {
-      width: 60%;
+      width: 100%;
       margin-top: -5px;
+      margin-left: 20px;
       text-align: center;
-      margin-left: 30px;
+      justify-content: center;
+      align-items: center;
     }
 
     nav .menu ul li {
@@ -91,10 +97,73 @@
     .a:hover {
       color: #426DDC;
       font-size: 20px;
-      margin-left: -5px;
     }
 
     nav .menu ul li a:hover {
+      color: #426DDC;
+      transition: 0.3s ease;
+    }
+
+    .dropdown_menuuu {
+      display: none;
+      position: absolute;
+      left: -55%;
+      top: 100%;
+      min-height: 90px;
+      background-color: white;
+      z-index: 1000;
+      min-width: 130px;
+    }
+
+    .menu ul li:hover .dropdown_menuuu,
+    .dropdown_menuuu:hover {
+      display: block;
+      border-radius: 5px;
+      font-size: 18px;
+    }
+
+    .dropdown_menuuu ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 15px;
+      margin-left: 25px;
+      margin-bottom: 9px;
+    }
+
+    .dropdown_menuuu ul li {
+      width: 130px;
+      padding: 7px;
+      white-space: nowrap;
+    }
+
+    #accountDropdown {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      border-radius: 6px;
+      right: 10px;
+      top: 55px;
+      min-width: 160px;
+      z-index: 1000;
+      padding: 8px 0;
+      font-weight: bold;
+    }
+
+    #accountDropdown.show {
+      display: block;
+    }
+
+    #accountDropdown a {
+      display: block;
+      padding: 10px 16px;
+      color: #333;
+      text-align: center;
+      text-decoration: none;
+      font-size: 14px;
+      font-family: "Poppins", sans-serif;
+    }
+
+    #accountDropdown a:hover {
       color: #426DDC;
       transition: 0.3s ease;
     }
@@ -123,7 +192,7 @@
       box-shadow: 0 0 5px rgba(66, 109, 220, 0.5);
     }
 
-    nav .search-container .fa-search,  button.search-button {
+    nav .search-container .fa-search, button.search-button {
       position: absolute;
       border: none;
       background: none;
@@ -150,32 +219,212 @@
       color: #426DDC;
     }
 
-    #accountDropdown {
-      display: none;
-      position: absolute;
-      background-color: #fff;
-      border-radius: 6px;
-      right: 10px;
-      top: 60px;
-      min-width: 160px;
-      z-index: 1000;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    @media (max-width: 1000px) {
+      nav button {
+        display: none;
+        width: 30px;
+        height: 25px;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        background: #757575;
+      }
+
+      .logo-name a {
+      margin-left: -16px;
+      font-family: "Poppins", sans-serif;
+      padding-left: 30px;
     }
 
-    #accountDropdown.show {
-      display: block;
+      nav button:before,
+      nav button:after {
+        position: absolute;
+        content: '';
+        z-index: 0;
+        background-color: white;
+        width: 30px;
+        height: 5px;
+        top: 5px;
+        left: 0;
+        transition: 0.5s;
+      }
+
+      nav button:after {
+        top: 15px;
+      }
+
+      nav button.expand-icon {
+        background: transparent;
+      }
+
+      nav button.expand-icon:before,
+      nav button.expand-icon:after {
+        transform: rotate(45deg);
+        background: #757575;
+        top: 10px;
+      }
+
+      nav button.expand-icon:after {
+        transform: rotate(-45deg);
+      }
+
+      nav .menu {
+        position: absolute;
+        margin: auto;
+        width: 100%;
+        height: 0;
+        background: white;
+        top: 60px;
+        transition: 0.5s;
+        overflow: hidden;
+      }
+
+      nav .menu ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+
+      nav .menu.expand-mobile {
+        height: 700px;
+      }
+
+      nav .menu ul li {
+        width: 100%;
+        display: block;
+        font-size: 1rem;
+        text-align: left;
+        padding: 10px 15px;
+        box-sizing: border-box;
+      }
+
+      .dropdown_menuu ul {
+        list-style: none;
+        padding: 0;
+        margin-left: 250px;
+      }
+
+      .dropdown_menuuu ul li {
+        width: 130px;
+        padding: 5px;
+        white-space: nowrap;
+      }
+
+      nav .menu ul:nth-child(2) li {
+        top: 0;
+        left: 0;
+      }
+
+      nav .nav-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        position: relative;
+        padding: 0 20px;
+        flex-direction: column;
+      }
+
+      nav .search-container {
+        position: relative;
+        margin: 0 auto;
+        justify-content: center;
+        width: 100%;
+        max-width: 500px;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        z-index: 10;
+      }
+
+      nav .search-container input[type="text"] {
+        padding: 8px 35px 8px 15px;
+        border-radius: 20px;
+        border: 1px solid #ccc;
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        outline: none;
+        width: 100%;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+      }
+
+      nav .search-container input[type="text"]:focus {
+        border-color: #426DDC;
+        box-shadow: 0 0 5px rgba(66, 109, 220, 0.5);
+      }
+
+      nav .search-container .fa-search {
+        position: absolute;
+        right: 35px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #888;
+        border: none;
+        font-size: 16px;
+        pointer-events: auto;
+      }
+
+      ::placeholder {
+        color: #888;
+        font-size: 15px;
+        margin-left: 30px;
+        font-family: "Poppins", sans-serif;
+      }
+
+      nav .search-container i .fa-search:hover {
+        color: #426DDC;
+        transition: 0.3s ease;
+      }
+
+      .user-icon {
+        display: none;
+      }
+
+      nav .menu-toggle {
+        display: flex;
+        top: auto;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 24px;
+        color: #333;
+        position: relative;
+        margin-left: 20px;
+      }
+
+      nav .menu-toggle:hover {
+        color: #426DDC;
+      }
     }
 
-    #accountDropdown a {
-      display: block;
-      padding: 10px 16px;
-      color: #333;
-      text-decoration: none;
-      font-size: 14px;
-    }
+    @media (max-width: 768px) {
+      nav {
+        height: auto;
+        padding: 10px 0;
+      }
 
-    #accountDropdown a:hover {
-      color: #426DDC;
+      .image-container img {
+        width: 40px;
+        height: 35px;
+        margin-left: 10px;
+      }
+
+      .logo-name {
+        font-size: 13px;
+        margin-left: 15px;
+      }
+
+      .search-container {
+        margin: 10px auto;
+        width: 90%;
+      }
+
+      .search-container input[type="text"] {
+        width: 100%;
+      }
     }
 
     .header-image {
@@ -217,6 +466,7 @@
       justify-content: center;
       align-items: flex-start;
       flex: 1;
+      padding-top: 25px;
     }
 
     .header-text h1 {
@@ -338,36 +588,214 @@
       margin-top: 60px;
     }
 
-    .dropdown_menuuu {
-      display: none;
-      position: absolute;
-      left: -55%;
-      top: 100%;
-      min-height: 90px;
-      background-color: white;
-      z-index: 1000;
-      min-width: 130px;
+    /* Header Section Responsive Styles */
+    @media (max-width: 1200px) {
+        .header-content {
+            padding: 40px 50px;
+        }
+
+        .header-text h1 {
+            font-size: 40px;
+        }
+
+        .header-text p {
+            font-size: 18px;
+        }
     }
 
-    .menu ul li:hover .dropdown_menuuu,
-    .dropdown_menuuu:hover {
-      display: block;
-      border-radius: 5px;
-      font-size: 18px;
+    @media (max-width: 992px) {
+        .header-content {
+            flex-direction: column;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .header-text {
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header-text h1 {
+            font-size: 36px;
+        }
+
+        .header-image-right img {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .about-section {
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .about-section.reverse {
+            flex-direction: column;
+        }
+
+        .about-section .text,
+        .about-section .image {
+            width: 100%;
+        }
+
+        .services {
+            grid-template-columns: repeat(2, 1fr);
+        }
     }
 
-    .dropdown_menuuu ul {
-      list-style: none;
-      padding: 0;
-      margin-top: 15px;
-      margin-left: 25px;
-      margin-bottom: 9px;
+    @media (max-width: 768px) {
+        .header-text h1 {
+            font-size: 32px;
+        }
+
+        .header-text p {
+            font-size: 16px;
+        }
+
+        .container {
+            padding: 0 15px;
+            margin-top: 60px;
+        }
+
+        .about-section {
+            margin-top: 20px;
+            gap: 20px;
+        }
+
+        .services {
+            grid-template-columns: 1fr;
+        }
+
+        .service-item {
+            padding: 15px;
+        }
+
+        .service-item i {
+            font-size: 24px;
+        }
     }
 
-    .dropdown_menuuu ul li {
-      width: 130px;
-      padding: 7px;
-      white-space: nowrap;
+    @media (max-width: 480px) {
+        .header-text h1 {
+            font-size: 28px;
+        }
+
+        .header-text p {
+            font-size: 14px;
+        }
+
+        .header-content {
+            padding: 20px 15px;
+        }
+
+        .container {
+            margin-top: 40px;
+        }
+
+        .about-section .text h2 {
+            font-size: 24px;
+        }
+
+        .about-section .text p {
+            font-size: 14px;
+        }
+
+        .service-item {
+            padding: 12px;
+        }
+
+        .service-item i {
+            font-size: 20px;
+        }
+
+        .service-item span {
+            font-size: 14px;
+        }
+    }
+
+    /* Department Head Section Responsive Styles */
+    @media (max-width: 768px) {
+        section[style*="background: #dbe8f4"] {
+            padding: 24px 15px;
+        }
+
+        section[style*="background: #dbe8f4"] h2 {
+            font-size: 1.5rem;
+        }
+
+        section[style*="background: #dbe8f4"] div[style*="width: 220px"] {
+            width: 180px;
+            height: 180px;
+        }
+
+        section[style*="background: #dbe8f4"] div[style*="font-size: 1.3rem"] {
+            font-size: 1.1rem;
+        }
+
+        section[style*="background: #dbe8f4"] div[style*="font-size: 1.05rem"] {
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        section[style*="background: #dbe8f4"] {
+            padding: 20px 10px;
+        }
+
+        section[style*="background: #dbe8f4"] h2 {
+            font-size: 1.3rem;
+        }
+
+        section[style*="background: #dbe8f4"] div[style*="width: 220px"] {
+            width: 150px;
+            height: 150px;
+        }
+    }
+
+    /* Footer Responsive Styles */
+    @media (max-width: 768px) {
+        footer {
+            padding: 15px;
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        footer {
+            padding: 10px;
+            font-size: 12px;
+        }
+    }
+
+    /* Animation for Header Content */
+    .header-content {
+        animation: fadeInUp 1s ease forwards;
+        opacity: 0;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Smooth Transitions */
+    .about-section .image img,
+    .service-item,
+    .header-image-right img {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .about-section .image img:hover,
+    .service-item:hover,
+    .header-image-right img:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
   </style>
 </head>
@@ -378,12 +806,14 @@
       <img src="{{ asset('storage/assets/civil_registry_logo.png') }}">
     </div>
     <div class="logo-name">
-    <b> Mandaluyong City <br/> <a> Civil Registry</a> </b> </div>
-    </div>
+             <p> Mandaluyong City <br> Civil Registry</p > 
+            
+            </div>
 
     <div class="menu">
       <ul>
-        <li><a href="{{ route('admin.homepage') }}">Home</a></li>
+        <li> <a href="{{ route('admin.homepage') }}"> Home </a> </li>
+
         <li> <a href="#"> Services <i class="fas fa-caret-down"> </i> </a>
 
         <div class="dropdown_menuuu">
@@ -393,22 +823,23 @@
           </ul>
         </div>
         </li>
-        <li><a href="{{ route('admin.faqs') }}">FAQs</a></li>
-        <li><a class="active" href="{{ route('admin.about') }}">About Us</a></li>
-        <li><a href="{{ route('admin.contact') }}">Contact Us</a></li>
+
+        <li> <a href="{{ route('admin.faqs') }}"> FAQs </a> </li>
+        <li> <a href="{{ route('admin.about') }}" class="active"> About Us </a> </li>
+        <li> <a href="{{ route('admin.contact') }}"> Contact Us </a> </li>
       </ul>
     </div>
 
     <div class="search-container">
-      <input type="text" placeholder="Search" />
-      <i class="fa fa-search"></i>
+      <input type="text" id="searchInput" placeholder="Search">
+      <i class="fa fa-search" onclick="performSearch()"> </i>
     </div>
 
     <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" onclick="toggleDropdown()" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-right: 23px;">
     <div id="accountDropdown">
       <div style="padding: 16px 0 8px 0; text-align: center;">
         <div style="font-size: 40px; color: #e0e0e0; margin-bottom: 4px;">
-          <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-left:15px;">
+          <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-left:20px;">
         </div>
         <div style="font-weight: bold; font-size: 18px;">Admin</div>
         <div style="font-size: 14px; color: #757575; word-break: break-all;">city.registrar@<br>mandaluyong.gov.ph</div>
@@ -416,7 +847,7 @@
       <a href="{{ route('admin.logout') }}" id="logoutLink">Logout</a>
     </div>
 
-    <button class="menu-toggle"> </button>
+    <button class="menu-toggle" onclick="toggleMenu()"> <i class="fas fa-bars"></i> </button>
   </nav>
 
   <header class="header-image">
@@ -492,17 +923,56 @@
 
   <script>
     function toggleDropdown() {
-      document.getElementById("accountDropdown").classList.toggle("show");
+      const dropdown = document.getElementById("accountDropdown");
+      dropdown.classList.toggle("show");
     }
 
-    window.onclick = function(event) {
-      if (!event.target.matches('.user-icon')) {
-        const dropdown = document.getElementById("accountDropdown");
-        if (dropdown.classList.contains('show')) {
-          dropdown.classList.remove('show');
+    function toggleMenu() {
+      const menu = document.querySelector('.menu');
+      const button = document.querySelector('.menu-toggle');
+      menu.classList.toggle('expand-mobile');
+      button.classList.toggle('expand-icon');
+    }
+
+    window.addEventListener("click", function(event) {
+      const userIcon = document.querySelector(".user-icon");
+      const dropdown = document.getElementById("accountDropdown");
+
+      if (!userIcon.contains(event.target) && !dropdown.contains(event.target)) {
+        dropdown.classList.remove("show");
+      }
+    });
+
+    function performSearch() {
+      const input = document.getElementById("searchInput").value.trim().toLowerCase();
+
+      if (input === "") {
+        alert("Please enter a search term.");
+      } else {
+        if (input === "home page" || input === "homepage" || input === "home") {
+          window.location.href = "{{ route('admin.homepage') }}";
+        } else if (input === "faqs" || input === "facts" || input === "help") {
+          window.location.href = "{{ route('admin.faqs') }}";
+        } else if (input === "about" || input === "about civil") {
+          window.location.href = "{{ route('admin.about') }}";
+        } else if (input === "appointment" || input === "appointments" || input === "schedule" || input === "schedules") {
+          window.location.href = "{{ route('admin.appointment') }}";
+        } else if (input === "reqs" || input === "requirements" || input === "requirement") {
+          window.location.href = "{{ route('admin.requirements') }}";
+        } else if (input === "contact" || input === "number" || input === "email") {
+          window.location.href = "{{ route('admin.contact') }}";
+        } else {
+          alert("No results found.");
+          inputField.value = "";
         }
       }
-    };
+    }
+
+    document.getElementById("searchInput").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        performSearch();
+      }
+    });
   </script>
 </body>
 </html>
