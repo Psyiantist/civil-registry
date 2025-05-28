@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="/storage/assets/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
@@ -188,13 +188,17 @@
       overflow-x: hidden;
       width: 100%;
       max-width: 100vw;
+      min-height: 100vh;
+      background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url('{{ asset('storage/assets/appointment_bg.jpg') }}') center 40% fixed;
+      background-size: cover;
+      background-repeat: no-repeat;
+      font-family: 'Poppins';
     }
 
     section {
       width: 100%;
       max-width: 100vw;
       min-height: 100vh;
-      height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -294,7 +298,7 @@
     .form {
       width: 400px;
       max-width: 90vw;
-      margin: 40px auto 0 auto;
+      margin: 40px auto 60px auto;
       position: relative;
       border-radius: 10px;
       background-color: white;
@@ -473,7 +477,7 @@
         margin: 10px 0;
       }
       nav button {
-        display: block;
+        display: none;
         width: 30px;
         height: 25px;
         top: 20px;
@@ -484,8 +488,8 @@
         background: #757575;
       }
 
-      nav  button:before,
-      nav  button:after {
+      nav button:before,
+      nav button:after {
         position: absolute;
         content: '';
         z-index: 0;
@@ -871,37 +875,8 @@
 </head>
 
 <body>
-	<nav>
-        <div class="image-container">
-            <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
+	@include('layouts.public-navbar')
 
-        <div class="logo-name">
-             <b> Mandaluyong City <br/> <a> Civil Registry</a> </b> </div>
-
-
-		<div class="menu">
-			<ul>
-				  <li> <a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}"> Home </a> </li>
-          <li> <a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs') }}"> FAQs </a> </li>
-          <li> <a class="{{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}"> About Us </a> </li>
-          <li> <a class="{{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}"> Contact Us </a> </li>
-			</ul>
-    </div>
-
-  <div class="search-container">
-  <input type="text" id="searchInput" placeholder="Search">
-  <i class="fa fa-search" onclick="performSearch()"> </i>
-</div>
-
-
-<i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
-</div>
-
-		<button class="menu-toggle"> </button>
-	</nav>
-
-
-	<section>
     <div class="details">
       <div>
         <h5 style=""><center>SCHEDULE</center></h5>
@@ -926,7 +901,6 @@
       <p class="link"> Upon acessing this service, you consent to adhere to the City Civil Registry of Mandaluyong's
       <a href="#" onclick="openModal()"> <br/> Terms of Use and Privacy Policy </a> </p>
     </div>
-  </section>
 
    <div id="termsModal" class="modal">
     <div class="modal-content">
@@ -1016,5 +990,6 @@
             }
 </script>
 
+@include('layouts.footer')
 </body>
 </html>

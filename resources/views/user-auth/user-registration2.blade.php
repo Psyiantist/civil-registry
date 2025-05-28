@@ -245,11 +245,7 @@
     </style>
 </head>
 <body>
-    <nav>
-        <div class="image-container">
-            <img src="{{ asset('storage/assets/civil_registry_logo.png') }}">
-        </div>
-    </nav>
+    @include('layouts.public-navbar')
 
     <section>
         <div class="form">

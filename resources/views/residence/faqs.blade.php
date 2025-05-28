@@ -699,56 +699,7 @@
 </head>
 
 <body>
-	<nav>
-        <div class="image-container">
-            <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
-
-            <div class="logo-name">
-             <p> Mandaluyong City <br> Civil Registry</p > 
-            
-            </div>
-
-
-		<div class="menu">
-			<ul>
-        <li> <a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ route('residence-homepage') }}"> Home </a> </li>
-
-        <li> <a href="#"> Services <i class="fas fa-caret-down"> </i> </a>
-
-    <div class="dropdown_menuuu">
-      <ul>
-        <li> <a href="{{ route('residence-appointment') }}"> Appointment </a> </li>
-        <li> <a href="{{ route('residence-requirements') }}"> Requirements </a> </li>
-            </ul>
-          </div>
-          </li>
-
-          <li> <a class="{{ request()->is('residence-faqs') ? 'active' : '' }}" href="{{ route('residence-faqs') }}"> FAQs </a> </li>
-          <li> <a class="{{ request()->is('residence-about-us') ? 'active' : '' }}" href="{{ route('residence-about-us') }}"> About Us </a> </li>
-          <li> <a class="{{ request()->is('residence-contact-us') ? 'active' : '' }}" href="{{ route('residence-contact-us') }}"> Contact Us </a> </li>
-			</ul>
-    </div>
-
-  <div class="search-container">
-  <input type="text" id="searchInput" placeholder="Search">
-  <i class="fa fa-search" onclick="performSearch()"> </i>
-  </div>
-	
-    @php
-      $user = Auth::user();
-      $profileImage = $user->profile_image
-        ? asset('storage/profiles/' . $user->profile_image)
-        : asset('storage/profiles/default-profile.jpg');
-    @endphp
-    <img src="{{ $profileImage }}" alt="Profile Picture" class="user-icon" onclick="toggleDropdown()" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer; object-fit: cover; object-position: center; border: 2px solid #426DDC; aspect-ratio: 1/1; margin-right: 23px;">
-    <div id="accountDropdown" class="absolute hidden">
-        <a href="{{ route('residence.profile') }}"> Profile </a>
-        <a href="{{ route('logout') }}" id="logoutLink"> Logout </a> 
-    </div>
-  
-    <button class="menu-toggle"> </button>
-  </nav>
-
+	@include('layouts.residence-navbar')
 	 <center>
      <section class="search-section">
        <div class="hcwhy"> 

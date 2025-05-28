@@ -63,8 +63,7 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/admin/login', [AuthController::class, 'showEmployeeLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AuthController::class, 'employeeLoginHandler'])->name('admin.login.handler');
 Route::get('/admin/logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
-Route::post('/admin/password', [AuthController::class, 'updateAdminPassword'])->name('admin.password.update');
-    
+Route::post('/admin/password/update', [AuthController::class, 'updateAdminPassword'])->name('admin.password.update');
 
 Route::middleware(['auth:employee'])->group(function () {
     Route::get('/admin/homepage', [EmployeeController::class, 'showAdminHomepage'])->name('admin.homepage');

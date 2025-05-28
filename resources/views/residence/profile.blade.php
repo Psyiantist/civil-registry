@@ -308,6 +308,8 @@
 </head>
 
 <body>
+  @include('layouts.residence-navbar')
+
   <div class="image-container">
     <img src="{{ asset('storage/assets/civil_registry_logo.png') }}" alt="Civil Registry Logo">
   </div>

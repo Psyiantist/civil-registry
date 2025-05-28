@@ -109,18 +109,25 @@ class AuthController extends Controller
     {
         $request->validate([
             'username' => 'required|string',
-            'password' => 'required|string|min:8'
+            'password' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]+$/'
+        ], [
+            'password.regex' => 'Password must contain at least one uppercase letter, one lowercase letter, and one number.'
         ]);
 
         $employee = Employee::where('username', $request->username)->first();
         if (!$employee) {
-            return redirect()->back()->withErrors(['username' => 'Username not found.']);
+            return redirect()->route('admin.login')->withErrors(['username' => 'Username not found.']);
         }
 
-        $employee->password = Hash::make($request->password);
-        $employee->save();
+        try {
+            $employee->password = Hash::make($request->password);
+            $employee->save();
 
-        return redirect()->back()->with('status', 'Password updated successfully.');
+            return redirect()->route('admin.login')->with('success', 'Password updated successfully. You can now login with your new password.');
+        } catch (\Exception $e) {
+            \Log::error('Password update failed: ' . $e->getMessage());
+            return redirect()->route('admin.login')->withErrors(['error' => 'Failed to update password. Please try again.']);
+        }
     }
 
     public function adminLogout()

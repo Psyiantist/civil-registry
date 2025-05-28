@@ -796,264 +796,215 @@
 </head>
 
 <body>
-        <nav>
-            <div class="image-container">
-                <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
-    
-                <div class="logo-name">
-             <p> Mandaluyong City <br> Civil Registry</p > 
-            
-            </div>
-            </div>
-    
-            <div class="menu">
-                <ul>
-                    <li> <a href="{{ route('residence-homepage') }}"> Home </a> </li>
-    
-            <li> <a class="active" href="#"> Services <i class="fas fa-caret-down"> </i> </a> 
-    
-            <div class="dropdown_menuuu">
-              <ul>
-            <li> <a href="{{ route('residence-appointment') }}"> Appointment </a> </li>
-            <li> <a class="active" href="{{ route('residence-requirements') }}"> Requirements </a> </li>
-               </ul>
-            </div>
-            </li>
-                    <li> <a href="{{ route('residence-faqs') }}"> FAQs </a> </li>
-                    <li> <a href="{{ route('residence-about-us') }}"> About Us </a> </li>
-                    <li> <a href="{{ route('residence-contact-us') }}"> Contact Us </a> </li>
-                </ul>
-        </div>
-    
-  <div class="search-container">
-  <input type="text" id="searchInput" placeholder="Search">
-  <i class="fa fa-search" onclick="performSearch()"> </i>
-  </div>
-        
-      @php
-        $user = Auth::user();
-        $profileImage = $user->profile_image
-          ? asset('storage/profiles/' . $user->profile_image)
-          : asset('storage/profiles/default-profile.jpg');
-      @endphp
-      <img src="{{ $profileImage }}" alt="Profile Picture" class="user-icon" onclick="toggleDropdown()" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer; object-fit: cover; object-position: center; border: 2px solid #426DDC; aspect-ratio: 1/1; margin-right: 23px;">
-    <div id="accountDropdown" class="absolute hidden">
-        <a href="{{ route('residence.profile') }}"> Profile </a>
-        <a href="{{ route('logout') }}" id="logoutLink"> Logout </a> 
-      
-        <button class="menu-toggle"> </button>
-      </nav>
+    @include('layouts.residence-navbar')
 
-  <!--MAIN SECTION --> 
-      <section class="pt-10">
+    <!--MAIN SECTION --> 
+    <section class="pt-10">
         <div class="details">
-          <div class="relative z-10 pt-12 px-8 pb-20 flex flex-col items-center text-white min-h-screen">
-            <h1 class="text-4xl font-bold bg-white text-blue-800 py-4 px-8 rounded-lg mb-10 shadow-lg transform hover:scale-105 transition-transform duration-300">REQUIREMENTS</h1>
-      
-            <div class="flex flex-col lg:flex-row gap-10 items-start justify-center w-full max-w-7xl">
-              
-              <!-- Document Type Icons -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 w-full lg:w-1/2">
-                @foreach($requirements as $requirement)
-                <div onclick="showChecklist('{{ $requirement->id }}')" 
-                     class="group transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-400 p-6 bg-white rounded-xl flex flex-col items-center text-blue-500 cursor-pointer border-2 border-transparent hover:border-blue-400">
-                  <div class="relative">
-                    <img src="{{ asset('storage/assets/docreq.png') }}" 
-                         class="h-32 w-32 mb-3 transform group-hover:rotate-3 transition-transform duration-300" 
-                         alt="{{ $requirement->title }} Icon" />
-                    <div class="absolute -top-2 -right-2 bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <i class="fas fa-chevron-right"></i>
+            <div class="relative z-10 pt-12 px-8 pb-20 flex flex-col items-center text-white min-h-screen">
+                <h1 class="text-4xl font-bold bg-white text-blue-800 py-4 px-8 rounded-lg mb-10 shadow-lg transform hover:scale-105 transition-transform duration-300">REQUIREMENTS</h1>
+
+                <div class="flex flex-col lg:flex-row gap-10 items-start justify-center w-full max-w-7xl">
+
+                    <!-- Document Type Icons -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 w-full lg:w-1/2">
+                        @foreach($requirements as $requirement)
+                        <div onclick="showChecklist('{{ $requirement->id }}')" 
+                            class="group transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-400 p-6 bg-white rounded-xl flex flex-col items-center text-blue-500 cursor-pointer border-2 border-transparent hover:border-blue-400">
+                            <div class="relative">
+                                <img src="{{ asset('storage/assets/docreq.png') }}" 
+                                    class="h-32 w-32 mb-3 transform group-hover:rotate-3 transition-transform duration-300" 
+                                    alt="{{ $requirement->title }} Icon" />
+                                <div class="absolute -top-2 -right-2 bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            <span class="text-lg font-semibold group-hover:text-blue-600 transition-colors duration-300">{{ $requirement->title }}</span>
+                        </div>
+                        @endforeach
                     </div>
-                  </div>
-                  <span class="text-lg font-semibold group-hover:text-blue-600 transition-colors duration-300">{{ $requirement->title }}</span>
-                </div>
-                @endforeach
-              </div>
-      
-              <!-- Requirements Checklist -->
-              <div class="bg-white p-8 rounded-xl shadow-lg text-black w-full lg:w-1/2 transform transition-all duration-300 hover:shadow-xl">
-                <div class="flex items-center justify-between mb-6">
-                  <h2 class="text-2xl font-bold text-gray-800" id="checklistTitle">CHECKLIST OF REQUIREMENTS</h2>
-                  <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium">
-                    <i class="fas fa-info-circle mr-2"></i>Click a document type to view requirements
-                  </div>
-                </div>
-                <div class="bg-gray-50 rounded-lg p-6">
-                  <ul id="checklist" class="space-y-3">
-                    <!-- Checklist items will be populated here -->
-                  </ul>
-                </div>
-                <div class="mt-6 p-4 bg-blue-50 rounded-lg hidden" id="additionalInfo">
-                  <h3 class="text-lg font-semibold text-blue-800 mb-2">Important Notes:</h3>
-                  <ul class="list-disc list-inside text-blue-700 space-y-2">
-                    <li>All documents must be original or certified true copy</li>
-                    <li>Bring valid government-issued ID</li>
-                    <li>Processing time may vary depending on document type</li>
-                  </ul>
-                </div>
-              </div>
-      
-            </div>
-          </div>
-        </div>
-      </section>
 
+                    <!-- Requirements Checklist -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg text-black w-full lg:w-1/2 transform transition-all duration-300 hover:shadow-xl">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800" id="checklistTitle">CHECKLIST OF REQUIREMENTS</h2>
+                            <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium">
+                                <i class="fas fa-info-circle mr-2"></i>Click a document type to view requirements
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-6">
+                            <ul id="checklist" class="space-y-3">
+                                <!-- Checklist items will be populated here -->
+                            </ul>
+                        </div>
+                        <div class="mt-6 p-4 bg-blue-50 rounded-lg hidden" id="additionalInfo">
+                            <h3 class="text-lg font-semibold text-blue-800 mb-2">Important Notes:</h3>
+                            <ul class="list-disc list-inside text-blue-700 space-y-2">
+                                <li>All documents must be original or certified true copy</li>
+                                <li>Bring valid government-issued ID</li>
+                                <li>Processing time may vary depending on document type</li>
+                            </ul>
+                        </div>
+                    </div>
 
-      <footer>
-    <div class="container">
-        <div class="footer-content">
-            <h3>Contact Us</h3>
-            <p><a href="mailto:city.registrar@mandaluyong.gov.ph">Email: city.registrar@mandaluyong.gov.ph</a></p>
-            <p>Phone: 8533-28-21</p>
-            <p>Address: <a href="https://maps.app.goo.gl/BqivjAUx2r4DJitu5" target="_blank">Maysilo, Mandaluyong</a></p>
-        </div>
-        <div class="footer-content">
-            <h3>Our Location</h3>
-            <div class="map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.374156967718!2d121.0337266!3d14.5777433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c84b4d7d8847%3A0x3cc947be6455c07a!2sMandaluyong%20City%20Hall!5e0!3m2!1sen!2sph!4v1745828287728!5m2!1sen!2sph" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
             </div>
         </div>
-        <div class="footer-content">
-            <h3>Follow Us</h3>
-            <ul class="social-icons">
-                <li><a href="https://www.facebook.com/p/Mandaluyong-City-Civil-Registry-100064760288454/" target="_blank"><i class="fab fa-facebook"></i></a></li>
-                <li><a href="mailto:city.registrar@mandaluyong.gov.ph"><i class="fas fa-envelope"></i></a></li>
-                <li><a href="https://mandaluyong.gov.ph/government/departments/city-civil-registry-department/"><i class="fas fa-paperclip"></i></a></li>
-                <li><a href="https://x.com/MandaluyongPIO"><i class="fab fa-twitter"></i></a></li>
-            </ul>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h3>Contact Us</h3>
+                <p><a href="mailto:city.registrar@mandaluyong.gov.ph">Email: city.registrar@mandaluyong.gov.ph</a></p>
+                <p>Phone: 8533-28-21</p>
+                <p>Address: <a href="https://maps.app.goo.gl/BqivjAUx2r4DJitu5" target="_blank">Maysilo, Mandaluyong</a></p>
+            </div>
+            <div class="footer-content">
+                <h3>Our Location</h3>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.374156967718!2d121.0337266!3d14.5777433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c84b4d7d8847%3A0x3cc947be6455c07a!2sMandaluyong%20City%20Hall!5e0!3m2!1sen!2sph!4v1745828287728!5m2!1sen!2sph" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+            <div class="footer-content">
+                <h3>Follow Us</h3>
+                <ul class="social-icons">
+                    <li><a href="https://www.facebook.com/p/Mandaluyong-City-Civil-Registry-100064760288454/" target="_blank"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="mailto:city.registrar@mandaluyong.gov.ph"><i class="fas fa-envelope"></i></a></li>
+                    <li><a href="https://mandaluyong.gov.ph/government/departments/city-civil-registry-department/"><i class="fas fa-paperclip"></i></a></li>
+                    <li><a href="https://x.com/MandaluyongPIO"><i class="fab fa-twitter"></i></a></li>
+                </ul>
+            </div>
         </div>
-    </div>
-    <div class="bottom-bar">
-        <p>&copy; 2025 Civil Registry Department. All Rights Reserved.</p>
-    </div>
-</footer>
-  
+        <div class="bottom-bar">
+            <p>&copy; 2025 Civil Registry Department. All Rights Reserved.</p>
+        </div>
+    </footer>
 
-  <script>
-    function toggleDropdown() {
-    const dropdown = document.getElementById("accountDropdown");
-    dropdown.classList.toggle("show");
-}
-
-window.addEventListener("click", function(event) {
-    const userIcon = document.querySelector(".user-icon");
-    const dropdown = document.getElementById("accountDropdown");
-
-    if (!userIcon.contains(event.target) && !dropdown.contains(event.target)) {
-        dropdown.classList.remove("show");
-    }
-});
-
-const button = document.querySelector('.menu-toggle');
-const menu = document.querySelector('.menu');
-if (button && menu) {
-    button.onclick = () => {
-        menu.classList.toggle('expand-mobile');
-        button.classList.toggle('expand-icon');
-    };
-}
-
-
-
-    function performSearch() {
-      const input = document.getElementById("searchInput").value.trim().toLowerCase();
-
-      if (input === "") {
-        alert("Please enter a search term.");
-    } else {
-        if (input === "home page" || input === "homepage" || input === "home") {
-            window.location.href = "Home page - Residence View.html";
-        } else if (input === "faqs" || input === "facts" || input === "help") {
-            window.location.href = "FAQs Page - Residence View.html";
-        } else if (input === "about" || input === "about civil") {
-            window.location.href = "About Us Page - Residence View.html";
-        } else if (input === "appointment" || input === "appointments" || input === "schedule" || input === "schedules") {
-            window.location.href = "Appointment Page - Residence View.html";
-        } else if (input === "reqs" || input === "requirements" || input === "requirement") {
-            window.location.href = "Requirements Page - Residence View.html";
-        } else if (input === "contact" || input === "number" || input === "email") {
-            window.location.href = "Contact Us Page - Residence View.html";
-        } else {
-                alert("No results found.");
-                inputField.value = "";
+    <script>
+        function toggleDropdown() {
+            const dropdown = document.getElementById("accountDropdown");
+            dropdown.classList.toggle("show");
         }
-    }}
-    document.getElementById("searchInput").addEventListener("keypress", function(e) {
-        if (e.key === "Enter") {
-        performSearch();
-    }
-    });
 
-    const checklistData = {
-      @foreach($requirements as $requirement)
-        '{{ $requirement->id }}': {!! json_encode(explode("\n", $requirement->description)) !!},
-      @endforeach
-    };
+        window.addEventListener("click", function(event) {
+            const userIcon = document.querySelector(".user-icon");
+            const dropdown = document.getElementById("accountDropdown");
 
-    function showChecklist(type) {
-      const checklist = checklistData[type];
-      const checklistEl = document.getElementById("checklist");
-      const title = document.getElementById("checklistTitle");
-      const additionalInfo = document.getElementById("additionalInfo");
-      const requirement = @json($requirements).find(r => r.id == type);
+            if (!userIcon.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.remove("show");
+            }
+        });
 
-      // Update title with animation
-      title.style.opacity = "0";
-      setTimeout(() => {
-        title.textContent = `REQUIREMENTS FOR ${requirement.title.toUpperCase()}`;
-        title.style.opacity = "1";
-      }, 300);
-
-      // Clear and populate checklist with animation
-      checklistEl.innerHTML = "";
-      checklist.forEach((item, index) => {
-        if (item.trim()) {
-          const li = document.createElement("li");
-          li.className = "flex items-start space-x-3 transform transition-all duration-300 opacity-0";
-          li.style.animationDelay = `${index * 100}ms`;
-          
-          const icon = document.createElement("i");
-          icon.className = "fas fa-check-circle text-green-500 mt-1";
-          
-          const text = document.createElement("span");
-          text.className = "text-gray-700";
-          text.textContent = item.trim();
-          
-          li.appendChild(icon);
-          li.appendChild(text);
-          checklistEl.appendChild(li);
-          
-          // Trigger animation
-          setTimeout(() => {
-            li.style.opacity = "1";
-            li.style.transform = "translateX(0)";
-          }, 50);
+        const button = document.querySelector('.menu-toggle');
+        const menu = document.querySelector('.menu');
+        if (button && menu) {
+            button.onclick = () => {
+                menu.classList.toggle('expand-mobile');
+                button.classList.toggle('expand-icon');
+            };
         }
-      });
 
-      // Show additional info
-      additionalInfo.classList.remove("hidden");
-      additionalInfo.style.opacity = "0";
-      setTimeout(() => {
-        additionalInfo.style.opacity = "1";
-      }, 500);
+        function performSearch() {
+            const input = document.getElementById("searchInput").value.trim().toLowerCase();
 
-      // Smooth scroll to checklist
-      title.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+            if (input === "") {
+                alert("Please enter a search term.");
+            } else {
+                if (input === "home page" || input === "homepage" || input === "home") {
+                    window.location.href = "Home page - Residence View.html";
+                } else if (input === "faqs" || input === "facts" || input === "help") {
+                    window.location.href = "FAQs Page - Residence View.html";
+                } else if (input === "about" || input === "about civil") {
+                    window.location.href = "About Us Page - Residence View.html";
+                } else if (input === "appointment" || input === "appointments" || input === "schedule" || input === "schedules") {
+                    window.location.href = "Appointment Page - Residence View.html";
+                } else if (input === "reqs" || input === "requirements" || input === "requirement") {
+                    window.location.href = "Requirements Page - Residence View.html";
+                } else if (input === "contact" || input === "number" || input === "email") {
+                    window.location.href = "Contact Us Page - Residence View.html";
+                } else {
+                    alert("No results found.");
+                    inputField.value = "";
+                }
+            }
+        }
+        document.getElementById("searchInput").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                performSearch();
+            }
+        });
 
-    // Add hover effect to document type cards
-    document.querySelectorAll('.grid > div').forEach(card => {
-      card.addEventListener('mouseenter', function() {
-        this.style.transform = 'scale(1.05)';
-        this.style.boxShadow = '0 20px 25px -5px rgba(59, 130, 246, 0.3)';
-      });
-      
-      card.addEventListener('mouseleave', function() {
-        this.style.transform = 'scale(1)';
-        this.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-      });
-    });
-  </script>
+        const checklistData = {
+            @foreach($requirements as $requirement)
+                '{{ $requirement->id }}': {!! json_encode(explode("\n", $requirement->description)) !!},
+            @endforeach
+        };
+
+        function showChecklist(type) {
+            const checklist = checklistData[type];
+            const checklistEl = document.getElementById("checklist");
+            const title = document.getElementById("checklistTitle");
+            const additionalInfo = document.getElementById("additionalInfo");
+            const requirement = @json($requirements).find(r => r.id == type);
+
+            // Update title with animation
+            title.style.opacity = "0";
+            setTimeout(() => {
+                title.textContent = `REQUIREMENTS FOR ${requirement.title.toUpperCase()}`;
+                title.style.opacity = "1";
+            }, 300);
+
+            // Clear and populate checklist with animation
+            checklistEl.innerHTML = "";
+            checklist.forEach((item, index) => {
+                if (item.trim()) {
+                    const li = document.createElement("li");
+                    li.className = "flex items-start space-x-3 transform transition-all duration-300 opacity-0";
+                    li.style.animationDelay = `${index * 100}ms`;
+                    
+                    const icon = document.createElement("i");
+                    icon.className = "fas fa-check-circle text-green-500 mt-1";
+                    
+                    const text = document.createElement("span");
+                    text.className = "text-gray-700";
+                    text.textContent = item.trim();
+                    
+                    li.appendChild(icon);
+                    li.appendChild(text);
+                    checklistEl.appendChild(li);
+                    
+                    // Trigger animation
+                    setTimeout(() => {
+                        li.style.opacity = "1";
+                        li.style.transform = "translateX(0)";
+                    }, 50);
+                }
+            });
+
+            // Show additional info
+            additionalInfo.classList.remove("hidden");
+            additionalInfo.style.opacity = "0";
+            setTimeout(() => {
+                additionalInfo.style.opacity = "1";
+            }, 500);
+
+            // Smooth scroll to checklist
+            title.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        // Add hover effect to document type cards
+        document.querySelectorAll('.grid > div').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+                this.style.boxShadow = '0 20px 25px -5px rgba(59, 130, 246, 0.3)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+            });
+        });
+    </script>
 </body>
 </html>

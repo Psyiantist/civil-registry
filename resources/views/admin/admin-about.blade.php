@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>About Us</title>
+  <title>About Us - Admin View</title>
   <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
@@ -20,6 +20,8 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      font-family: 'Poppins';
+      background-color: #d8e4f0;
     }
 
     /* Navigation Styles */
@@ -64,7 +66,7 @@
     nav .menu {
       width: 100%;
       margin-top: -5px;
-      margin-left: 20px;
+      margin-left: 30px;
       text-align: center;
       justify-content: center;
       align-items: center;
@@ -75,7 +77,7 @@
       font-size: 17px;
       list-style: none;
       font-weight: bold;
-      margin-right: 30px;
+      margin-right: 50px;
       display: inline-block;
       position: relative;
       font-family: "Poppins", sans-serif;
@@ -107,33 +109,48 @@
     .dropdown_menuuu {
       display: none;
       position: absolute;
-      left: -55%;
+      left: 0;
       top: 100%;
       min-height: 90px;
       background-color: white;
       z-index: 1000;
-      min-width: 130px;
+      min-width: 200px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      padding: 10px 0;
     }
 
-    .menu ul li:hover .dropdown_menuuu,
-    .dropdown_menuuu:hover {
+    .menu ul li:hover .dropdown_menuuu {
       display: block;
-      border-radius: 5px;
-      font-size: 18px;
     }
 
     .dropdown_menuuu ul {
       list-style: none;
       padding: 0;
-      margin-top: 15px;
-      margin-left: 25px;
-      margin-bottom: 9px;
+      margin: 0;
     }
 
     .dropdown_menuuu ul li {
-      width: 130px;
-      padding: 7px;
+      width: 100%;
+      padding: 8px 20px;
       white-space: nowrap;
+      transition: background-color 0.3s ease;
+    }
+
+    .dropdown_menuuu ul li:hover {
+      background-color: #f5f5f5;
+    }
+
+    .dropdown_menuuu ul li a {
+      color: #333;
+      text-decoration: none;
+      font-size: 15px;
+      display: block;
+      width: 100%;
+    }
+
+    .dropdown_menuuu ul li a:hover {
+      color: #426DDC;
     }
 
     #accountDropdown {
@@ -300,14 +317,14 @@
         box-sizing: border-box;
       }
 
-      .dropdown_menuu ul {
+      .dropdown_menuuu ul {
         list-style: none;
         padding: 0;
-        margin-left: 250px;
+        margin: 0;
       }
 
       .dropdown_menuuu ul li {
-        width: 130px;
+        width: 100%;
         padding: 5px;
         white-space: nowrap;
       }
@@ -800,55 +817,7 @@
   </style>
 </head>
 <body>
-
-  <nav>
-    <div class="image-container">
-      <img src="{{ asset('storage/assets/civil_registry_logo.png') }}">
-    </div>
-    <div class="logo-name">
-             <p> Mandaluyong City <br> Civil Registry</p > 
-            
-            </div>
-
-    <div class="menu">
-      <ul>
-        <li> <a href="{{ route('admin.homepage') }}"> Home </a> </li>
-
-        <li> <a href="#"> Services <i class="fas fa-caret-down"> </i> </a>
-
-        <div class="dropdown_menuuu">
-          <ul>
-            <li> <a href="{{ route('admin.appointment') }}"> Appointment </a> </li>
-            <li> <a href="{{ route('admin.requirements') }}"> Requirements </a> </li>
-          </ul>
-        </div>
-        </li>
-
-        <li> <a href="{{ route('admin.faqs') }}"> FAQs </a> </li>
-        <li> <a href="{{ route('admin.about') }}" class="active"> About Us </a> </li>
-        <li> <a href="{{ route('admin.contact') }}"> Contact Us </a> </li>
-      </ul>
-    </div>
-
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Search">
-      <i class="fa fa-search" onclick="performSearch()"> </i>
-    </div>
-
-    <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" onclick="toggleDropdown()" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-right: 23px;">
-    <div id="accountDropdown">
-      <div style="padding: 16px 0 8px 0; text-align: center;">
-        <div style="font-size: 40px; color: #e0e0e0; margin-bottom: 4px;">
-          <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-left:20px;">
-        </div>
-        <div style="font-weight: bold; font-size: 18px;">Admin</div>
-        <div style="font-size: 14px; color: #757575; word-break: break-all;">city.registrar@<br>mandaluyong.gov.ph</div>
-      </div>
-      <a href="{{ route('admin.logout') }}" id="logoutLink">Logout</a>
-    </div>
-
-    <button class="menu-toggle" onclick="toggleMenu()"> <i class="fas fa-bars"></i> </button>
-  </nav>
+  @include('layouts.admin-navbar')
 
   <header class="header-image">
     <div class="header-overlay"></div>
@@ -917,9 +886,7 @@
     </section>
   </div>
 
-  <footer>
-    &copy; 2025 Civil Registry Office - Mandaluyong City. All rights reserved.
-  </footer>
+  @include('layouts.footer')
 
   <script>
     function toggleDropdown() {

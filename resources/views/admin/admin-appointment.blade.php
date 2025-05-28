@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <link rel="icon" type="image/x-icon" href="/storage/assets/favicon.ico">
@@ -603,56 +604,9 @@
 </head>
 
 <body>
-        <nav>
-            <div class="image-container">
-                <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
-    
-                <div class="logo-name">
-             <p> Mandaluyong City <br> Civil Registry</p > 
-            </div>
+    @include('layouts.admin-navbar')
 
-    
-            <div class="menu">
-                <ul>
-                    <li> <a href="{{ route('admin.homepage') }}"> Home </a> </li>
-    
-            <li> <a class="active" href="#"> Services <i class="fas fa-caret-down"> </i> </a> 
-    
-            <div class="dropdown_menuuu">
-              <ul>
-            <li> <a class="active" href="{{ route('admin.appointment') }}"> Appointment </a> </li>
-            <li> <a href="{{ route('admin.requirements') }}"> Requirements </a> </li>
-               </ul>
-            </div>
-            </li>
-    
-                    <li> <a href="{{ route('admin.faqs') }}"> FAQs </a> </li>
-                    <li> <a href="{{ route('admin.about') }}"> About Us </a> </li>
-                    <li> <a href="{{ route('admin.contact') }}"> Contact Us </a> </li>
-                </ul>
-        </div>
-    
-  <div class="search-container">
-  <input type="text" id="searchInput" placeholder="Search">
-  <i class="fa fa-search" onclick="performSearch()"> </i>
-  </div>
-        
-  <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" onclick="toggleDropdown()" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-right: 23px;">
-        <div id="accountDropdown">
-            <div style="padding: 16px 0 8px 0; text-align: center;">
-                <div style="font-size: 40px; color: #e0e0e0; margin-bottom: 4px;">
-                <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-left:60px;">
-                </div>
-                <div style="font-weight: bold; font-size: 18px;">Admin</div>
-                <div style="font-size: 14px; color: #757575; word-break: break-all;">city.registrar@<br>mandaluyong.gov.ph</div>
-            </div>
-            <a href="{{ route('admin.logout') }}" id="logoutLink">Logout</a>
-        </div>
-      
-        <button class="menu-toggle"> </button>
-      </nav>
-
-      <main class="p-8">
+    <main class="p-8">
         <h2 class="text-2xl font-bold text-center mb-6">Scheduled Appointments</h2>
         <div class="overflow-x-auto">
             @if(session('success'))

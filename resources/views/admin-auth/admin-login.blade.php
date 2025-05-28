@@ -573,38 +573,36 @@
 </head>
 
 <body>
-  <nav>
-    <div class="nav-left">
-      <div class="image-container">
-        <img src="{{ asset('storage/assets/civil_registry_logo.png') }}" alt="Logo">
-      </div>
-      <div class="logo-name">
-             <p> Mandaluyong City <br> Civil Registry</p > 
-      </div>
-    </div>
+  <script>
+    function showForgotPassword() {
+        document.getElementById('loginContainer').style.display = 'none';
+        document.getElementById('forgotPasswordContainer').style.display = 'block';
+    }
 
-    <div class="menu">
-      <ul>
-        <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}">Home</a></li>
-        <li><a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs') }}">FAQs</a></li>
-        <li><a class="{{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}">About Us</a></li>
-        <li><a class="{{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact Us</a></li>
-      </ul>
-    </div>
+    function hideForgotPassword() {
+        document.getElementById('forgotPasswordContainer').style.display = 'none';
+        document.getElementById('loginContainer').style.display = 'block';
+    }
 
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Search">
-      <i class="fa fa-search" onclick="performSearch()"></i>
-    </div>
+    function togglePasswordVisibility(inputName) {
+        const passwordField = document.querySelector(`input[name="${inputName}"]`);
+        const eyeIcon = passwordField.nextElementSibling;
 
-    <i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
+        if (passwordField && eyeIcon) {
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            } else {
+                passwordField.type = 'password';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            }
+        }
+    }
+  </script>
 
-    <button class="menu-toggle">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </nav>
+  @include('layouts.public-navbar')
 
   <section>
     <div class="details">
@@ -661,17 +659,23 @@
       <p class="link" style="margin-bottom: 18px; font-size: 16px;">Please enter your username and new password:</p>
       <form id="forgotPasswordForm" action="{{ route('admin.password.update') }}" method="POST">
         @csrf
-        <input type="text" id="userName" name="username" placeholder="Username" required>
-        <input type="password" id="newPassword" name="password" placeholder="Enter New Password" required>
+        <input type="text" id="userName" name="username" placeholder="Username" required value="{{ old('username') }}">
+        <div class="input-group">
+          <input type="password" id="newPassword" name="password" placeholder="Enter New Password" required>
+          <i class="fa fa-eye-slash eye-icon" onclick="togglePasswordVisibility('password')"></i>
+        </div>
         <button class="btnn" type="submit">SUBMIT</button>
         @if(session('status'))
-          <div style="color: green; text-align: center; margin-top: 10px;">{{ session('status') }}</div>
+          <div style="color: green; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif;">{{ session('status') }}</div>
         @endif
         @if($errors->has('username'))
-          <div style="color: red; text-align: center; margin-top: 10px;">{{ $errors->first('username') }}</div>
+          <div style="color: red; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif;">{{ $errors->first('username') }}</div>
         @endif
         @if($errors->has('password'))
-          <div style="color: red; text-align: center; margin-top: 10px;">{{ $errors->first('password') }}</div>
+          <div style="color: red; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif;">{{ $errors->first('password') }}</div>
+        @endif
+        @if($errors->has('error'))
+          <div style="color: red; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif;">{{ $errors->first('error') }}</div>
         @endif
       </form>
       <p class="link" style="margin-top: 18px;">Remembered your password?
@@ -682,29 +686,31 @@
 
 <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 <script>
-function performSearch() {
-    const input = document.getElementById("searchInput").value.trim().toLowerCase();
+    function performSearch() {
+        const input = document.getElementById("searchInput").value.trim().toLowerCase();
 
-    if (input === "") {
-        alert("Please enter a search term.");
-    } else {
-        if (input === "home page" || input === "homepage" || input === "home") {
-            window.location.href = "{{ route('admin.homepage') }}";
-        } else if (input === "faqs" || input === "facts" || input === "help") {
-            window.location.href = "{{ route('admin.faqs') }}";
-        } else if (input === "about" || input === "about civil") {
-            window.location.href = "{{ route('admin.about') }}";
-        } else if (input === "contact" || input === "number" || input === "email") {
-            window.location.href = "{{ route('admin.contact') }}";
+        if (input === "") {
+            alert("Please enter a search term.");
         } else {
-          alert("No results found.");
-          inputField.value = "";
+            if (input === "home page" || input === "homepage" || input === "home") {
+                window.location.href = "{{ route('admin.homepage') }}";
+            } else if (input === "faqs" || input === "facts" || input === "help") {
+                window.location.href = "{{ route('admin.faqs') }}";
+            } else if (input === "about" || input === "about civil") {
+                window.location.href = "{{ route('admin.about') }}";
+            } else if (input === "contact" || input === "number" || input === "email") {
+                window.location.href = "{{ route('admin.contact') }}";
+            } else {
+                alert("No results found.");
+                inputField.value = "";
+            }
         }
-      }}
+    }
+
     document.getElementById("searchInput").addEventListener("keypress", function(e) {
         if (e.key === "Enter") {
-        performSearch();
-    }
+            performSearch();
+        }
     });
 
     const menuToggle = document.querySelector('.menu-toggle');
@@ -716,51 +722,25 @@ function performSearch() {
             menuToggle.classList.toggle('active');
         });
     }
+
     window.toggleDropdown = function () {
         const dropdown = document.getElementById("accountDropdown");
         alert("Please login or register your account first.");
         if (dropdown) dropdown.classList.toggle("show");
     };
 
-    window.togglePasswordVisibility = function (inputName = "password") {
-    const passwordField = document.querySelector(`input[name="${inputName}"]`);
-    const eyeIcon = document.getElementById('eye-icon');
+    const usernameInput = document.querySelector('input[name="username"]');
+    const passwordInput = document.querySelector('input[name="password"]');
+    const rememberMeCheckbox = document.getElementById("remember-me");
+    const loginButton = document.querySelector(".btnn");
 
-    if (passwordField && eyeIcon) {
-        if (passwordField.type === 'password') {
-            passwordField.type = 'text';
-            eyeIcon.classList.add('fa-eye');
-            eyeIcon.classList.remove('fa-eye-slash');
-        } else {
-            passwordField.type = 'password';
-            eyeIcon.classList.add('fa-eye-slash');
-            eyeIcon.classList.remove('fa-eye');
+    if (usernameInput && passwordInput && loginButton && rememberMeCheckbox) {
+        if (localStorage.getItem("rememberMe") === "true") {
+            usernameInput.value = localStorage.getItem("username") || "";
+            passwordInput.value = localStorage.getItem("password") || "";
+            rememberMeCheckbox.checked = true;
         }
     }
-};
-
-function showForgotPassword() {
-    document.getElementById('loginContainer').style.display = 'none';
-    document.getElementById('forgotPasswordContainer').style.display = 'block';
-}
-
-function hideForgotPassword() {
-    document.getElementById('forgotPasswordContainer').style.display = 'none';
-    document.getElementById('loginContainer').style.display = 'block';
-}
-
-const usernameInput = document.querySelector('input[name="username"]');
-const passwordInput = document.querySelector('input[name="password"]');
-const rememberMeCheckbox = document.getElementById("remember-me");
-const loginButton = document.querySelector(".btnn");
-
-if (usernameInput && passwordInput && loginButton && rememberMeCheckbox) {
-if (localStorage.getItem("rememberMe") === "true") {
-    usernameInput.value = localStorage.getItem("username") || "";
-    passwordInput.value = localStorage.getItem("password") || "";
-    rememberMeCheckbox.checked = true;
-}
-}
 </script>
 
 </body>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Admin Registration</title>
-    <link rel="icon" type="image/x-icon" href="/storage/assets/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <style type="text/css">
@@ -20,141 +20,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        nav {
-            top: 0;
-            width: 100%;
-            height: 65px;
-            z-index: 9999;
-            display: flex;
-            position: sticky;
-            align-items: center;
-            justify-content: space-between;
-            background-color: white;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-            padding: 0 20px;
-        }
-
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .image-container img {
-            width: 50px;
-            height: 45px;
-            margin-top: 5px;
-            position: relative;
-            border-radius: 50%;
-        }
-
-        .logo-name {
-            font-size: 15px;
-            margin-left: 15px;
-            white-space: nowrap;
-            font-family: "Poppins", sans-serif;
-        }
-
-        .logo-name a {
-            margin-left: -16px;
-            font-family: "Poppins", sans-serif;
-        }
-
-        nav .menu {
-            display: flex;
-            align-items: center;
-        }
-
-        nav .menu ul {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        nav .menu ul li {
-            padding: 0;
-            font-size: 17px;
-            font-weight: bold;
-            margin-right: 30px;
-            position: relative;
-            font-family: "Poppins", sans-serif;
-        }
-
-        nav .menu ul li a {
-            color: black;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        nav .menu ul li a:hover,
-        nav .menu .active {
-            color: #426DDC;
-        }
-
-        .search-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            margin-right: 20px;
-        }
-
-        .search-container input[type="text"] {
-            padding: 8px 35px 8px 15px;
-            border-radius: 20px;
-            border: 1px solid #ccc;
-            font-family: "Poppins", sans-serif;
-            font-size: 14px;
-            outline: none;
-            transition: all 0.3s ease;
-            width: 180px;
-        }
-
-        .search-container input[type="text"]:focus {
-            border-color: #426DDC;
-            box-shadow: 0 0 5px rgba(66, 109, 220, 0.5);
-        }
-
-        .search-container .fa-search {
-            position: absolute;
-            right: 12px;
-            color: gray;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .search-container .fa-search:hover {
-            color: #426DDC;
-        }
-
-        .user-icon {
-            font-size: 28px;
-            color: #333;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .user-icon:hover {
-            color: #426DDC;
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .menu-toggle span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background-color: #333;
-            margin: 5px 0;
-            transition: all 0.3s ease;
         }
 
         section {
@@ -373,59 +238,6 @@
         }
 
         @media screen and (max-width: 768px) {
-            nav {
-                padding: 0 15px;
-            }
-
-            nav .menu {
-                position: fixed;
-                top: 65px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 65px);
-                background: white;
-                flex-direction: column;
-                transition: 0.3s ease;
-                padding: 20px;
-            }
-
-            nav .menu.active {
-                left: 0;
-            }
-
-            nav .menu ul {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            nav .menu ul li {
-                width: 100%;
-                margin: 10px 0;
-                text-align: center;
-            }
-
-            .search-container {
-                display: none;
-            }
-
-            .user-icon {
-                display: none;
-            }
-
-            .logo-name {
-                font-size: 13px;
-                margin-left: 10px;
-            }
-
-            .image-container img {
-                width: 40px;
-                height: 35px;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
             .details h5 {
                 font-size: 50px;
                 letter-spacing: 10px;
@@ -467,19 +279,6 @@
         }
 
         @media screen and (max-width: 480px) {
-            nav {
-                padding: 0 10px;
-            }
-
-            .logo-name {
-                font-size: 12px;
-            }
-
-            .image-container img {
-                width: 35px;
-                height: 30px;
-            }
-
             .details h5 {
                 font-size: 36px;
                 letter-spacing: 8px;
@@ -605,38 +404,7 @@
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-left">
-            <div class="image-container">
-                <img src="{{ asset('storage/assets/civil_registry_logo.png') }}" alt="Logo">
-            </div>
-            <div class="logo-name">
-                <b>Mandaluyong City<br/><a>Civil Registry</a></b>
-            </div>
-        </div>
-
-        <div class="menu">
-            <ul>
-                <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}">Home</a></li>
-                <li><a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs') }}">FAQs</a></li>
-                <li><a class="{{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}">About Us</a></li>
-                <li><a class="{{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact Us</a></li>
-            </ul>
-        </div>
-
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search">
-            <i class="fa fa-search" onclick="performSearch()"></i>
-        </div>
-
-        <i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
-
-        <button class="menu-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </nav>
+    @include('layouts.public-navbar')
 
     <section>
         <div class="details">
@@ -744,49 +512,6 @@
                 eyeIcon.classList.add('fa-eye-slash');
             }
         }
-
-        function performSearch() {
-            const input = document.getElementById("searchInput").value.trim().toLowerCase();
-
-            if (input === "") {
-                alert("Please enter a search term.");
-            } else {
-                if (input === "home page" || input === "homepage" || input === "home") {
-                    window.location.href = "{{ route('admin.homepage') }}";
-                } else if (input === "faqs" || input === "facts" || input === "help") {
-                    window.location.href = "{{ route('admin.faqs') }}";
-                } else if (input === "about" || input === "about civil") {
-                    window.location.href = "{{ route('admin.about') }}";
-                } else if (input === "contact" || input === "number" || input === "email") {
-                    window.location.href = "{{ route('admin.contact') }}";
-                } else {
-                    alert("No results found.");
-                    inputField.value = "";
-                }
-            }
-        }
-
-        document.getElementById("searchInput").addEventListener("keypress", function(e) {
-            if (e.key === "Enter") {
-                performSearch();
-            }
-        });
-
-        const menuToggle = document.querySelector('.menu-toggle');
-        const menu = document.querySelector('.menu');
-        
-        if (menuToggle && menu) {
-            menuToggle.addEventListener('click', () => {
-                menu.classList.toggle('active');
-                menuToggle.classList.toggle('active');
-            });
-        }
-
-        window.toggleDropdown = function () {
-            const dropdown = document.getElementById("accountDropdown");
-            alert("Please login or register your account first.");
-            if (dropdown) dropdown.classList.toggle("show");
-        };
 
         function previewIdCard(event) {
             const input = event.target;

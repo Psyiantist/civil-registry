@@ -9,7 +9,7 @@
     @stack('styles')
 </head>
 <body class="bg-gray-100">
-    <div class="min-h-screen flex">
+    <div class="min-h-screen flex flex-col">
         <!-- Sidebar -->
         <div class="bg-gray-800 text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
             <a href="{{ route('admin.homepage') }}" class="text-white flex items-center space-x-2 px-4">
@@ -43,7 +43,7 @@
         </div>
 
         <!-- Content -->
-        <div class="flex-1">
+        <div class="flex-1 flex flex-col">
             <!-- Top Navigation -->
             <div class="bg-white shadow-lg">
                 <div class="container mx-auto px-6 py-3">
@@ -69,9 +69,14 @@
             </div>
 
             <!-- Main Content -->
-            <main class="container mx-auto px-6 py-8">
+            <main class="container mx-auto px-6 py-8 flex-grow">
                 @yield('content')
             </main>
+
+            <!-- Footer -->
+            <div class="mt-auto">
+                @include('layouts.footer')
+            </div>
         </div>
     </div>
 

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Home Page - Admin View</title>
-  <link rel="icon" type="image/x-icon" href="/storage/assets/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
   <style type="text/css">
@@ -60,7 +60,7 @@
     nav .menu {
       width: 100%;
       margin-top: -5px;
-      margin-left: 20px;
+      margin-left: 30px;
       text-align: center;
       justify-content: center;
       align-items: center;
@@ -71,11 +71,10 @@
       font-size: 17px;
       list-style: none;
       font-weight: bold;
-      margin-right: 30px;
+      margin-right: 50px;
       display: inline-block;
       position: relative;
       font-family: "Poppins", sans-serif;
-
     }
 
     nav .menu ul:nth-child(2) li {
@@ -133,33 +132,53 @@
     .dropdown_menuuu {
       display: none;
       position: absolute;
-      left: -55%;
+      left: 0;
       top: 100%;
       min-height: 90px;
       background-color: white;
       z-index: 1000;
-      min-width: 130px;
+      min-width: 200px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      padding: 10px 0;
+      transition: none;
     }
 
-    .menu ul li:hover .dropdown_menuuu,
+    .menu ul li:hover .dropdown_menuuu {
+      display: block;
+    }
+
     .dropdown_menuuu:hover {
-       display: block;
-       border-radius: 5px;
-       font-size: 18px;
+      display: block;
     }
 
     .dropdown_menuuu ul {
-       list-style: none;
-       padding: 0;
-       margin-top: 15px;
-       margin-left: 25px;
-       margin-bottom: 9px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
 
     .dropdown_menuuu ul li {
-       width: 130px;
-       padding: 7px;
-       white-space: nowrap;
+      width: 100%;
+      padding: 8px 20px;
+      white-space: nowrap;
+      transition: background-color 0.3s ease;
+    }
+
+    .dropdown_menuuu ul li:hover {
+      background-color: #f5f5f5;
+    }
+
+    .dropdown_menuuu ul li a {
+      color: #333;
+      text-decoration: none;
+      font-size: 15px;
+      display: block;
+      width: 100%;
+    }
+
+    .dropdown_menuuu ul li a:hover {
+      color: #426DDC;
     }
 
     #accountDropdown {
@@ -953,610 +972,686 @@
       border: 1.5px solid #1E63E9;
     }
 
+    /* Add responsive styles for details section */
+    @media screen and (max-width: 768px) {
+      .details {
+        margin-top: -80px;
+        padding: 0 20px;
+      }
+
+      h5 {
+        font-size: 50px;
+        letter-spacing: 15px;
+        margin-top: 40px;
+      }
+
+      h4 {
+        font-size: 24px;
+        letter-spacing: 2px;
+        margin-top: -15px;
+      }
+
+      .details p {
+        font-size: 14px;
+        padding: 8px 15px;
+        margin-top: 15px;
+      }
+
+      .learn-button {
+        left: 50%;
+        font-size: 14px;
+        padding: 8px 20px;
+        bottom: -30px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .details {
+        margin-top: -60px;
+      }
+
+      h5 {
+        font-size: 36px;
+        letter-spacing: 10px;
+        margin-top: 30px;
+      }
+
+      h4 {
+        font-size: 20px;
+        letter-spacing: 1px;
+      }
+
+      .details p {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+
+      .learn-button {
+        font-size: 12px;
+        padding: 6px 16px;
+      }
+    }
+
+    /* Add responsive table styles */
+    @media screen and (max-width: 1024px) {
+      .account-approval-container {
+        margin: 20px 10px;
+        overflow-x: auto;
+      }
+
+      #approvalTable, #userActivityTable {
+        min-width: 800px;
+      }
+
+      #approvalTable th, #approvalTable td,
+      #userActivityTable th, #userActivityTable td {
+        padding: 8px;
+        font-size: 0.9rem;
+      }
+
+      .status-badge {
+        padding: 4px 12px;
+        font-size: 0.85rem;
+      }
+
+      .approve-btn, .reject-btn, .delete-btn {
+        padding: 4px 8px;
+        font-size: 0.85rem;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .account-approval-container {
+        margin: 15px 5px;
+      }
+
+      #approvalTable, #userActivityTable {
+        min-width: 700px;
+      }
+
+      #approvalTable th, #approvalTable td,
+      #userActivityTable th, #userActivityTable td {
+        padding: 6px;
+        font-size: 0.85rem;
+      }
+
+      .status-badge {
+        padding: 3px 10px;
+        font-size: 0.8rem;
+      }
+
+      .approve-btn, .reject-btn, .delete-btn {
+        padding: 3px 6px;
+        font-size: 0.8rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        padding: 12px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .account-approval-container {
+        margin: 10px 0;
+      }
+
+      #approvalTable, #userActivityTable {
+        min-width: 600px;
+      }
+
+      #approvalTable th, #approvalTable td,
+      #userActivityTable th, #userActivityTable td {
+        padding: 4px;
+        font-size: 0.8rem;
+      }
+
+      .status-badge {
+        padding: 2px 8px;
+        font-size: 0.75rem;
+      }
+
+      .approve-btn, .reject-btn, .delete-btn {
+        padding: 2px 4px;
+        font-size: 0.75rem;
+      }
+
+      h2 {
+        font-size: 1.2rem;
+        padding: 10px;
+      }
+    }
+
 	</style>
 </head>
 
 
 <body>
-	<nav>
-        <div class="image-container">
-            <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
+  @include('layouts.admin-navbar')
 
-        <div class="logo-name">
-             <p> Mandaluyong City <br> Civil Registry</p > 
-            
-            </div>
-
-
-		<div class="menu">
-			<ul>
-				<li> <a class="active" href="{{ route('admin.homepage') }}"> Home </a> </li>
-
-        <li> <a href="#"> Services <i class="fas fa-caret-down"> </i> </a>
-
-        <div class="dropdown_menuuu">
-          <ul>
-        <li> <a href="{{ route('admin.appointment') }}"> Appointment </a> </li>
-        <li> <a href="{{ route('admin.requirements') }}"> Requirements </a> </li>
-           </ul>
-        </div>
-        </li>
-
-				<li> <a href="{{ route('admin.faqs') }}"> FAQs </a> </li>
-				<li> <a href="{{ route('admin.about') }}"> About Us </a> </li>
-				<li> <a href="{{ route('admin.contact') }}"> Contact Us </a> </li>
-			</ul>
-    </div>
-
-  <div class="search-container">
-  <input type="text" id="searchInput" placeholder="Search">
-  <i class="fa fa-search" onclick="performSearch()"> </i>
-  </div>
-
-  <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" onclick="toggleDropdown()" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-right: 23px;">
-  <div id="accountDropdown">
-  <div style="padding: 16px 0 8px 0; text-align: center;">
-    <div style="font-size: 40px; color: #e0e0e0; margin-bottom: 4px;">
-    <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-right: 10px; margin-left: 10px;">
-    </div>
-    <div style="font-weight: bold; font-size: 18px;">Admin</div>
-    <div style="font-size: 14px; color: #757575; word-break: break-all;">city.registrar@<br>mandaluyong.gov.ph</div>
-  </div>
-  <a href="{{ route('admin.logout') }}" id="logoutLink">Logout</a>
-</div>
-
-    <button class="menu-toggle"> </button>
-  </nav>
-
-<section>
+  <section>
     <div class="details">
       <div>
-      <h5> <center> SCHEDULE </h5>
-      <h4> AN APPOINTMENT NOW! <i class="fa fa-calendar-week" aria-hidden="true"> </i> </i> </h4>
-      <p> <i> "Convenience you can count on, appointments you can trust." </i> </p>
-      <a href="#learn-more" class="learn-button"> Learn more </a> </center>
-    </div>
-    </section>
-
-    <div class="announcement-section">
-  <div class="announcement-header">
-    <h2> <i class="fa fa-bullhorn" aria-hidden="true"></i> Announcement & News Update </h2>
-    <div style="display: flex; align-items: center; gap: 16px;">
-      <p id="datetime"> </p>
-      <button id="addAnnouncementBtn" style="background: #426DDC; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif;">
-        <i class="fas fa-plus"></i> Add Announcement
-      </button>
-    </div>
-  </div>
-
-  <div class="announcement-body">
-    <div class="editable-wrapper">
-      <p> Welcome! Stay tuned for the latest updates from the <i>City Civil Registry Department. </i> </p>
-    </div>
-  </div>
-</div>
-    
-<div class="slider-container">
-  <div class="slider">
-    @foreach($announcements as $announcement)
-    <div class="slide">
-      <img id="img{{ $announcement->id }}" src="{{ asset('storage/announcements/' . $announcement->image_path) }}"> <br>
-      <div class="announcement-controls">
-        <form action="{{ url('/admin/announcements/' . $announcement->id) }}" method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 10px;">
-          @csrf
-          @method('PUT')
-          <label class="custom-file-label" style="margin-bottom: 0;">
-            <input type="file" name="image" accept="image/*" class="announcement-file-input" required>
-            <span>Choose File</span>
-          </label>
-          <span class="file-name-display">No file chosen</span>
-          <button type="submit" class="save-button" style="background: #426DDC; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif;">Save Changes</button>
-        </form>
-        <form action="{{ url('/admin/announcements/' . $announcement->id) }}" method="POST" style="margin: 0;">
-          @csrf
-          @method('PUT')
-          <input type="hidden" name="reset_to_default" value="1">
-          <button type="submit" class="reset-button" style="background: #426DDC; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif; width: 220px; margin: 0 auto; display: block;">Reset to Default Photo</button>
-        </form>
-        <form action="{{ route('admin.announcements.destroy', $announcement->id) }}" method="POST" style="margin-top: 10px;">
-          @csrf
-          @method('DELETE')
-          <button type="submit" class="delete-button" style="background: #f87171; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif; width: 220px; margin: 0 auto; display: block;" onclick="return confirm('Are you sure you want to delete this announcement?');">
-            Delete Announcement
-          </button>
-        </form>
+        <h5><center>SCHEDULE</h5>
+        <h4>AN APPOINTMENT NOW! <i class="fa fa-calendar-week" aria-hidden="true"></i></h4>
+        <p><i>"Convenience you can count on, appointments you can trust."</i></p>
+        <a href="#learn-more" class="learn-button">Learn more</a></center>
       </div>
-      <div class="announcement-text" style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 24px 32px; background: #fff; border-radius: 0 0 16px 16px; box-shadow: 0 2px 8px rgba(66, 109, 220, 0.07); display: flex; flex-direction: column; align-items: center;">
-        <form action="{{ url('/admin/announcements/' . $announcement->id) }}" method="POST" style="margin-bottom: 20px; width: 100%;">
-          @csrf
-          @method('PUT')
-          <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; gap: 24px; width: 100%; max-width: 1200px;">
-            <div style="flex: 2; display: flex; flex-direction: column; gap: 10px;">
-              <input
-                type="text"
-                name="title"
-                value="{{ $announcement->title }}"
-                required
-                style="font-size: 24px; font-weight: bold; text-align: left; width: 100%; max-width: 1000px; border-radius: 6px; border: 1px solid #ccc; padding: 8px;"
-              >
-              <textarea
-                name="content"
-                required
-                style="font-size: 16px; width: 100%; max-width: 1000px; border-radius: 6px; border: 1px solid #ccc; padding: 8px; min-height: 60px;"
-              >{{ $announcement->content }}</textarea>
+    </div>
+  </section>
+
+  <div class="announcement-section">
+    <div class="announcement-header">
+      <h2> <i class="fa fa-bullhorn" aria-hidden="true"></i> Announcement & News Update </h2>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <p id="datetime"> </p>
+        <button id="addAnnouncementBtn" style="background: #426DDC; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif;">
+          <i class="fas fa-plus"></i> Add Announcement
+        </button>
+      </div>
+    </div>
+
+    <div class="announcement-body">
+      <div class="editable-wrapper">
+        <p> Welcome! Stay tuned for the latest updates from the <i>City Civil Registry Department. </i> </p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="slider-container">
+    <div class="slider">
+      @foreach($announcements as $announcement)
+      <div class="slide">
+        <img id="img{{ $announcement->id }}" src="{{ asset('storage/announcements/' . $announcement->image_path) }}"> <br>
+        <div class="announcement-controls">
+          <form action="{{ url('/admin/announcements/' . $announcement->id) }}" method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 10px;">
+            @csrf
+            @method('PUT')
+            <label class="custom-file-label" style="margin-bottom: 0;">
+              <input type="file" name="image" accept="image/*" class="announcement-file-input" required>
+              <span>Choose File</span>
+            </label>
+            <span class="file-name-display">No file chosen</span>
+            <button type="submit" class="save-button" style="background: #426DDC; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif;">Save Changes</button>
+          </form>
+          <form action="{{ url('/admin/announcements/' . $announcement->id) }}" method="POST" style="margin: 0;">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="reset_to_default" value="1">
+            <button type="submit" class="reset-button" style="background: #426DDC; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif; width: 220px; margin: 0 auto; display: block;">Reset to Default Photo</button>
+          </form>
+          <form action="{{ route('admin.announcements.destroy', $announcement->id) }}" method="POST" style="margin-top: 10px;">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="delete-button" style="background: #f87171; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif; width: 220px; margin: 0 auto; display: block;" onclick="return confirm('Are you sure you want to delete this announcement?');">
+              Delete Announcement
+            </button>
+          </form>
+        </div>
+        <div class="announcement-text" style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 24px 32px; background: #fff; border-radius: 0 0 16px 16px; box-shadow: 0 2px 8px rgba(66, 109, 220, 0.07); display: flex; flex-direction: column; align-items: center;">
+          <form action="{{ url('/admin/announcements/' . $announcement->id) }}" method="POST" style="margin-bottom: 20px; width: 100%;">
+            @csrf
+            @method('PUT')
+            <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; gap: 24px; width: 100%; max-width: 1200px;">
+              <div style="flex: 2; display: flex; flex-direction: column; gap: 10px;">
+                <input
+                  type="text"
+                  name="title"
+                  value="{{ $announcement->title }}"
+                  required
+                  style="font-size: 24px; font-weight: bold; text-align: left; width: 100%; max-width: 1000px; border-radius: 6px; border: 1px solid #ccc; padding: 8px;"
+                >
+                <textarea
+                  name="content"
+                  required
+                  style="font-size: 16px; width: 100%; max-width: 1000px; border-radius: 6px; border: 1px solid #ccc; padding: 8px; min-height: 60px;"
+                >{{ $announcement->content }}</textarea>
+              </div>
+              <div style="flex: 1; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; width: 100%;">
+                <button
+                  type="submit"
+                  style="background: #426DDC; color: white; border: none; padding: 8px 24px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 16px; min-width: 180px;"
+                >Save Changes</button>
+              </div>
             </div>
-            <div style="flex: 1; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; width: 100%;">
-              <button
-                type="submit"
-                style="background: #426DDC; color: white; border: none; padding: 8px 24px; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 16px; min-width: 180px;"
-              >Save Changes</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-    @endforeach
-  </div>
-  <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
-  <button class="next" onclick="moveSlide(1)">&#10095;</button>
-</div>
-
-<!-- ACCOUNT APPROVAL SECTION (Backend-Driven) -->
-<div class="account-approval-container" style="max-width: 1200px; margin: 40px auto 60px auto; background: #f7faff; border-radius: 12px; box-shadow: 0 4px 16px rgba(30,99,233,0.07); overflow: hidden; min-height: 400px; max-height: 800px; overflow-y: auto;">
-  <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">ACCOUNT APPROVAL</h2>
-  <table id="approvalTable" style="width: 100%; border-collapse: collapse; font-family: 'Poppins', sans-serif; background: white;">
-    <thead style="background-color: #1E63E9; color: white;">
-      <tr>
-        <th style="padding: 12px;">User Name</th>
-        <th style="padding: 12px;">Email Address</th>
-        <th style="padding: 12px;">ID Type</th>
-        <th style="padding: 12px;">ID Uploaded</th>
-        <th style="padding: 12px;">Current/Permanent Address</th>
-        <th style="padding: 12px;">Date of Birth</th>
-        <th style="padding: 12px;">Status</th>
-        <th style="padding: 12px;">Action</th>
-      </tr>
-    </thead>
-    <tbody id="approvalTableBody">
-      @if($pending_users->isEmpty())
-        <tr>
-          <td colspan="8" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">No pending users for approval.</td>
-        </tr>
-      @else
-        @foreach($pending_users as $user)
-          <tr style="background-color: white;">
-            <td style="padding: 12px;">{{ $user->first_name }} {{ $user->last_name }}</td>
-            <td style="padding: 12px;">{{ $user->email }}</td>
-            <td style="padding: 12px;">{{ $user->id_type }}</td>
-            <td style="padding: 12px;">
-              @if($user->id_image)
-                <a href="{{ asset('storage/uploads/' . $user->id_image) }}" target="_blank" style="color: #1E63E9; text-decoration: underline;">View ID</a>
-              @else
-                <span style="color: #aaa;">No ID</span>
-              @endif
-            </td>
-            <td style="padding: 12px;">{{ $user->current_address }}</td>
-            <td style="padding: 12px;">{{ $user->date_of_birth }}</td>
-            <td style="padding: 12px;">
-              <span class="status-badge status-pending">Pending</span>
-            </td>
-            <td style="padding: 12px;">
-              @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
-                <div style="display: flex; gap: 8px;">
-                  <form method="POST" action="{{ route('admin.accept-user', $user->id) }}" class="approval-action-form" style="display:inline;">
-                    @csrf
-                    <button type="submit" class="approve-btn" style="background: #4ade80; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Approve</button>
-                  </form>
-                  <form method="POST" action="{{ route('admin.reject-user', $user->id) }}" class="approval-action-form" style="display:inline;">
-                    @csrf
-                    <button type="submit" class="reject-btn" style="background: #f87171; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Reject</button>
-                  </form>
-                </div>
-              @else
-                <span style="color: #666; font-style: italic;">Only admin1 can approve accounts</span>
-              @endif
-            </td>
-          </tr>
-        @endforeach
-      @endif
-    </tbody>
-  </table>
-</div>
-<!-- END ACCOUNT APPROVAL SECTION -->
-
-<!-- USER ACTIVITY SECTION -->
-<div class="account-approval-container" style="max-width: 1200px; margin: 40px auto 60px auto; background: #f7faff; border-radius: 12px; box-shadow: 0 4px 16px rgba(30,99,233,0.07); overflow: hidden; min-height: 400px; max-height: 800px; overflow-y: auto;">
-  <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">USER ACTIVITY</h2>
-  <table id="userActivityTable" style="width: 100%; border-collapse: collapse; font-family: 'Poppins', sans-serif; background: white;">
-    <thead style="background-color: #1E63E9; color: white;">
-      <tr>
-        <th style="padding: 12px;">User Name</th>
-        <th style="padding: 12px;">Email Address</th>
-        <th style="padding: 12px;">Last Login</th>
-        <th style="padding: 12px;">Status</th>
-        <th style="padding: 12px;">Action</th>
-      </tr>
-    </thead>
-    <tbody id="userActivityTableBody">
-      @if($users->isEmpty())
-        <tr>
-          <td colspan="5" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">No users found.</td>
-        </tr>
-      @else
-        @foreach($users as $user)
-          <tr style="background-color: white;">
-            <td style="padding: 12px;">{{ $user->first_name }} {{ $user->last_name }}</td>
-            <td style="padding: 12px;">{{ $user->email }}</td>
-            <td style="padding: 12px;">{{ $user->last_login ? $user->last_login->format('M d, Y h:i A') : 'Never' }}</td>
-            <td style="padding: 12px;">
-              @php
-                $isActive = $user->last_login && $user->last_login->diffInDays(now()) <= 14;
-              @endphp
-              <span class="status-badge {{ $isActive ? 'status-approved' : 'status-declined' }}">
-                {{ $isActive ? 'Active' : 'Inactive' }}
-              </span>
-            </td>
-            <td style="padding: 12px;">
-              @if(!$isActive)
-                @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
-                  <form method="POST" action="{{ route('admin.delete-user', $user->id) }}" style="display: inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="delete-btn" style="background: #f87171; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;" onclick="return confirm('Are you sure you want to delete this inactive user?')">
-                      Delete Account
-                    </button>
-                  </form>
-                @else
-                  <span style="color: #666; font-style: italic;">Only admin1 can delete accounts</span>
-                @endif
-              @endif
-            </td>
-          </tr>
-        @endforeach
-      @endif
-    </tbody>
-  </table>
-</div>
-<!-- END USER ACTIVITY SECTION -->
-
-<footer>
-  <div class="container">
-      <div class="footer-content">
-          <h3>Contact Us</h3>
-          <p><a href="mailto:city.registrar@mandaluyong.gov.ph">Email: city.registrar@mandaluyong.gov.ph</a></p>
-          <p>Phone: 8533-28-21</p>
-          <p>Address: <a href="https://maps.app.goo.gl/BqivjAUx2r4DJitu5" target="_blank">Maysilo, Mandaluyong</a></p>
-      </div>
-      <div class="footer-content">
-          <h3>Our Location</h3>
-          <div class="map-container">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.374156967718!2d121.0337266!3d14.5777433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c84b4d7d8847%3A0x3cc947be6455c07a!2sMandaluyong%20City%20Hall!5e0!3m2!1sen!2sph!4v1745828287728!5m2!1sen!2sph" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
-      </div>
-      <div class="footer-content">
-          <h3>Follow Us</h3>
-          <ul class="social-icons">
-              <li><a href="https://www.facebook.com/p/Mandaluyong-City-Civil-Registry-100064760288454/" target="_blank"><i class="fab fa-facebook"></i></a></li>
-              <li><a href="mailto:city.registrar@mandaluyong.gov.ph"><i class="fas fa-envelope"></i></a></li>
-              <li><a href="https://mandaluyong.gov.ph/government/departments/city-civil-registry-department/"><i class="fas fa-paperclip"></i></a></li>
-              <li><a href="https://x.com/MandaluyongPIO"><i class="fab fa-twitter"></i></a></li>
-          </ul>
-      </div>
-  </div>
-  <div class="bottom-bar">
-      <p>&copy; 2025 Civil Registry Department. All Rights Reserved.</p>
-  </div>
-</footer>
-
-<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
-<script type="text/javascript">
-
-let originalImageSrc = {};
-let selectedFiles = {};
-
-function handleFileSelect(input, imgId, announcementId) {
-    const file = input.files[0];
-    const imgElement = document.getElementById(imgId);
-    const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
-    const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
-
-    if (!imgElement) {
-        alert("Image element not found.");
-        return;
-    }
-
-    if (!originalImageSrc[announcementId]) {
-        originalImageSrc[announcementId] = imgElement.src;
-    }
-
-    if (file) {
-        // Store the selected file
-        selectedFiles[announcementId] = file;
-        
-        // Preview the image
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            imgElement.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-        
-        // Show the save changes container
-        saveChangesContainer.style.display = 'block';
-        fileNameDisplay.textContent = file.name;
-    }
-}
-
-function saveImageChanges(imgId, announcementId) {
-    const imgElement = document.getElementById(imgId);
-    const file = selectedFiles[announcementId];
-    const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
-    const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
-
-    if (!file) {
-        alert("No file selected.");
-        return;
-    }
-
-    const formData = new FormData();
-    formData.append('image', file);
-
-    fetch(`/admin/announcements/${announcementId}`, {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert("Image uploaded successfully!");
-            // Optionally update the image src to the new file if you want to force refresh
-            // imgElement.src = `/storage/announcements/${data.image_path}`;
-            saveChangesContainer.style.display = 'none';
-            selectedFiles[announcementId] = null;
-            fileNameDisplay.textContent = 'No file chosen';
-        } else {
-            alert("Failed to upload image");
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert("An error occurred while uploading the image");
-    });
-}
-
-function cancelImageChanges(imgId, announcementId) {
-    const imgElement = document.getElementById(imgId);
-    const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
-    const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
-    const fileInput = document.querySelector(`input[onchange="handleFileSelect(this, '${imgId}', ${announcementId})"]`);
-
-    // Reset the image to original
-    imgElement.src = originalImageSrc[announcementId];
-    
-    // Reset the file input
-    fileInput.value = '';
-    
-    // Hide save changes container
-    saveChangesContainer.style.display = 'none';
-    
-    // Reset file name display
-    fileNameDisplay.textContent = 'No file chosen';
-    
-    // Clear selected file
-    selectedFiles[announcementId] = null;
-}
-
-function resetImage(imgId, announcementId) {
-    const imgElement = document.getElementById(imgId);
-    const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
-    const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
-    const fileInput = document.querySelector(`input[onchange="handleFileSelect(this, '${imgId}', ${announcementId})"]`);
-
-    // Reset to default image
-    imgElement.src = "{{ asset('storage/announcements/default-announcement.png') }}";
-    
-    // Reset the file input
-    fileInput.value = '';
-    
-    // Hide save changes container
-    saveChangesContainer.style.display = 'none';
-    
-    // Reset file name display
-    fileNameDisplay.textContent = 'No file chosen';
-    
-    // Clear selected file
-    selectedFiles[announcementId] = null;
-
-    // Update the image in the database
-    const formData = new FormData();
-    formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
-    formData.append('reset_to_default', true);
-
-    fetch(`/admin/announcements/${announcementId}`, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert("Image reset to default successfully!");
-            originalImageSrc[announcementId] = imgElement.src;
-        } else {
-            alert("Failed to reset image");
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert("An error occurred while resetting the image");
-    });
-}
-
-    function performSearch() {
-    const input = document.getElementById("searchInput").value.trim().toLowerCase();
-
-    if (input === "") {
-        alert("Please enter a search term.");
-    } else {
-        if (input === "home page" || input === "homepage" || input === "home") {
-            window.location.href = "{{ route('admin.homepage') }}";
-        } else if (input === "faqs" || input === "facts" || input === "help") {
-            window.location.href = "{{ route('admin.faqs') }}";
-        } else if (input === "about" || input === "about civil") {
-            window.location.href = "{{ route('admin.about') }}";
-        } else if (input === "appointment" || input === "appointments" || input === "schedule" || input === "schedules") {
-            window.location.href = "{{ route('admin.appointment') }}";
-        } else if (input === "reqs" || input === "requirements" || input === "requirement") {
-            window.location.href = "{{ route('admin.requirements') }}";
-        } else if (input === "contact" || input === "number" || input === "email") {
-            window.location.href = "{{ route('admin.contact') }}";
-        } else {
-                alert("No results found.");
-                inputField.value = "";
-        }
-    }}
-    document.getElementById("searchInput").addEventListener("keypress", function(e) {
-        if (e.key === "Enter") {
-        performSearch();
-    }
-    });
-
-function toggleDropdown() {
-    const dropdown = document.getElementById("accountDropdown");
-    dropdown.classList.toggle("show");
-}
-
-window.addEventListener("click", function(event) {
-    const userIcon = document.querySelector(".user-icon");
-    const dropdown = document.getElementById("accountDropdown");
-
-    if (!userIcon.contains(event.target) && !dropdown.contains(event.target)) {
-        dropdown.classList.remove("show");
-    }
-});
-
-const button = document.querySelector('.menu-toggle');
-const menu = document.querySelector('.menu');
-if (button && menu) {
-    button.onclick = () => {
-        menu.classList.toggle('expand-mobile');
-        button.classList.toggle('expand-icon');
-    };
-}
-
-const logoutLink = document.getElementById("logoutLink");
-
-function updateDateTime() {
-    const now = new Date();
-    const formatted = now.toLocaleString('en-PH', {
-        dateStyle: 'full',
-        timeStyle: 'short',
-        hour12: true
-    });
-    document.getElementById('datetime').textContent = formatted;
-}
-
-window.onload = function () {
-    updateDateTime();
-    setInterval(updateDateTime, 1000);
-};
-
-let currentSlide = 0;
-
-function moveSlide(step) {
-    const slides = document.querySelectorAll('.slide');
-    const totalSlides = slides.length;
-
-    currentSlide = (currentSlide + step + totalSlides) % totalSlides;
-
-    const slider = document.querySelector('.slider');
-    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-}
-
-function updateAnnouncement(id, field, value) {
-    fetch(`/admin/announcements/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-        },
-        body: JSON.stringify({
-            [field]: value
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Announcement updated successfully');
-        } else {
-            alert('Failed to update announcement');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred while updating the announcement');
-    });
-}
-
-document.getElementById('addAnnouncementBtn').onclick = function() {
-  document.getElementById('addAnnouncementModal').style.display = 'flex';
-};
-
-function closeAddAnnouncementModal() {
-  document.getElementById('addAnnouncementModal').style.display = 'none';
-}
-
-// Close modal when clicking outside the form
-window.onclick = function(event) {
-  var modal = document.getElementById('addAnnouncementModal');
-  if (event.target === modal) {
-    modal.style.display = 'none';
-  }
-};
-
-// Update file name display for each announcement file input
-const fileInputs = document.querySelectorAll('.announcement-file-input');
-fileInputs.forEach(input => {
-  input.addEventListener('change', function(e) {
-    const fileNameSpan = input.closest('label').nextElementSibling;
-    fileNameSpan.textContent = input.files[0] ? input.files[0].name : 'No file chosen';
-  });
-});
-
-</script>
-
-<!-- Add Announcement Modal -->
-<div id="addAnnouncementModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;">
-  <div style="background: white; padding: 32px; border-radius: 12px; width: 90%; max-width: 600px; position: relative;">
-    <h2 style="margin-bottom: 24px; color: #333; font-size: 24px;">Add New Announcement</h2>
-    <form action="{{ route('admin.announcements.store') }}" method="POST" enctype="multipart/form-data">
-      @csrf
-      <div style="margin-bottom: 20px;">
-        <label style="display: block; margin-bottom: 8px; color: #555;">Title</label>
-        <input type="text" name="title" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-      </div>
-      <div style="margin-bottom: 20px;">
-        <label style="display: block; margin-bottom: 8px; color: #555;">Content</label>
-        <textarea name="content" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 100px;"></textarea>
-      </div>
-      <div style="margin-bottom: 20px;">
-        <label style="display: block; margin-bottom: 8px; color: #555;">Image</label>
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <label class="custom-file-label">
-            <input type="file" name="image" accept="image/*" id="customFileInput" required>
-            <span>Choose File</span>
-          </label>
-          <span id="fileName" style="color: #666;">No file chosen</span>
+          </form>
         </div>
       </div>
-      <div style="display: flex; justify-content: flex-end; gap: 12px;">
-        <button type="button" onclick="closeAddAnnouncementModal()" style="padding: 8px 16px; border: 1px solid #ddd; border-radius: 4px; background: #f5f5f5; cursor: pointer;">Cancel</button>
-        <button type="submit" style="padding: 8px 16px; border: none; border-radius: 4px; background: #426DDC; color: white; cursor: pointer;">Add Announcement</button>
-      </div>
-    </form>
+      @endforeach
+    </div>
+    <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+    <button class="next" onclick="moveSlide(1)">&#10095;</button>
   </div>
-</div>
+
+  <!-- ACCOUNT APPROVAL SECTION (Backend-Driven) -->
+  <div class="account-approval-container" style="max-width: 1200px; margin: 40px auto 60px auto; background: #f7faff; border-radius: 12px; box-shadow: 0 4px 16px rgba(30,99,233,0.07); overflow: hidden; min-height: 400px; max-height: 800px; overflow-y: auto;">
+    <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">ACCOUNT APPROVAL</h2>
+    <table id="approvalTable" style="width: 100%; border-collapse: collapse; font-family: 'Poppins', sans-serif; background: white;">
+      <thead style="background-color: #1E63E9; color: white;">
+        <tr>
+          <th style="padding: 12px;">User Name</th>
+          <th style="padding: 12px;">Email Address</th>
+          <th style="padding: 12px;">ID Type</th>
+          <th style="padding: 12px;">ID Uploaded</th>
+          <th style="padding: 12px;">Current/Permanent Address</th>
+          <th style="padding: 12px;">Date of Birth</th>
+          <th style="padding: 12px;">Status</th>
+          <th style="padding: 12px;">Action</th>
+        </tr>
+      </thead>
+      <tbody id="approvalTableBody">
+        @if($pending_users->isEmpty())
+          <tr>
+            <td colspan="8" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">No pending users for approval.</td>
+          </tr>
+        @else
+          @foreach($pending_users as $user)
+            <tr style="background-color: white;">
+              <td style="padding: 12px;">{{ $user->first_name }} {{ $user->last_name }}</td>
+              <td style="padding: 12px;">{{ $user->email }}</td>
+              <td style="padding: 12px;">{{ $user->id_type }}</td>
+              <td style="padding: 12px;">
+                @if($user->id_image)
+                  <a href="{{ asset('storage/uploads/' . $user->id_image) }}" target="_blank" style="color: #1E63E9; text-decoration: underline;">View ID</a>
+                @else
+                  <span style="color: #aaa;">No ID</span>
+                @endif
+              </td>
+              <td style="padding: 12px;">{{ $user->current_address }}</td>
+              <td style="padding: 12px;">{{ $user->date_of_birth }}</td>
+              <td style="padding: 12px;">
+                <span class="status-badge status-pending">Pending</span>
+              </td>
+              <td style="padding: 12px;">
+                @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
+                  <div style="display: flex; gap: 8px;">
+                    <form method="POST" action="{{ route('admin.accept-user', $user->id) }}" class="approval-action-form" style="display:inline;">
+                      @csrf
+                      <button type="submit" class="approve-btn" style="background: #4ade80; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Approve</button>
+                    </form>
+                    <form method="POST" action="{{ route('admin.reject-user', $user->id) }}" class="approval-action-form" style="display:inline;">
+                      @csrf
+                      <button type="submit" class="reject-btn" style="background: #f87171; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Reject</button>
+                    </form>
+                  </div>
+                @else
+                  <span style="color: #666; font-style: italic;">Only admin1 can approve accounts</span>
+                @endif
+              </td>
+            </tr>
+          @endforeach
+        @endif
+      </tbody>
+    </table>
+  </div>
+  <!-- END ACCOUNT APPROVAL SECTION -->
+
+  <!-- USER ACTIVITY SECTION -->
+  <div class="account-approval-container" style="max-width: 1200px; margin: 40px auto 60px auto; background: #f7faff; border-radius: 12px; box-shadow: 0 4px 16px rgba(30,99,233,0.07); overflow: hidden; min-height: 400px; max-height: 800px; overflow-y: auto;">
+    <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">USER ACTIVITY</h2>
+    <table id="userActivityTable" style="width: 100%; border-collapse: collapse; font-family: 'Poppins', sans-serif; background: white;">
+      <thead style="background-color: #1E63E9; color: white;">
+        <tr>
+          <th style="padding: 12px;">User Name</th>
+          <th style="padding: 12px;">Email Address</th>
+          <th style="padding: 12px;">Last Login</th>
+          <th style="padding: 12px;">Status</th>
+          <th style="padding: 12px;">Action</th>
+        </tr>
+      </thead>
+      <tbody id="userActivityTableBody">
+        @if($users->isEmpty())
+          <tr>
+            <td colspan="5" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">No users found.</td>
+          </tr>
+        @else
+          @foreach($users as $user)
+            <tr style="background-color: white;">
+              <td style="padding: 12px;">{{ $user->first_name }} {{ $user->last_name }}</td>
+              <td style="padding: 12px;">{{ $user->email }}</td>
+              <td style="padding: 12px;">{{ $user->last_login ? $user->last_login->format('M d, Y h:i A') : 'Never' }}</td>
+              <td style="padding: 12px;">
+                @php
+                  $isActive = $user->last_login && $user->last_login->diffInDays(now()) <= 14;
+                @endphp
+                <span class="status-badge {{ $isActive ? 'status-approved' : 'status-declined' }}">
+                  {{ $isActive ? 'Active' : 'Inactive' }}
+                </span>
+              </td>
+              <td style="padding: 12px;">
+                @if(!$isActive)
+                  @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
+                    <form method="POST" action="{{ route('admin.delete-user', $user->id) }}" style="display: inline;">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="delete-btn" style="background: #f87171; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;" onclick="return confirm('Are you sure you want to delete this inactive user?')">
+                        Delete Account
+                      </button>
+                    </form>
+                  @else
+                    <span style="color: #666; font-style: italic;">Only admin1 can delete accounts</span>
+                  @endif
+                @endif
+              </td>
+            </tr>
+          @endforeach
+        @endif
+      </tbody>
+    </table>
+  </div>
+  <!-- END USER ACTIVITY SECTION -->
+
+  @include('layouts.footer')
+
+  <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+  <script type="text/javascript">
+
+  let originalImageSrc = {};
+  let selectedFiles = {};
+
+  function handleFileSelect(input, imgId, announcementId) {
+      const file = input.files[0];
+      const imgElement = document.getElementById(imgId);
+      const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
+      const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
+
+      if (!imgElement) {
+          alert("Image element not found.");
+          return;
+      }
+
+      if (!originalImageSrc[announcementId]) {
+          originalImageSrc[announcementId] = imgElement.src;
+      }
+
+      if (file) {
+          // Store the selected file
+          selectedFiles[announcementId] = file;
+          
+          // Preview the image
+          const reader = new FileReader();
+          reader.onload = function(e) {
+              imgElement.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+          
+          // Show the save changes container
+          saveChangesContainer.style.display = 'block';
+          fileNameDisplay.textContent = file.name;
+      }
+  }
+
+  function saveImageChanges(imgId, announcementId) {
+      const imgElement = document.getElementById(imgId);
+      const file = selectedFiles[announcementId];
+      const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
+      const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
+
+      if (!file) {
+          alert("No file selected.");
+          return;
+      }
+
+      const formData = new FormData();
+      formData.append('image', file);
+
+      fetch(`/admin/announcements/${announcementId}`, {
+          method: 'POST',
+          headers: {
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+          },
+          body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              alert("Image uploaded successfully!");
+              // Optionally update the image src to the new file if you want to force refresh
+              // imgElement.src = `/storage/announcements/${data.image_path}`;
+              saveChangesContainer.style.display = 'none';
+              selectedFiles[announcementId] = null;
+              fileNameDisplay.textContent = 'No file chosen';
+          } else {
+              alert("Failed to upload image");
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          alert("An error occurred while uploading the image");
+      });
+  }
+
+  function cancelImageChanges(imgId, announcementId) {
+      const imgElement = document.getElementById(imgId);
+      const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
+      const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
+      const fileInput = document.querySelector(`input[onchange="handleFileSelect(this, '${imgId}', ${announcementId})"]`);
+
+      // Reset the image to original
+      imgElement.src = originalImageSrc[announcementId];
+      
+      // Reset the file input
+      fileInput.value = '';
+      
+      // Hide save changes container
+      saveChangesContainer.style.display = 'none';
+      
+      // Reset file name display
+      fileNameDisplay.textContent = 'No file chosen';
+      
+      // Clear selected file
+      selectedFiles[announcementId] = null;
+  }
+
+  function resetImage(imgId, announcementId) {
+      const imgElement = document.getElementById(imgId);
+      const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
+      const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
+      const fileInput = document.querySelector(`input[onchange="handleFileSelect(this, '${imgId}', ${announcementId})"]`);
+
+      // Reset to default image
+      imgElement.src = "{{ asset('storage/announcements/default-announcement.png') }}";
+      
+      // Reset the file input
+      fileInput.value = '';
+      
+      // Hide save changes container
+      saveChangesContainer.style.display = 'none';
+      
+      // Reset file name display
+      fileNameDisplay.textContent = 'No file chosen';
+      
+      // Clear selected file
+      selectedFiles[announcementId] = null;
+
+      // Update the image in the database
+      const formData = new FormData();
+      formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
+      formData.append('reset_to_default', true);
+
+      fetch(`/admin/announcements/${announcementId}`, {
+          method: 'POST',
+          body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              alert("Image reset to default successfully!");
+              originalImageSrc[announcementId] = imgElement.src;
+          } else {
+              alert("Failed to reset image");
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          alert("An error occurred while resetting the image");
+      });
+  }
+
+      function performSearch() {
+      const input = document.getElementById("searchInput").value.trim().toLowerCase();
+
+      if (input === "") {
+          alert("Please enter a search term.");
+      } else {
+          if (input === "home page" || input === "homepage" || input === "home") {
+              window.location.href = "{{ route('admin.homepage') }}";
+          } else if (input === "faqs" || input === "facts" || input === "help") {
+              window.location.href = "{{ route('admin.faqs') }}";
+          } else if (input === "about" || input === "about civil") {
+              window.location.href = "{{ route('admin.about') }}";
+          } else if (input === "appointment" || input === "appointments" || input === "schedule" || input === "schedules") {
+              window.location.href = "{{ route('admin.appointment') }}";
+          } else if (input === "reqs" || input === "requirements" || input === "requirement") {
+              window.location.href = "{{ route('admin.requirements') }}";
+          } else if (input === "contact" || input === "number" || input === "email") {
+              window.location.href = "{{ route('admin.contact') }}";
+          } else {
+                  alert("No results found.");
+                  inputField.value = "";
+          }
+      }}
+      document.getElementById("searchInput").addEventListener("keypress", function(e) {
+          if (e.key === "Enter") {
+          performSearch();
+      }
+      });
+
+  function toggleDropdown() {
+      const dropdown = document.getElementById("accountDropdown");
+      dropdown.classList.toggle("show");
+  }
+
+  window.addEventListener("click", function(event) {
+      const userIcon = document.querySelector(".user-icon");
+      const dropdown = document.getElementById("accountDropdown");
+
+      if (!userIcon.contains(event.target) && !dropdown.contains(event.target)) {
+          dropdown.classList.remove("show");
+      }
+  });
+
+  const button = document.querySelector('.menu-toggle');
+  const menu = document.querySelector('.menu');
+  if (button && menu) {
+      button.onclick = () => {
+          menu.classList.toggle('expand-mobile');
+          button.classList.toggle('expand-icon');
+      };
+  }
+
+  const logoutLink = document.getElementById("logoutLink");
+
+  function updateDateTime() {
+      const now = new Date();
+      const formatted = now.toLocaleString('en-PH', {
+          dateStyle: 'full',
+          timeStyle: 'short',
+          hour12: true
+      });
+      document.getElementById('datetime').textContent = formatted;
+  }
+
+  window.onload = function () {
+      updateDateTime();
+      setInterval(updateDateTime, 1000);
+  };
+
+  let currentSlide = 0;
+
+  function moveSlide(step) {
+      const slides = document.querySelectorAll('.slide');
+      const totalSlides = slides.length;
+
+      currentSlide = (currentSlide + step + totalSlides) % totalSlides;
+
+      const slider = document.querySelector('.slider');
+      slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+  }
+
+  function updateAnnouncement(id, field, value) {
+      fetch(`/admin/announcements/${id}`, {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+          },
+          body: JSON.stringify({
+              [field]: value
+          })
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              alert('Announcement updated successfully');
+          } else {
+              alert('Failed to update announcement');
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while updating the announcement');
+      });
+  }
+
+  document.getElementById('addAnnouncementBtn').onclick = function() {
+    document.getElementById('addAnnouncementModal').style.display = 'flex';
+  };
+
+  function closeAddAnnouncementModal() {
+    document.getElementById('addAnnouncementModal').style.display = 'none';
+  }
+
+  // Close modal when clicking outside the form
+  window.onclick = function(event) {
+    var modal = document.getElementById('addAnnouncementModal');
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  };
+
+  // Update file name display for each announcement file input
+  const fileInputs = document.querySelectorAll('.announcement-file-input');
+  fileInputs.forEach(input => {
+    input.addEventListener('change', function(e) {
+      const fileNameSpan = input.closest('label').nextElementSibling;
+      fileNameSpan.textContent = input.files[0] ? input.files[0].name : 'No file chosen';
+    });
+  });
+
+  </script>
+
+  <!-- Add Announcement Modal -->
+  <div id="addAnnouncementModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;">
+    <div style="background: white; padding: 32px; border-radius: 12px; width: 90%; max-width: 600px; position: relative;">
+      <h2 style="margin-bottom: 24px; color: #333; font-size: 24px;">Add New Announcement</h2>
+      <form action="{{ route('admin.announcements.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div style="margin-bottom: 20px;">
+          <label style="display: block; margin-bottom: 8px; color: #555;">Title</label>
+          <input type="text" name="title" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+        <div style="margin-bottom: 20px;">
+          <label style="display: block; margin-bottom: 8px; color: #555;">Content</label>
+          <textarea name="content" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 100px;"></textarea>
+        </div>
+        <div style="margin-bottom: 20px;">
+          <label style="display: block; margin-bottom: 8px; color: #555;">Image</label>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <label class="custom-file-label">
+              <input type="file" name="image" accept="image/*" id="customFileInput" required>
+              <span>Choose File</span>
+            </label>
+            <span id="fileName" style="color: #666;">No file chosen</span>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 12px;">
+          <button type="button" onclick="closeAddAnnouncementModal()" style="padding: 8px 16px; border: 1px solid #ddd; border-radius: 4px; background: #f5f5f5; cursor: pointer;">Cancel</button>
+          <button type="submit" style="padding: 8px 16px; border: none; border-radius: 4px; background: #426DDC; color: white; cursor: pointer;">Add Announcement</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
 </body>
 </html>

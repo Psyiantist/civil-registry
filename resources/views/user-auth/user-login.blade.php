@@ -603,38 +603,7 @@
 </head>
 
 <body>
-  <nav>
-    <div class="nav-left">
-      <div class="image-container">
-        <img src="{{ asset('storage/assets/civil_registry_logo.png') }}" alt="Logo">
-      </div>
-      <div class="logo-name">
-        <b>Mandaluyong City<br/><a>Civil Registry</a></b>
-      </div>
-    </div>
-
-    <div class="menu">
-      <ul>
-        <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}">Home</a></li>
-        <li><a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs') }}">FAQs</a></li>
-        <li><a class="{{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}">About Us</a></li>
-        <li><a class="{{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact Us</a></li>
-      </ul>
-    </div>
-
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Search">
-      <i class="fa fa-search" onclick="performSearch()"></i>
-    </div>
-
-    <i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
-
-    <button class="menu-toggle">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </nav>
+  @include('layouts.public-navbar')
 
   <section>
     <div class="details">

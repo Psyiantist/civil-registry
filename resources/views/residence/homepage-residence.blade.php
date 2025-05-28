@@ -951,56 +951,7 @@
 </head>
 
 <body>
-	<nav>
-        <div class="image-container">
-            <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> </div>
-
-            <div class="logo-name">
-             <p> Mandaluyong City <br> Civil Registry</p > 
-            
-            </div>
-        </div>
-
-		<div class="menu">
-			<ul>
-        <li> <a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ route('residence-homepage') }}"> Home </a> </li>
-
-        <li> <a href="#"> Services <i class="fas fa-caret-down"> </i> </a>
-
-        <div class="dropdown_menuuu">
-          <ul>
-        <li> <a href="{{ route('residence-appointment') }}"> Appointment </a> </li>
-        <li> <a href="{{ route('residence-requirements') }}"> Requirements </a> </li>
-           </ul>
-        </div>
-        </li>
-
-				<li> <a class="{{ request()->is('residence-faqs') ? 'active' : '' }}" href="{{ route('residence-faqs') }}"> FAQs </a> </li>
-				<li> <a class="{{ request()->is('residence-about-us') ? 'active' : '' }}" href="{{ route('residence-about-us') }}"> About Us </a> </li>
-				<li> <a class="{{ request()->is('residence-contact-us') ? 'active' : '' }}" href="{{ route('residence-contact-us') }}"> Contact Us </a> </li>
-			</ul>
-    </div>
-
-  <div class="search-container">
-  <input type="text" id="searchInput" placeholder="Search">
-  <i class="fa fa-search" onclick="performSearch()"> </i>
-  </div>
-
-  @php
-    $user = Auth::user();
-    $profileImage = $user->profile_image
-      ? asset('storage/profiles/' . $user->profile_image)
-      : asset('storage/profiles/default-profile.jpg');
-  @endphp
-  <img src="{{ $profileImage }}" alt="Profile Picture" class="user-icon" onclick="toggleDropdown()" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer; object-fit: cover; object-position: center; border: 2px solid #426DDC; aspect-ratio: 1/1;">
-  <div id="accountDropdown" class="absolute hidden">
-    <a href="{{ route('residence.profile') }}"> Profile </a>
-
-    <a href="{{ route('logout') }}" id="logoutLink"> Logout </a> 
-  </div>
-
-    <button class="menu-toggle"> </button>
-  </nav>
+	@include('layouts.residence-navbar')
 
 	<section>
 		<div class="details">
@@ -1038,35 +989,7 @@
   <button class="next" onclick="moveSlide(1)">&#10095;</button>
 </div>
 
-<footer>
-  <div class="container">
-      <div class="footer-content">
-          <h3>Contact Us</h3>
-          <p><a href="mailto:city.registrar@mandaluyong.gov.ph">Email: city.registrar@mandaluyong.gov.ph</a></p>
-          <p>Phone: 8533-28-21</p>
-          <p>Address: <a href="https://maps.app.goo.gl/BqivjAUx2r4DJitu5" target="_blank">Maysilo, Mandaluyong</a></p>
-      </div>
-      <div class="footer-content">
-          <h3>Our Location</h3>
-          <div class="map-container">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.374156967718!2d121.0337266!3d14.5777433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c84b4d7d8847%3A0x3cc947be6455c07a!2sMandaluyong%20City%20Hall!5e0!3m2!1sen!2sph!4v1745828287728!5m2!1sen!2sph" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
-      </div>
-      <div class="footer-content">
-          <h3>Follow Us</h3>
-          <ul class="social-icons">
-              <li><a href="https://www.facebook.com/p/Mandaluyong-City-Civil-Registry-100064760288454/" target="_blank"><i class="fab fa-facebook"></i></a></li>
-              <li><a href="mailto:city.registrar@mandaluyong.gov.ph"><i class="fas fa-envelope"></i></a></li>
-              <li><a href="https://mandaluyong.gov.ph/government/departments/city-civil-registry-department/"><i class="fas fa-paperclip"></i></a></li>
-              <li><a href="https://x.com/MandaluyongPIO"><i class="fab fa-twitter"></i></a></li>
-          </ul>
-      </div>
-  </div>
-  <div class="bottom-bar">
-      <p>&copy; 2025 Civil Registry Department. All Rights Reserved.</p>
-  </div>
-</footer>
-
+@include('layouts.footer')
 
 <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 <script type="text/javascript">

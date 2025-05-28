@@ -209,6 +209,12 @@
         overflow: hidden;
       }
 
+      nav .menu ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+
       nav .menu.expand-mobile {
         height: 700px;
       }
@@ -220,6 +226,18 @@
         text-align: left;
         padding: 10px 15px;
         box-sizing: border-box;
+      }
+
+      .dropdown_menuuu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .dropdown_menuuu ul li {
+        width: 100%;
+        padding: 5px;
+        white-space: nowrap;
       }
 
       nav .menu ul:nth-child(2) li {
@@ -259,6 +277,34 @@
         width: 100%;
         box-sizing: border-box;
         transition: all 0.3s ease;
+      }
+
+      nav .search-container input[type="text"]:focus {
+        border-color: #426DDC;
+        box-shadow: 0 0 5px rgba(66, 109, 220, 0.5);
+      }
+
+      nav .search-container .fa-search {
+        position: absolute;
+        right: 35px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #888;
+        border: none;
+        font-size: 16px;
+        pointer-events: auto;
+      }
+
+      ::placeholder {
+        color: #888;
+        font-size: 15px;
+        margin-left: 30px;
+        font-family: "Poppins", sans-serif;
+      }
+
+      nav .search-container i .fa-search:hover {
+        color: #426DDC;
+        transition: 0.3s ease;
       }
 
       .user-icon {
@@ -553,33 +599,8 @@
 </head>
 <body>
 
-  <nav>
-    <div class="image-container">
-      <img src="{{ asset('storage/assets/civil_registry_logo.png') }}">
-    </div>
-    <div class="logo-name">
-             <p> Mandaluyong City <br> Civil Registry</p > 
-            
-            </div>
-    </div>
-  
-    <div class="menu">
-      <ul>
-        <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}">Home</a></li>
-        <li><a class="{{ request()->is('faqs') ? 'active' : '' }}" href="{{ route('faqs') }}">FAQs</a></li>
-        <li><a class="{{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}">About Us</a></li>
-        <li><a class="{{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact Us</a></li>
-      </ul>
-    </div>
-  
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Search">
-      <i class="fa fa-search" onclick="performSearch()"></i>
-    </div>
-    
-    <i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
-  </nav>
- 
+  @include('layouts.public-navbar')
+
   <header class="header-image">
     <div class="header-overlay"></div>
     <div class="header-content animated">
@@ -650,9 +671,7 @@
     </section>
   </div>
 
-  <footer>
-    &copy; 2025 Civil Registry Office - Mandaluyong City. All rights reserved.
-  </footer>
+  @include('layouts.footer')
 
   <script>
     function performSearch() {
