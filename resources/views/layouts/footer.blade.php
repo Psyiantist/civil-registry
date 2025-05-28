@@ -1,340 +1,342 @@
-<footer class="main-footer">
-    <div class="footer-container">
-        <div class="footer-content">
+<footer class="civil-registry-footer">
+    <div class="civil-registry-footer-container">
+        <div class="civil-registry-footer-content">
             <h3>Contact Us</h3>
-            <div class="contact-info">
+            <div class="civil-registry-contact-info">
                 <p><i class="fas fa-envelope"></i> <a href="mailto:city.registrar@mandaluyong.gov.ph">city.registrar@mandaluyong.gov.ph</a></p>
                 <p><i class="fas fa-phone"></i> <a href="tel:8533-28-21">8533-28-21</a></p>
                 <p><i class="fas fa-map-marker-alt"></i> <a href="https://maps.app.goo.gl/BqivjAUx2r4DJitu5" target="_blank">Maysilo, Mandaluyong</a></p>
             </div>
         </div>
-        <div class="footer-content">
+        <div class="civil-registry-footer-content">
             <h3>Follow Us</h3>
-            <ul class="social-icons">
+            <ul class="civil-registry-social-icons">
                 <li><a href="https://www.facebook.com/p/Mandaluyong-City-Civil-Registry-100064760288454/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a></li>
                 <li><a href="mailto:city.registrar@mandaluyong.gov.ph" aria-label="Email"><i class="fas fa-envelope"></i></a></li>
                 <li><a href="https://mandaluyong.gov.ph/government/departments/city-civil-registry-department/" aria-label="Website"><i class="fas fa-paperclip"></i></a></li>
                 <li><a href="https://x.com/MandaluyongPIO" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
             </ul>
-            <div class="office-hours">
+            <div class="civil-registry-office-hours">
                 <h4>Office Hours</h4>
                 <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
                 <p>Saturday: 8:00 AM - 12:00 PM</p>
                 <p>Sunday: Closed</p>
             </div>
         </div>
-        <div class="footer-content map-section">
+        <div class="civil-registry-footer-content civil-registry-map-section">
             <h3>Our Location</h3>
-            <div class="map-container">
+            <div class="civil-registry-map-container">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.374156967718!2d121.0337266!3d14.5777433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c84b4d7d8847%3A0x3cc947be6455c07a!2sMandaluyong%20City%20Hall!5e0!3m2!1sen!2sph!4v1745828287728!5m2!1sen!2sph" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </div>
-    <div class="footer-bottom">
+    <div class="civil-registry-footer-bottom">
         <p>&copy; 2025 Civil Registry Department. All Rights Reserved.</p>
     </div>
 </footer>
 
 <style>
-    .main-footer {
-        background: #f8f9fa;
-        padding: 40px 0 0;
-        width: 100%;
-        margin-top: auto;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    .civil-registry-footer {
+        background: #f8f9fa !important;
+        padding: 40px 0 0 !important;
+        width: 100% !important;
+        margin-top: auto !important;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05) !important;
+        position: relative !important;
+        z-index: 1 !important;
     }
 
-    .footer-container {
-        margin: 0 auto;
-        padding: 0 40px;
-        max-width: 1200px;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1.5fr;
-        gap: 40px;
+    .civil-registry-footer-container {
+        margin: 0 auto !important;
+        padding: 0 40px !important;
+        max-width: 1200px !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 1.5fr !important;
+        gap: 40px !important;
     }
 
-    .main-footer .footer-content {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        text-align: left;
+    .civil-registry-footer .civil-registry-footer-content {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        text-align: left !important;
     }
 
-    .main-footer .map-section {
-        grid-column: 3;
+    .civil-registry-footer .civil-registry-map-section {
+        grid-column: 3 !important;
     }
 
-    .main-footer .contact-info {
-        margin-top: 15px;
+    .civil-registry-footer .civil-registry-contact-info {
+        margin-top: 15px !important;
     }
 
-    .main-footer .contact-info p {
-        margin: 10px 0;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+    .civil-registry-footer .civil-registry-contact-info p {
+        margin: 10px 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
     }
 
-    .main-footer .contact-info i {
-        color: #3247df;
-        width: 20px;
+    .civil-registry-footer .civil-registry-contact-info i {
+        color: #3247df !important;
+        width: 20px !important;
     }
 
-    .main-footer .map-container {
-        width: 100%;
-        height: 300px;
-        margin: 15px 0;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    .civil-registry-footer .civil-registry-map-container {
+        width: 100% !important;
+        height: 300px !important;
+        margin: 15px 0 !important;
+        border-radius: 8px !important;
+        overflow: hidden !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
     }
 
-    .main-footer iframe {
-        width: 100%;
-        height: 100%;
-        border: 0;
+    .civil-registry-footer iframe {
+        width: 100% !important;
+        height: 100% !important;
+        border: 0 !important;
     }
 
-    .main-footer .social-icons {
-        display: flex;
-        gap: 20px;
-        padding: 0;
-        list-style: none;
-        margin: 15px 0;
+    .civil-registry-footer .civil-registry-social-icons {
+        display: flex !important;
+        gap: 20px !important;
+        padding: 0 !important;
+        list-style: none !important;
+        margin: 15px 0 !important;
     }
 
-    .main-footer .social-icons li {
-        display: inline-block;
+    .civil-registry-footer .civil-registry-social-icons li {
+        display: inline-block !important;
     }
 
-    .main-footer .social-icons a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        background: #fff;
-        border-radius: 50%;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
+    .civil-registry-footer .civil-registry-social-icons a {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 40px !important;
+        height: 40px !important;
+        background: #fff !important;
+        border-radius: 50% !important;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+        transition: all 0.3s ease !important;
     }
 
-    .main-footer .social-icons i {
-        color: #3247df;
-        font-size: 20px;
-        transition: all 0.3s ease;
+    .civil-registry-footer .civil-registry-social-icons i {
+        color: #3247df !important;
+        font-size: 20px !important;
+        transition: all 0.3s ease !important;
     }
 
-    .main-footer .social-icons a:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    .civil-registry-footer .civil-registry-social-icons a:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
     }
 
-    .main-footer .social-icons a:hover i {
-        color: #1a2bb3;
+    .civil-registry-footer .civil-registry-social-icons a:hover i {
+        color: #1a2bb3 !important;
     }
 
-    .main-footer .office-hours {
-        margin-top: 20px;
-        padding: 15px;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    .civil-registry-footer .civil-registry-office-hours {
+        margin-top: 20px !important;
+        padding: 15px !important;
+        background: #fff !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important;
     }
 
-    .main-footer .office-hours h4 {
-        color: #3247df;
-        margin: 0 0 10px;
-        font-size: 16px;
+    .civil-registry-footer .civil-registry-office-hours h4 {
+        color: #3247df !important;
+        margin: 0 0 10px !important;
+        font-size: 16px !important;
     }
 
-    .main-footer .office-hours p {
-        margin: 5px 0;
-        font-size: 14px;
-        color: #666;
+    .civil-registry-footer .civil-registry-office-hours p {
+        margin: 5px 0 !important;
+        font-size: 14px !important;
+        color: #666 !important;
     }
 
-    .main-footer .footer-bottom {
-        background: #3247df;
-        text-align: center;
-        padding: 15px 0;
-        margin-top: 40px;
+    .civil-registry-footer .civil-registry-footer-bottom {
+        background: #3247df !important;
+        text-align: center !important;
+        padding: 15px 0 !important;
+        margin-top: 40px !important;
     }
 
-    .main-footer .footer-bottom p {
-        color: #fff;
-        margin: 0;
-        font-size: 14px;
+    .civil-registry-footer .civil-registry-footer-bottom p {
+        color: #fff !important;
+        margin: 0 !important;
+        font-size: 14px !important;
     }
 
-    .main-footer h3 {
-        color: #3247df;
-        font-size: 18px;
-        margin-bottom: 15px;
-        font-weight: 600;
-        position: relative;
-        padding-bottom: 10px;
+    .civil-registry-footer h3 {
+        color: #3247df !important;
+        font-size: 18px !important;
+        margin-bottom: 15px !important;
+        font-weight: 600 !important;
+        position: relative !important;
+        padding-bottom: 10px !important;
     }
 
-    .main-footer h3::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 40px;
-        height: 2px;
-        background: #3247df;
+    .civil-registry-footer h3::after {
+        content: '' !important;
+        position: absolute !important;
+        left: 0 !important;
+        bottom: 0 !important;
+        width: 40px !important;
+        height: 2px !important;
+        background: #3247df !important;
     }
 
-    .main-footer a {
-        color: #555;
-        text-decoration: none;
-        transition: color 0.3s ease;
+    .civil-registry-footer a {
+        color: #555 !important;
+        text-decoration: none !important;
+        transition: color 0.3s ease !important;
     }
 
-    .main-footer a:hover {
-        color: #3247df;
+    .civil-registry-footer a:hover {
+        color: #3247df !important;
     }
 
     /* Tablet View */
     @media (max-width: 992px) {
-        .footer-container {
-            grid-template-columns: 1fr 1fr;
-            padding: 0 30px;
-            gap: 30px;
+        .civil-registry-footer-container {
+            grid-template-columns: 1fr 1fr !important;
+            padding: 0 30px !important;
+            gap: 30px !important;
         }
 
-        .main-footer .map-section {
-            grid-column: 1 / -1;
+        .civil-registry-footer .civil-registry-map-section {
+            grid-column: 1 / -1 !important;
         }
 
-        .main-footer .map-container {
-            height: 250px;
+        .civil-registry-footer .civil-registry-map-container {
+            height: 250px !important;
         }
     }
 
     /* Mobile View */
     @media (max-width: 768px) {
-        .main-footer {
-            padding: 30px 0 0;
+        .civil-registry-footer {
+            padding: 30px 0 0 !important;
         }
 
-        .footer-container {
-            grid-template-columns: 1fr;
-            padding: 0 20px;
-            gap: 25px;
+        .civil-registry-footer-container {
+            grid-template-columns: 1fr !important;
+            padding: 0 20px !important;
+            gap: 25px !important;
         }
 
-        .main-footer .footer-content {
-            align-items: center;
-            text-align: center;
-            padding: 0 10px;
+        .civil-registry-footer .civil-registry-footer-content {
+            align-items: center !important;
+            text-align: center !important;
+            padding: 0 10px !important;
         }
 
-        .main-footer .contact-info {
-            width: 100%;
-            max-width: 300px;
-            margin: 15px auto;
+        .civil-registry-footer .civil-registry-contact-info {
+            width: 100% !important;
+            max-width: 300px !important;
+            margin: 15px auto !important;
         }
 
-        .main-footer .contact-info p {
-            justify-content: center;
-            font-size: 15px;
-            padding: 8px 0;
+        .civil-registry-footer .civil-registry-contact-info p {
+            justify-content: center !important;
+            font-size: 15px !important;
+            padding: 8px 0 !important;
         }
 
-        .main-footer .contact-info i {
-            font-size: 18px;
+        .civil-registry-footer .civil-registry-contact-info i {
+            font-size: 18px !important;
         }
 
-        .main-footer h3 {
-            font-size: 20px;
-            margin-bottom: 20px;
+        .civil-registry-footer h3 {
+            font-size: 20px !important;
+            margin-bottom: 20px !important;
         }
 
-        .main-footer h3::after {
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
+        .civil-registry-footer h3::after {
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            width: 60px !important;
         }
 
-        .main-footer .map-container {
-            height: 220px;
-            margin: 10px 0;
+        .civil-registry-footer .civil-registry-map-container {
+            height: 220px !important;
+            margin: 10px 0 !important;
         }
 
-        .main-footer .social-icons {
-            gap: 25px;
-            margin: 20px 0;
+        .civil-registry-footer .civil-registry-social-icons {
+            gap: 25px !important;
+            margin: 20px 0 !important;
         }
 
-        .main-footer .social-icons a {
-            width: 45px;
-            height: 45px;
+        .civil-registry-footer .civil-registry-social-icons a {
+            width: 45px !important;
+            height: 45px !important;
         }
 
-        .main-footer .social-icons i {
-            font-size: 22px;
+        .civil-registry-footer .civil-registry-social-icons i {
+            font-size: 22px !important;
         }
 
-        .main-footer .office-hours {
-            width: 100%;
-            max-width: 300px;
-            margin: 20px auto;
-            padding: 20px;
+        .civil-registry-footer .civil-registry-office-hours {
+            width: 100% !important;
+            max-width: 300px !important;
+            margin: 20px auto !important;
+            padding: 20px !important;
         }
 
-        .main-footer .office-hours h4 {
-            font-size: 18px;
-            margin-bottom: 15px;
+        .civil-registry-footer .civil-registry-office-hours h4 {
+            font-size: 18px !important;
+            margin-bottom: 15px !important;
         }
 
-        .main-footer .office-hours p {
-            font-size: 15px;
-            margin: 8px 0;
+        .civil-registry-footer .civil-registry-office-hours p {
+            font-size: 15px !important;
+            margin: 8px 0 !important;
         }
 
-        .main-footer .footer-bottom {
-            margin-top: 30px;
-            padding: 12px 0;
+        .civil-registry-footer .civil-registry-footer-bottom {
+            margin-top: 30px !important;
+            padding: 12px 0 !important;
         }
 
-        .main-footer .footer-bottom p {
-            font-size: 13px;
-            padding: 0 15px;
+        .civil-registry-footer .civil-registry-footer-bottom p {
+            font-size: 13px !important;
+            padding: 0 15px !important;
         }
     }
 
     /* Small Mobile View */
     @media (max-width: 480px) {
-        .main-footer {
-            padding: 25px 0 0;
+        .civil-registry-footer {
+            padding: 25px 0 0 !important;
         }
 
-        .footer-container {
-            padding: 0 15px;
-            gap: 20px;
+        .civil-registry-footer-container {
+            padding: 0 15px !important;
+            gap: 20px !important;
         }
 
-        .main-footer .map-container {
-            height: 200px;
+        .civil-registry-footer .civil-registry-map-container {
+            height: 200px !important;
         }
 
-        .main-footer .social-icons {
-            gap: 20px;
+        .civil-registry-footer .civil-registry-social-icons {
+            gap: 20px !important;
         }
 
-        .main-footer .social-icons a {
-            width: 40px;
-            height: 40px;
+        .civil-registry-footer .civil-registry-social-icons a {
+            width: 40px !important;
+            height: 40px !important;
         }
 
-        .main-footer .social-icons i {
-            font-size: 20px;
+        .civil-registry-footer .civil-registry-social-icons i {
+            font-size: 20px !important;
         }
 
-        .main-footer .office-hours {
-            padding: 15px;
+        .civil-registry-footer .civil-registry-office-hours {
+            padding: 15px !important;
         }
     }
 </style> 
