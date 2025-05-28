@@ -24,8 +24,15 @@ class AdminRegisterController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'birthday' => 'required|date',
             'address' => 'required|string',
-            'employee_id' => 'required|string|unique:employees',
+            'id_card_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        $filename = null;
+        if($request->hasFile('id_card_image')){
+            $file = $request->file('id_card_image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('storage/uploads'), $filename);
+        }
 
         $employee = Employee::create([
             'username' => $request->email,
@@ -33,7 +40,7 @@ class AdminRegisterController extends Controller
             'role' => 'admin',
             'birthday' => $request->birthday,
             'address' => $request->address,
-            'employee_id' => $request->employee_id,
+            'id_card_image' => $filename,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
         ]);

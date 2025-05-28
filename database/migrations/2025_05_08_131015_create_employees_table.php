@@ -15,6 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('username');
             $table->string('password');
+            $table->string('role')->nullable();
+            $table->date('birthday')->nullable();
+            $table->text('address')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('id_card_image')->nullable();
             $table->timestamps();
         });
     }
