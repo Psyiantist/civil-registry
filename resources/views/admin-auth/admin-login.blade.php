@@ -272,7 +272,7 @@
     .login-content .input-group .eye-icon {
       position: absolute;
       right: 10px;
-      top: 40%;
+      top: 50%;
       transform: translateY(-50%);
       font-size: 20px;
       color: #426DDC;
@@ -431,7 +431,7 @@
         <input type="text" id="userName" name="username" placeholder="Username" required value="{{ old('username') }}">
         <div class="input-group">
           <input type="password" id="newPassword" name="password" placeholder="Enter New Password" required>
-          <i class="fa fa-eye-slash eye-icon" onclick="togglePasswordVisibility('password')"></i>
+          <i class="fa fa-eye-slash eye-icon" id="eye-icon-new" onclick="togglePasswordVisibility('newPassword')"></i>
         </div>
         <button class="btnn" type="submit">SUBMIT</button>
         @if(session('status'))
@@ -495,8 +495,8 @@ function performSearch() {
         if (dropdown) dropdown.classList.toggle("show");
     };
 
-    function togglePasswordVisibility(inputName) {
-        const passwordField = document.querySelector(`input[name="${inputName}"]`);
+    function togglePasswordVisibility(inputId) {
+        const passwordField = document.getElementById(inputId);
         const eyeIcon = passwordField.nextElementSibling;
 
         if (passwordField && eyeIcon) {
