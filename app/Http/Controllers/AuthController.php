@@ -108,25 +108,45 @@ class AuthController extends Controller
     public function updateAdminPassword(Request $request)
     {
         $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]+$/'
+            'username' => 'required|string|exists:employees,username',
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed'
+            ]
         ], [
-            'password.regex' => 'Password must contain at least one uppercase letter, one lowercase letter, and one number.'
+            'username.exists' => 'Username not found.',
+            'password.min' => 'Password must be at least 8 characters long.',
+            'password.confirmed' => 'Password confirmation does not match.'
         ]);
 
-        $employee = Employee::where('username', $request->username)->first();
-        if (!$employee) {
-            return redirect()->route('admin.login')->withErrors(['username' => 'Username not found.']);
-        }
-
         try {
+            $employee = Employee::where('username', $request->username)->first();
+            
+            if (!$employee) {
+                return redirect()->route('admin.login')
+                    ->withErrors(['username' => 'Username not found.'])
+                    ->withInput($request->only('username'));
+            }
+
+            // Check if the new password is the same as the old one
+            if (Hash::check($request->password, $employee->password)) {
+                return redirect()->route('admin.login')
+                    ->withErrors(['password' => 'New password must be different from the current password.'])
+                    ->withInput($request->only('username'));
+            }
+
             $employee->password = Hash::make($request->password);
             $employee->save();
 
-            return redirect()->route('admin.login')->with('success', 'Password updated successfully. You can now login with your new password.');
+            return redirect()->route('admin.login')
+                ->with('success', 'Password updated successfully. You can now login with your new password.');
         } catch (\Exception $e) {
             \Log::error('Password update failed: ' . $e->getMessage());
-            return redirect()->route('admin.login')->withErrors(['error' => 'Failed to update password. Please try again.']);
+            return redirect()->route('admin.login')
+                ->withErrors(['error' => 'Failed to update password. Please try again.'])
+                ->withInput($request->only('username'));
         }
     }
 

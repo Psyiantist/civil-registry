@@ -29,13 +29,27 @@
     }
 
     function showForgotPassword() {
-        document.getElementById('loginContainer').style.display = 'none';
-        document.getElementById('forgotPasswordContainer').style.display = 'block';
+        const loginContainer = document.getElementById('loginContainer');
+        const forgotContainer = document.getElementById('forgotPasswordContainer');
+        
+        if (loginContainer && forgotContainer) {
+            loginContainer.style.display = 'none';
+            forgotContainer.style.display = 'block';
+            // Clear any existing error messages
+            document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+        }
     }
 
     function hideForgotPassword() {
-        document.getElementById('forgotPasswordContainer').style.display = 'none';
-        document.getElementById('loginContainer').style.display = 'block';
+        const loginContainer = document.getElementById('loginContainer');
+        const forgotContainer = document.getElementById('forgotPasswordContainer');
+        
+        if (loginContainer && forgotContainer) {
+            forgotContainer.style.display = 'none';
+            loginContainer.style.display = 'block';
+            // Clear any existing error messages
+            document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+        }
     }
 
     // Initialize functions when DOM is loaded
@@ -101,6 +115,24 @@
         alert("Please login or register your account first.");
         if (dropdown) dropdown.classList.toggle("show");
     };
+
+    // Add password validation
+    document.getElementById('forgotPasswordForm').addEventListener('submit', function(e) {
+        const password = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('password_confirmation').value;
+        
+        if (password.length < 8) {
+            e.preventDefault();
+            alert('Password must be at least 8 characters long.');
+            return;
+        }
+        
+        if (password !== confirmPassword) {
+            e.preventDefault();
+            alert('Password confirmation does not match.');
+            return;
+        }
+    });
   </script>
   <style type="text/css">
     html, body {
@@ -521,23 +553,46 @@
       <p class="link" style="margin-bottom: 18px; font-size: 16px;">Please enter your username and new password:</p>
       <form id="forgotPasswordForm" action="{{ route('admin.password.update') }}" method="POST">
         @csrf
-        <input type="text" id="userName" name="username" placeholder="Username" required value="{{ old('username') }}">
+        <input type="text" id="userName" name="username" placeholder="Username" required value="{{ old('username') }}" 
+               class="{{ $errors->has('username') ? 'error' : '' }}">
         <div class="input-group">
-          <input type="password" id="newPassword" name="password" placeholder="Enter New Password" required>
+          <input type="password" id="newPassword" name="password" placeholder="Enter New Password" required minlength="8"
+                 class="{{ $errors->has('password') ? 'error' : '' }}">
           <i class="fa fa-eye-slash eye-icon" id="eye-icon-new" onclick="togglePasswordVisibility('newPassword')"></i>
         </div>
+        <div class="input-group">
+          <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm New Password" required minlength="8"
+                 class="{{ $errors->has('password_confirmation') ? 'error' : '' }}">
+          <i class="fa fa-eye-slash eye-icon" id="eye-icon-confirm" onclick="togglePasswordVisibility('password_confirmation')"></i>
+        </div>
+        <div class="password-requirements" style="font-size: 12px; color: #666; margin: 5px 0 15px 0; text-align: left;">
+          Password must be at least 8 characters long
+        </div>
         <button class="btnn" type="submit">SUBMIT</button>
-        @if(session('status'))
-          <div style="color: green; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif;">{{ session('status') }}</div>
+        @if(session('success'))
+          <div style="color: green; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif; padding: 10px; background-color: #d4edda; border-radius: 5px;">
+            {{ session('success') }}
+          </div>
         @endif
         @if($errors->has('username'))
-          <div style="color: red; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif;">{{ $errors->first('username') }}</div>
+          <div style="color: red; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif; padding: 10px; background-color: #f8d7da; border-radius: 5px;">
+            {{ $errors->first('username') }}
+          </div>
         @endif
         @if($errors->has('password'))
-          <div style="color: red; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif;">{{ $errors->first('password') }}</div>
+          <div style="color: red; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif; padding: 10px; background-color: #f8d7da; border-radius: 5px;">
+            {{ $errors->first('password') }}
+          </div>
+        @endif
+        @if($errors->has('password_confirmation'))
+          <div style="color: red; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif; padding: 10px; background-color: #f8d7da; border-radius: 5px;">
+            {{ $errors->first('password_confirmation') }}
+          </div>
         @endif
         @if($errors->has('error'))
-          <div style="color: red; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif;">{{ $errors->first('error') }}</div>
+          <div style="color: red; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif; padding: 10px; background-color: #f8d7da; border-radius: 5px;">
+            {{ $errors->first('error') }}
+          </div>
         @endif
       </form>
       <p class="link" style="margin-top: 18px;">Remembered your password?
