@@ -8,37 +8,38 @@
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            font-family: poppins;
+        html, body {
             margin: 0;
             padding: 0;
-        }
-
-        .image-container img {
-            width: 60px;
-            height: 55px;
-            margin-top: 23px;
-            margin-left: 45px;
-            border-radius: 50%;
-        }
-
-        section {
             width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Reset styles only for registration content */
+        .registration-content * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Main content styles */
+        .registration-content {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
-            height: 150vh;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            justify-content: space-around;
-            position: absolute;
-            background-attachment: fixed;
-            //pointer-events: none;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
 
-        section::before {
+        .registration-content::before {
             content: "";
             position: absolute;
             top: 0;
@@ -51,15 +52,16 @@
             z-index: -1;
         }
 
-        .form {
+        .registration-content .form {
             background: white;
             padding: 40px;
             border-radius: 10px;
+            width: 100%;
             max-width: 560px;
-            margin: 80px auto;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            margin: 20px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.13);
             animation: popUp 0.7s ease-out;
-            min-height: fit-content;
+            position: relative;
         }
 
         @keyframes popUp {
@@ -73,55 +75,60 @@
             }
         }
 
-        h2 {
+        .registration-content h2 {
             text-align: center;
             font-size: 20px;
+            font-family: "Poppins", sans-serif;
+            margin-bottom: 20px;
         }
 
-        label {
+        .registration-content label {
             display: block;
             margin-top: 15px;
             font-weight: normal;
-            width: 480px;
+            width: 100%;
             font-size: 15px;
             color: #434343;
+            font-family: "Poppins", sans-serif;
         }
 
-        input {
-            width: 480px;
+        .registration-content input {
+            width: 100%;
             padding: 10px;
             margin-top: 5px;
             border: none;
             border-bottom: 1.5px solid black;
             outline: none;
+            font-family: "Poppins", sans-serif;
         }
 
-        input[type="file"] {
-            width: 480px;
+        .registration-content input[type="file"] {
+            width: 100%;
             padding: 7px;
             margin-top: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
             background: white;
-            font-family: poppins;
+            font-family: "Poppins", sans-serif;
             font-size: 15px;
             appearance: none;
         }
 
-        select {
-            width: 480px;
+        .registration-content select {
+            width: 100%;
             padding: 10px;
             margin-top: 5px;
             border-radius: 5px;
             border: 1px solid #ccc;
+            font-family: "Poppins", sans-serif;
         }
 
-        select:focus {
+        .registration-content select:focus {
             border: 1px solid #8d8d8d;
             outline: none;
         }
 
-        #uploadedImage {
+        .registration-content #uploadedImage {
             max-width: 100%;
             max-height: 300px;
             margin-top: 10px;
@@ -131,22 +138,17 @@
             object-fit: contain;
         }
 
-        .note {
+        .registration-content .note {
             margin-top: 10px;
             font-size: 0.9em;
             color: #555;
             background: #f1f1f1;
             padding: 10px;
             border-radius: 5px;
+            font-family: "Poppins", sans-serif;
         }
 
-        .error {
-            color: rgb(108, 13, 13);
-            display: none;
-            margin-top: 5px;
-        }
-
-        button {
+        .registration-content button {
             margin-top: 20px;
             width: 100%;
             padding: 10px;
@@ -156,53 +158,32 @@
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
-            font-family: poppins;
+            font-family: "Poppins", sans-serif;
+            transition: background-color 0.3s ease;
         }
 
-        button:hover {
+        .registration-content button:hover {
             background-color: #344CB7;
         }
 
-        .close-btn {
-            text-align: right;
-            margin-left: 470px;
-            margin-top: -20px;
+        .registration-content .close-btn {
             position: absolute;
+            top: 10px;
+            right: 20px;
         }
 
-        .close-btn a {
+        .registration-content .close-btn a {
             font-size: 30px;
             text-decoration: none;
             color: black;
+            transition: color 0.3s ease;
         }
 
-        .error-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #6e6e6e;
-            color: white;
-            padding: 20px;
-            border-radius: 5px;
-            font-size: 16px;
+        .registration-content .close-btn a:hover {
+            color: rgb(187, 3, 3);
         }
 
-        .error-popup button {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: rgb(205, 47, 47);
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .error-popup button:hover {
-            background-color: #7f3030;
-        }
-
-        .error-message {
+        .registration-content .error-message {
             color: #dc3545;
             font-size: 12px;
             margin-top: 5px;
@@ -211,15 +192,15 @@
             padding-left: 5px;
         }
 
-        .input-error {
+        .registration-content .input-error {
             border-bottom: 2px solid #dc3545 !important;
         }
 
-        .select-error {
+        .registration-content .select-error {
             border: 1px solid #dc3545 !important;
         }
 
-        .alert {
+        .registration-content .alert {
             padding: 15px;
             margin-bottom: 20px;
             border: 1px solid transparent;
@@ -227,27 +208,74 @@
             font-family: "Poppins", sans-serif;
         }
 
-        .alert-danger {
+        .registration-content .alert-danger {
             color: #721c24;
             background-color: #f8d7da;
             border-color: #f5c6cb;
         }
 
-        .alert-success {
+        .registration-content .alert-success {
             color: #155724;
             background-color: #d4edda;
             border-color: #c3e6cb;
         }
 
-        .file-error {
+        .registration-content .file-error {
             border: 1px solid #dc3545 !important;
+        }
+
+        /* Mobile Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .registration-content .form {
+                padding: 30px 20px;
+                margin: 15px;
+            }
+
+            .registration-content h2 {
+                font-size: 18px;
+            }
+
+            .registration-content label {
+                font-size: 14px;
+            }
+
+            .registration-content input,
+            .registration-content select {
+                font-size: 14px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .registration-content .form {
+                padding: 20px 15px;
+                margin: 10px;
+            }
+
+            .registration-content h2 {
+                font-size: 16px;
+            }
+
+            .registration-content label {
+                font-size: 13px;
+            }
+
+            .registration-content input,
+            .registration-content select {
+                font-size: 13px;
+                padding: 8px;
+            }
+
+            .registration-content .note {
+                font-size: 0.8em;
+                padding: 8px;
+            }
         }
     </style>
 </head>
 <body>
     @include('layouts.public-navbar')
 
-    <section>
+    <div class="registration-content">
         <div class="form">
             <div class="close-btn">
                 <a href="{{ route('home') }}">&times;</a>
@@ -318,7 +346,7 @@
                 <button type="submit">Register</button>
             </form>
         </div>
-    </section>
+    </div>
 
     <script>
         const idTypeSelect = document.getElementById("idType");

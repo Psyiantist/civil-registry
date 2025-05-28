@@ -7,38 +7,39 @@
     <title>Registration - Step 1</title>
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    <style type="text/css">
-        * {
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Reset styles only for registration content */
+        .registration-content * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            overflow: hidden;
-            height: 100vh;
-        }
-
-        .image-container img {
-            width: 60px;
-            height: 55px;
-            margin-top: 5px;
-            margin-left: 45px;
-            border-radius: 50%;
-        }
-
-        section {
+        /* Main content styles */
+        .registration-content {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
             display: flex;
-            height: 150vh;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            justify-content: space-around;
+            justify-content: center;
+            align-items: center;
             position: relative;
         }
 
-        section::before {
+        .registration-content::before {
             content: "";
             position: absolute;
             top: 0;
@@ -51,23 +52,31 @@
             z-index: -1;
         }
 
-        .form {
-            top: 30%;
-            left: 50%;
+        .registration-content .form {
             width: 460px;
-            height: 550px;
+            max-width: 90%;
+            height: auto;
+            min-height: 550px;
             padding: 25px;
-            position: absolute;
+            position: relative;
             border-radius: 10px;
             background-color: white;
-            transform: translate(-50%, -50%);
-            padding-right: 30px;
-            box-shadow: black;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.13);
             z-index: 999;
             animation: popUp 0.5s ease-out forwards;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .close-btn {
+        .registration-content .form form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .registration-content .close-btn {
             position: absolute;
             top: 10px;
             right: 20px;
@@ -78,29 +87,30 @@
             transition: color 0.3s ease;
         }
 
-        .close-btn a {
+        .registration-content .close-btn a {
             font-size: 30px;
             text-decoration: none;
             color: black;
         }
 
-        .close-btn:hover {
+        .registration-content .close-btn:hover {
             color: rgb(187, 3, 3);
         }
 
         @keyframes popUp {
             from {
                 opacity: 0;
-                transform: scale(0.8) translate(-50%, -50%);
+                transform: scale(0.8);
             }
             to {
                 opacity: 1;
-                transform: scale(1) translate(-50%, -50%);
+                transform: scale(1);
             }
         }
 
-        .form input {
-            width: 360px;
+        .registration-content .form input {
+            width: 100%;
+            max-width: 360px;
             height: 35px;
             background: transparent;
             border-bottom: 1.5px solid black;
@@ -111,46 +121,54 @@
             letter-spacing: 1px;
             margin-top: 15px;
             font-family: "Poppins", sans-serif;
-            align-items: center;
-            margin-left: 25px;
+            padding-left: 0;
+            padding-right: 30px;
         }
 
-        #eye-icon {
-            width: 15px;
-            height: 15px;
+        .registration-content .password-container {
+            position: relative;
+            width: 100%;
+            max-width: 360px;
+            margin-top: 15px;
+        }
+
+        .registration-content #eye-icon,
+        .registration-content #eye-icon-confirm {
+            width: 20px;
+            height: 20px;
             position: absolute;
-            margin-left: -20px;
-            margin-top: 25px;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
         }
 
-        #eye-icon-confirm {
-            width: 15px;
-            height: 15px;
-            transform: translateY(-40%);
-            margin-left: -25px;
-            margin-bottom: -7px;
+        .registration-content #eye-icon:hover,
+        .registration-content #eye-icon-confirm:hover {
+            opacity: 1;
         }
 
-        .form input:focus {
+        .registration-content .form input:focus {
             outline: none;
         }
 
-        .form h2 {
+        .registration-content .form h2 {
             width: 100%;
-            font-family: sans-serif;
+            font-family: "Poppins", sans-serif;
             text-align: center;
             color: rgb(0, 0, 0);
             font-size: 20px;
             border-radius: 10px;
             padding: 7px;
-            font-family: "Poppins", sans-serif;
             margin-bottom: 20px;
-            align-items: center;
             margin-top: 10px;
         }
 
-        .form .btnn {
-            width: 370px;
+        .registration-content .form .btnn {
+            width: 100%;
+            max-width: 360px;
             height: 35px;
             background: #426DDC;
             border: none;
@@ -160,16 +178,16 @@
             cursor: pointer;
             color: rgb(255, 255, 255);
             transition: 0.4s ease;
-            align-items: center;
-            font-family: poppins;
-            margin-left: 20px;
+            font-family: "Poppins", sans-serif;
         }
 
-        .form .btnn:hover {
+        .registration-content .form .btnn:hover {
             background-color: #344CB7;
         }
 
-        .form .link {
+        .registration-content .form .link {
+            width: 100%;
+            max-width: 360px;
             color: black;
             font-size: 12px;
             text-align: center;
@@ -177,86 +195,56 @@
             font-family: "Poppins", sans-serif;
         }
 
-        .form .link a {
+        .registration-content .form .link a {
             color: #426DDC;
             text-decoration: none;
         }
 
-        .form .link a:hover {
+        .registration-content .form .link a:hover {
             color: #426DDC;
             text-decoration: underline;
             text-underline-offset: 4px;
             text-decoration-thickness: 1px;
         }
 
-        .liw {
-            text-align: center;
-            font-size: 12px;
-            color: #75757586;
-            margin-top: 10px;
-            margin-top: 20px;
-        }
-
-        .icons a {
-            text-decoration: none;
-        }
-
-        .icons ion-icon {
-            color: #426DDC;
-            font-size: 40px;
-            padding-top: -5px;
-            padding-left: 5px;
-            margin-top: 7px;
-        }
-
-        .icons ion-icon:hover {
-            color: black;
-        }
-
-        .form .name-row {
+        .registration-content .name-row {
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap;
             gap: 12px;
-            width: 350px;
+            width: 100%;
+            max-width: 360px;
         }
 
-        .form .name-row input {
-            width: 320px;
+        .registration-content .name-row input {
+            flex: 1;
+            min-width: 150px;
         }
 
-        .notification-checkbox {
+        .registration-content .notification-checkbox {
+            width: 100%;
+            max-width: 360px;
             font-family: "Poppins", sans-serif;
-            margin-top: -4px;
+            margin-top: 20px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .notification-checkbox input {
-            margin-right: 10px;
+        .registration-content .notification-checkbox input {
             width: 15px;
             height: 15px;
-            background-color: #818181;
-            border-radius: 5px;
-            cursor: pointer;
+            margin: 0;
         }
 
-        .notification-checkbox label {
+        .registration-content .notification-checkbox label {
             font-size: 11px;
             color: rgb(145, 145, 145);
             font-weight: normal;
             font-style: italic;
-            margin-top: 14px;
-            position: absolute;
-            margin-left: -3px;
         }
 
-        .error {
-            color: red;
-            font-size: 12px;
-            margin-top: 5px;
-            display: block;
-        }
-
-        .error-message {
+        .registration-content .error-message {
             color: #dc3545;
             font-size: 12px;
             margin-top: 5px;
@@ -265,11 +253,13 @@
             padding-left: 5px;
         }
 
-        .input-error {
+        .registration-content .input-error {
             border-bottom: 2px solid #dc3545 !important;
         }
 
-        .alert {
+        .registration-content .alert {
+            width: 100%;
+            max-width: 360px;
             padding: 15px;
             margin-bottom: 20px;
             border: 1px solid transparent;
@@ -277,28 +267,63 @@
             font-family: "Poppins", sans-serif;
         }
 
-        .alert-danger {
+        .registration-content .alert-danger {
             color: #721c24;
             background-color: #f8d7da;
             border-color: #f5c6cb;
         }
 
-        .alert-success {
+        .registration-content .alert-success {
             color: #155724;
             background-color: #d4edda;
             border-color: #c3e6cb;
         }
 
-        .name-row .error-message {
-            position: absolute;
-            margin-top: 35px;
+        /* Mobile Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .registration-content .form {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .registration-content .form h2 {
+                font-size: 18px;
+            }
+
+            .registration-content .name-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .registration-content .name-row input {
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .registration-content .form {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .registration-content .form h2 {
+                font-size: 16px;
+            }
+
+            .registration-content .form input {
+                font-size: 12px;
+            }
+
+            .registration-content .notification-checkbox label {
+                font-size: 10px;
+            }
         }
     </style>
 </head>
 <body>
     @include('layouts.public-navbar')
 
-    <section>
+    <div class="registration-content">
         <div class="form">
             <h2>REGISTRATION</h2>
             <span class="close-btn">
@@ -336,14 +361,18 @@
                     <span class="error-message">{{ $message }}</span>
                 @enderror
 
-                <input type="password" name="password" placeholder="Password" required class="{{ $errors->has('password') ? 'input-error' : '' }}">
-                <img src="{{ asset('storage/assets/icons8-blind-30.jpg') }}" id="eye-icon" onclick="togglePasswordVisibility('password')">
+                <div class="password-container">
+                    <input type="password" name="password" placeholder="Password" required class="{{ $errors->has('password') ? 'input-error' : '' }}">
+                    <img src="{{ asset('storage/assets/icons8-blind-30.jpg') }}" id="eye-icon" onclick="togglePasswordVisibility('password')">
+                </div>
                 @error('password')
                     <span class="error-message">{{ $message }}</span>
                 @enderror
 
-                <input type="password" name="password_confirmation" placeholder="Confirm Password" required class="{{ $errors->has('password_confirmation') ? 'input-error' : '' }}">
-                <img src="{{ asset('storage/assets/icons8-blind-30.jpg') }}" id="eye-icon-confirm" onclick="togglePasswordVisibility('password_confirmation')">
+                <div class="password-container">
+                    <input type="password" name="password_confirmation" placeholder="Confirm Password" required class="{{ $errors->has('password_confirmation') ? 'input-error' : '' }}">
+                    <img src="{{ asset('storage/assets/icons8-blind-30.jpg') }}" id="eye-icon-confirm" onclick="togglePasswordVisibility('password_confirmation')">
+                </div>
                 @error('password_confirmation')
                     <span class="error-message">{{ $message }}</span>
                 @enderror
@@ -354,17 +383,16 @@
                     <input type="checkbox" id="receive-notifications" name="receive_notifications" value=1 required {{ old('receive_notifications') ? 'checked' : '' }}>
                     <label for="receive-notifications">I would like to receive updates and notifications.</label>
                     @error('receive_notifications')
-                        <span class="error">{{ $message }}</span>
+                        <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <p class="link">Already have an account?
                     <a href="{{ route('login') }}">Login here</a>
                 </p>
-
             </form>
         </div>
-    </section>
+    </div>
 
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script>

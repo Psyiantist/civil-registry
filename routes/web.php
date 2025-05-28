@@ -28,7 +28,7 @@ Route::post('/feedback', [ContactController::class, 'sendFeedback'])->name('cont
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'loginHandler']);
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/register/step1', [RegisterController::class, 'showStep1'])->name('register');
 Route::post('/register/step1', [RegisterController::class, 'postStep1']);
