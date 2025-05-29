@@ -443,7 +443,9 @@
 <body>
     <nav>
         <div class="image-container">
-            <img src="{{ asset('storage/assets/civil_registry_logo.png') }}">
+            <a href="{{ route('residence-homepage') }}">
+                <img src="{{ asset('storage/assets/civil_registry_logo.png') }}">
+            </a>
         </div>
 
         <div class="logo-name">

@@ -1,6 +1,8 @@
 <nav>
     <div class="image-container">
-        <img src="{{ asset('storage/assets/civil_registry_logo.png') }}"> 
+        <a href="{{ route('home') }}">
+            <img src="{{ asset('storage/assets/civil_registry_logo.png') }}">
+        </a>
     </div>
 
     <div class="logo-name">
