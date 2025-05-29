@@ -87,7 +87,8 @@ class RegisterController extends Controller
 
             session()->forget('register');
 
-            Mail::to($registrationData['email'])->send(new RegistrationMail($registrationData['first_name']));
+            // Send registration confirmation email
+            Mail::to($registrationData['email'])->send(new \App\Mail\RegistrationMail($registrationData['first_name']));
 
             return redirect()->route('login')->with('success', 'Registration successful! Please wait for admin approval.');
 

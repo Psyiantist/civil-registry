@@ -77,45 +77,7 @@
             });
         }
 
-        // Menu toggle functionality
-        const menuToggle = document.querySelector('.menu-toggle');
-        const menu = document.querySelector('.menu');
-        
-        if (menuToggle && menu) {
-            menuToggle.addEventListener('click', () => {
-                menu.classList.toggle('active');
-                menuToggle.classList.toggle('active');
-            });
-        }
-    });
-
-    function performSearch() {
-        const input = document.getElementById("searchInput").value.trim().toLowerCase();
-
-        if (input === "") {
-            alert("Please enter a search term.");
-        } else {
-            if (input === "home page" || input === "homepage" || input === "home") {
-                window.location.href = "{{ route('admin.homepage') }}";
-            } else if (input === "faqs" || input === "facts" || input === "help") {
-                window.location.href = "{{ route('admin.faqs') }}";
-            } else if (input === "about" || input === "about civil") {
-                window.location.href = "{{ route('admin.about') }}";
-            } else if (input === "contact" || input === "number" || input === "email") {
-                window.location.href = "{{ route('admin.contact') }}";
-            } else {
-                alert("No results found.");
-                document.getElementById("searchInput").value = "";
-            }
-        }
-    }
-
-    window.toggleDropdown = function () {
-        const dropdown = document.getElementById("accountDropdown");
-        alert("Please login or register your account first.");
-        if (dropdown) dropdown.classList.toggle("show");
-    };
-
+     
     // Add password validation
     document.getElementById('forgotPasswordForm').addEventListener('submit', function(e) {
         const password = document.getElementById('newPassword').value;
@@ -152,19 +114,16 @@
 
     /* Main content styles */
     .login-content {
-      position: fixed;
-      top: 0;
-      left: 0;
+      position: relative;
+      min-height: 100vh;
       width: 100%;
-      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
       background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url('{{ asset('storage/assets/appointment_bg.jpg') }}') center 40% fixed;
       background-size: cover;
       background-repeat: no-repeat;
-      padding: 50px 0 0 0;
+      padding: 20px;
       overflow-y: auto;
       overflow-x: hidden;
     }
@@ -175,6 +134,7 @@
       margin: 0 auto;
       position: relative;
       text-align: center;
+      padding: 20px 0;
     }
 
     .login-content .details h5 {
@@ -249,7 +209,7 @@
     .login-content .form {
       width: 400px;
       max-width: 90vw;
-      margin: 40px auto 0 auto;
+      margin: 20px auto;
       position: relative;
       border-radius: 18px;
       background-color: #fff;
@@ -388,24 +348,43 @@
       width: 100%;
       display: flex;
       align-items: center;
+      margin-bottom: 18px;
+      height: 38px;
     }
 
     .login-content .input-group input[type="password"] {
       width: 100%;
-      padding-right: 40px;
+      padding-right: 35px;
+      height: 38px;
+      background: transparent;
+      border-bottom: 2px solid #222;
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      font-size: 15px;
+      letter-spacing: 1px;
+      font-family: "Poppins", sans-serif;
+      padding-left: 0;
+      color: #222;
+      line-height: 38px;
     }
 
     .login-content .input-group .eye-icon {
       position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 20px;
+      right: 0;
+      top: -10px;
+      bottom: 0;
+      font-size: 16px;
       color: #426DDC;
       cursor: pointer;
       z-index: 2;
       opacity: 0.8;
       transition: color 0.2s;
+      padding: 0 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 38px;
     }
 
     .login-content .input-group .eye-icon:hover {
@@ -415,6 +394,10 @@
 
     /* Mobile Responsive Styles */
     @media screen and (max-width: 768px) {
+      .login-content {
+        padding: 15px;
+      }
+
       .login-content .details h5 {
         font-size: 50px;
         letter-spacing: 10px;
@@ -456,13 +439,16 @@
     }
 
     @media screen and (max-width: 480px) {
+      .login-content {
+        padding: 0;
+      }
+
       .login-content .details h5 {
         font-size: 36px;
         letter-spacing: 8px;
         padding: 0 15px;
         margin: 0;
-        padding-top: 150px;
-        
+        padding-top: 100px;
       }
 
       .login-content .details h4 {
@@ -488,11 +474,28 @@
       .login-content .form {
         width: 95%;
         padding: 20px 15px;
+        margin: 15px auto;
       }
 
       .login-content .form h2 {
         font-size: 24px;
         margin-bottom: 15px;
+      }
+
+      .login-content .form input[type="text"],
+      .login-content .form input[type="password"],
+      .login-content .form input[type="text"].password-field {
+        font-size: 14px;
+        height: 35px;
+      }
+
+      .login-content .form .btnn {
+        height: 40px;
+        font-size: 16px;
+      }
+
+      .login-content .form .link {
+        font-size: 11px;
       }
     }
   </style>
