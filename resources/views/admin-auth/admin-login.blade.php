@@ -300,12 +300,14 @@
     .login-content .remember-forgot label {
       font-size: 14px;
       color: #666;
+      font-family: "Poppins", sans-serif;
     }
 
     .login-content .forgot a {
       color: #426DDC;
       text-decoration: none;
       font-size: 14px;
+      font-family: "Poppins", sans-serif;
     }
 
     .login-content .forgot a:hover {
