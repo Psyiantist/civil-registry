@@ -104,7 +104,10 @@ class ContactController extends Controller
             $field => $rules[$field]
         ]);
 
-        $contact = Contact::first() ?? new Contact();
+        $contact = Contact::first();
+        if (!$contact) {
+            return back()->with('error', 'Contact record does not exist. Please create it in the database first.');
+        }
         $contact->$field = $request->input($field);
         $contact->save();
 

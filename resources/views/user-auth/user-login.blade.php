@@ -14,7 +14,7 @@
       padding: 0;
       width: 100%;
       height: 100%;
-      overflow-x: hidden;
+      overflow: auto;
     }
     
     .login-content * {
@@ -63,7 +63,7 @@
               -1px 1px 0px white,
                0 0 50px black;
       font-family: "Poppins", sans-serif;
-      padding-top: 50px;
+      padding-top: 30px;
     }
 
     .login-content .details h4 {

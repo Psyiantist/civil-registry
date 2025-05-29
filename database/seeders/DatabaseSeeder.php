@@ -16,12 +16,23 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
+            'first_name' => 'Test',
+            'last_name' => 'User',
             'email' => 'test@example.com',
+            'password' => bcrypt('password'),
+            'id_type' => 'Passport',
+            'id_image' => 'default.jpg',
+            'years_residency' => 1,
+            'current_address' => 'Sample Address',
+            'permanent_address' => 'Sample Address',
+            'date_of_birth' => '2000-01-01',
+            'is_verified' => false,
+            'status' => 'Pending',
         ]);
 
         $this->call([
             RequirementSeeder::class,
+            ContactSeeder::class,
         ]);
     }
 }

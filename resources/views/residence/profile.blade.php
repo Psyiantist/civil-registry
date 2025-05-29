@@ -9,16 +9,7 @@
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
   <style>
-    :root {
-      --primary-color: #4e73df;
-      --primary-dark: #2e59d9;
-      --danger-color: #e74a3b;
-      --danger-dark: #cf3e31;
-      --text-color: #5a5c69;
-      --border-radius: 16px;
-      --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      --transition: all 0.3s ease;
-    }
+
 
     * {
       box-sizing: border-box;
@@ -33,23 +24,7 @@
       line-height: 1.6;
     }
 
-    .image-container {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1000;
-    }
 
-    .image-container img {
-      width: 60px;
-      height: 55px;
-      border-radius: 50%;
-      transition: var(--transition);
-    }
-
-    .image-container img:hover {
-      transform: scale(1.05);
-    }
 
     section {
       position: fixed;
@@ -310,9 +285,6 @@
 <body>
   @include('layouts.residence-navbar')
 
-  <div class="image-container">
-    <img src="{{ asset('storage/assets/civil_registry_logo.png') }}" alt="Civil Registry Logo">
-  </div>
 
   <section></section>
 

@@ -43,6 +43,7 @@
             margin-left: 30px;
             white-space: nowrap;
             font-family: "Poppins", sans-serif;
+            font-weight: bold;
         }
 
         .logo-name a {

@@ -43,6 +43,7 @@
             margin-left: 30px;
             white-space: nowrap;
             font-family: "Poppins", sans-serif;
+            font-weight: bold;
         }
 
         .logo-name a {
@@ -402,14 +403,15 @@
 
             nav .menu-toggle {
                 display: flex;
-                top: auto;
+                position: absolute;
+                right: 20px;
+                top: 20px;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
                 font-size: 24px;
                 color: #333;
-                position: relative;
-                margin-left: 20px;
+                z-index: 10001;
             }
 
             nav .menu-toggle:hover {
@@ -446,11 +448,6 @@
             </ul>
         </div>
 
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search">
-            <i class="fa fa-search" onclick="performSearch()"></i>
-        </div>
-
         @php
             $user = Auth::user();
             $profileImage = $user->profile_image
@@ -466,49 +463,11 @@
             </form>
         </div>
 
-        <button class="menu-toggle"></button>
+        <button class="menu-toggle" style="position: absolute; right: 20px; top: 20px;"></button>
     </nav>
 
     <script type="text/javascript">
-        function performSearch() {
-            const routes = {
-                home: "{{ route('residence-homepage') }}",
-                requirements: "{{ route('residence-requirements') }}",
-                appointment: "{{ route('residence-appointment') }}",
-                faqs: "{{ route('residence-faqs') }}",
-                about: "{{ route('residence-about-us') }}",
-                contact: "{{ route('residence-contact-us') }}"
-            };
 
-            const input = document.getElementById("searchInput").value.trim().toLowerCase();
-
-            if (input === "") {
-                alert("Please enter a search term.");
-            } else {
-                if (["home page", "homepage", "home"].includes(input)) {
-                    window.location.href = routes.home;
-                } else if (["reqs", "requirements", "requirement"].includes(input)) {
-                    window.location.href = routes.requirements;
-                } else if (["appointment", "appointments", "schedule", "schedules"].includes(input)) {
-                    window.location.href = routes.appointment;
-                } else if (["faqs", "facts", "help", "faq", "question"].includes(input)) {
-                    window.location.href = routes.faqs;
-                } else if (["about", "about civil"].includes(input)) {
-                    window.location.href = routes.about;
-                } else if (["contact", "number", "email"].includes(input)) {
-                    window.location.href = routes.contact;
-                } else {
-                    alert("No results found.");
-                    inputField.value = "";
-                }
-            }
-        }
-
-        document.getElementById("searchInput").addEventListener("keypress", function(e) {
-            if (e.key === "Enter") {
-                performSearch();
-            }
-        });
 
         function toggleDropdown() {
             const dropdown = document.getElementById("accountDropdown");
