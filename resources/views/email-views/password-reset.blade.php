@@ -46,13 +46,16 @@
             display: inline-block;
             padding: 10px 20px;
             background-color: #426DDC;
-            color: white;
+            color: white !important;
             text-decoration: none;
             border-radius: 5px;
             margin-top: 20px;
+            font-weight: 500;
         }
         .button:hover {
             background-color: #344CB7;
+            color: white !important;
+            text-decoration: none;
         }
     </style>
 </head>
