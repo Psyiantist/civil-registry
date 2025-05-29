@@ -178,39 +178,46 @@
     }
 
     .remove-btn {
-      background: var(--danger-color);
+      background: #dc3545;
       color: white;
-      padding: 8px 15px;
+      padding: 12px 20px;
       border: none;
-      border-radius: var(--border-radius);
+      border-radius: 8px;
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
-      transition: var(--transition);
+      transition: all 0.3s ease;
       margin: 10px auto;
       display: block;
+      width: 100%;
+      max-width: 200px;
+      box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
     }
 
     .remove-btn:hover {
-      background: var(--danger-dark);
+      background: #c82333;
       transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
     }
 
     form button[type="submit"] {
-      background: var(--primary-color);
+      background: #4e73df;
       color: white;
-      padding: 12px;
+      padding: 14px;
       border: none;
-      border-radius: var(--border-radius);
+      border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
-      transition: var(--transition);
+      transition: all 0.3s ease;
       margin-top: 20px;
+      width: 100%;
+      box-shadow: 0 2px 8px rgba(78, 115, 223, 0.2);
     }
 
     form button[type="submit"]:hover {
-      background: var(--primary-dark);
+      background: #2e59d9;
       transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(78, 115, 223, 0.3);
     }
 
     .link {
@@ -239,19 +246,29 @@
       top: 20px;
       right: 20px;
       padding: 15px 25px;
-      border-radius: var(--border-radius);
+      border-radius: 8px;
       color: white;
       font-weight: 500;
-      z-index: 1000;
+      z-index: 9999;
       animation: slideIn 0.3s ease-out;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .alert-success {
       background: #28a745;
+      border-left: 4px solid #1e7e34;
     }
 
     .alert-danger {
-      background: var(--danger-color);
+      background: #dc3545;
+      border-left: 4px solid #bd2130;
+    }
+
+    .alert i {
+      font-size: 1.2rem;
     }
 
     @keyframes slideIn {
@@ -262,6 +279,17 @@
       to {
         transform: translateX(0);
         opacity: 1;
+      }
+    }
+
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(100%);
+        opacity: 0;
       }
     }
 
@@ -358,17 +386,32 @@
 
   @if(session('success'))
     <div class="alert alert-success">
+      <i class="fas fa-check-circle"></i>
       {{ session('success') }}
     </div>
   @endif
 
   @if(session('error'))
     <div class="alert alert-danger">
+      <i class="fas fa-exclamation-circle"></i>
       {{ session('error') }}
     </div>
   @endif
 
   <script>
+    // Auto-dismiss alerts after 5 seconds
+    document.addEventListener('DOMContentLoaded', function() {
+      const alerts = document.querySelectorAll('.alert');
+      alerts.forEach(alert => {
+        setTimeout(() => {
+          alert.style.animation = 'slideOut 0.3s ease-out forwards';
+          setTimeout(() => {
+            alert.remove();
+          }, 300);
+        }, 5000);
+      });
+    });
+
     function triggerFileInput() {
       document.getElementById('fileInput').click();
     }
