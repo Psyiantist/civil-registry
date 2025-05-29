@@ -902,92 +902,45 @@
       <a href="#" onclick="openModal()"> <br/> Terms of Use and Privacy Policy </a> </p>
     </div>
 
-   <div id="termsModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h2><center>Terms of Use and Privacy Policy</center></h2><br/>
-      <p>Welcome to City Civil Registry of Mandaluyong Portal. By using this website, you agree to the following terms:<br/><br/>
-      <h3>1. Use of Services</h3>
-      This website allows you to request and verify civil registry records. You agree to use the site legally and only access records you are authorized to view.
-      <h3>2. Privacy & Data Collection</h3>
-      We collect personal information (such as name, contact details, and ID numbers) to process your requests. Your data is used only for providing services, verifying identity, and complying with legal requirements.
-      We do not sell your information. Data may be shared with authorized agencies or partners solely to process your request or as required by law.
-      <h3>3. Cookies</h3>
-      We may use cookies to improve website performance and user experience. You can manage cookies through your browser settings.
-      <h3>4. Security</h3>
-      We are committed to protecting your personal information. This website uses secure technologies, including encryption and security protocols, to safeguard your data from unauthorized access, loss, or misuse. We continuously monitor and maintain our systems to ensure your information remains protected.
-      <h3>5. Limitations</h3>
-      While we aim to provide accurate and uninterrupted service, occasional errors or technical issues may occur. We are committed to correcting any errors and continuously improving the website to ensure a reliable and secure user experience. Please contact us if you encounter any issues.
-      <h3>6. Changes</h3>
-      We may update these terms and our privacy policy. Continued use of the website means you accept any changes.<br/><br/>
+    <!-- Terms and Conditions Modal -->
+    <div id="termsModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2><center>Terms of Use and Privacy Policy</center></h2><br/>
+        <p>Welcome to City Civil Registry of Mandaluyong Portal. By using this website, you agree to the following terms:<br/><br/>
+        <h3>1. Use of Services</h3>
+        This website allows you to request and verify civil registry records. You agree to use the site legally and only access records you are authorized to view.
+        <h3>2. Privacy & Data Collection</h3>
+        We collect personal information (such as name, contact details, and ID numbers) to process your requests. Your data is used only for providing services, verifying identity, and complying with legal requirements.
+        We do not sell your information. Data may be shared with authorized agencies or partners solely to process your request or as required by law.
+        <h3>3. Cookies</h3>
+        We may use cookies to improve website performance and user experience. You can manage cookies through your browser settings.
+        <h3>4. Security</h3>
+        We are committed to protecting your personal information. This website uses secure technologies, including encryption and security protocols, to safeguard your data from unauthorized access, loss, or misuse. We continuously monitor and maintain our systems to ensure your information remains protected.
+        <h3>5. Limitations</h3>
+        While we aim to provide accurate and uninterrupted service, occasional errors or technical issues may occur. We are committed to correcting any errors and continuously improving the website to ensure a reliable and secure user experience. Please contact us if you encounter any issues.
+        <h3>6. Changes</h3>
+        We may update these terms and our privacy policy. Continued use of the website means you accept any changes.<br/><br/>
 
-      <h3><center>Contact Us:</center></h3>
-      For questions or concerns, contact Civil Registry of Mandaluyong at city.registrar@mandaluyong.gov.ph or (02) 8533-28-21.</p>
+        <h3><center>Contact Us:</center></h3>
+        For questions or concerns, contact Civil Registry of Mandaluyong at city.registrar@mandaluyong.gov.ph or (02) 8533-28-21.</p>
+      </div>
     </div>
-  </div>
 
 <script type="text/javascript">
-            function performSearch() {
-                const routes = {
-                    home: "{{ route('home') }}",
-                    faqs: "{{ route('faqs') }}",
-                    about: "{{ route('about') }}",
-                    contact: "{{ route('contact') }}"
-                };
+function openModal() {
+    document.getElementById("termsModal").style.display = "block";
+}
+function closeModal() {
+    document.getElementById("termsModal").style.display = "none";
+}
+window.onclick = function(event) {
+    const modal = document.getElementById("termsModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
 
-            const input = document.getElementById("searchInput").value.trim().toLowerCase();
-
-            if (input === "") {
-            alert("Please enter a search term.");
-            } else {
-                if (["home page", "homepage", "home"].includes(input)) {
-                    window.location.href = routes.home;
-            } else if (["faqs", "facts", "help", "faq", "question"].includes(input)) {
-                    window.location.href = routes.faqs;
-            } else if (["about", "about civil"].includes(input)) {
-                    window.location.href = routes.about;
-            } else if (["contact", "number", "email"].includes(input)) {
-                    window.location.href = routes.contact;
-            } else {
-                  alert("No results found.");
-                  inputField.value = "";
-            }
-            } }
-            document.getElementById("searchInput").addEventListener("keypress", function(e) {
-                 if (e.key === "Enter") {
-            performSearch();
-            }
-            });
-
-            const button = document.querySelector('.menu-toggle');
-            const menu = document.querySelector('.menu');
-                 if (button && menu) {
-            button.onclick = () => {
-                menu.classList.toggle('expand-mobile');
-                button.classList.toggle('expand-icon');
-            };
-            }
-
-            function toggleDropdown() {
-            const dropdown = document.getElementById("accountDropdown");
-            alert("Please choose a user mode that best describes you.");
-            dropdown.classList.toggle("show");
-            }
-
-            function openModal() {
-            document.getElementById("termsModal").style.display = "block";
-            }
-
-            function closeModal() {
-            document.getElementById("termsModal").style.display = "none";
-            }
-
-            window.onclick = function(event) {
-            const modal = document.getElementById("termsModal");
-            if (event.target == modal) {
-            modal.style.display = "none";
-            }
-            }
 </script>
 
 @include('layouts.footer')
