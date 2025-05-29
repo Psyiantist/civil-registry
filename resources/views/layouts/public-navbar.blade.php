@@ -22,6 +22,10 @@
 <button class="menu-toggle"></button>
 </nav>
 
+<head>
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
+</head>
+
 <style>
 nav {
     top: 0;

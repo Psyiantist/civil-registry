@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title> Requirements Page - Admin View </title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <link rel="icon" type="image/x-icon" href="/storage/assets/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
