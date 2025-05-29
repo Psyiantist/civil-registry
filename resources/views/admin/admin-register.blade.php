@@ -130,9 +130,10 @@
             border-top: none;
             border-right: none;
             border-left: none;
+            border-radius: 0;
             font-size: 15px;
             letter-spacing: 1px;
-            margin-bottom: 18px;
+            margin-bottom: 25px;
             font-family: "Poppins", sans-serif;
             padding-left: 0;
             color: #222;
@@ -140,6 +141,7 @@
 
         .form select {
             color: #666;
+            border-radius: 0;
         }
 
         .form select option {
@@ -150,19 +152,47 @@
         .input-group {
             position: relative;
             width: 100%;
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            height: 38px;
+        }
+
+        .input-group input[type="password"] {
+            width: 100%;
+            padding-right: 35px;
+            height: 38px;
+            background: transparent;
+            border-bottom: 2px solid #222;
+            border-top: none;
+            border-right: none;
+            border-left: none;
+            border-radius: 0;
+            font-size: 15px;
+            letter-spacing: 1px;
+            font-family: "Poppins", sans-serif;
+            padding-left: 0;
+            color: #222;
+            line-height: 38px;
+            margin-bottom: 0;
         }
 
         .eye-icon {
             position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 20px;
+            right: 0;
+            top: -10px;
+            bottom: 0;
+            font-size: 16px;
             color: #426DDC;
             cursor: pointer;
             z-index: 2;
             opacity: 0.8;
             transition: color 0.2s;
+            padding: 0 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 38px;
         }
 
         .eye-icon:hover {
@@ -228,9 +258,10 @@
         .error-message {
             color: #dc3545;
             font-size: 12px;
-            margin-top: -15px;
-            margin-bottom: 15px;
+            margin-top: -20px;
+            margin-bottom: 5px;
             display: block;
+            padding-left: 5px;
         }
 
         .input-error {
@@ -327,17 +358,17 @@
             box-shadow: 0 12px 40px rgba(66, 109, 220, 0.18), 0 2px 8px rgba(0,0,0,0.10);
         }
         .modern-input {
-            border-radius: 8px;
-            border: 1.5px solid #d1d5db;
-            padding: 12px 14px;
-            font-size: 16px;
+            border-radius: 0;
+            border: none;
+            border-bottom: 2px solid #222;
+            padding: 0;
+            font-size: 15px;
             margin-bottom: 18px;
-            background: #f9fafe;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            background: transparent;
+            transition: border-color 0.2s;
         }
         .modern-input:focus {
             border-color: #426DDC;
-            box-shadow: 0 0 0 2px rgba(66, 109, 220, 0.13);
             outline: none;
         }
         .modern-btn {
@@ -400,6 +431,28 @@
                 max-width: 120px;
                 max-height: 80px;
             }
+        }
+        .name-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .name-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+
+        .input-group[style*="flex-direction: column"] {
+            margin-bottom: 25px;
+            height: auto;
+        }
+
+        .input-group[style*="flex-direction: column"] label {
+            margin-bottom: 8px;
         }
     </style>
 </head>
@@ -467,7 +520,10 @@
                     <span class="error-message">{{ $message }}</span>
                 @enderror
 
-                <input type="date" name="birthday" placeholder="Birthday" required value="{{ old('birthday') }}" class="modern-input {{ $errors->has('birthday') ? 'input-error' : '' }}">
+                <div class="input-group" style="display: flex; flex-direction: column; align-items: flex-start;">
+                    <label for="birthday" style="font-size: 14px; color: #666; margin-bottom: 5px;">Birthday</label>
+                    <input type="date" id="birthday" name="birthday" required value="{{ old('birthday') }}" class="modern-input {{ $errors->has('birthday') ? 'input-error' : '' }}" style="width: 100%;">
+                </div>
                 @error('birthday')
                     <span class="error-message">{{ $message }}</span>
                 @enderror
