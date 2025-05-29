@@ -16,11 +16,6 @@
         </ul>
     </div>
 
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search">
-        <i class="fa fa-search" onclick="performSearch()"></i>
-    </div>
-    
     <i class="fas fa-user-circle user-icon" onclick="toggleDropdown()"></i>
 </div>
 
@@ -55,6 +50,7 @@ nav {
     margin-left: 30px;
     white-space: nowrap;
     font-family: "Poppins", sans-serif;
+    font-weight: bold;
 }
 
 .logo-name a {
@@ -163,11 +159,12 @@ nav .user-icon:hover {
 
 @media(max-width: 1000px) {
     nav button {
-        display: none;
+        display: block;
         width: 30px;
         height: 25px;
-        top: 20px;
+        position: absolute;
         right: 20px;
+        top: 20px;
         cursor: pointer;
         border: none;
         outline: none;
@@ -321,14 +318,14 @@ nav .user-icon:hover {
 
     nav .menu-toggle {
         display: flex;
-        top: auto;
+        position: absolute;
+        right: 20px;
+        top: 20px;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         font-size: 24px;
         color: #333;
-        position: relative;
-        margin-left: 20px;
     }
 
     nav .menu-toggle:hover {
@@ -366,11 +363,6 @@ function performSearch() {
     }
 }
 
-document.getElementById("searchInput").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-        performSearch();
-    }
-});
 
 const button = document.querySelector('.menu-toggle');
 const menu = document.querySelector('.menu');

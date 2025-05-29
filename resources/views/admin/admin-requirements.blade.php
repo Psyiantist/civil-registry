@@ -66,13 +66,6 @@
         z-index: 1;
         }
     }
-
-    footer {
-      background: #fff;
-      padding-top: 20px;
-      padding-bottom: 5px;
-    }
-
     .container {
       margin-left: 20px;
       margin-right: 20px;
@@ -80,24 +73,6 @@
       width: 1140px;
       display: flex;
       justify-content: space-between;
-    }
-
-    .footer-content {
-      margin-left: 20px;
-      margin-right: 20px;
-      width: 33.3%;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start; 
-      margin: 0 10px;
-    }
-
-    footer iframe {
-      margin-left: 20px;
-      width: 100%;
-      height: 100%;
-      border: 0;
-      margin: 0;
     }
 
     .map-container {
@@ -277,94 +252,10 @@
         </form>
     </div>
 </div>
-
-      <footer>
-    <div class="container">
-        <div class="footer-content">
-            <h3>Contact Us</h3>
-            <p><a href="mailto:city.registrar@mandaluyong.gov.ph">Email: city.registrar@mandaluyong.gov.ph</a></p>
-            <p>Phone: 8533-28-21</p>
-            <p>Address: <a href="https://maps.app.goo.gl/BqivjAUx2r4DJitu5" target="_blank">Maysilo, Mandaluyong</a></p>
-        </div>
-        <div class="footer-content">
-            <h3>Our Location</h3>
-            <div class="map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.374156967718!2d121.0337266!3d14.5777433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c84b4d7d8847%3A0x3cc947be6455c07a!2sMandaluyong%20City%20Hall!5e0!3m2!1sen!2sph!4v1745828287728!5m2!1sen!2sph" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </div>
-        <div class="footer-content">
-            <h3>Follow Us</h3>
-            <ul class="social-icons">
-                <li><a href="https://www.facebook.com/p/Mandaluyong-City-Civil-Registry-100064760288454/" target="_blank"><i class="fab fa-facebook"></i></a></li>
-                <li><a href="mailto:city.registrar@mandaluyong.gov.ph"><i class="fas fa-envelope"></i></a></li>
-                <li><a href="https://mandaluyong.gov.ph/government/departments/city-civil-registry-department/"><i class="fas fa-paperclip"></i></a></li>
-                <li><a href="https://x.com/MandaluyongPIO"><i class="fab fa-twitter"></i></a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="bottom-bar">
-        <p>&copy; 2025 Civil Registry Department. All Rights Reserved.</p>
-    </div>
-</footer>
   
 
+@include('layouts.footer')
   <script>
-function toggleDropdown() {
-    const dropdown = document.getElementById("accountDropdown");
-    dropdown.classList.toggle("show");
-}
-
-window.addEventListener("click", function(event) {
-    const userIcon = document.querySelector(".user-icon");
-    const dropdown = document.getElementById("accountDropdown");
-
-    if (!userIcon.contains(event.target) && !dropdown.contains(event.target)) {
-        dropdown.classList.remove("show");
-    }
-});
-
-const button = document.querySelector('.menu-toggle');
-const menu = document.querySelector('.menu');
-if (button && menu) {
-    button.onclick = () => {
-        menu.classList.toggle('expand-mobile');
-        button.classList.toggle('expand-icon');
-    };
-}
-
-
-function performSearch() {
-    const inputField = document.getElementById("searchInput");
-    const input = inputField.value.trim().toLowerCase();
-
-    if (input === "") {
-        alert("Please enter a search term.");
-    } else {
-        if (input === "home page" || input === "homepage" || input === "home") {
-            window.location.href = "{{ route('admin.homepage') }}";
-        } else if (input === "faqs" || input === "facts" || input === "help") {
-            window.location.href = "{{ route('admin.faqs') }}";
-        } else if (input === "about" || input === "about civil") {
-            window.location.href = "{{ route('admin.about') }}";
-        } else if (input === "appointment" || input === "appointments" || input === "schedule" || input === "schedules") {
-            window.location.href = "{{ route('admin.appointment') }}";
-        } else if (input === "reqs" || input === "requirements" || input === "requirement") {
-            window.location.href = "{{ route('admin.requirements') }}";
-        } else if (input === "contact" || input === "number" || input === "email") {
-            window.location.href = "{{ route('admin.contact') }}";
-        } else {
-            alert("No results found.");
-            inputField.value = "";
-        }
-    }
-}
-
-document.getElementById("searchInput").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-        performSearch();
-    }
-});
-
 function showChecklist(type) {
     const checklist = checklistData[type];
     const checklistEl = document.getElementById("checklist");

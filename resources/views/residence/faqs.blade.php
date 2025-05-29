@@ -11,6 +11,7 @@
 
     body {
             font-family: 'Poppins';
+            
         }
 
     *{
@@ -433,9 +434,6 @@
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
-      background-color: #d8e4f0;
-      background-size: cover;
-      background-repeat: no-repeat;
       margin: 0;
       padding: 20px;
       box-sizing: border-box;

@@ -19,7 +19,6 @@
 
         nav {
             top: 0;
-            width: 100%;
             height: 65px;
             z-index: 9999;
             display: flex;
@@ -110,14 +109,18 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
             padding: 10px 0;
-            transition: none;
+            transition: all 0.3s ease;
         }
 
-        .menu ul li:hover .dropdown_menuuu {
-            display: block;
+        .menu ul li a[href="#"] {
+            cursor: pointer;
         }
 
-        .dropdown_menuuu:hover {
+        .menu ul li a[href="#"]:hover {
+            color: #426DDC;
+        }
+
+        .dropdown_menuuu.show {
             display: block;
         }
 
@@ -131,7 +134,8 @@
             width: 100%;
             padding: 8px 20px;
             white-space: nowrap;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            margin: 0;
         }
 
         .dropdown_menuuu ul li:hover {
@@ -144,6 +148,7 @@
             font-size: 15px;
             display: block;
             width: 100%;
+            transition: color 0.3s ease;
         }
 
         .dropdown_menuuu ul li a:hover {
@@ -154,32 +159,86 @@
             display: none;
             position: absolute;
             background-color: #fff;
-            border-radius: 6px;
-            right: 10px;
-            top: 55px;
-            min-width: 160px;
-            z-index: 1000;
-            padding: 8px 0;
-            font-weight: bold;
+            border-radius: 8px;
+            right: 20px;
+            top: 65px;
+            min-width: 200px;
+            z-index: 9999;
+            padding: 0;
+            font-weight: 500;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            transform-origin: top right;
+            transition: all 0.2s ease-in-out;
         }
 
         #accountDropdown.show {
             display: block;
+            animation: dropdownFade 0.2s ease-in-out;
+        }
+
+        @keyframes dropdownFade {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #accountDropdown .profile-header {
+            padding: 16px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: center;
+        }
+
+        #accountDropdown .profile-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            border: 2px solid #426DDC;
+            margin: 0 auto 8px;
+        }
+
+        #accountDropdown .profile-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        #accountDropdown .profile-email {
+            font-size: 13px;
+            color: #6b7280;
+            word-break: break-all;
         }
 
         #accountDropdown a {
             display: block;
-            padding: 10px 16px;
-            color: #333;
-            text-align: center;
+            padding: 12px 16px;
+            color: #4b5563;
             text-decoration: none;
             font-size: 14px;
-            font-family: "Poppins", sans-serif;
+            transition: all 0.2s ease;
         }
 
         #accountDropdown a:hover {
+            background-color: #f3f4f6;
             color: #426DDC;
-            transition: 0.3s ease;
+        }
+
+        #accountDropdown a.logout-link {
+            color: #ef4444;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        #accountDropdown a.logout-link:hover {
+            background-color: #fee2e2;
+            color: #dc2626;
         }
 
         nav .search-container {
@@ -222,15 +281,16 @@
             transition: 0.3s ease;
         }
 
-        nav .user-icon {
+        .user-icon {
             font-size: 28px;
             color: #333;
             margin-right: 23px;
             cursor: pointer;
             transition: color 0.3s ease;
+            position: relative;
         }
 
-        nav .user-icon:hover {
+        .user-icon:hover {
             color: #426DDC;
         }
 
@@ -241,11 +301,12 @@
             }
 
             nav button {
-                display: none;
+                display: block;
                 width: 30px;
                 height: 25px;
-                top: 20px;
+                position: absolute;
                 right: 20px;
+                top: 20px;
                 cursor: pointer;
                 border: none;
                 outline: none;
@@ -291,6 +352,8 @@
                 height: 0;
                 background: white;
                 top: 60px;
+                left: 0;
+                right: 0;
                 transition: 0.5s;
                 overflow: hidden;
             }
@@ -299,10 +362,12 @@
                 padding: 0;
                 margin: 0;
                 list-style: none;
+                width: 100%;
             }
 
             nav .menu.expand-mobile {
                 height: 700px;
+                width: 100%;
             }
 
             nav .menu ul li {
@@ -312,18 +377,39 @@
                 text-align: left;
                 padding: 10px 15px;
                 box-sizing: border-box;
+                margin-right: 0;
+            }
+
+            .dropdown_menuuu {
+                position: static;
+                width: 100%;
+                min-width: 100%;
+                margin-left: 0;
+                box-shadow: none;
+                border-top: 1px solid #eee;
+                display: none;
+                padding: 0;
+            }
+
+            .menu.expand-mobile .dropdown_menuuu {
+                display: block;
             }
 
             .dropdown_menuuu ul {
-                list-style: none;
-                padding: 0;
-                margin-left: 250px;
+                margin-left: 0;
+                width: 100%;
             }
 
             .dropdown_menuuu ul li {
-                width: 130px;
-                padding: 5px;
-                white-space: nowrap;
+                width: 100%;
+                padding: 10px 15px;
+                margin: 0;
+                border-left: 3px solid transparent;
+            }
+
+            .dropdown_menuuu ul li:hover {
+                border-left: 3px solid #426DDC;
+                background-color: #f5f5f5;
             }
 
             nav .menu ul:nth-child(2) li {
@@ -399,14 +485,14 @@
 
             nav .menu-toggle {
                 display: flex;
-                top: auto;
+                position: absolute;
+                right: 20px;
+                top: 20px;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
                 font-size: 24px;
                 color: #333;
-                position: relative;
-                margin-left: 20px;
             }
 
             nav .menu-toggle:hover {
@@ -446,81 +532,102 @@
                 <li><a href="{{ route('admin.contact') }}" class="{{ Request::is('admin/contact*') ? 'active' : '' }}">Contact Us</a></li>
             </ul>
         </div>
-
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search">
-            <i class="fa fa-search" onclick="performSearch()"></i>
-        </div>
-
-        <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" onclick="toggleDropdown()" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-right: 23px;">
-        <div id="accountDropdown">
-            <div style="padding: 16px 0 8px 0; text-align: center;">
-                <div style="font-size: 40px; color: #e0e0e0; margin-bottom: 4px;">
-                    <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" alt="City of Mandaluyong Logo" class="user-icon" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC; margin-right: 10px; margin-left: 10px;">
+        <div class="nav-right">
+            <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" 
+                 alt="City of Mandaluyong Logo" 
+                 class="user-icon" 
+                 id="profileIcon"
+                 style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 2px solid #426DDC;">
+            
+            <div id="accountDropdown">
+                <div class="profile-header">
+                    <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" 
+                         alt="Profile" 
+                         class="profile-image">
+                    <div class="profile-name">Admin</div>
+                    <div class="profile-email">city.registrar@<br>mandaluyong.gov.ph</div>
                 </div>
-                <div style="font-weight: bold; font-size: 18px;">Admin</div>
-                <div style="font-size: 14px; color: #757575; word-break: break-all;">city.registrar@<br>mandaluyong.gov.ph</div>
+                <a href="{{ route('admin.logout') }}" class="logout-link">
+                    <i class="fas fa-sign-out-alt mr-2"></i>
+                    Logout
+                </a>
             </div>
-            <a href="{{ route('admin.logout') }}" id="logoutLink">Logout</a>
         </div>
 
         <button class="menu-toggle"></button>
     </nav>
 
     <script type="text/javascript">
-        function performSearch() {
-            const input = document.getElementById("searchInput").value.trim().toLowerCase();
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                // Profile dropdown functionality
+                const profileIcon = document.getElementById('profileIcon');
+                const dropdown = document.getElementById('accountDropdown');
 
-            if (input === "") {
-                alert("Please enter a search term.");
-            } else {
-                if (input === "home page" || input === "homepage" || input === "home") {
-                    window.location.href = "{{ route('admin.homepage') }}";
-                } else if (input === "faqs" || input === "facts" || input === "help") {
-                    window.location.href = "{{ route('admin.faqs') }}";
-                } else if (input === "about" || input === "about civil") {
-                    window.location.href = "{{ route('admin.about') }}";
-                } else if (input === "appointment" || input === "appointments" || input === "schedule" || input === "schedules") {
-                    window.location.href = "{{ route('admin.appointment') }}";
-                } else if (input === "reqs" || input === "requirements" || input === "requirement") {
-                    window.location.href = "{{ route('admin.requirements') }}";
-                } else if (input === "contact" || input === "number" || input === "email") {
-                    window.location.href = "{{ route('admin.contact') }}";
-                } else {
-                    alert("No results found.");
-                    inputField.value = "";
+                if (profileIcon && dropdown) {
+                    profileIcon.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        dropdown.classList.toggle('show');
+                    });
+
+                    document.addEventListener('click', function(e) {
+                        if (!profileIcon.contains(e.target) && !dropdown.contains(e.target)) {
+                            dropdown.classList.remove('show');
+                        }
+                    });
+
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape') {
+                            dropdown.classList.remove('show');
+                        }
+                    });
+
+                    dropdown.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                    });
                 }
-            }
-        }
 
-        document.getElementById("searchInput").addEventListener("keypress", function(e) {
-            if (e.key === "Enter") {
-                performSearch();
+                // Services dropdown functionality
+                const servicesLink = document.querySelector('.menu ul li a[href="#"]');
+                const servicesDropdown = document.querySelector('.dropdown_menuuu');
+                
+                console.log('servicesLink:', servicesLink);
+                console.log('servicesDropdown:', servicesDropdown);
+                
+                if (servicesLink && servicesDropdown) {
+                    // Handle click on services link
+                    servicesLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        servicesDropdown.classList.toggle('show');
+                    });
+
+                    // Close dropdown when clicking outside
+                    document.addEventListener('click', function(e) {
+                        if (!servicesLink.contains(e.target) && !servicesDropdown.contains(e.target)) {
+                            servicesDropdown.classList.remove('show');
+                        }
+                    });
+
+                    // Handle mobile menu
+                    const menuToggle = document.querySelector('.menu-toggle');
+                    const menu = document.querySelector('.menu');
+                    
+                    if (menuToggle && menu) {
+                        menuToggle.addEventListener('click', function() {
+                            menu.classList.toggle('expand-mobile');
+                            menuToggle.classList.toggle('expand-icon');
+                            
+                            // Reset dropdown state when mobile menu is closed
+                            if (!menu.classList.contains('expand-mobile')) {
+                                servicesDropdown.classList.remove('show');
+                            }
+                        });
+                    }
+                }
+            } catch (e) {
+                console.error(e);
             }
         });
-
-        function toggleDropdown() {
-            const dropdown = document.getElementById("accountDropdown");
-            dropdown.classList.toggle("show");
-        }
-
-        window.addEventListener("click", function(event) {
-            const userIcon = document.querySelector(".user-icon");
-            const dropdown = document.getElementById("accountDropdown");
-
-            if (!userIcon.contains(event.target) && !dropdown.contains(event.target)) {
-                dropdown.classList.remove("show");
-            }
-        });
-
-        const button = document.querySelector('.menu-toggle');
-        const menu = document.querySelector('.menu');
-        if (button && menu) {
-            button.onclick = () => {
-                menu.classList.toggle('expand-mobile');
-                button.classList.toggle('expand-icon');
-            };
-        }
     </script>
 </body>
 </html> 

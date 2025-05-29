@@ -63,6 +63,7 @@
               -1px 1px 0px white,
                0 0 50px black;
       font-family: "Poppins", sans-serif;
+      padding-top: 50px;
     }
 
     .login-content .details h4 {
@@ -361,6 +362,7 @@
         letter-spacing: 8px;
         padding: 0 15px;
         margin: 0;
+        padding-top: 150px;
       }
 
       .login-content .details h4 {
@@ -430,7 +432,7 @@
         @enderror
         <div class="input-group">
           <input type="password" id="password" name="password" placeholder="Password" class="{{ $errors->has('password') ? 'input-error' : '' }}" required>
-          <i class="fa fa-eye-slash eye-icon" id="eye-icon" onclick="togglePasswordVisibility('password')"></i>
+          <i class="fa fa-eye-slash eye-icon" id="eye-icon"></i>
         </div>
         @error('password')
             <span class="error-message">{{ $message }}</span>
@@ -466,41 +468,80 @@
 
 <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 <script>
-function performSearch() {
-    const input = document.getElementById("searchInput").value.trim().toLowerCase();
-
-    if (input === "") {
-        alert("Please enter a search term.");
-    } else {
-        if (input === "home page" || input === "homepage" || input === "home") {
-            window.location.href = "{{ route('home') }}";
-        } else if (input === "faqs" || input === "facts" || input === "help") {
-            window.location.href = "{{ route('faqs') }}";
-        } else if (input === "about" || input === "about civil") {
-            window.location.href = "{{ route('about') }}";
-        } else if (input === "contact" || input === "number" || input === "email") {
-            window.location.href = "{{ route('contact') }}";
-        } else {
-          alert("No results found.");
-          inputField.value = "";
-        }
+document.addEventListener('DOMContentLoaded', function() {
+    // Search functionality
+    const searchInput = document.getElementById("searchInput");
+    if (searchInput) {
+        searchInput.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                performSearch();
+            }
+        });
     }
-}
 
-document.getElementById("searchInput").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-        performSearch();
+    // Menu toggle functionality
+    const menuToggle = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('.menu');
+
+    if (menuToggle && menu) {
+        menuToggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+    }
+
+    // Password visibility toggle functionality
+    const eyeIcon = document.getElementById('eye-icon');
+    const passwordField = document.getElementById('password');
+
+    if (eyeIcon && passwordField) {
+        eyeIcon.addEventListener('click', function() {
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            } else {
+                passwordField.type = 'password';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            }
+        });
+    }
+
+    // Remember me functionality
+    const rememberMeCheckbox = document.getElementById("remember");
+    if (rememberMeCheckbox) {
+        rememberMeCheckbox.addEventListener("change", () => {
+            if (rememberMeCheckbox.checked) {
+                localStorage.setItem("rememberMe", "true");
+            } else {
+                localStorage.setItem("rememberMe", "false");
+            }
+        });
     }
 });
 
-const menuToggle = document.querySelector('.menu-toggle');
-const menu = document.querySelector('.menu');
+function performSearch() {
+    const input = document.getElementById("searchInput")?.value.trim().toLowerCase();
 
-if (menuToggle && menu) {
-    menuToggle.addEventListener('click', () => {
-        menu.classList.toggle('active');
-        menuToggle.classList.toggle('active');
-    });
+    if (!input) {
+        alert("Please enter a search term.");
+        return;
+    }
+
+    if (input === "home page" || input === "homepage" || input === "home") {
+        window.location.href = "{{ route('home') }}";
+    } else if (input === "faqs" || input === "facts" || input === "help") {
+        window.location.href = "{{ route('faqs') }}";
+    } else if (input === "about" || input === "about civil") {
+        window.location.href = "{{ route('about') }}";
+    } else if (input === "contact" || input === "number" || input === "email") {
+        window.location.href = "{{ route('contact') }}";
+    } else {
+        alert("No results found.");
+        const inputField = document.getElementById("searchInput");
+        if (inputField) inputField.value = "";
+    }
 }
 
 window.toggleDropdown = function () {
@@ -509,43 +550,18 @@ window.toggleDropdown = function () {
     if (dropdown) dropdown.classList.toggle("show");
 };
 
-window.togglePasswordVisibility = function (inputName) {
-    const passwordField = document.querySelector(`input[name="${inputName}"]`);
-    const eyeIcon = document.getElementById('eye-icon');
-
-    if (passwordField && eyeIcon) {
-        if (passwordField.type === 'password') {
-            passwordField.type = 'text';
-            eyeIcon.classList.add('fa-eye');
-            eyeIcon.classList.remove('fa-eye-slash');
-        } else {
-            passwordField.type = 'password';
-            eyeIcon.classList.add('fa-eye-slash');
-            eyeIcon.classList.remove('fa-eye');
-        }
-    }
-};
-
 function showForgotPassword() {
-    document.getElementById('loginContainer').style.display = 'none';
-    document.getElementById('forgotPasswordContainer').style.display = 'block';
+    const loginContainer = document.getElementById('loginContainer');
+    const forgotPasswordContainer = document.getElementById('forgotPasswordContainer');
+    if (loginContainer) loginContainer.style.display = 'none';
+    if (forgotPasswordContainer) forgotPasswordContainer.style.display = 'block';
 }
 
 function hideForgotPassword() {
-    document.getElementById('forgotPasswordContainer').style.display = 'none';
-    document.getElementById('loginContainer').style.display = 'block';
-}
-
-// Handle remember me functionality
-const rememberMeCheckbox = document.getElementById("remember");
-if (rememberMeCheckbox) {
-    rememberMeCheckbox.addEventListener("change", () => {
-        if (rememberMeCheckbox.checked) {
-            localStorage.setItem("rememberMe", "true");
-        } else {
-            localStorage.setItem("rememberMe", "false");
-        }
-    });
+    const loginContainer = document.getElementById('loginContainer');
+    const forgotPasswordContainer = document.getElementById('forgotPasswordContainer');
+    if (forgotPasswordContainer) forgotPasswordContainer.style.display = 'none';
+    if (loginContainer) loginContainer.style.display = 'block';
 }
 </script>
 

@@ -10,6 +10,10 @@
 	<style type="text/css">
     body {
             font-family: 'Poppins';
+            
+      background-color: #d8e4f0;
+      background-size: cover;
+      background-repeat: no-repeat;
         }
     *{
       margin: 0;
@@ -32,9 +36,6 @@
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
-      background-color: #d8e4f0;
-      background-size: cover;
-      background-repeat: no-repeat;
       margin: 0;
       padding: 20px;
       box-sizing: border-box;
@@ -65,7 +66,6 @@
       margin: 20px 0;
       align-items: center;
       width: 100%;
-      max-width: 600px;
       height: 40px;
       padding: 15px;
       background: #f9f9f9;

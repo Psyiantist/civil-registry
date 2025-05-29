@@ -956,129 +956,62 @@
 
 
   <script>
-    function toggleDropdown() {
-    const dropdown = document.getElementById("accountDropdown");
-    dropdown.classList.toggle("show");
-}
+    document.addEventListener('DOMContentLoaded', function() {
+        // Dropdown functionality
+        const userIcon = document.querySelector(".user-icon");
+        const dropdown = document.getElementById("accountDropdown");
 
-window.addEventListener("click", function(event) {
-    const userIcon = document.querySelector(".user-icon");
-    const dropdown = document.getElementById("accountDropdown");
+        if (userIcon && dropdown) {
+            userIcon.addEventListener("click", function(event) {
+                event.stopPropagation();
+                dropdown.classList.toggle("show");
+            });
 
-    if (!userIcon.contains(event.target) && !dropdown.contains(event.target)) {
-        dropdown.classList.remove("show");
-    }
-});
-
-const button = document.querySelector('.menu-toggle');
-const menu = document.querySelector('.menu');
-if (button && menu) {
-    button.onclick = () => {
-        menu.classList.toggle('expand-mobile');
-        button.classList.toggle('expand-icon');
-    };
-}
-
-    const months = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        ];
-        let currentDate = new Date();
-        let currentMonthIndex = currentDate.getMonth();
-        let currentYear = currentDate.getFullYear();
-
-        function generateCalendar() {
-            const calendarDays = document.getElementById('calendarDays');
-            calendarDays.innerHTML = '';
-
-            const firstDay = new Date(currentYear, currentMonthIndex, 1).getDay();
-            const daysInMonth = new Date(currentYear, currentMonthIndex + 1, 0).getDate();
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-
-            for (let i = 0; i < firstDay; i++) {
-                const emptyCell = document.createElement('div');
-                emptyCell.classList.add('text-gray-400');
-                calendarDays.appendChild(emptyCell);
-            }
-
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dayCell = document.createElement('div');
-                const currentDate = new Date(currentYear, currentMonthIndex, day);
-                currentDate.setHours(0, 0, 0, 0);
-
-                dayCell.classList.add('cursor-pointer');
-                dayCell.textContent = day;
-
-                if (currentDate <= today) {
-                    dayCell.classList.add('text-gray-400', 'cursor-not-allowed');
-                    dayCell.style.pointerEvents = 'none';
-                } else {
-                    dayCell.onclick = function() {
-                        selectDate(dayCell);
-                    };
+            document.addEventListener("click", function(event) {
+                if (!userIcon.contains(event.target) && !dropdown.contains(event.target)) {
+                    dropdown.classList.remove("show");
                 }
-
-                calendarDays.appendChild(dayCell);
-            }
-
-            document.getElementById('currentMonth').textContent = `${months[currentMonthIndex]} ${currentYear}`;
-        }
-
-        function prevMonth() {
-            if (currentMonthIndex > 0) {
-                currentMonthIndex--;
-            } else {
-                currentMonthIndex = 11;
-                currentYear--;
-            }
-            generateCalendar();
-        }
-
-        function nextMonth() {
-            if (currentMonthIndex < 11) {
-                currentMonthIndex++;
-            } else {
-                currentMonthIndex = 0;
-                currentYear++;
-            }
-            generateCalendar();
-        }
-
-        function selectDate(element) {
-            document.querySelectorAll('.grid-cols-7 div').forEach(function (date) {
-                date.classList.remove('selected-date');
             });
-            element.classList.add('selected-date');
-            
-            // Set the selected date in the hidden input
-            const selectedDate = new Date(currentYear, currentMonthIndex, element.textContent);
-            document.getElementById('selectedDate').value = selectedDate.toISOString().split('T')[0];
         }
 
-        function selectTime(element) {
-            document.querySelectorAll('.grid-cols-2 button').forEach(function (time) {
-                time.classList.remove('selected-time');
+        // Burger menu functionality
+        const button = document.querySelector('.menu-toggle');
+        const menu = document.querySelector('.menu');
+        if (button && menu) {
+            button.addEventListener('click', () => {
+                menu.classList.toggle('expand-mobile');
+                button.classList.toggle('expand-icon');
             });
-            element.classList.add('selected-time');
-            
-            // Set the selected time in the hidden input
-            document.getElementById('selectedTime').value = element.dataset.time;
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            generateCalendar();
+        // Search functionality
+        const searchInput = document.getElementById("searchInput");
+        if (searchInput) {
+            searchInput.addEventListener("keypress", function(e) {
+                if (e.key === "Enter") {
+                    performSearch();
+                }
+            });
+        }
 
-            // Add form submission handler
-            document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+        // Calendar initialization
+        const calendarDays = document.getElementById('calendarDays');
+        if (calendarDays) {
+            generateCalendar();
+        }
+
+        // Form submission handler
+        const appointmentForm = document.getElementById('appointmentForm');
+        if (appointmentForm) {
+            appointmentForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                const selectedDate = document.getElementById('selectedDate').value;
-                const selectedTime = document.getElementById('selectedTime').value;
-                const appointmentType = document.querySelector('select[name="appointment_type"]').value;
-                const documentType = document.querySelector('select[name="document_type"]').value;
+                const selectedDate = document.getElementById('selectedDate');
+                const selectedTime = document.getElementById('selectedTime');
+                const appointmentType = document.querySelector('select[name="appointment_type"]');
+                const documentType = document.querySelector('select[name="document_type"]');
 
-                if (!selectedDate || !selectedTime || !appointmentType || !documentType) {
+                if (!selectedDate?.value || !selectedTime?.value || !appointmentType?.value || !documentType?.value) {
                     alert('Please fill in all required fields');
                     return;
                 }
@@ -1089,7 +1022,7 @@ if (button && menu) {
                     method: 'POST',
                     body: formData,
                     headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
                         'Accept': 'application/json',
                         'X-Requested-With': 'XMLHttpRequest'
                     }
@@ -1104,9 +1037,11 @@ if (button && menu) {
                 })
                 .then(data => {
                     if (data.success) {
-                        showConfirmationModal(selectedDate, selectedTime, data);
+                        showConfirmationModal(selectedDate.value, selectedTime.value, data);
                         this.reset();
-                        generateCalendar(); // Refresh calendar after successful submission
+                        if (calendarDays) {
+                            generateCalendar();
+                        }
                     } else {
                         showCancellationModal(data.message);
                     }
@@ -1116,14 +1051,19 @@ if (button && menu) {
                     showCancellationModal(error.message);
                 });
             });
-        });
+        }
+    });
 
-        function performSearch() {
-            const input = document.getElementById("searchInput").value.trim().toLowerCase();
+    function performSearch() {
+        const searchInput = document.getElementById("searchInput");
+        if (!searchInput) return;
 
-            if (input === "") {
-        alert("Please enter a search term.");
-    } else {
+        const input = searchInput.value.trim().toLowerCase();
+        if (!input) {
+            alert("Please enter a search term.");
+            return;
+        }
+
         if (input === "home page" || input === "homepage" || input === "home") {
             window.location.href = "{{ route('residence-homepage') }}";
         } else if (input === "faqs" || input === "facts" || input === "help") {
@@ -1137,47 +1077,148 @@ if (button && menu) {
         } else if (input === "contact" || input === "number" || input === "email") {
             window.location.href = "{{ route('residence-contact-us') }}";
         } else {
-                alert("No results found.");
-                inputField.value = "";
+            alert("No results found.");
+            searchInput.value = "";
         }
-    }}
-    document.getElementById("searchInput").addEventListener("keypress", function(e) {
-        if (e.key === "Enter") {
-        performSearch();
     }
-    });
 
-        // confirm
-        function showConfirmationModal(date, time, data) {
-            const confirmationModal = document.getElementById("confirmationModal");
-            const confirmationMessage = document.querySelector("#confirmationModal p");
-            confirmationMessage.innerHTML = `Your appointment is subject to approval. Wait for the confirmation email before attending your appointment.<br><br>
-                📅 Date: ${date}<br>
-                ⏰ Time: ${time}<br>
-                🔖 Reference Number: ${data.reference_number}<br><br>
-                Please check your email for further details.<br>
-                If you need to cancel due to an error or change of mind, kindly email us as soon as possible.<br><br>
-                Thank you!`;
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    let currentDate = new Date();
+    let currentMonthIndex = currentDate.getMonth();
+    let currentYear = currentDate.getFullYear();
 
-            confirmationModal.classList.remove("hidden");
+    function generateCalendar() {
+        const calendarDays = document.getElementById('calendarDays');
+        const currentMonth = document.getElementById('currentMonth');
+        
+        if (!calendarDays || !currentMonth) return;
+
+        calendarDays.innerHTML = '';
+
+        const firstDay = new Date(currentYear, currentMonthIndex, 1).getDay();
+        const daysInMonth = new Date(currentYear, currentMonthIndex + 1, 0).getDate();
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        for (let i = 0; i < firstDay; i++) {
+            const emptyCell = document.createElement('div');
+            emptyCell.classList.add('text-gray-400');
+            calendarDays.appendChild(emptyCell);
         }
 
-        // cancel
-        function showCancellationModal(errorMessage) {
-            const cancellationModal = document.getElementById("cancellationModal");
-            const cancellationMessage = document.querySelector("#cancellationModal p");
-            cancellationMessage.innerHTML = `There was an error processing your appointment request.<br><br>
-                ${errorMessage || 'Please try again or contact our support team for assistance.'}<br><br>
-                Thank you for your understanding.`;
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dayCell = document.createElement('div');
+            const currentDate = new Date(currentYear, currentMonthIndex, day);
+            currentDate.setHours(0, 0, 0, 0);
 
-            cancellationModal.classList.remove("hidden");
+            dayCell.classList.add('cursor-pointer');
+            dayCell.textContent = day;
+
+            if (currentDate <= today) {
+                dayCell.classList.add('text-gray-400', 'cursor-not-allowed');
+                dayCell.style.pointerEvents = 'none';
+            } else {
+                dayCell.onclick = function() {
+                    selectDate(dayCell);
+                };
+            }
+
+            calendarDays.appendChild(dayCell);
         }
 
-        // Close 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add("hidden");
-        }
+        currentMonth.textContent = `${months[currentMonthIndex]} ${currentYear}`;
+    }
 
+    function prevMonth() {
+        if (currentMonthIndex > 0) {
+            currentMonthIndex--;
+        } else {
+            currentMonthIndex = 11;
+            currentYear--;
+        }
+        generateCalendar();
+    }
+
+    function nextMonth() {
+        if (currentMonthIndex < 11) {
+            currentMonthIndex++;
+        } else {
+            currentMonthIndex = 0;
+            currentYear++;
+        }
+        generateCalendar();
+    }
+
+    function selectDate(element) {
+        const calendarDays = document.querySelectorAll('.grid-cols-7 div');
+        if (!calendarDays.length) return;
+
+        calendarDays.forEach(function (date) {
+            date.classList.remove('selected-date');
+        });
+        element.classList.add('selected-date');
+        
+        const selectedDate = new Date(currentYear, currentMonthIndex, element.textContent);
+        const selectedDateInput = document.getElementById('selectedDate');
+        if (selectedDateInput) {
+            selectedDateInput.value = selectedDate.toISOString().split('T')[0];
+        }
+    }
+
+    function selectTime(element) {
+        const timeButtons = document.querySelectorAll('.grid-cols-2 button');
+        if (!timeButtons.length) return;
+
+        timeButtons.forEach(function (time) {
+            time.classList.remove('selected-time');
+        });
+        element.classList.add('selected-time');
+        
+        const selectedTimeInput = document.getElementById('selectedTime');
+        if (selectedTimeInput) {
+            selectedTimeInput.value = element.dataset.time;
+        }
+    }
+
+    function showConfirmationModal(date, time, data) {
+        const confirmationModal = document.getElementById("confirmationModal");
+        const confirmationMessage = document.querySelector("#confirmationModal p");
+        
+        if (!confirmationModal || !confirmationMessage) return;
+
+        confirmationMessage.innerHTML = `Your appointment is subject to approval. Wait for the confirmation email before attending your appointment.<br><br>
+            📅 Date: ${date}<br>
+            ⏰ Time: ${time}<br>
+            🔖 Reference Number: ${data.reference_number}<br><br>
+            Please check your email for further details.<br>
+            If you need to cancel due to an error or change of mind, kindly email us as soon as possible.<br><br>
+            Thank you!`;
+
+        confirmationModal.classList.remove("hidden");
+    }
+
+    function showCancellationModal(errorMessage) {
+        const cancellationModal = document.getElementById("cancellationModal");
+        const cancellationMessage = document.querySelector("#cancellationModal p");
+        
+        if (!cancellationModal || !cancellationMessage) return;
+
+        cancellationMessage.innerHTML = `There was an error processing your appointment request.<br><br>
+            ${errorMessage || 'Please try again or contact our support team for assistance.'}<br><br>
+            Thank you for your understanding.`;
+
+        cancellationModal.classList.remove("hidden");
+    }
+
+    function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add("hidden");
+        }
+    }
   </script>
 
  </body>

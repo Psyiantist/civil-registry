@@ -227,8 +227,9 @@
                 display: block;
                 width: 30px;
                 height: 25px;
-                top: 20px;
+                position: absolute;
                 right: 20px;
+                top: 20px;
                 cursor: pointer;
                 border: none;
                 outline: none;
@@ -336,14 +337,14 @@
 
             nav .menu-toggle {
                 display: flex;
-                top: auto;
+                position: absolute;
+                right: 20px;
+                top: 20px;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
                 font-size: 24px;
                 color: #333;
-                position: relative;
-                margin-left: 20px;
             }
 
             nav .menu-toggle:hover {

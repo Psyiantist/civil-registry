@@ -190,6 +190,7 @@
               -1px 1px 0px white,
                0 0 50px black;
       font-family: "Poppins", sans-serif;
+      padding-top: 50px;
     }
 
     .login-content .details h4 {
@@ -460,6 +461,8 @@
         letter-spacing: 8px;
         padding: 0 15px;
         margin: 0;
+        padding-top: 150px;
+        
       }
 
       .login-content .details h4 {

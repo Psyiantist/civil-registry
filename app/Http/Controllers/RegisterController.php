@@ -79,7 +79,8 @@ class RegisterController extends Controller
                 'permanent_address' => $request->input('permanent_address'),
                 'date_of_birth' => $request->input('date_of_birth'),
                 'is_verified' => 0,
-                'status' => 'Pending'
+                'status' => 'Pending',
+                'last_login' => now(),
             ]);
 
             $user = User::create($registrationData);
