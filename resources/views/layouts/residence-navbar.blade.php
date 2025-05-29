@@ -432,19 +432,19 @@
 
         <div class="menu">
             <ul>
-                <li><a class="{{ request()->is('residence/homepage') ? 'active' : '' }}" href="{{ route('residence-homepage') }}">Home</a></li>
-                <li>
+                <li><a class="{{ request()->is('residence-homepage') ? 'active' : '' }}" href="{{ route('residence-homepage') }}">Home</a></li>
+                <li class="{{ request()->is('residence-requirements') || request()->is('residence-appointment') ? 'active' : '' }}">
                     <a href="#">Services <i class="fas fa-caret-down"></i></a>
                     <div class="dropdown_menuuu">
                         <ul>
-                            <li><a href="{{ route('residence-requirements') }}">Requirements</a></li>
-                            <li><a href="{{ route('residence-appointment') }}">Appointment</a></li>
+                            <li><a class="{{ request()->is('residence-requirements') ? 'active' : '' }}" href="{{ route('residence-requirements') }}">Requirements</a></li>
+                            <li><a class="{{ request()->is('residence-appointment') ? 'active' : '' }}" href="{{ route('residence-appointment') }}">Appointment</a></li>
                         </ul>
                     </div>
                 </li>
-                <li><a class="{{ request()->is('residence/faqs') ? 'active' : '' }}" href="{{ route('residence-faqs') }}">FAQs</a></li>
-                <li><a class="{{ request()->is('residence/about-us') ? 'active' : '' }}" href="{{ route('residence-about-us') }}">About Us</a></li>
-                <li><a class="{{ request()->is('residence/contact-us') ? 'active' : '' }}" href="{{ route('residence-contact-us') }}">Contact Us</a></li>
+                <li><a class="{{ request()->is('residence-faqs') ? 'active' : '' }}" href="{{ route('residence-faqs') }}">FAQs</a></li>
+                <li><a class="{{ request()->is('residence-about-us') ? 'active' : '' }}" href="{{ route('residence-about-us') }}">About Us</a></li>
+                <li><a class="{{ request()->is('residence-contact-us') ? 'active' : '' }}" href="{{ route('residence-contact-us') }}">Contact Us</a></li>
             </ul>
         </div>
 
