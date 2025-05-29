@@ -427,9 +427,15 @@
       width: 100%;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
+      position: relative;
     }
 
-    #approvalTable, #userActivityTable {
+    /* Add spacing between tables */
+    .account-approval-container + .account-approval-container {
+      margin-top: 80px;
+    }
+
+    #approvalTable, #userActivityTable, #employeeApprovalTable {
       width: 100%;
       min-width: 800px;
       border-collapse: collapse;
@@ -438,7 +444,8 @@
     }
 
     #approvalTable th, #approvalTable td,
-    #userActivityTable th, #userActivityTable td {
+    #userActivityTable th, #userActivityTable td,
+    #employeeApprovalTable th, #employeeApprovalTable td {
       padding: 12px;
       text-align: left;
       font-size: 0.95rem;
@@ -446,7 +453,7 @@
       white-space: nowrap;
     }
 
-    #approvalTable th, #userActivityTable th {
+    #approvalTable th, #userActivityTable th, #employeeApprovalTable th {
       background-color: #1E63E9;
       color: white;
       font-weight: 600;
@@ -456,17 +463,20 @@
     }
 
     #approvalTable tr:last-child td,
-    #userActivityTable tr:last-child td {
+    #userActivityTable tr:last-child td,
+    #employeeApprovalTable tr:last-child td {
       border-bottom: none;
     }
 
     #approvalTable tr,
-    #userActivityTable tr {
+    #userActivityTable tr,
+    #employeeApprovalTable tr {
       transition: background 0.2s;
     }
 
     #approvalTable tr:hover,
-    #userActivityTable tr:hover {
+    #userActivityTable tr:hover,
+    #employeeApprovalTable tr:hover {
       background: #f0f6ff;
     }
 
@@ -480,6 +490,21 @@
       white-space: nowrap;
     }
 
+    .status-pending {
+      background-color: #f59e0b;
+      color: white;
+    }
+
+    .status-approved {
+      background-color: #10b981;
+      color: white;
+    }
+
+    .status-declined {
+      background-color: #ef4444;
+      color: white;
+    }
+
     /* Responsive styles for tables */
     @media screen and (max-width: 1024px) {
       .account-approval-container {
@@ -488,7 +513,8 @@
       }
 
       #approvalTable th, #approvalTable td,
-      #userActivityTable th, #userActivityTable td {
+      #userActivityTable th, #userActivityTable td,
+      #employeeApprovalTable th, #employeeApprovalTable td {
         padding: 10px;
         font-size: 0.9rem;
       }
@@ -510,23 +536,29 @@
         margin: 15px 5px;
         border-radius: 6px;
         overflow: visible;
+        margin-bottom: 40px;
       }
 
-      #approvalTable, #userActivityTable {
+      /* Add more spacing between tables on mobile */
+      .account-approval-container + .account-approval-container {
+        margin-top: 60px;
+      }
+
+      #approvalTable, #userActivityTable, #employeeApprovalTable {
         display: block;
         min-width: 100%;
       }
 
-      #approvalTable thead, #userActivityTable thead {
+      #approvalTable thead, #userActivityTable thead, #employeeApprovalTable thead {
         display: none;
       }
 
-      #approvalTable tbody, #userActivityTable tbody {
+      #approvalTable tbody, #userActivityTable tbody, #employeeApprovalTable tbody {
         display: block;
         width: 100%;
       }
 
-      #approvalTable tr, #userActivityTable tr {
+      #approvalTable tr, #userActivityTable tr, #employeeApprovalTable tr {
         display: block;
         margin-bottom: 15px;
         background: white;
@@ -535,24 +567,26 @@
         padding: 12px;
       }
 
-      #approvalTable td, #userActivityTable td {
+      #approvalTable td, #userActivityTable td, #employeeApprovalTable td {
         display: flex;
         padding: 8px 0;
         border: none;
         font-size: 0.9rem;
         align-items: center;
         justify-content: space-between;
+        text-align: right;
       }
 
-      #approvalTable td:before, #userActivityTable td:before {
+      #approvalTable td:before, #userActivityTable td:before, #employeeApprovalTable td:before {
         content: attr(data-label);
         font-weight: 600;
         color: #1E63E9;
         margin-right: 10px;
         flex: 0 0 40%;
+        text-align: left;
       }
 
-      #approvalTable td:last-child, #userActivityTable td:last-child {
+      #approvalTable td:last-child, #userActivityTable td:last-child, #employeeApprovalTable td:last-child {
         border-bottom: none;
       }
 
@@ -570,15 +604,20 @@
       }
 
       /* Action buttons container */
-      #approvalTable td:last-child, #userActivityTable td:last-child {
+      #approvalTable td:last-child, #userActivityTable td:last-child, #employeeApprovalTable td:last-child {
         flex-direction: column;
         align-items: stretch;
         gap: 8px;
       }
 
       /* Add labels for mobile view */
-      #approvalTable td[data-label], #userActivityTable td[data-label] {
+      #approvalTable td[data-label], #userActivityTable td[data-label], #employeeApprovalTable td[data-label] {
         position: relative;
+      }
+
+      /* Improve mobile view for links */
+      #approvalTable td a, #userActivityTable td a, #employeeApprovalTable td a {
+        margin-left: auto;
       }
     }
 
@@ -589,7 +628,8 @@
       }
 
       #approvalTable th, #approvalTable td,
-      #userActivityTable th, #userActivityTable td {
+      #userActivityTable th, #userActivityTable td,
+      #employeeApprovalTable th, #employeeApprovalTable td {
         padding: 6px;
         font-size: 0.8rem;
       }
@@ -607,6 +647,16 @@
       h2 {
         font-size: 1.2rem;
         padding: 10px;
+      }
+
+      /* Improve mobile view for action buttons */
+      .approval-action-form {
+        width: 100%;
+      }
+
+      .approve-btn, .reject-btn, .delete-btn {
+        width: 100%;
+        margin: 2px 0;
       }
     }
 
@@ -629,7 +679,7 @@
     }
 
     /* Improve table header visibility */
-    #approvalTable th, #userActivityTable th {
+    #approvalTable th, #userActivityTable th, #employeeApprovalTable th {
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
@@ -1063,6 +1113,73 @@
     </div>
   </div>
   <!-- END USER ACTIVITY SECTION -->
+
+  <!-- EMPLOYEE ACCOUNT APPROVAL SECTION -->
+  @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
+  <div class="account-approval-container">
+    <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">EMPLOYEE ACCOUNT APPROVAL</h2>
+    @if(session('employee_success'))
+        <div style="color: green; font-weight: bold; margin-bottom: 10px;">{{ session('employee_success') }}</div>
+    @endif
+    @if(session('employee_error'))
+        <div style="color: red; font-weight: bold; margin-bottom: 10px;">{{ session('employee_error') }}</div>
+    @endif
+    <div class="table-responsive">
+      <table id="employeeApprovalTable">
+        <thead>
+          <tr>
+            <th>Employee Name</th>
+            <th>Username</th>
+            <th>Email Address</th>
+            <th>Role</th>
+            <th>ID Card</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if($pending_employees->isEmpty())
+            <tr>
+              <td colspan="7" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">No pending employee accounts for approval.</td>
+            </tr>
+          @else
+            @foreach($pending_employees as $employee)
+              <tr>
+                <td data-label="Employee Name">{{ $employee->first_name }} {{ $employee->last_name }}</td>
+                <td data-label="Username">{{ $employee->username }}</td>
+                <td data-label="Email Address">{{ $employee->email }}</td>
+                <td data-label="Role">{{ $employee->role }}</td>
+                <td data-label="ID Card">
+                  @if($employee->id_card_image)
+                    <a href="{{ asset('storage/' . $employee->id_card_image) }}" target="_blank" style="color: #1E63E9; text-decoration: underline;">View ID Card</a>
+                  @else
+                    <span style="color: #aaa;">No ID Card</span>
+                  @endif
+                </td>
+                <td data-label="Status">
+                  <span class="status-badge status-pending">Pending</span>
+                </td>
+                <td data-label="Action">
+                  <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <form method="POST" action="{{ route('admin.accept-employee', $employee->id) }}" class="approval-action-form">
+                      @csrf
+                      <button type="submit" class="approve-btn"><i class="fas fa-check-circle"></i>Approve</button>
+                    </form>
+                    <form method="POST" action="{{ route('admin.reject-employee', $employee->id) }}" class="approval-action-form">
+                      @csrf
+                      <button type="submit" class="reject-btn"><i class="fas fa-times-circle"></i>Reject</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            @endforeach
+          @endif
+        </tbody>
+      </table>
+    </div>
+  </div>
+  @endif
+  <!-- END EMPLOYEE ACCOUNT APPROVAL SECTION -->
 
   @include('layouts.footer')
 

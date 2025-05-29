@@ -21,7 +21,11 @@ class Employee extends Authenticatable
         'username',
         'password',
         'first_name',
-        'last_name'
+        'last_name',
+        'birthday',
+        'address',
+        'id_card_image',
+        'status'
     ];
 
     /**
@@ -43,6 +47,7 @@ class Employee extends Authenticatable
     {
         return [
             'password' => 'hashed',
+            'birthday' => 'date',
         ];
     }
 }

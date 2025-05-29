@@ -10,10 +10,9 @@
   <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
   <script>
-    // Define functions before they're used
     function togglePasswordVisibility(inputId) {
         const passwordField = document.getElementById(inputId);
-        const eyeIcon = passwordField.nextElementSibling;
+        const eyeIcon = document.querySelector(`[onclick="togglePasswordVisibility('${inputId}')"]`);
 
         if (passwordField && eyeIcon) {
             if (passwordField.type === 'password') {
@@ -66,17 +65,7 @@
                 rememberMeCheckbox.checked = true;
             }
         }
-
-        // Search functionality
-        const searchInput = document.getElementById("searchInput");
-        if (searchInput) {
-            searchInput.addEventListener("keypress", function(e) {
-                if (e.key === "Enter") {
-                    performSearch();
-                }
-            });
-        }
-
+    });
      
     // Add password validation
     document.getElementById('forgotPasswordForm').addEventListener('submit', function(e) {
@@ -343,6 +332,21 @@
       width: 100%;
     }
 
+    .login-content .alert-warning {
+      color: #856404;
+      background-color: #fff3cd;
+      border-color: #ffeeba;
+      font-size: 16px !important;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding: 10px 15px;
+      border-radius: 6px;
+      box-shadow: none;
+      width: 100%;
+    }
+
     .login-content .input-group {
       position: relative;
       width: 100%;
@@ -520,6 +524,11 @@
       @if(session('success'))
           <div style="font-family: 'Poppins', sans-serif;" class="alert-success">
               {{ session('success') }}
+          </div>
+      @endif
+      @if(session('warning'))
+          <div style="font-family: 'Poppins', sans-serif;" class="alert-warning">
+              {{ session('warning') }}
           </div>
       @endif
       <form action="{{ route('admin.login') }}" method="POST" id="loginForm">

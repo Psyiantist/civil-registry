@@ -101,6 +101,16 @@ class AuthController extends Controller
             return redirect()->back()->withErrors(['password' => 'Invalid password']);
         }
 
+        // Check if account is pending
+        if ($employee->status === 'pending') {
+            return redirect()->back()->withErrors(['username' => 'Your account is pending approval. Please wait for admin approval.']);
+        }
+
+        // Check if account is declined
+        if ($employee->status === 'declined') {
+            return redirect()->back()->withErrors(['username' => 'Your account has been declined. Please contact the administrator.']);
+        }
+
         Auth::guard('employee')->login($employee);
         return redirect()->route('admin.homepage')->with('success', 'Login successful');
     }

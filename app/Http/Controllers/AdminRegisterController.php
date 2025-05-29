@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AdminRegistrationMail;
+use Illuminate\Support\Facades\Storage;
 
 class AdminRegisterController extends Controller
 {
@@ -27,27 +28,38 @@ class AdminRegisterController extends Controller
             'id_card_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $filename = null;
-        if($request->hasFile('id_card_image')){
-            $file = $request->file('id_card_image');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('storage/uploads'), $filename);
+        try {
+            $filename = null;
+            if($request->hasFile('id_card_image')){
+                $file = $request->file('id_card_image');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('storage/uploads'), $filename);
+            }
+
+            $employee = Employee::create([
+                'username' => $request->email,
+                'password' => Hash::make($request->password),
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'birthday' => $request->birthday,
+                'address' => $request->address,
+                'id_card_image' => $filename,
+                'status' => 'pending'
+            ]);
+
+            // Send registration confirmation email
+            Mail::to($request->email)->send(new \App\Mail\RegistrationMail($request->first_name));
+
+            return redirect()->route('admin.login')->with('success', 'Registration successful! Please wait for admin approval.');
+        } catch (\Exception $e) {
+            // If there's an error, delete the uploaded file if it exists
+            if (isset($filename) && file_exists(public_path('storage/uploads/' . $filename))) {
+                unlink(public_path('storage/uploads/' . $filename));
+            }
+            
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['error' => 'Registration failed. Please try again.']);
         }
-
-        $employee = Employee::create([
-            'username' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'admin',
-            'birthday' => $request->birthday,
-            'address' => $request->address,
-            'id_card_image' => $filename,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-        ]);
-
-        // Send welcome email
-        Mail::to($request->email)->send(new AdminRegistrationMail($request->first_name));
-
-        return redirect()->route('admin.login')->with('success', 'Registration successful! Please login.');
     }
 } 

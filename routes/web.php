@@ -13,6 +13,8 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\RequirementController;
 use App\Http\Controllers\AdminRegisterController;
+use App\Http\Controllers\EmployeeApprovalController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('homepage');
@@ -61,12 +63,12 @@ Route::middleware(['auth'])->group(function () {
 
 // ADMIN ROUTES
 Route::get('/admin/login', [AuthController::class, 'showEmployeeLoginForm'])->name('admin.login');
-Route::post('/admin/login', [AuthController::class, 'employeeLoginHandler'])->name('admin.login.handler');
+Route::post('/admin/login', [AuthController::class, 'employeeLoginHandler'])->name('admin.login');
 Route::get('/admin/logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
 Route::post('/admin/password/update', [AuthController::class, 'updateAdminPassword'])->name('admin.password.update');
 
 Route::middleware(['auth:employee'])->group(function () {
-    Route::get('/admin/homepage', [EmployeeController::class, 'showAdminHomepage'])->name('admin.homepage');
+    Route::get('/admin/homepage', [AdminController::class, 'showHomepage'])->name('admin.homepage');
     Route::get('/admin/appointment', [EmployeeController::class, 'showAdminAppointment'])->name('admin.appointment');
     Route::get('/admin/requirements', [EmployeeController::class, 'showAdminRequirements'])->name('admin.requirements');
     Route::get('/admin/faqs', [EmployeeController::class, 'showAdminFaqs'])->name('admin.faqs');
@@ -112,6 +114,10 @@ Route::middleware(['auth:employee'])->group(function () {
     // Email Tester Route
     Route::get('/admin/email-tester', [AppointmentController::class, 'showEmailTester'])->name('admin.email-tester');
     Route::post('/admin/email-tester/send', [AppointmentController::class, 'sendTestEmail'])->name('admin.email-tester.send');
+
+    // Employee Approval Routes
+    Route::post('/admin/accept-employee/{id}', [EmployeeApprovalController::class, 'acceptEmployee'])->name('admin.accept-employee');
+    Route::post('/admin/reject-employee/{id}', [EmployeeApprovalController::class, 'rejectEmployee'])->name('admin.reject-employee');
 });
 
 // Public Routes
