@@ -533,7 +533,7 @@
       @endif
       <form action="{{ route('admin.login') }}" method="POST" id="loginForm">
         @csrf
-        <input type="text" id="username" name="username" placeholder="Username" required>
+        <input type="text" id="username" name="username" placeholder="Email Address" required>
         <div class="input-group">
           <input type="password" name="password" id="password" placeholder="Password" required>
           <i class="fa fa-eye-slash eye-icon" id="eye-icon" onclick="togglePasswordVisibility('password')"></i>
