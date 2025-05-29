@@ -8,6 +8,7 @@
   <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style type="text/css">
 
     body {
@@ -990,10 +991,24 @@
   <div class="account-approval-container">
     <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">ACCOUNT APPROVAL</h2>
     @if(session('success'))
-        <div style="color: green; font-weight: bold; margin-bottom: 10px;">{{ session('success') }}</div>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '{{ session('success') }}',
+                confirmButtonColor: '#426DDC'
+            });
+        </script>
     @endif
     @if(session('error'))
-        <div style="color: red; font-weight: bold; margin-bottom: 10px;">{{ session('error') }}</div>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '{{ session('error') }}',
+                confirmButtonColor: '#426DDC'
+            });
+        </script>
     @endif
     <div class="table-responsive">
       <table id="approvalTable">
@@ -1119,10 +1134,24 @@
   <div class="account-approval-container">
     <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">EMPLOYEE ACCOUNT APPROVAL</h2>
     @if(session('employee_success'))
-        <div style="color: green; font-weight: bold; margin-bottom: 10px;">{{ session('employee_success') }}</div>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '{{ session('employee_success') }}',
+                confirmButtonColor: '#426DDC'
+            });
+        </script>
     @endif
     @if(session('employee_error'))
-        <div style="color: red; font-weight: bold; margin-bottom: 10px;">{{ session('employee_error') }}</div>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '{{ session('employee_error') }}',
+                confirmButtonColor: '#426DDC'
+            });
+        </script>
     @endif
     <div class="table-responsive">
       <table id="employeeApprovalTable">
@@ -1420,6 +1449,137 @@
       const fileNameSpan = input.closest('label').nextElementSibling;
       fileNameSpan.textContent = input.files[0] ? input.files[0].name : 'No file chosen';
     });
+  });
+
+  // Add confirmation dialogs for actions
+  document.addEventListener('DOMContentLoaded', function() {
+      // Approve user confirmation
+      const approveForms = document.querySelectorAll('form[action*="accept-user"]');
+      approveForms.forEach(form => {
+          form.addEventListener('submit', function(e) {
+              e.preventDefault();
+              Swal.fire({
+                  title: 'Approve User?',
+                  text: "Are you sure you want to approve this user?",
+                  icon: 'question',
+                  showCancelButton: true,
+                  confirmButtonColor: '#22c55e',
+                  cancelButtonColor: '#ef4444',
+                  confirmButtonText: 'Yes, approve!'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      form.submit();
+                  }
+              });
+          });
+      });
+
+      // Reject user confirmation
+      const rejectForms = document.querySelectorAll('form[action*="reject-user"]');
+      rejectForms.forEach(form => {
+          form.addEventListener('submit', function(e) {
+              e.preventDefault();
+              Swal.fire({
+                  title: 'Reject User?',
+                  text: "Are you sure you want to reject this user?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#ef4444',
+                  cancelButtonColor: '#6b7280',
+                  confirmButtonText: 'Yes, reject!'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      form.submit();
+                  }
+              });
+          });
+      });
+
+      // Delete user confirmation
+      const deleteForms = document.querySelectorAll('form[action*="delete-user"]');
+      deleteForms.forEach(form => {
+          form.addEventListener('submit', function(e) {
+              e.preventDefault();
+              Swal.fire({
+                  title: 'Delete User?',
+                  text: "Are you sure you want to delete this user? This action cannot be undone!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#ef4444',
+                  cancelButtonColor: '#6b7280',
+                  confirmButtonText: 'Yes, delete!'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      form.submit();
+                  }
+              });
+          });
+      });
+
+      // Approve employee confirmation
+      const approveEmployeeForms = document.querySelectorAll('form[action*="accept-employee"]');
+      approveEmployeeForms.forEach(form => {
+          form.addEventListener('submit', function(e) {
+              e.preventDefault();
+              Swal.fire({
+                  title: 'Approve Employee?',
+                  text: "Are you sure you want to approve this employee?",
+                  icon: 'question',
+                  showCancelButton: true,
+                  confirmButtonColor: '#22c55e',
+                  cancelButtonColor: '#ef4444',
+                  confirmButtonText: 'Yes, approve!'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      form.submit();
+                  }
+              });
+          });
+      });
+
+      // Reject employee confirmation
+      const rejectEmployeeForms = document.querySelectorAll('form[action*="reject-employee"]');
+      rejectEmployeeForms.forEach(form => {
+          form.addEventListener('submit', function(e) {
+              e.preventDefault();
+              Swal.fire({
+                  title: 'Reject Employee?',
+                  text: "Are you sure you want to reject this employee?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#ef4444',
+                  cancelButtonColor: '#6b7280',
+                  confirmButtonText: 'Yes, reject!'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      form.submit();
+                  }
+              });
+          });
+      });
+
+      // Delete announcement confirmation
+      const deleteAnnouncementForms = document.querySelectorAll('form[action*="announcements"]');
+      deleteAnnouncementForms.forEach(form => {
+          if (form.querySelector('input[name="_method"][value="DELETE"]')) {
+              form.addEventListener('submit', function(e) {
+                  e.preventDefault();
+                  Swal.fire({
+                      title: 'Delete Announcement?',
+                      text: "Are you sure you want to delete this announcement? This action cannot be undone!",
+                      icon: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#ef4444',
+                      cancelButtonColor: '#6b7280',
+                      confirmButtonText: 'Yes, delete!'
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                          form.submit();
+                      }
+                  });
+              });
+          }
+      });
   });
 
   </script>
