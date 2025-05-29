@@ -535,16 +535,18 @@
 
                 <div class="input-group file-group">
                     <label for="id_card_image" class="file-label">Upload ID Card Image</label>
-                    <input type="file" id="id_card_image" name="id_card_image" accept="image/*" required class="modern-input file-input {{ $errors->has('id_card_image') ? 'input-error' : '' }}" onchange="previewIdCard(event)">
-                    <div id="idCardPreviewContainer" class="preview-container" style="display:none;">
-                        <img id="idCardPreview" src="#" alt="ID Card Preview" class="id-card-preview"/>
-                    </div>
+                    <input type="file" id="id_card_image" name="id_card_image" accept="image/*" required class="modern-input file-input {{ $errors->has('id_card_image') ? 'input-error' : '' }}">
                 </div>
                 @error('id_card_image')
                     <span class="error-message">{{ $message }}</span>
                 @enderror
 
                 <button type="submit" class="btnn modern-btn">REGISTER</button>
+
+                <div class="checkbox-group" style="margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <input type="checkbox" id="updates" name="updates" required class="modern-checkbox" style="width: 14px; height: 14px; margin: 0;">
+                    <label for="updates" style="color: #666; font-size: 13px; margin: 0;">I would like to receive updates and notifications.</label>
+                </div>
 
                 <p class="link">Already have an account?
                     <a href="{{ route('admin.login') }}">Login here</a>
@@ -566,23 +568,6 @@
                 passwordField.type = 'password';
                 eyeIcon.classList.remove('fa-eye');
                 eyeIcon.classList.add('fa-eye-slash');
-            }
-        }
-
-        function previewIdCard(event) {
-            const input = event.target;
-            const previewContainer = document.getElementById('idCardPreviewContainer');
-            const preview = document.getElementById('idCardPreview');
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    previewContainer.style.display = 'flex';
-                }
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                preview.src = '#';
-                previewContainer.style.display = 'none';
             }
         }
     </script>
