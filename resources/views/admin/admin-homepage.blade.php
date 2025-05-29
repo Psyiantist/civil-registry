@@ -1129,9 +1129,9 @@
         <thead>
           <tr>
             <th>Employee Name</th>
-            <th>Username</th>
             <th>Email Address</th>
-            <th>Role</th>
+            <th>Birthday</th>
+            <th>Address</th>
             <th>ID Card</th>
             <th>Status</th>
             <th>Action</th>
@@ -1147,11 +1147,11 @@
               <tr>
                 <td data-label="Employee Name">{{ $employee->first_name }} {{ $employee->last_name }}</td>
                 <td data-label="Username">{{ $employee->username }}</td>
-                <td data-label="Email Address">{{ $employee->email }}</td>
-                <td data-label="Role">{{ $employee->role }}</td>
+                <td data-label="Birthday">{{ $employee->birthday ? $employee->birthday->format('M d, Y') : 'N/A' }}</td>
+                <td data-label="Address">{{ $employee->address ?? 'N/A' }}</td>
                 <td data-label="ID Card">
                   @if($employee->id_card_image)
-                    <a href="{{ asset('storage/' . $employee->id_card_image) }}" target="_blank" style="color: #1E63E9; text-decoration: underline;">View ID Card</a>
+                    <a href="{{ asset('storage/uploads/' . $employee->id_card_image) }}" target="_blank" style="color: #1E63E9; text-decoration: underline;">View ID Card</a>
                   @else
                     <span style="color: #aaa;">No ID Card</span>
                   @endif
