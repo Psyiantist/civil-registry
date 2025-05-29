@@ -382,7 +382,7 @@
 
                 <div class="notification-checkbox">
                     <input type="checkbox" id="receive-notifications" name="receive_notifications" value=1 required {{ old('receive_notifications') ? 'checked' : '' }}>
-                    <label for="receive-notifications">I would like to receive updates and notifications.</label>
+                    <label for="receive-notifications">I would like to receive updates and notifications via email.</label>
                     @error('receive_notifications')
                         <span class="error-message">{{ $message }}</span>
                     @enderror

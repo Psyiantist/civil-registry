@@ -545,7 +545,7 @@
 
                 <div class="checkbox-group" style="margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px;">
                     <input type="checkbox" id="updates" name="updates" required class="modern-checkbox" style="width: 14px; height: 14px; margin: 0;">
-                    <label for="updates" style="color: #666; font-size: 13px; margin: 0;">I would like to receive updates and notifications.</label>
+                    <label for="updates" style="color: #666; font-size: 13px; margin: 0;">I would like to receive updates and notifications via email.</label>
                 </div>
 
                 <p class="link">Already have an account?
