@@ -78,16 +78,58 @@ class AppointmentController extends Controller
 
     public function showAppointments()
     {
-        $appointments = Appointment::orderByRaw("
-            CASE 
-                WHEN status = 'Pending' THEN 1
-                WHEN status = 'Approved' THEN 2
-                WHEN status = 'Completed' THEN 3
-                WHEN status = 'Declined' THEN 4
-                WHEN status = 'Cancelled' THEN 5
-            END
-        ")->get();
-        return view('admin.admin-appointment', compact('appointments'));
+        $appointments = Appointment::with('user')
+            ->whereNotIn('status', ['Approved'])
+            ->orderByRaw("
+                CASE 
+                    WHEN status = 'Pending' THEN 1
+                    WHEN status = 'Completed' THEN 2
+                    WHEN status = 'Declined' THEN 3
+                    WHEN status = 'Cancelled' THEN 4
+                END
+            ")->get();
+
+        $approvedAppointments = Appointment::with('user')
+            ->where('status', 'Approved')
+            ->orderBy('appointment_date', 'asc')
+            ->orderBy('appointment_time', 'asc')
+            ->get();
+
+        return view('admin.admin-appointment', compact('appointments', 'approvedAppointments'));
+    }
+
+    public function filterApproved(Request $request)
+    {
+        try {
+            $request->validate([
+                'start_date' => 'required|date',
+                'end_date' => 'required|date|after_or_equal:start_date'
+            ]);
+
+            $appointments = Appointment::with('user')
+                ->where('status', 'Approved')
+                ->whereBetween('appointment_date', [$request->start_date, $request->end_date])
+                ->orderBy('appointment_date', 'asc')
+                ->orderBy('appointment_time', 'asc')
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'appointments' => $appointments
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to filter approved appointments: ' . $e->getMessage(), [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'request_data' => $request->all(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile()
+            ]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to filter appointments: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function updateStatus(Request $request, $id)

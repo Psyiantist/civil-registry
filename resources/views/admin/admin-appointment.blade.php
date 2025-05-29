@@ -27,10 +27,14 @@
         }
 
         .p-8 {
+            padding: 1.5rem;
+            min-height: auto;
+        }
 
-height: 100vh;
+        .main-section {
+            margin-bottom: 2rem;
+        }
 
-}
         html, body {
         overflow-x: hidden;
         height: 100%;
@@ -46,7 +50,6 @@ height: 100vh;
 
         section {
         background: transparent;
-        min-height: 100vh;
         padding: 2rem;
         position: relative;
         z-index: 1;
@@ -199,14 +202,630 @@ height: 100vh;
     }
     
 
+    .date-filter-container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 1.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        margin-bottom: 1.5rem;
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .date-input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .date-input-wrapper {
+        position: relative;
+    }
+
+    .date-input-wrapper label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #1F2937;
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.025em;
+    }
+
+    .date-input-wrapper input[type="date"] {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 2px solid #E5E7EB;
+        border-radius: 0.75rem;
+        background-color: white;
+        color: #1F2937;
+        font-size: 0.875rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    .date-input-wrapper input[type="date"]:hover {
+        border-color: #93C5FD;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .date-input-wrapper input[type="date"]:focus {
+        outline: none;
+        border-color: #3B82F6;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    }
+
+    /* Custom date picker button styles */
+    .date-input-wrapper input[type="date"]::-webkit-calendar-picker-indicator {
+        opacity: 0;
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.25rem;
+        height: 1.25rem;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    /* Custom date picker button */
+    .date-input-wrapper::after {
+        content: '';
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.25rem;
+        height: 1.25rem;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'%3E%3C/path%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        pointer-events: none;
+        transition: all 0.2s ease;
+    }
+
+    .date-input-wrapper:hover::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%233B82F6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'%3E%3C/path%3E%3C/svg%3E");
+    }
+
+    .date-input-wrapper input[type="date"]:focus + .date-input-wrapper::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%233B82F6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'%3E%3C/path%3E%3C/svg%3E");
+    }
+
+    /* Date picker popup styles */
+    .date-input-wrapper input[type="date"]::-webkit-datetime-edit {
+        padding: 0;
+    }
+
+    .date-input-wrapper input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+        padding: 0;
+    }
+
+    .date-input-wrapper input[type="date"]::-webkit-datetime-edit-text {
+        padding: 0 0.2em;
+        color: #6B7280;
+    }
+
+    .date-input-wrapper input[type="date"]::-webkit-datetime-edit-year-field,
+    .date-input-wrapper input[type="date"]::-webkit-datetime-edit-month-field,
+    .date-input-wrapper input[type="date"]::-webkit-datetime-edit-day-field {
+        padding: 0 0.2em;
+        color: #1F2937;
+    }
+
+    .date-input-wrapper input[type="date"]:focus::-webkit-datetime-edit-text,
+    .date-input-wrapper input[type="date"]:focus::-webkit-datetime-edit-year-field,
+    .date-input-wrapper input[type="date"]:focus::-webkit-datetime-edit-month-field,
+    .date-input-wrapper input[type="date"]:focus::-webkit-datetime-edit-day-field {
+        color: #3B82F6;
+    }
+
+    /* Date picker popup button styles */
+    .date-input-wrapper input[type="date"]::-webkit-inner-spin-button,
+    .date-input-wrapper input[type="date"]::-webkit-clear-button {
+        display: none;
+    }
+
+    .date-input-wrapper input[type="date"]::-webkit-calendar-picker-indicator {
+        background: transparent;
+        bottom: 0;
+        color: transparent;
+        cursor: pointer;
+        height: auto;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: auto;
+    }
+
+    .filter-button {
+        background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: none;
+        box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+        letter-spacing: 0.025em;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .filter-button:hover {
+        background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.25);
+    }
+
+    .filter-button:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px -1px rgba(37, 99, 235, 0.2);
+    }
+
+    .filter-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
+    }
+
+    .filter-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent
+        );
+        transition: 0.5s;
+    }
+
+    .filter-button:hover::before {
+        left: 100%;
+    }
+
+    .filter-button i {
+        font-size: 0.875rem;
+        transition: transform 0.3s ease;
+    }
+
+    .filter-button:hover i {
+        transform: rotate(90deg);
+    }
+
+    @media (min-width: 640px) {
+        .date-filter-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 1.5rem;
+        }
+
+        .date-input-group {
+            flex-direction: row;
+            flex: 1;
+            gap: 1.5rem;
+        }
+
+        .date-input-wrapper {
+            flex: 1;
+        }
+    }
+
+    /* Add smooth scrolling to the page */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Add a subtle animation to the container */
+    .date-filter-container {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+        .date-filter-container {
+            padding: 1rem;
+            margin: 0 -0.5rem 1rem -0.5rem;
+            border-radius: 0.75rem;
+        }
+
+        .date-input-group {
+            gap: 0.75rem;
+        }
+
+        .date-input-wrapper {
+            margin-bottom: 0.5rem;
+        }
+
+        .date-input-wrapper label {
+            font-size: 0.8125rem;
+            margin-bottom: 0.375rem;
+        }
+
+        .date-input-wrapper input[type="date"] {
+            padding: 0.625rem 0.75rem;
+            font-size: 0.8125rem;
+        }
+
+        .filter-button {
+            width: 100%;
+            justify-content: center;
+            padding: 0.625rem 1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Table Responsive Styles */
+        .overflow-x-auto {
+            margin: 0 -0.5rem;
+            padding: 0 0.5rem;
+        }
+
+        table {
+            min-width: 800px; /* Ensure table doesn't get too squeezed */
+        }
+
+        th, td {
+            padding: 0.75rem 0.5rem;
+            font-size: 0.8125rem;
+            white-space: nowrap;
+        }
+
+        /* Status badge adjustments */
+        .status-badge {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        /* Action buttons adjustments */
+        .action-button {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        /* Select dropdown adjustments */
+        select {
+            padding: 0.375rem 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        /* Table container adjustments */
+        .max-h-[600px] {
+            max-height: 400px;
+        }
+
+        /* Scrollbar styling for better mobile experience */
+        .overflow-x-auto::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .overflow-x-auto::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .overflow-x-auto::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+
+        .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Add touch-friendly scrolling */
+        .overflow-x-auto {
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: #888 #f1f1f1;
+        }
+
+        /* Improve table header visibility */
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        /* Add visual indicator for scrollable content */
+        .overflow-x-auto::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 20px;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.9));
+            pointer-events: none;
+        }
+    }
+
+    /* Small Mobile Devices */
+    @media (max-width: 480px) {
+        .date-filter-container {
+            padding: 0.75rem;
+        }
+
+        .date-input-wrapper input[type="date"] {
+            padding: 0.5rem 0.625rem;
+        }
+
+        .filter-button {
+            padding: 0.5rem 0.75rem;
+        }
+
+        th, td {
+            padding: 0.5rem 0.375rem;
+            font-size: 0.75rem;
+        }
+    }
+
+    /* Landscape Mode */
+    @media (max-width: 768px) and (orientation: landscape) {
+        .date-filter-container {
+            flex-direction: row;
+            align-items: flex-end;
+        }
+
+        .date-input-group {
+            flex-direction: row;
+        }
+
+        .filter-button {
+            width: auto;
+            margin-top: 0;
+        }
+
+        .max-h-[600px] {
+            max-height: 300px;
+        }
+    }
+
+    /* Enhanced Table Responsive Styles */
+    @media (max-width: 768px) {
+        /* Table Container */
+        .table-container {
+            position: relative;
+            margin: 0 -1rem;
+            padding: 0 1rem;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            min-width: 800px;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        /* Table Header */
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: #2563EB;
+        }
+
+        thead th {
+            position: relative;
+            padding: 0.75rem 0.5rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: white;
+            text-align: left;
+            white-space: nowrap;
+            border-bottom: 2px solid #1D4ED8;
+        }
+
+        /* Table Body */
+        tbody tr {
+            transition: background-color 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background-color: rgba(37, 99, 235, 0.05);
+        }
+
+        tbody td {
+            padding: 0.75rem 0.5rem;
+            font-size: 0.8125rem;
+            border-bottom: 1px solid #E5E7EB;
+            vertical-align: middle;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: nowrap;
+        }
+
+        .action-button {
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        /* Select Dropdown */
+        select {
+            padding: 0.375rem 0.5rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            background-color: white;
+            border: 1px solid #E5E7EB;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 1rem;
+            padding-right: 2rem;
+        }
+
+        /* Scrollbar Styling */
+        .table-container::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+
+        .table-container::-webkit-scrollbar-track {
+            background: #F3F4F6;
+            border-radius: 3px;
+        }
+
+        .table-container::-webkit-scrollbar-thumb {
+            background: #9CA3AF;
+            border-radius: 3px;
+        }
+
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: #6B7280;
+        }
+
+        /* Scroll Indicators */
+        .table-container::before,
+        .table-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 20px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .table-container::before {
+            left: 0;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.9), transparent);
+        }
+
+        .table-container::after {
+            right: 0;
+            background: linear-gradient(to left, rgba(255, 255, 255, 0.9), transparent);
+        }
+
+        /* Empty State */
+        .empty-state {
+            padding: 2rem;
+            text-align: center;
+            background: white;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .empty-state p {
+            color: #6B7280;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+    }
+
+    /* Small Mobile Devices */
+    @media (max-width: 480px) {
+        thead th {
+            padding: 0.625rem 0.375rem;
+            font-size: 0.75rem;
+        }
+
+        tbody td {
+            padding: 0.625rem 0.375rem;
+            font-size: 0.75rem;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.375rem;
+            font-size: 0.6875rem;
+            min-width: 70px;
+        }
+
+        .action-button {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.6875rem;
+        }
+
+        select {
+            padding: 0.25rem 0.375rem;
+            font-size: 0.6875rem;
+            padding-right: 1.75rem;
+            background-size: 0.875rem;
+        }
+    }
+
+    /* Landscape Mode */
+    @media (max-width: 768px) and (orientation: landscape) {
+        .table-container {
+            max-height: 60vh;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+    }
+
+    /* Touch Device Optimizations */
+    @media (hover: none) {
+        .action-button:active {
+            transform: scale(0.98);
+        }
+
+        select:active {
+            background-color: #F3F4F6;
+        }
+
+        tbody tr:active {
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+    }
+
   </style>
 </head>
 
 <body>
     @include('layouts.admin-navbar')
 
-    <main class="p-8">
-        <h2 class="text-2xl font-bold text-center mb-6">Scheduled Appointments</h2>
+    <main class="p-8 main-section">
+        <h2 class="text-2xl font-bold text-center mb-4">Scheduled Appointments</h2>
         <div class="overflow-x-auto">
             @if(session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
@@ -263,7 +882,7 @@ height: 100vh;
                                         <form action="{{ route('admin.appointments.status', $appointment->id) }}" method="POST" class="inline">
                                             @csrf
                                             @method('PUT')
-                                            <select name="status" onchange="handleStatusChange(this, {{ $appointment->id }})" class="border rounded px-2 py-1 text-sm">
+                                            <select name="status" onchange="handleStatusChange(this, {{ $appointment->id }})" class="status-select">
                                                 <option value="Pending" {{ $appointment->status == 'Pending' ? 'selected' : '' }}>Pending</option>
                                                 <option value="Approved" {{ $appointment->status == 'Approved' ? 'selected' : '' }}>Approved</option>
                                                 <option value="Completed" {{ $appointment->status == 'Completed' ? 'selected' : '' }}>Completed</option>
@@ -273,7 +892,7 @@ height: 100vh;
                                             <input type="hidden" name="cancellation_reason" id="cancellation_reason_{{ $appointment->id }}">
                                         </form>
                                     @else
-                                        <select disabled class="border rounded px-2 py-1 text-sm bg-gray-100">
+                                        <select disabled class="status-select">
                                             <option selected>{{ $appointment->status }}</option>
                                         </select>
                                     @endif
@@ -304,6 +923,81 @@ height: 100vh;
         </div>
     </main>
 
+    <!-- Approved Appointments Section -->
+    <main class="p-8 main-section">
+        <h2 class="text-2xl font-bold text-center mb-4">Approved Appointments</h2>
+        <div class="overflow-x-auto">
+            <div class="mb-4 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white/95 p-6 rounded-xl shadow-lg backdrop-blur-sm border border-white/20">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="relative">
+                        <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                        <div class="relative">
+                            <input type="date" id="start_date" name="start_date" 
+                                class="w-full px-4 py-2.5 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 ease-in-out cursor-pointer"
+                            >
+                    </div>
+                    </div>
+                    <div class="relative">
+                        <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                        <div class="relative">
+                            <input type="date" id="end_date" name="end_date" 
+                                class="w-full px-4 py-2.5 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 ease-in-out cursor-pointer"
+                            >
+                </div>
+                    </div>
+                </div>
+                <button onclick="filterApprovedAppointments()" class="px-4 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 ease-in-out transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl flex items-center gap-2">
+                    <i class="fas fa-filter"></i>
+                    <span>Filter</span>
+                </button>
+            </div>
+
+            <div class="max-h-[600px] overflow-y-auto relative">
+                <table class="min-w-full bg-white shadow rounded-lg overflow-hidden">
+                    <thead class="bg-blue-600 text-white">
+                        <tr>
+                            <th class="py-3 px-4 text-left">Reference Number</th>
+                            <th class="py-3 px-4 text-left">User Name</th>
+                            <th class="py-3 px-4 text-left">Appointment Type</th>
+                            <th class="py-3 px-4 text-left">Document Type</th>
+                            <th class="py-3 px-4 text-left">Date & Time</th>
+                            <th class="py-3 px-4 text-left">Status</th>
+                            @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
+                                <th class="py-3 px-4 text-left">Action</th>
+                            @endif
+                        </tr>
+                    </thead>
+                    <tbody id="approvedAppointmentTable">
+                        @foreach($approvedAppointments as $appointment)
+                        <tr class="border-b">
+                            <td class="py-3 px-4 font-medium">{{ $appointment->reference_number }}</td>
+                            <td class="py-3 px-4">{{ $appointment->user->first_name }} {{ $appointment->user->last_name }}</td>
+                            <td class="py-3 px-4">{{ $appointment->appointment_type }}</td>
+                            <td class="py-3 px-4">{{ $appointment->document_type }}</td>
+                            <td class="py-3 px-4">{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('Y-m-d') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</td>
+                            <td class="py-3 px-4">
+                                <span class="bg-green-300 text-green-900 px-2 py-1 rounded text-sm">{{ $appointment->status }}</span>
+                            </td>
+                            @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
+                                <td class="py-3 px-4">
+                                    <form action="{{ route('admin.appointments.status', $appointment->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <select name="status" onchange="handleApprovedStatusChange(this, {{ $appointment->id }})" class="status-select">
+                                            <option value="Approved" {{ $appointment->status === 'Approved' ? 'selected' : '' }}>Approved</option>
+                                            <option value="Completed" {{ $appointment->status === 'Completed' ? 'selected' : '' }}>Completed</option>
+                                        </select>
+                                    </form>
+                                </td>
+                            @endif
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
     <!-- Cancellation Modal -->
     <div id="cancellationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
@@ -317,8 +1011,8 @@ height: 100vh;
                     <textarea name="cancellation_reason" id="cancellation_reason" rows="3" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required></textarea>
                 </div>
                 <div class="flex justify-end space-x-3">
-                    <button type="button" onclick="closeCancellationModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Confirm Cancellation</button>
+                    <button type="button" onclick="closeCancellationModal()" class="modal-button cancel">Cancel</button>
+                    <button type="submit" class="modal-button confirm">Confirm Cancellation</button>
                 </div>
             </form>
         </div>
@@ -333,8 +1027,8 @@ height: 100vh;
                 @csrf
                 @method('DELETE')
                 <div class="flex justify-end space-x-3">
-                    <button type="button" onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Delete Appointment</button>
+                    <button type="button" onclick="closeDeleteModal()" class="modal-button cancel">Cancel</button>
+                    <button type="submit" class="modal-button confirm">Delete Appointment</button>
                 </div>
             </form>
         </div>
@@ -361,7 +1055,25 @@ height: 100vh;
                 </table>
             </div>
             <div class="flex justify-end mt-4">
-                <button onclick="closeLogsModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Close</button>
+                <button onclick="closeLogsModal()" class="modal-button cancel">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="bg-white/90 rounded-2xl p-8 flex flex-col items-center shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="loadingContent">
+            <div class="relative">
+                <div class="w-16 h-16 border-4 border-blue-200 rounded-full"></div>
+                <div class="w-16 h-16 border-4 border-blue-600 rounded-full animate-spin border-t-transparent absolute top-0 left-0"></div>
+            </div>
+            <div class="mt-4 flex flex-col items-center">
+                <p class="text-gray-800 font-medium text-lg">Loading</p>
+                <div class="flex space-x-1 mt-2">
+                    <div class="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+                    <div class="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+                    <div class="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -384,20 +1096,37 @@ window.addEventListener("click", function(event) {
     }
 });
 
+    // Show loading overlay with animation
+    function showLoading() {
+        const overlay = document.getElementById('loadingOverlay');
+        const content = document.getElementById('loadingContent');
+        overlay.classList.remove('hidden');
+        // Trigger reflow
+        void overlay.offsetWidth;
+        content.classList.remove('scale-95', 'opacity-0');
+        content.classList.add('scale-100', 'opacity-100');
+    }
 
-
+    // Hide loading overlay with animation
+    function hideLoading() {
+        const overlay = document.getElementById('loadingOverlay');
+        const content = document.getElementById('loadingContent');
+        content.classList.remove('scale-100', 'opacity-100');
+        content.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+        }, 300); // Match the duration of the transition
+    }
 
     function handleStatusChange(select, appointmentId) {
         if (select.value === 'Cancelled') {
-            // Show cancellation modal
             const modal = document.getElementById('cancellationModal');
             const form = document.getElementById('cancellationForm');
             form.action = `/admin/appointments/${appointmentId}/status`;
             modal.classList.remove('hidden');
-            // Prevent form submission until reason is provided
             select.value = 'Pending';
         } else {
-            // Submit form for other status changes
+            showLoading();
             select.form.submit();
         }
     }
@@ -424,7 +1153,7 @@ window.addEventListener("click", function(event) {
         const logsModal = document.getElementById('logsModal');
         logsModal.classList.remove('hidden');
         
-        // Fetch all logs
+        showLoading();
         fetch('{{ route("admin.appointments.all-logs") }}', {
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -440,6 +1169,7 @@ window.addEventListener("click", function(event) {
                 return response.json();
             })
             .then(data => {
+                hideLoading();
                 if (data.success) {
                     const logsTableBody = document.getElementById('logsTableBody');
                     logsTableBody.innerHTML = '';
@@ -450,7 +1180,6 @@ window.addEventListener("click", function(event) {
                         
                         const date = new Date(log.created_at).toLocaleString();
                         
-                        // Convert action to user-friendly text
                         let actionText = log.action;
                         switch(log.action) {
                             case 'status_update':
@@ -464,7 +1193,6 @@ window.addEventListener("click", function(event) {
                                 break;
                         }
                         
-                        // Convert status changes to user-friendly text
                         let statusChange = '';
                         if (log.action === 'status_update') {
                             const oldStatus = log.old_status ? log.old_status.charAt(0).toUpperCase() + log.old_status.slice(1) : 'Unknown';
@@ -489,6 +1217,7 @@ window.addEventListener("click", function(event) {
                 }
             })
             .catch(error => {
+                hideLoading();
                 console.error('Error fetching logs:', error);
                 alert('Failed to load logs. Please try again.');
             });
@@ -498,6 +1227,87 @@ window.addEventListener("click", function(event) {
         const logsModal = document.getElementById('logsModal');
         logsModal.classList.add('hidden');
     }
+
+    function filterApprovedAppointments() {
+        const startDate = document.getElementById('start_date').value;
+        const endDate = document.getElementById('end_date').value;
+        const isAdmin1 = {{ Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1' ? 'true' : 'false' }};
+        
+        if (!startDate || !endDate) {
+            alert('Please select both start and end dates');
+            return;
+        }
+
+        showLoading();
+        fetch(`{{ route('admin.appointments.filter-approved') }}?start_date=${startDate}&end_date=${endDate}`, {
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            hideLoading();
+            if (data.success) {
+                const tableBody = document.getElementById('approvedAppointmentTable');
+                tableBody.innerHTML = '';
+                
+                data.appointments.forEach(appointment => {
+                    const row = document.createElement('tr');
+                    row.className = 'border-b';
+                    let rowHtml = `
+                        <td class="py-3 px-4 font-medium">${appointment.reference_number}</td>
+                        <td class="py-3 px-4">${appointment.user.first_name} ${appointment.user.last_name}</td>
+                        <td class="py-3 px-4">${appointment.appointment_type}</td>
+                        <td class="py-3 px-4">${appointment.document_type}</td>
+                        <td class="py-3 px-4">${new Date(appointment.appointment_date).toLocaleDateString()} ${new Date(appointment.appointment_time).toLocaleTimeString()}</td>
+                        <td class="py-3 px-4">
+                            <span class="bg-green-300 text-green-900 px-2 py-1 rounded text-sm">${appointment.status}</span>
+                        </td>`;
+
+                    if (isAdmin1) {
+                        rowHtml += `
+                            <td class="py-3 px-4">
+                                <form action="{{ route('admin.appointments.status', $appointment->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('PUT')
+                                    <select name="status" onchange="handleApprovedStatusChange(this, ${appointment.id})" class="status-select">
+                                        <option value="Approved" ${appointment.status === 'Approved' ? 'selected' : ''}>Approved</option>
+                                        <option value="Completed" ${appointment.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                                    </select>
+                                </form>
+                            </td>`;
+                    }
+
+                    row.innerHTML = rowHtml;
+                    tableBody.appendChild(row);
+                });
+            }
+        })
+        .catch(error => {
+            hideLoading();
+            console.error('Error filtering appointments:', error);
+            alert('Failed to filter appointments. Please try again.');
+        });
+    }
+
+    function handleApprovedStatusChange(select, appointmentId) {
+        showLoading();
+        const form = select.closest('form');
+        form.submit();
+    }
+
+    // Add loading state to form submissions
+    document.addEventListener('DOMContentLoaded', function() {
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            form.addEventListener('submit', function() {
+                showLoading();
+        });
+        });
+    });
   </script>
 </body>
 </html>

@@ -111,6 +111,9 @@ Route::middleware(['auth:employee'])->group(function () {
     Route::get('/admin/appointments/{id}/logs', [AppointmentController::class, 'getLogs'])->name('admin.appointments.logs');
     Route::get('/admin/appointments/logs', [AppointmentController::class, 'getAllLogs'])->name('admin.appointments.all-logs');
     
+    // Approved Appointments Route
+    Route::get('/admin/appointments/filter-approved', [AppointmentController::class, 'filterApproved'])->name('admin.appointments.filter-approved');
+    
     // Email Tester Route
     Route::get('/admin/email-tester', [AppointmentController::class, 'showEmailTester'])->name('admin.email-tester');
     Route::post('/admin/email-tester/send', [AppointmentController::class, 'sendTestEmail'])->name('admin.email-tester.send');
