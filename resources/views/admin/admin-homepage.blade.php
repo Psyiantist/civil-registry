@@ -899,7 +899,7 @@
         <h5><center>SCHEDULE</h5>
         <h4>AN APPOINTMENT NOW! <i class="fa fa-calendar-week" aria-hidden="true"></i></h4>
         <p><i>"Convenience you can count on, appointments you can trust."</i></p>
-        <a href="#learn-more" class="learn-button">Learn more</a></center>
+        <a href="{{ route('admin.about') }}" class="learn-button">Learn more</a></center>
       </div>
     </div>
   </section>

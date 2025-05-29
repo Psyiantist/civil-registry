@@ -885,7 +885,7 @@
           <h4 style="white-space: nowrap; text-align: center;">AN APPOINTMENT NOW! <i class="fa fa-calendar-week" aria-hidden="true"></i></h4>
           <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
             <p>"Convenience you can count on, appointments you can trust."</p>
-            <a href="#learn-more" class="learn-button" style="margin-top: 18px;">Learn more</a>
+            <a href="{{ route('about') }}" class="learn-button" style="margin-top: 18px;">Learn more</a>
           </div>
         </div>  
       </div>

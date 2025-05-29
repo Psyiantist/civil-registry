@@ -451,7 +451,7 @@
           <h4>AN APPOINTMENT NOW! <i class="fa fa-calendar-week" aria-hidden="true"></i></h4>
           <p>"Convenience you can count on, appointments you can trust."</p>
         </div>
-        <a href="#learn-more" class="learn-button">Learn more</a>
+        <a href="{{ route('about') }}" class="learn-button">Learn more</a>
       </div>
     </div>
     <div id="loginContainer" class="form">
