@@ -181,37 +181,45 @@ class AppointmentController extends Controller
             // Send appropriate email based on status
             $user = $appointment->user;
             switch ($request->status) {
-                    case 'Approved':
+                case 'Approved':
                     Mail::to($user->email)->send(new ApprovedAppointmentMail(
-                            $appointment->appointment_type,
-                            $appointment->document_type,
-                            $appointment->appointment_date,
-                            $appointment->appointment_time,
-                            $user->first_name,
-                            $appointment->reference_number
-                        ));
-                        break;
-                    case 'Completed':
+                        $appointment->appointment_type,
+                        $appointment->document_type,
+                        $appointment->appointment_date,
+                        $appointment->appointment_time,
+                        $user->first_name,
+                        $appointment->reference_number
+                    ));
+                    break;
+                case 'Completed':
                     Mail::to($user->email)->send(new CompletedAppointmentMail(
-                            $appointment->appointment_type,
-                            $appointment->document_type,
-                            $appointment->appointment_date,
-                            $appointment->appointment_time,
-                            $user->first_name,
-                            $appointment->reference_number
-                        ));
-                        break;
-                    case 'Cancelled':
-                    case 'Declined':
+                        $appointment->appointment_type,
+                        $appointment->document_type,
+                        $appointment->appointment_date,
+                        $appointment->appointment_time,
+                        $user->first_name,
+                        $appointment->reference_number
+                    ));
+                    break;
+                case 'Cancelled':
+                case 'Declined':
                     Mail::to($user->email)->send(new CancelledAppointmentMail(
-                            $appointment->appointment_type,
-                            $appointment->document_type,
-                            $appointment->appointment_date,
-                            $appointment->appointment_time,
-                            $user->first_name,
-                            $appointment->reference_number
-                        ));
-                        break;
+                        $appointment->appointment_type,
+                        $appointment->document_type,
+                        $appointment->appointment_date,
+                        $appointment->appointment_time,
+                        $user->first_name,
+                        $appointment->reference_number
+                    ));
+                    break;
+            }
+            
+            // Check if the request is AJAX
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Appointment status updated successfully'
+                ]);
             }
             
             return redirect()->back()->with('success', 'Appointment status updated successfully');
@@ -224,6 +232,15 @@ class AppointmentController extends Controller
                 'line' => $e->getLine(),
                 'file' => $e->getFile()
             ]);
+            
+            // Check if the request is AJAX
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to update appointment status: ' . $e->getMessage()
+                ], 500);
+            }
+            
             return redirect()->back()->with('error', 'Failed to update appointment status: ' . $e->getMessage());
         }
     }

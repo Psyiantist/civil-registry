@@ -885,8 +885,6 @@
                                             <select name="status" onchange="handleStatusChange(this, {{ $appointment->id }})" class="status-select">
                                                 <option value="Pending" {{ $appointment->status == 'Pending' ? 'selected' : '' }}>Pending</option>
                                                 <option value="Approved" {{ $appointment->status == 'Approved' ? 'selected' : '' }}>Approved</option>
-                                                <option value="Completed" {{ $appointment->status == 'Completed' ? 'selected' : '' }}>Completed</option>
-                                                <option value="Cancelled" {{ $appointment->status == 'Cancelled' ? 'selected' : '' }}>Cancelled</option>
                                                 <option value="Declined" {{ $appointment->status == 'Declined' ? 'selected' : '' }}>Declined</option>
                                             </select>
                                             <input type="hidden" name="cancellation_reason" id="cancellation_reason_{{ $appointment->id }}">
@@ -986,6 +984,7 @@
                                         <select name="status" onchange="handleApprovedStatusChange(this, {{ $appointment->id }})" class="status-select">
                                             <option value="Approved" {{ $appointment->status === 'Approved' ? 'selected' : '' }}>Approved</option>
                                             <option value="Completed" {{ $appointment->status === 'Completed' ? 'selected' : '' }}>Completed</option>
+                                            <option value="Cancelled">Cancel</option>
                                         </select>
                                     </form>
                                 </td>
@@ -1011,8 +1010,8 @@
                     <textarea name="cancellation_reason" id="cancellation_reason" rows="3" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required></textarea>
                 </div>
                 <div class="flex justify-end space-x-3">
-                    <button type="button" onclick="closeCancellationModal()" class="modal-button cancel">Cancel</button>
-                    <button type="submit" class="modal-button confirm">Confirm Cancellation</button>
+                    <button type="button" onclick="closeCancellationModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors duration-200">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors duration-200">Confirm Cancellation</button>
                 </div>
             </form>
         </div>
@@ -1122,7 +1121,7 @@ window.addEventListener("click", function(event) {
         if (select.value === 'Cancelled') {
             const modal = document.getElementById('cancellationModal');
             const form = document.getElementById('cancellationForm');
-            form.action = `/admin/appointments/${appointmentId}/status`;
+            form.action = `{{ url('admin/appointments') }}/${appointmentId}/status`;
             modal.classList.remove('hidden');
             select.value = 'Pending';
         } else {
@@ -1276,6 +1275,7 @@ window.addEventListener("click", function(event) {
                                     <select name="status" onchange="handleApprovedStatusChange(this, ${appointment.id})" class="status-select">
                                         <option value="Approved" ${appointment.status === 'Approved' ? 'selected' : ''}>Approved</option>
                                         <option value="Completed" ${appointment.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                                        <option value="Cancelled">Cancel</option>
                                     </select>
                                 </form>
                             </td>`;
@@ -1294,9 +1294,17 @@ window.addEventListener("click", function(event) {
     }
 
     function handleApprovedStatusChange(select, appointmentId) {
-        showLoading();
-        const form = select.closest('form');
-        form.submit();
+        if (select.value === 'Cancelled') {
+            const modal = document.getElementById('cancellationModal');
+            const form = document.getElementById('cancellationForm');
+            form.action = `{{ url('admin/appointments') }}/${appointmentId}/status`;
+            modal.classList.remove('hidden');
+            select.value = 'Approved';
+        } else {
+            showLoading();
+            const form = select.closest('form');
+            form.submit();
+        }
     }
 
     // Add loading state to form submissions
@@ -1305,8 +1313,74 @@ window.addEventListener("click", function(event) {
         forms.forEach(form => {
             form.addEventListener('submit', function() {
                 showLoading();
+            });
         });
-        });
+
+        // Add form submission handler for cancellation form
+        const cancellationForm = document.getElementById('cancellationForm');
+        if (cancellationForm) {
+            cancellationForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const reason = document.getElementById('cancellation_reason').value.trim();
+                if (!reason) {
+                    alert('Please provide a reason for cancellation');
+                    return;
+                }
+                
+                showLoading();
+                const formData = new FormData(this);
+                
+                // Add the cancellation reason to the form data
+                formData.append('cancellation_reason', reason);
+                formData.append('status', 'Cancelled');
+                
+                // Log the form data for debugging
+                console.log('Form Data:', Object.fromEntries(formData));
+                console.log('Form Action:', this.action);
+                
+                // Submit the form with the cancellation reason
+                fetch(this.action, {
+                    method: 'POST', // Change to POST
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-HTTP-Method-Override': 'PUT' // Add this header to simulate PUT
+                    },
+                    credentials: 'same-origin'
+                })
+                .then(async response => {
+                    const responseText = await response.text();
+                    console.log('Response Status:', response.status);
+                    console.log('Response Text:', responseText);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}, message: ${responseText}`);
+                    }
+                    
+                    try {
+                        return JSON.parse(responseText);
+                    } catch (e) {
+                        console.error('Failed to parse JSON:', e);
+                        throw new Error('Invalid JSON response from server');
+                    }
+                })
+                .then(data => {
+                    hideLoading();
+                    if (data.success) {
+                        window.location.reload();
+                    } else {
+                        throw new Error(data.message || 'Failed to cancel appointment');
+                    }
+                })
+                .catch(error => {
+                    hideLoading();
+                    console.error('Error:', error);
+                    alert(error.message || 'Failed to cancel appointment. Please try again.');
+                });
+            });
+        }
     });
 
     // Add this at the beginning of your script section
