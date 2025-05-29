@@ -274,6 +274,27 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
+    /* Add these styles at the beginning of your existing styles */
+    #confirmationModal, #cancellationModal {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        z-index: 99999 !important;
+        background-color: rgba(0, 0, 0, 0.5) !important;
+    }
+
+    #confirmationModal > div, #cancellationModal > div {
+        position: relative !important;
+        z-index: 99999 !important;
+    }
+
+    /* Ensure navbar and footer stay below modals */
+    nav, footer {
+        z-index: 1;
+    }
+
     </style>
     </head>
 
@@ -420,7 +441,7 @@
          </div>
         </form>
 
-    <div id="confirmationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div id="confirmationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
     <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
       <h2 class="text-xl font-bold mb-4 text-center text-green-700">Appointment Confirmed!</h2>
       <p class="text-gray-700 text-center mb-6">
@@ -436,7 +457,7 @@
     </div>
 
   
-    <div id="cancellationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div id="cancellationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
     <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
       <h2 class="text-xl font-bold mb-4 text-center text-red-700">Appointment Cancelled!</h2>
       <p class="text-gray-700 text-center mb-6">

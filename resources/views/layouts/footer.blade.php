@@ -43,7 +43,6 @@
         margin-top: auto !important;
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05) !important;
         position: relative !important;
-        z-index: 1 !important;
     }
 
     .civil-registry-footer-container {
