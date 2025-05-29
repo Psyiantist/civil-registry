@@ -503,6 +503,34 @@
             .form {
                 display: none;
             }
+
+            nav .menu ul li.mobile-only {
+                display: block !important;
+                width: 100%;
+                text-align: left;
+                padding: 10px 15px;
+                border-top: 1px solid #eee;
+            }
+
+            nav .menu ul li.mobile-only a {
+                color: #333;
+                text-decoration: none;
+                font-size: 16px;
+                display: block;
+                width: 100%;
+            }
+
+            nav .menu ul li.mobile-only a:hover {
+                color: #426DDC;
+            }
+
+            nav .menu ul li.mobile-only a.logout-link {
+                color: #ef4444;
+            }
+
+            nav .menu ul li.mobile-only a.logout-link:hover {
+                color: #dc2626;
+            }
         }
     </style>
 </head>
@@ -531,6 +559,12 @@
                 <li><a href="{{ route('admin.faqs') }}" class="{{ Request::is('admin/faqs*') ? 'active' : '' }}">FAQs</a></li>
                 <li><a href="{{ route('admin.about') }}" class="{{ Request::is('admin/about*') ? 'active' : '' }}">About Us</a></li>
                 <li><a href="{{ route('admin.contact') }}" class="{{ Request::is('admin/contact*') ? 'active' : '' }}">Contact Us</a></li>
+                <li class="mobile-only" style="display: none;">
+                    <a href="{{ route('admin.logout') }}" class="logout-link">
+                        <i class="fas fa-sign-out-alt mr-2"></i>
+                        Logout
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="nav-right">
@@ -617,6 +651,12 @@
                         menuToggle.addEventListener('click', function() {
                             menu.classList.toggle('expand-mobile');
                             menuToggle.classList.toggle('expand-icon');
+                            
+                            // Show/hide mobile-only menu items
+                            const mobileItems = document.querySelectorAll('.mobile-only');
+                            mobileItems.forEach(item => {
+                                item.style.display = menu.classList.contains('expand-mobile') ? 'block' : 'none';
+                            });
                             
                             // Reset dropdown state when mobile menu is closed
                             if (!menu.classList.contains('expand-mobile')) {

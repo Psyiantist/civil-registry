@@ -19,8 +19,7 @@
             <div class="civil-registry-office-hours">
                 <h4>Office Hours</h4>
                 <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
-                <p>Saturday: 8:00 AM - 12:00 PM</p>
-                <p>Sunday: Closed</p>
+                <p>Saturday - Sunday: Closed</p>
             </div>
         </div>
         <div class="civil-registry-footer-content civil-registry-map-section">

@@ -417,6 +417,26 @@
             nav .menu-toggle:hover {
                 color: #426DDC;
             }
+
+            nav .menu ul li.mobile-only {
+                display: block !important;
+                width: 100%;
+                text-align: left;
+                padding: 10px 15px;
+                border-top: 1px solid #eee;
+            }
+
+            nav .menu ul li.mobile-only a {
+                color: #333;
+                text-decoration: none;
+                font-size: 16px;
+                display: block;
+                width: 100%;
+            }
+
+            nav .menu ul li.mobile-only a:hover {
+                color: #426DDC;
+            }
         }
     </style>
 </head>
@@ -445,6 +465,12 @@
                 <li><a class="{{ request()->is('residence-faqs') ? 'active' : '' }}" href="{{ route('residence-faqs') }}">FAQs</a></li>
                 <li><a class="{{ request()->is('residence-about-us') ? 'active' : '' }}" href="{{ route('residence-about-us') }}">About Us</a></li>
                 <li><a class="{{ request()->is('residence-contact-us') ? 'active' : '' }}" href="{{ route('residence-contact-us') }}">Contact Us</a></li>
+                <li class="mobile-only" style="display: none;">
+                    <a href="{{ route('residence.profile') }}">Profile</a>
+                </li>
+                <li class="mobile-only" style="display: none;">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                </li>
             </ul>
         </div>
 
@@ -489,6 +515,12 @@
             button.onclick = () => {
                 menu.classList.toggle('expand-mobile');
                 button.classList.toggle('expand-icon');
+                
+                // Show/hide mobile-only menu items
+                const mobileItems = document.querySelectorAll('.mobile-only');
+                mobileItems.forEach(item => {
+                    item.style.display = menu.classList.contains('expand-mobile') ? 'block' : 'none';
+                });
             };
         }
 

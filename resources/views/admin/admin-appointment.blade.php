@@ -1308,6 +1308,44 @@ window.addEventListener("click", function(event) {
         });
         });
     });
+
+    // Add this at the beginning of your script section
+    document.addEventListener('DOMContentLoaded', function() {
+        const startDateInput = document.getElementById('start_date');
+        const endDateInput = document.getElementById('end_date');
+
+        // Function to disable weekends
+        function disableWeekends(input) {
+            input.addEventListener('input', function(e) {
+                const selectedDate = new Date(this.value);
+                const day = selectedDate.getDay();
+                
+                // 0 is Sunday, 6 is Saturday
+                if (day === 0 || day === 6) {
+                    alert('Weekends are not available. Please select a weekday.');
+                    this.value = '';
+                }
+            });
+
+            // Add min attribute to prevent selecting past dates
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            input.min = `${yyyy}-${mm}-${dd}`;
+        }
+
+        // Apply to both date inputs
+        disableWeekends(startDateInput);
+        disableWeekends(endDateInput);
+
+        // Add note about office hours
+        const dateFilterContainer = document.querySelector('.date-filter-container');
+        const officeHoursNote = document.createElement('p');
+        officeHoursNote.className = 'text-sm text-gray-600 mt-2';
+        officeHoursNote.innerHTML = '<i class="fas fa-info-circle mr-1"></i> Note: Office is open Monday to Friday, 8:00 AM - 5:00 PM';
+        dateFilterContainer.appendChild(officeHoursNote);
+    });
   </script>
 </body>
 </html>

@@ -488,6 +488,11 @@
         const calendarDays = document.getElementById('calendarDays');
         if (calendarDays) {
             generateCalendar();
+            // Add office hours note only once
+            const officeHoursNote = document.createElement('div');
+            officeHoursNote.className = 'text-sm text-gray-600 mt-4 text-center';
+            officeHoursNote.innerHTML = '<i class="fas fa-info-circle mr-1"></i> Office is open Monday to Friday, 8:00 AM - 5:00 PM';
+            calendarDays.parentNode.insertBefore(officeHoursNote, calendarDays.nextSibling);
         }
 
         // Form submission handler
@@ -604,6 +609,15 @@
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
+        // Add days of week header
+        const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        daysOfWeek.forEach(day => {
+            const dayHeader = document.createElement('div');
+            dayHeader.textContent = day;
+            dayHeader.classList.add('font-semibold', 'text-gray-600');
+            calendarDays.appendChild(dayHeader);
+        });
+
         for (let i = 0; i < firstDay; i++) {
             const emptyCell = document.createElement('div');
             emptyCell.classList.add('text-gray-400');
@@ -618,9 +632,16 @@
             dayCell.classList.add('cursor-pointer');
             dayCell.textContent = day;
 
-            if (currentDate <= today) {
+            // Check if the day is a weekend (Saturday or Sunday)
+            const dayOfWeek = currentDate.getDay();
+            const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+
+            if (currentDate <= today || isWeekend) {
                 dayCell.classList.add('text-gray-400', 'cursor-not-allowed');
                 dayCell.style.pointerEvents = 'none';
+                if (isWeekend) {
+                    dayCell.title = 'Weekends are not available';
+                }
             } else {
                 dayCell.onclick = function() {
                     selectDate(dayCell);
