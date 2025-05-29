@@ -145,7 +145,8 @@ class AppointmentController extends Controller
                             $appointment->document_type,
                             $appointment->appointment_date,
                             $appointment->appointment_time,
-                        $user->first_name
+                            $user->first_name,
+                            $appointment->reference_number
                         ));
                         break;
                     case 'Completed':
@@ -154,7 +155,8 @@ class AppointmentController extends Controller
                             $appointment->document_type,
                             $appointment->appointment_date,
                             $appointment->appointment_time,
-                        $user->first_name
+                            $user->first_name,
+                            $appointment->reference_number
                         ));
                         break;
                     case 'Cancelled':
@@ -164,7 +166,8 @@ class AppointmentController extends Controller
                             $appointment->document_type,
                             $appointment->appointment_date,
                             $appointment->appointment_time,
-                        $user->first_name
+                            $user->first_name,
+                            $appointment->reference_number
                         ));
                         break;
             }

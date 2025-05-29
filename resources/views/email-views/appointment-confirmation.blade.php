@@ -85,11 +85,6 @@
 
             <div class="appointment-details">
                 <div class="detail-item">
-                    <span class="detail-label">Reference Number:</span>
-                    <span>{{ $reference_number }}</span>
-                </div>
-
-                <div class="detail-item">
                     <span class="detail-label">Appointment Type:</span>
                     <span>{{ ucfirst($appointmentType) }}</span>
                 </div>

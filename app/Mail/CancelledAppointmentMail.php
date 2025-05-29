@@ -16,14 +16,14 @@ class CancelledAppointmentMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($appointmentType, $documentType, $appointmentDate, $appointmentTime, $first_name, $reason)
+    public function __construct($appointmentType, $documentType, $appointmentDate, $appointmentTime, $first_name, $reference_number)
     {
         $this->appointmentType = $appointmentType;
         $this->documentType = $documentType;
         $this->appointmentDate = $appointmentDate;
         $this->appointmentTime = $appointmentTime;
         $this->first_name = $first_name;
-        $this->reason = $reason;
+        $this->reference_number = $reference_number;
     }
 
     /**
@@ -49,7 +49,7 @@ class CancelledAppointmentMail extends Mailable
                 'appointmentDate' => $this->appointmentDate,
                 'appointmentTime' => $this->appointmentTime,
                 'first_name' => $this->first_name,
-                'reason' => $this->reason,
+                'reference_number' => $this->reference_number
             ],
         );
     }

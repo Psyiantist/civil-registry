@@ -229,7 +229,6 @@ height: 100vh;
                     <table class="min-w-full bg-white shadow rounded-lg overflow-hidden">
                         <thead class="bg-blue-600 text-white">
                             <tr>
-                                <th class="py-3 px-4 text-left">Reference #</th>
                                 <th class="py-3 px-4 text-left">User Name</th>
                                 <th class="py-3 px-4 text-left">Appointment Type</th>
                                 <th class="py-3 px-4 text-left">Document Type</th>
@@ -242,7 +241,6 @@ height: 100vh;
                         <tbody id="appointmentTable">
                             @foreach($appointments as $appointment)
                             <tr class="border-b">
-                                <td class="py-3 px-4">{{ $appointment->reference_number }}</td>
                                 <td class="py-3 px-4">{{ $appointment->user->first_name }} {{ $appointment->user->last_name }}</td>
                                 <td class="py-3 px-4">{{ $appointment->appointment_type }}</td>
                                 <td class="py-3 px-4">{{ $appointment->document_type }}</td>

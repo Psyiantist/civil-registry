@@ -7,8 +7,9 @@
     <title> Appointment Page - Residence View </title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-        <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet"/>
     
     <style>
         body {
@@ -503,7 +504,12 @@
                 const documentType = document.querySelector('select[name="document_type"]');
 
                 if (!selectedDate?.value || !selectedTime?.value || !appointmentType?.value || !documentType?.value) {
-                    alert('Please fill in all required fields');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Missing Information',
+                        text: 'Please fill in all required fields',
+                        confirmButtonColor: '#426DDC'
+                    });
                     if (loadingOverlay) loadingOverlay.style.display = 'none';
                     return;
                 }
@@ -531,19 +537,19 @@
                 .then(data => {
                     if (loadingOverlay) loadingOverlay.style.display = 'none';
                     if (data.success) {
-                        showConfirmationModal(selectedDate.value, selectedTime.value, data);
+                        showConfirmationAlert(selectedDate.value, selectedTime.value, data);
                         this.reset();
                         if (calendarDays) {
                             generateCalendar();
                         }
                     } else {
-                        showCancellationModal(data.message);
+                        showErrorAlert(data.message);
                     }
                 })
                 .catch(error => {
                     if (loadingOverlay) loadingOverlay.style.display = 'none';
                     console.error('Error:', error);
-                    showCancellationModal(error.message);
+                    showErrorAlert(error.message);
                 });
             });
         }
@@ -678,34 +684,49 @@
         }
     }
 
-    function showConfirmationModal(date, time, data) {
-        const confirmationModal = document.getElementById("confirmationModal");
-        const confirmationMessage = document.querySelector("#confirmationModal p");
-        
-        if (!confirmationModal || !confirmationMessage) return;
-
-        confirmationMessage.innerHTML = `Your appointment is subject to approval. Wait for the confirmation email before attending your appointment.<br><br>
-            📅 Date: ${date}<br>
-            ⏰ Time: ${time}<br>
-            🔖 Reference Number: ${data.reference_number}<br><br>
-            Please check your email for further details.<br>
-            If you need to cancel due to an error or change of mind, kindly email us as soon as possible.<br><br>
-            Thank you!`;
-
-        confirmationModal.classList.remove("hidden");
+    function showConfirmationAlert(date, time, data) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Appointment Confirmed!',
+            html: `
+                <div class="text-center">
+                    <p class="mb-4">Your appointment is subject to approval. Wait for the confirmation email before attending your appointment.</p>
+                    <div class="space-y-2 mb-4">
+                        <p>📅 Date: ${date}</p>
+                        <p>⏰ Time: ${time}</p>
+                    </div>
+                    <p class="mb-2">Please check your email for further details.</p>
+                    <p class="text-sm text-gray-600">If you need to cancel due to an error or change of mind, kindly email us as soon as possible.</p>
+                </div>
+            `,
+            confirmButtonColor: '#426DDC',
+            confirmButtonText: 'OK',
+            customClass: {
+                container: 'my-swal',
+                popup: 'my-swal-popup',
+                content: 'my-swal-content'
+            }
+        });
     }
 
-    function showCancellationModal(errorMessage) {
-        const cancellationModal = document.getElementById("cancellationModal");
-        const cancellationMessage = document.querySelector("#cancellationModal p");
-        
-        if (!cancellationModal || !cancellationMessage) return;
-
-        cancellationMessage.innerHTML = `There was an error processing your appointment request.<br><br>
-            ${errorMessage || 'Please try again or contact our support team for assistance.'}<br><br>
-            Thank you for your understanding.`;
-
-        cancellationModal.classList.remove("hidden");
+    function showErrorAlert(errorMessage) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Appointment Error',
+            html: `
+                <div class="text-center">
+                    <p class="mb-4">There was an error processing your appointment request.</p>
+                    <p class="text-gray-600">${errorMessage || 'Please try again or contact our support team for assistance.'}</p>
+                </div>
+            `,
+            confirmButtonColor: '#426DDC',
+            confirmButtonText: 'OK',
+            customClass: {
+                container: 'my-swal',
+                popup: 'my-swal-popup',
+                content: 'my-swal-content'
+            }
+        });
     }
 
     function closeModal(modalId) {

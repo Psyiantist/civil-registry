@@ -16,13 +16,14 @@ class ApprovedAppointmentMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(private $appointmentType, private $documentType, private $appointmentDate, private $appointmentTime, private $first_name)
+    public function __construct(private $appointmentType, private $documentType, private $appointmentDate, private $appointmentTime, private $first_name, private $reference_number)
     {
         $this->appointmentType = $appointmentType;
         $this->documentType = $documentType;
         $this->appointmentDate = $appointmentDate;
         $this->appointmentTime = $appointmentTime;
         $this->first_name = $first_name;
+        $this->reference_number = $reference_number;
     }
 
     /**
@@ -47,7 +48,8 @@ class ApprovedAppointmentMail extends Mailable
                 'documentType' => $this->documentType,
                 'appointmentDate' => $this->appointmentDate,
                 'appointmentTime' => $this->appointmentTime,
-                'first_name' => $this->first_name
+                'first_name' => $this->first_name,
+                'reference_number' => $this->reference_number
             ]
         );
     }
