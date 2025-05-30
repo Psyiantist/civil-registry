@@ -63,16 +63,17 @@ class EmployeeController extends Controller
 
     public function deleteUser(User $user)
     {
-        if (auth()->guard('employee')->user()->username !== 'admin1' && auth()->guard('employee')->user()->username !== 'Admin1') {
-            return redirect()->back()->with('error', 'Only admin1 can delete users');
-        }
-
-        // Check if user is inactive (no login in last 14 days)
-        if ($user->last_login && $user->last_login->diffInDays(now()) > 14) {
-            $user->delete();
-            return redirect()->back()->with('success', 'Inactive user deleted successfully');
+        // Check if user is admin1
+        $isAdmin1 = auth()->guard('employee')->user()->username === 'admin1' || auth()->guard('employee')->user()->username === 'Admin1';
+        
+        // If not admin1, check if user is active
+        if (!$isAdmin1) {
+            if ($user->last_login && $user->last_login->diffInDays(now()) <= 14) {
+                return redirect()->back()->with('error', 'Cannot delete active users');
+            }
         }
         
-        return redirect()->back()->with('error', 'Cannot delete active users');
+        $user->delete();
+        return redirect()->back()->with('success', 'User deleted successfully');
     }
 }

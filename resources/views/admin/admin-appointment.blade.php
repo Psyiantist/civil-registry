@@ -863,7 +863,7 @@
                                 <td class="py-3 px-4">{{ $appointment->user->first_name }} {{ $appointment->user->last_name }}</td>
                                 <td class="py-3 px-4">{{ $appointment->appointment_type }}</td>
                                 <td class="py-3 px-4">{{ $appointment->document_type }}</td>
-                                <td class="py-3 px-4">{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('Y-m-d') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</td>
+                                <td class="py-3 px-4">{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('F d, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->setTimezone('Asia/Manila')->format('h:i A') }}</td>
                                 <td class="py-3 px-4">
                                     @php
                                         $statusColors = [
@@ -882,12 +882,22 @@
                                         <form action="{{ route('admin.appointments.status', $appointment->id) }}" method="POST" class="inline">
                                             @csrf
                                             @method('PUT')
-                                            <select name="status" onchange="handleStatusChange(this, {{ $appointment->id }})" class="status-select">
+                                            @php
+                                                $appointmentDate = \Carbon\Carbon::parse($appointment->appointment_date)->format('Y-m-d');
+                                                $dailyAppointments = \App\Models\Appointment::where('appointment_date', $appointmentDate)
+                                                    ->where('status', 'Approved')
+                                                    ->count();
+                                                $isLimitReached = $dailyAppointments >= 40;
+                                            @endphp
+                                            <select name="status" onchange="handleStatusChange(this, {{ $appointment->id }}, {{ $isLimitReached ? 'true' : 'false' }})" class="status-select" {{ $isLimitReached ? 'disabled' : '' }}>
                                                 <option value="Pending" {{ $appointment->status == 'Pending' ? 'selected' : '' }}>Pending</option>
-                                                <option value="Approved" {{ $appointment->status == 'Approved' ? 'selected' : '' }}>Approved</option>
+                                                <option value="Approved" {{ $appointment->status == 'Approved' ? 'selected' : '' }} {{ $isLimitReached ? 'disabled' : '' }}>Approved</option>
                                                 <option value="Declined" {{ $appointment->status == 'Declined' ? 'selected' : '' }}>Declined</option>
                                             </select>
                                             <input type="hidden" name="cancellation_reason" id="cancellation_reason_{{ $appointment->id }}">
+                                            @if($isLimitReached)
+                                                <div class="text-red-600 text-sm mt-1">Daily appointment limit (40) reached for this date</div>
+                                            @endif
                                         </form>
                                     @else
                                         <select disabled class="status-select">
@@ -923,7 +933,12 @@
 
     <!-- Approved Appointments Section -->
     <main class="p-8 main-section">
-        <h2 class="text-2xl font-bold text-center mb-4">Approved Appointments</h2>
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold text-center">Approved Appointments</h2>
+            <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg font-semibold">
+                Approved: {{ $approvedAppointments->count() }} / 40
+            </div>
+        </div>
         <div class="overflow-x-auto">
             <div class="mb-4 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white/95 p-6 rounded-xl shadow-lg backdrop-blur-sm border border-white/20">
                 <div class="flex flex-col sm:flex-row gap-4">
@@ -972,7 +987,7 @@
                             <td class="py-3 px-4">{{ $appointment->user->first_name }} {{ $appointment->user->last_name }}</td>
                             <td class="py-3 px-4">{{ $appointment->appointment_type }}</td>
                             <td class="py-3 px-4">{{ $appointment->document_type }}</td>
-                            <td class="py-3 px-4">{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('Y-m-d') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</td>
+                            <td class="py-3 px-4">{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('F d, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->setTimezone('Asia/Manila')->format('h:i A') }}</td>
                             <td class="py-3 px-4">
                                 <span class="bg-green-300 text-green-900 px-2 py-1 rounded text-sm">{{ $appointment->status }}</span>
                             </td>
@@ -1117,7 +1132,18 @@ window.addEventListener("click", function(event) {
         }, 300); // Match the duration of the transition
     }
 
-    function handleStatusChange(select, appointmentId) {
+    function handleStatusChange(select, appointmentId, isLimitReached) {
+        if (isLimitReached && select.value === 'Approved') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Appointment Limit Reached',
+                text: 'The daily appointment limit (40) has been reached for this date.',
+                confirmButtonColor: '#426DDC'
+            });
+            select.value = 'Pending';
+            return;
+        }
+
         if (select.value === 'Cancelled') {
             const modal = document.getElementById('cancellationModal');
             const form = document.getElementById('cancellationForm');

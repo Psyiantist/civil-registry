@@ -1096,7 +1096,13 @@
               <tr>
                 <td data-label="User Name">{{ $user->first_name }} {{ $user->last_name }}</td>
                 <td data-label="Email Address">{{ $user->email }}</td>
-                <td data-label="Last Login">{{ $user->last_login ? $user->last_login->format('M d, Y h:i A') : 'Never' }}</td>
+                <td data-label="Last Login">
+                  @if($user->last_login)
+                    {{ $user->last_login->format('F d, Y h:i A') }}
+                  @else
+                    Never
+                  @endif
+                </td>
                 <td data-label="Status">
                   @php
                     $isActive = $user->last_login && $user->last_login->diffInDays(now()) <= 14;
@@ -1106,18 +1112,22 @@
                   </span>
                 </td>
                 <td data-label="Action">
-                  @if(!$isActive)
-                    @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
+                  @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
+                    <form method="POST" action="{{ route('admin.delete-user', $user->id) }}">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i>Delete Account</button>
+                    </form>
+                  @else
+                    @if(!$isActive)
                       <form method="POST" action="{{ route('admin.delete-user', $user->id) }}">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i>Delete Account</button>
                       </form>
                     @else
-                      <span style="color: #666; font-style: italic;">Only admin1 can delete accounts</span>
+                      <button class="delete-btn" disabled style="opacity:0.5; cursor:not-allowed;" title="Cannot delete active users"><i class="fas fa-trash-alt"></i>Delete Account</button>
                     @endif
-                  @else
-                    <button class="delete-btn" disabled style="opacity:0.5; cursor:not-allowed;" title="Cannot delete active users"><i class="fas fa-trash-alt"></i>Delete Account</button>
                   @endif
                 </td>
               </tr>

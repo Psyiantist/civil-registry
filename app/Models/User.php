@@ -54,7 +54,15 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'last_login' => 'datetime',
+            'last_login' => 'datetime:Y-m-d H:i:s',
         ];
+    }
+
+    public function getLastLoginAttribute($value)
+    {
+        if ($value) {
+            return \Carbon\Carbon::parse($value)->setTimezone('Asia/Manila');
+        }
+        return null;
     }
 }
