@@ -936,7 +936,7 @@
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-2xl font-bold text-center">Approved Appointments</h2>
             <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg font-semibold">
-                Approved: {{ $approvedAppointments->count() }} / 40
+                Approved: <span id="approvedCount">{{ $approvedAppointments->count() }}</span> / 40
             </div>
         </div>
         <div class="overflow-x-auto">
@@ -947,22 +947,30 @@
                         <div class="relative">
                             <input type="date" id="start_date" name="start_date" 
                                 class="w-full px-4 py-2.5 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 ease-in-out cursor-pointer"
+                                onchange="updateApprovedCount(this.value)"
                             >
-                    </div>
+                        </div>
                     </div>
                     <div class="relative">
                         <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
                         <div class="relative">
                             <input type="date" id="end_date" name="end_date" 
                                 class="w-full px-4 py-2.5 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 ease-in-out cursor-pointer"
+                                onchange="updateApprovedCount(this.value)"
                             >
-                </div>
+                        </div>
                     </div>
                 </div>
-                <button onclick="filterApprovedAppointments()" class="px-4 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 ease-in-out transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl flex items-center gap-2">
-                    <i class="fas fa-filter"></i>
-                    <span>Filter</span>
-                </button>
+                <div class="flex gap-2">
+                    <button onclick="filterApprovedAppointments()" class="px-4 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 ease-in-out transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl flex items-center gap-2">
+                        <i class="fas fa-filter"></i>
+                        <span>Filter</span>
+                    </button>
+                    <button onclick="clearDateFilters()" class="px-4 py-2.5 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-lg font-semibold hover:from-gray-700 hover:to-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200 ease-in-out transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl flex items-center gap-2">
+                        <i class="fas fa-times"></i>
+                        <span>Clear</span>
+                    </button>
+                </div>
             </div>
 
             <div class="max-h-[600px] overflow-y-auto relative">
@@ -1253,6 +1261,49 @@ window.addEventListener("click", function(event) {
         logsModal.classList.add('hidden');
     }
 
+    function updateApprovedCount(selectedDate) {
+        const startDate = document.getElementById('start_date').value;
+        const endDate = document.getElementById('end_date').value;
+        
+        if (!startDate || !endDate) return;
+        
+        showLoading();
+        fetch(`{{ route('admin.appointments.filter-approved') }}?start_date=${startDate}&end_date=${endDate}`, {
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            hideLoading();
+            if (data.success) {
+                // Count appointments for each date
+                const dateCounts = {};
+                data.appointments.forEach(appointment => {
+                    const date = appointment.appointment_date;
+                    if (!dateCounts[date]) {
+                        dateCounts[date] = 0;
+                    }
+                    dateCounts[date]++;
+                });
+
+                // Update the count display with the total count
+                const totalCount = data.appointments.length;
+                document.getElementById('approvedCount').textContent = totalCount;
+
+                // Log the counts for each date (for debugging)
+                console.log('Appointments per date:', dateCounts);
+            }
+        })
+        .catch(error => {
+            hideLoading();
+            console.error('Error updating count:', error);
+        });
+    }
+
     function filterApprovedAppointments() {
         const startDate = document.getElementById('start_date').value;
         const endDate = document.getElementById('end_date').value;
@@ -1278,6 +1329,9 @@ window.addEventListener("click", function(event) {
             if (data.success) {
                 const tableBody = document.getElementById('approvedAppointmentTable');
                 tableBody.innerHTML = '';
+                
+                // Update the count display
+                document.getElementById('approvedCount').textContent = data.appointments.length;
                 
                 data.appointments.forEach(appointment => {
                     const row = document.createElement('tr');
@@ -1446,6 +1500,72 @@ window.addEventListener("click", function(event) {
         officeHoursNote.innerHTML = '<i class="fas fa-info-circle mr-1"></i> Note: Office is open Monday to Friday, 8:00 AM - 5:00 PM';
         dateFilterContainer.appendChild(officeHoursNote);
     });
+
+    function clearDateFilters() {
+        // Clear date inputs
+        document.getElementById('start_date').value = '';
+        document.getElementById('end_date').value = '';
+        
+        // Reset the approved count to the initial value
+        const initialCount = {{ $approvedAppointments->count() }};
+        document.getElementById('approvedCount').textContent = initialCount;
+        
+        // Reload the approved appointments table to show all appointments
+        showLoading();
+        fetch('{{ route("admin.appointments.filter-approved") }}', {
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            hideLoading();
+            if (data.success) {
+                const tableBody = document.getElementById('approvedAppointmentTable');
+                tableBody.innerHTML = '';
+                
+                data.appointments.forEach(appointment => {
+                    const row = document.createElement('tr');
+                    row.className = 'border-b';
+                    let rowHtml = `
+                        <td class="py-3 px-4 font-medium">${appointment.reference_number}</td>
+                        <td class="py-3 px-4">${appointment.user.first_name} ${appointment.user.last_name}</td>
+                        <td class="py-3 px-4">${appointment.appointment_type}</td>
+                        <td class="py-3 px-4">${appointment.document_type}</td>
+                        <td class="py-3 px-4">${new Date(appointment.appointment_date).toLocaleDateString()} ${new Date(appointment.appointment_time).toLocaleTimeString()}</td>
+                        <td class="py-3 px-4">
+                            <span class="bg-green-300 text-green-900 px-2 py-1 rounded text-sm">${appointment.status}</span>
+                        </td>`;
+
+                    if ({{ Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1' ? 'true' : 'false' }}) {
+                        rowHtml += `
+                            <td class="py-3 px-4">
+                                <form action="{{ route('admin.appointments.status', $appointment->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('PUT')
+                                    <select name="status" onchange="handleApprovedStatusChange(this, ${appointment.id})" class="status-select">
+                                        <option value="Approved" ${appointment.status === 'Approved' ? 'selected' : ''}>Approved</option>
+                                        <option value="Completed" ${appointment.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                                        <option value="Cancelled">Cancel</option>
+                                    </select>
+                                </form>
+                            </td>`;
+                    }
+
+                    row.innerHTML = rowHtml;
+                    tableBody.appendChild(row);
+                });
+            }
+        })
+        .catch(error => {
+            hideLoading();
+            console.error('Error resetting appointments:', error);
+            alert('Failed to reset appointments. Please try again.');
+        });
+    }
   </script>
 </body>
 </html>
