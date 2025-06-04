@@ -30,6 +30,22 @@ class EmployeeController extends Controller
         ]);
     }
 
+    public function getUserActivity()
+    {
+        $users = User::where('is_verified', '1')
+            ->select('id', 'first_name', 'last_name', 'email', 'last_login', 'status')
+            ->get()
+            ->map(function ($user) {
+                $user->is_active = $user->last_login && $user->last_login->diffInDays(now()) <= 14;
+                return $user;
+            });
+            
+        return response()->json([
+            'success' => true,
+            'data' => $users
+        ]);
+    }
+
     public function showAdminAppointment()
     {
         return view('admin.admin-appointment');

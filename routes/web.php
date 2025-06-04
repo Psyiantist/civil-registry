@@ -124,6 +124,7 @@ Route::middleware(['auth:employee'])->group(function () {
 
     // API Routes for User Management
     Route::get('/api/admin/pending-users', [EmployeeController::class, 'getPendingUsers'])->name('api.admin.pending-users');
+    Route::get('/api/admin/user-activity', [EmployeeController::class, 'getUserActivity'])->name('api.admin.user-activity');
 });
 
 // Public Routes

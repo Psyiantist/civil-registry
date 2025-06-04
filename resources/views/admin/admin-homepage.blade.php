@@ -1046,53 +1046,8 @@
             <th>Action</th>
           </tr>
         </thead>
-        <tbody>
-          @if($users->isEmpty())
-            <tr>
-              <td colspan="5" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">No users found.</td>
-            </tr>
-          @else
-            @foreach($users as $user)
-              <tr>
-                <td data-label="User Name">{{ $user->first_name }} {{ $user->last_name }}</td>
-                <td data-label="Email Address">{{ $user->email }}</td>
-                <td data-label="Last Login">
-                  @if($user->last_login)
-                    {{ $user->last_login->format('F d, Y h:i A') }}
-                  @else
-                    Never
-                  @endif
-                </td>
-                <td data-label="Status">
-                  @php
-                    $isActive = $user->last_login && $user->last_login->diffInDays(now()) <= 14;
-                  @endphp
-                  <span class="status-badge {{ $isActive ? 'status-approved' : 'status-declined' }}">
-                    {{ $isActive ? 'Active' : 'Inactive' }}
-                  </span>
-                </td>
-                <td data-label="Action">
-                  @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
-                    <form method="POST" action="{{ route('admin.delete-user', $user->id) }}">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i>Delete Account</button>
-                    </form>
-                  @else
-                    @if(!$isActive)
-                      <form method="POST" action="{{ route('admin.delete-user', $user->id) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i>Delete Account</button>
-                      </form>
-                    @else
-                      <button class="delete-btn" disabled style="opacity:0.5; cursor:not-allowed;" title="Cannot delete active users"><i class="fas fa-trash-alt"></i>Delete Account</button>
-                    @endif
-                  @endif
-                </td>
-              </tr>
-            @endforeach
-          @endif
+        <tbody id="userActivityTableBody">
+          <!-- Data will be loaded here via JavaScript -->
         </tbody>
       </table>
     </div>
@@ -1554,6 +1509,7 @@
 
   document.addEventListener('DOMContentLoaded', function() {
       loadPendingUsers();
+      loadUserActivity();
   });
 
   function loadPendingUsers() {
@@ -1631,6 +1587,109 @@
                   </td>
               </tr>
           `;
+      });
+  }
+
+  function loadUserActivity() {
+      fetch('/api/admin/user-activity', {
+          headers: {
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+              'Accept': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest'
+          },
+          credentials: 'same-origin'
+      })
+      .then(response => response.json())
+      .then(data => {
+          const tbody = document.getElementById('userActivityTableBody');
+          tbody.innerHTML = '';
+          
+          if (data.data.length === 0) {
+              tbody.innerHTML = `
+                  <tr>
+                      <td colspan="5" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">
+                          No users found.
+                      </td>
+                  </tr>
+              `;
+              return;
+          }
+
+          data.data.forEach(user => {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                  <td data-label="User Name">${user.first_name} ${user.last_name}</td>
+                  <td data-label="Email Address">${user.email}</td>
+                  <td data-label="Last Login">
+                      ${user.last_login ? new Date(user.last_login).toLocaleString('en-PH', {
+                          dateStyle: 'full',
+                          timeStyle: 'short',
+                          hour12: true
+                      }) : 'Never'}
+                  </td>
+                  <td data-label="Status">
+                      <span class="status-badge ${user.is_active ? 'status-approved' : 'status-declined'}">
+                          ${user.is_active ? 'Active' : 'Inactive'}
+                      </span>
+                  </td>
+                  <td data-label="Action">
+                      ${isAdmin1() ? `
+                          <form method="POST" action="/admin/delete-user/${user.id}">
+                              @csrf
+                              @method('DELETE')
+                              <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i>Delete Account</button>
+                          </form>
+                      ` : !user.is_active ? `
+                          <form method="POST" action="/admin/delete-user/${user.id}">
+                              @csrf
+                              @method('DELETE')
+                              <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i>Delete Account</button>
+                          </form>
+                      ` : `
+                          <button class="delete-btn" disabled style="opacity:0.5; cursor:not-allowed;" title="Cannot delete active users">
+                              <i class="fas fa-trash-alt"></i>Delete Account
+                          </button>
+                      `}
+                  </td>
+              `;
+              tbody.appendChild(row);
+          });
+
+          // Reattach event listeners for delete buttons
+          attachDeleteEventListeners();
+      })
+      .catch(error => {
+          console.error('Error loading user activity:', error);
+          const tbody = document.getElementById('userActivityTableBody');
+          tbody.innerHTML = `
+              <tr>
+                  <td colspan="5" style="text-align:center; padding: 24px; color: #ef4444; font-size: 1.1rem; background: #f7faff;">
+                      Error loading users. Please try again.
+                  </td>
+              </tr>
+          `;
+      });
+  }
+
+  function attachDeleteEventListeners() {
+      const deleteForms = document.querySelectorAll('form[action*="delete-user"]');
+      deleteForms.forEach(form => {
+          form.addEventListener('submit', function(e) {
+              e.preventDefault();
+              Swal.fire({
+                  title: 'Delete User?',
+                  text: "Are you sure you want to delete this user? This action cannot be undone!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#ef4444',
+                  cancelButtonColor: '#6b7280',
+                  confirmButtonText: 'Yes, delete!'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      form.submit();
+                  }
+              });
+          });
       });
   }
 
