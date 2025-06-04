@@ -890,7 +890,7 @@
 </head>
 
 
-<body>
+<body data-is-admin1="{{ $isAdmin1 ? 'true' : 'false' }}">
   @include('layouts.admin-navbar')
 
   <section>
@@ -1024,48 +1024,8 @@
             <th>Action</th>
           </tr>
         </thead>
-        <tbody>
-          @if($pending_users->isEmpty())
-            <tr>
-              <td colspan="8" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">No pending users for approval.</td>
-            </tr>
-          @else
-            @foreach($pending_users as $user)
-              <tr>
-                <td data-label="User Name">{{ $user->first_name }} {{ $user->last_name }}</td>
-                <td data-label="Email Address">{{ $user->email }}</td>
-                <td data-label="ID Type">{{ $user->id_type }}</td>
-                <td data-label="ID Uploaded">
-                  @if($user->id_image)
-                    <a href="{{ asset('storage/uploads/' . $user->id_image) }}" target="_blank" style="color: #1E63E9; text-decoration: underline;">View ID</a>
-                  @else
-                    <span style="color: #aaa;">No ID</span>
-                  @endif
-                </td>
-                <td data-label="Current/Permanent Address">{{ $user->current_address }}</td>
-                <td data-label="Date of Birth">{{ $user->date_of_birth }}</td>
-                <td data-label="Status">
-                  <span class="status-badge status-pending">Pending</span>
-                </td>
-                <td data-label="Action">
-                  @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
-                    <div style="display: flex; flex-direction: column; gap: 8px;">
-                      <form method="POST" action="{{ route('admin.accept-user', $user->id) }}" class="approval-action-form">
-                        @csrf
-                        <button type="submit" class="approve-btn"><i class="fas fa-check-circle"></i>Approve</button>
-                      </form>
-                      <form method="POST" action="{{ route('admin.reject-user', $user->id) }}" class="approval-action-form">
-                        @csrf
-                        <button type="submit" class="reject-btn"><i class="fas fa-times-circle"></i>Reject</button>
-                      </form>
-                    </div>
-                  @else
-                    <span style="color: #666; font-style: italic;">Only admin1 can approve accounts</span>
-                  @endif
-                </td>
-              </tr>
-            @endforeach
-          @endif
+        <tbody id="pendingUsersTableBody">
+          <!-- Data will be loaded here via JavaScript -->
         </tbody>
       </table>
     </div>
@@ -1591,6 +1551,137 @@
           }
       });
   });
+
+  document.addEventListener('DOMContentLoaded', function() {
+      loadPendingUsers();
+  });
+
+  function loadPendingUsers() {
+      fetch('/api/admin/pending-users', {
+          headers: {
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+              'Accept': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest'
+          },
+          credentials: 'same-origin'
+      })
+      .then(response => response.json())
+      .then(data => {
+          const tbody = document.getElementById('pendingUsersTableBody');
+          tbody.innerHTML = '';
+          
+          if (data.data.length === 0) {
+              tbody.innerHTML = `
+                  <tr>
+                      <td colspan="8" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">
+                          No pending users for approval.
+                      </td>
+                  </tr>
+              `;
+              return;
+          }
+
+          data.data.forEach(user => {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                  <td data-label="User Name">${user.first_name} ${user.last_name}</td>
+                  <td data-label="Email Address">${user.email}</td>
+                  <td data-label="ID Type">${user.id_type}</td>
+                  <td data-label="ID Uploaded">
+                      ${user.id_image ? 
+                          `<a href="/storage/uploads/${user.id_image}" target="_blank" style="color: #1E63E9; text-decoration: underline;">View ID</a>` :
+                          `<span style="color: #aaa;">No ID</span>`
+                      }
+                  </td>
+                  <td data-label="Current/Permanent Address">${user.current_address}</td>
+                  <td data-label="Date of Birth">${user.date_of_birth}</td>
+                  <td data-label="Status">
+                      <span class="status-badge status-pending">Pending</span>
+                  </td>
+                  <td data-label="Action">
+                      ${isAdmin1() ? `
+                          <div style="display: flex; flex-direction: column; gap: 8px;">
+                              <form method="POST" action="/admin/accept-user/${user.id}" class="approval-action-form">
+                                  @csrf
+                                  <button type="submit" class="approve-btn"><i class="fas fa-check-circle"></i>Approve</button>
+                              </form>
+                              <form method="POST" action="/admin/reject-user/${user.id}" class="approval-action-form">
+                                  @csrf
+                                  <button type="submit" class="reject-btn"><i class="fas fa-times-circle"></i>Reject</button>
+                              </form>
+                          </div>
+                      ` : `
+                          <span style="color: #666; font-style: italic;">Only admin1 can approve accounts</span>
+                      `}
+                  </td>
+              `;
+              tbody.appendChild(row);
+          });
+
+          // Reattach event listeners for approve/reject buttons
+          attachApprovalEventListeners();
+      })
+      .catch(error => {
+          console.error('Error loading pending users:', error);
+          const tbody = document.getElementById('pendingUsersTableBody');
+          tbody.innerHTML = `
+              <tr>
+                  <td colspan="8" style="text-align:center; padding: 24px; color: #ef4444; font-size: 1.1rem; background: #f7faff;">
+                      Error loading users. Please try again.
+                  </td>
+              </tr>
+          `;
+      });
+  }
+
+  function isAdmin1() {
+      // This should be set by your backend when rendering the page
+      return document.body.dataset.isAdmin1 === 'true';
+  }
+
+  function attachApprovalEventListeners() {
+      // Approve user confirmation
+      const approveForms = document.querySelectorAll('form[action*="accept-user"]');
+      approveForms.forEach(form => {
+          form.addEventListener('submit', function(e) {
+              e.preventDefault();
+              Swal.fire({
+                  title: 'Approve User?',
+                  text: "Are you sure you want to approve this user?",
+                  icon: 'question',
+                  showCancelButton: true,
+                  confirmButtonColor: '#22c55e',
+                  cancelButtonColor: '#ef4444',
+                  confirmButtonText: 'Yes, approve!'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      form.submit();
+                  }
+              });
+          });
+      });
+
+      // Reject user confirmation
+      const rejectForms = document.querySelectorAll('form[action*="reject-user"]');
+      rejectForms.forEach(form => {
+          form.addEventListener('submit', function(e) {
+              e.preventDefault();
+              Swal.fire({
+                  title: 'Reject User?',
+                  text: "Are you sure you want to reject this user?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#ef4444',
+                  cancelButtonColor: '#6b7280',
+                  confirmButtonText: 'Yes, reject!'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      form.submit();
+                  }
+              });
+          });
+      });
+  }
 
   </script>
 

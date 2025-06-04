@@ -14,9 +14,20 @@ class EmployeeController extends Controller
     public function showAdminHomepage()
     {
         $announcements = Announcement::orderBy('order')->get();
-        $pending_users = User::where('is_verified', '0')->get();
-        $users = User::where('is_verified', '1')->get();
-        return view('admin.admin-homepage', compact('announcements', 'pending_users', 'users'));
+        $isAdmin1 = auth()->guard('employee')->user()->username === 'admin1' || auth()->guard('employee')->user()->username === 'Admin1';
+        return view('admin.admin-homepage', compact('announcements', 'isAdmin1'));
+    }
+
+    public function getPendingUsers()
+    {
+        $pending_users = User::where('is_verified', '0')
+            ->select('id', 'first_name', 'last_name', 'email', 'id_type', 'id_image', 'current_address', 'date_of_birth', 'status')
+            ->get();
+            
+        return response()->json([
+            'success' => true,
+            'data' => $pending_users
+        ]);
     }
 
     public function showAdminAppointment()

@@ -839,12 +839,12 @@
                 </div>
             @endif
 
-            @if($appointments->isEmpty())
-                <div class="text-center py-8 bg-white shadow rounded-lg">
-                    <p class="text-gray-500 text-lg">No appointments have been made yet.</p>
-                </div>
-            @else
-                <div class="max-h-[600px] overflow-y-auto relative">
+            <div class="max-h-[600px] overflow-y-auto relative">
+                @if($appointments->isEmpty())
+                    <div class="text-center py-8 bg-white shadow rounded-lg">
+                        <p class="text-gray-500 text-lg">No appointments have been made yet.</p>
+                    </div>
+                @else
                     <table class="min-w-full bg-white shadow rounded-lg overflow-hidden">
                         <thead class="bg-blue-600 text-white">
                             <tr>
@@ -926,8 +926,8 @@
                             </tr>
                         </tfoot>
                     </table>
-                </div>
-            @endif
+                @endif
+            </div>
         </div>
     </main>
 

@@ -121,6 +121,9 @@ Route::middleware(['auth:employee'])->group(function () {
     // Employee Approval Routes
     Route::post('/admin/accept-employee/{id}', [EmployeeApprovalController::class, 'acceptEmployee'])->name('admin.accept-employee');
     Route::post('/admin/reject-employee/{id}', [EmployeeApprovalController::class, 'rejectEmployee'])->name('admin.reject-employee');
+
+    // API Routes for User Management
+    Route::get('/api/admin/pending-users', [EmployeeController::class, 'getPendingUsers'])->name('api.admin.pending-users');
 });
 
 // Public Routes
