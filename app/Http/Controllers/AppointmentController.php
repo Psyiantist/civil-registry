@@ -79,15 +79,18 @@ class AppointmentController extends Controller
     public function showAppointments()
     {
         $appointments = Appointment::with('user')
-            ->whereNotIn('status', ['Approved'])
             ->orderByRaw("
                 CASE 
                     WHEN status = 'Pending' THEN 1
-                    WHEN status = 'Completed' THEN 2
-                    WHEN status = 'Declined' THEN 3
-                    WHEN status = 'Cancelled' THEN 4
+                    WHEN status = 'Approved' THEN 2
+                    WHEN status = 'Completed' THEN 3
+                    WHEN status = 'Declined' THEN 4
+                    WHEN status = 'Cancelled' THEN 5
                 END
-            ")->get();
+            ")
+            ->orderBy('appointment_date', 'asc')
+            ->orderBy('appointment_time', 'asc')
+            ->get();
 
         $approvedAppointments = Appointment::with('user')
             ->where('status', 'Approved')
