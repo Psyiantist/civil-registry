@@ -12,7 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // First convert to string to remove any existing constraints
+        // First drop any existing constraints
+        DB::statement('ALTER TABLE employees DROP CONSTRAINT IF EXISTS employees_status_check');
+
+        // Convert to string to remove any existing constraints
         Schema::table('employees', function (Blueprint $table) {
             $table->string('status')->nullable()->change();
         });
