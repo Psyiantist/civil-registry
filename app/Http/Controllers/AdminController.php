@@ -15,7 +15,8 @@ class AdminController extends Controller
         $users = User::where('status', 'approved')->get();
         $announcements = Announcement::all();
         $pending_employees = Employee::where('status', 'pending')->get();
+        $isAdmin1 = auth()->guard('employee')->user()->username === 'admin1' || auth()->guard('employee')->user()->username === 'Admin1';
 
-        return view('admin.admin-homepage', compact('pending_users', 'users', 'announcements', 'pending_employees'));
+        return view('admin.admin-homepage', compact('pending_users', 'users', 'announcements', 'pending_employees', 'isAdmin1'));
     }
 } 
