@@ -1349,7 +1349,7 @@ window.addEventListener("click", function(event) {
                     if (isAdmin1) {
                         rowHtml += `
                             <td class="py-3 px-4">
-                                <form action="{{ route('admin.appointments.status', $appointment->id) }}" method="POST" class="inline">
+                                <form action="/admin/appointments/${appointment.id}/status" method="POST" class="inline">
                                     @csrf
                                     @method('PUT')
                                     <select name="status" onchange="handleApprovedStatusChange(this, ${appointment.id})" class="status-select">
@@ -1543,7 +1543,7 @@ window.addEventListener("click", function(event) {
                     if ({{ Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1' ? 'true' : 'false' }}) {
                         rowHtml += `
                             <td class="py-3 px-4">
-                                <form action="{{ route('admin.appointments.status', $appointment->id) }}" method="POST" class="inline">
+                                <form action="/admin/appointments/${appointment.id}/status" method="POST" class="inline">
                                     @csrf
                                     @method('PUT')
                                     <select name="status" onchange="handleApprovedStatusChange(this, ${appointment.id})" class="status-select">
