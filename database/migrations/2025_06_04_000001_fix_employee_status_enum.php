@@ -12,14 +12,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // First, convert the column to string to remove the enum constraint
+        // First convert to string to remove any existing constraints
         Schema::table('employees', function (Blueprint $table) {
-            $table->string('status')->change();
+            $table->string('status')->nullable()->change();
         });
 
-        // Then create a new enum with all three values
+        // Update any NULL values to 'pending'
+        DB::table('employees')
+            ->whereNull('status')
+            ->update(['status' => 'pending']);
+
+        // Now add the check constraint using PostgreSQL syntax
+        DB::statement("ALTER TABLE employees ADD CONSTRAINT employees_status_check CHECK (status IN ('pending', 'approved', 'declined'))");
+        
+        // Set the default and not null constraints
         Schema::table('employees', function (Blueprint $table) {
-            $table->enum('status', ['pending', 'approved', 'declined'])->default('pending')->change();
+            $table->string('status')->default('pending')->nullable(false)->change();
         });
     }
 
@@ -28,8 +36,12 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Remove the check constraint
+        DB::statement('ALTER TABLE employees DROP CONSTRAINT IF EXISTS employees_status_check');
+
+        // Convert back to original state
         Schema::table('employees', function (Blueprint $table) {
-            $table->enum('status', ['approved', 'declined'])->default('declined')->change();
+            $table->string('status')->nullable()->change();
         });
     }
 }; 
