@@ -21,7 +21,7 @@ class AdminRegisterController extends Controller
         $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:employees,username',
+            'email' => 'required|string|email|max:255|unique:employees,email',
             'password' => 'required|string|min:8|confirmed',
             'birthday' => 'required|date',
             'address' => 'required|string',
@@ -33,10 +33,18 @@ class AdminRegisterController extends Controller
             if($request->hasFile('id_card_image')){
                 $file = $request->file('id_card_image');
                 $filename = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('storage/uploads'), $filename);
+                
+                // Ensure upload directory exists
+                $uploadPath = public_path('storage/uploads');
+                if (!file_exists($uploadPath)) {
+                    mkdir($uploadPath, 0755, true);
+                }
+                
+                $file->move($uploadPath, $filename);
             }
 
             $employee = Employee::create([
+                'email' => $request->email,
                 'username' => $request->email,
                 'password' => Hash::make($request->password),
                 'first_name' => $request->first_name,
@@ -48,7 +56,7 @@ class AdminRegisterController extends Controller
             ]);
 
             // Send registration confirmation email
-            Mail::to($request->email)->send(new \App\Mail\RegistrationMail($request->first_name));
+            Mail::to($request->email)->send(new AdminRegistrationMail($request->first_name));
 
             return redirect()->route('admin.login')->with('success', 'Registration successful! Please wait for admin approval.');
         } catch (\Exception $e) {
