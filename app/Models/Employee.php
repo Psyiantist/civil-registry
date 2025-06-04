@@ -25,7 +25,8 @@ class Employee extends Authenticatable
         'birthday',
         'address',
         'id_card_image',
-        'status'
+        'status',
+        'email'
     ];
 
     /**
