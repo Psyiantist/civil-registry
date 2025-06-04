@@ -34,6 +34,15 @@ return new class extends Migration
         // Copy username to email for existing records
         DB::table('employees')->whereNull('email')->update(['email' => DB::raw('username')]);
 
+        // Handle any remaining null or empty emails
+        $employees = DB::table('employees')->whereNull('email')->orWhere('email', '')->get();
+        foreach ($employees as $employee) {
+            $newEmail = 'user_' . time() . '_' . rand(1000, 9999) . '@example.com';
+            DB::table('employees')
+                ->where('id', $employee->id)
+                ->update(['email' => $newEmail]);
+        }
+
         // Now make email unique and not nullable
         Schema::table('employees', function (Blueprint $table) {
             $table->string('email')->unique()->nullable(false)->change();
