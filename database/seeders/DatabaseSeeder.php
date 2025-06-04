@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             RequirementSeeder::class,
             ContactSeeder::class,
             TestAppointmentsSeeder::class,
+            EmployeeSeeder::class,
         ]);
     }
 }
