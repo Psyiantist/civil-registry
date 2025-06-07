@@ -534,7 +534,7 @@
                 @enderror
 
                 <div class="input-group file-group">
-                    <label for="id_card_image" class="file-label">Upload ID Card Image</label>
+                    <label for="id_card_image" class="file-label">Upload Government Issued ID</label>
                     <input type="file" id="id_card_image" name="id_card_image" accept="image/*" required class="modern-input file-input {{ $errors->has('id_card_image') ? 'input-error' : '' }}">
                 </div>
                 @error('id_card_image')

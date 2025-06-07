@@ -310,7 +310,7 @@
                     <span class="error-message">{{ $message }}</span>
                 @enderror
 
-                <label for="uploadID">Upload ID Image:</label>
+                <label for="uploadID">Upload Government Issued ID:</label>
                 <input type="file" id="uploadID" name="id_image" accept="image/*" required class="{{ $errors->has('id_image') ? 'file-error' : '' }}">
                 <img id="uploadedImage" />
                 @error('id_image')
