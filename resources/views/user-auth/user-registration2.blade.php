@@ -390,7 +390,12 @@
             }
 
             if (age < 18) {
-                alert('You must be at least 18 years old to register.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Age Restriction',
+                    text: 'You must be at least 18 years old to register.',
+                    confirmButtonColor: '#426DDC'
+                });
                 this.value = '';
             }
         });

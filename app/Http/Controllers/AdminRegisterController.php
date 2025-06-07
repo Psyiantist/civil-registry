@@ -37,7 +37,8 @@ class AdminRegisterController extends Controller
             if($request->hasFile('id_card_image')){
                 try {
                     $file = $request->file('id_card_image');
-                    $filename = time() . '_' . $file->getClientOriginalName();
+                    $randomNumber = mt_rand(100000, 999999);
+                    $filename = $randomNumber . '_' . $file->getClientOriginalName();
                     
                     // Store in public disk
                     $file->storeAs('uploads', $filename, 'public');

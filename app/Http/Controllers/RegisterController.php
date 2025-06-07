@@ -58,10 +58,19 @@ class RegisterController extends Controller
 
             $filename = null;
             if($request->hasFile('id_image')){
-                $file = $request->file('id_image');
-                $filename = time() . '_' . $file->getClientOriginalName();
-                $file->storeAs('uploads', $filename, 'public');
-                $filename = Storage::disk('public')->url('uploads/' . $filename);
+                try {
+                    $file = $request->file('id_image');
+                    $randomNumber = mt_rand(100000, 999999);
+                    $filename = $randomNumber . '_' . $file->getClientOriginalName();
+                    
+                    // Store in public disk
+                    $file->storeAs('uploads', $filename, 'public');
+                    // Store only the filename, not the full URL
+                    \Log::info('File uploaded successfully: ' . $filename);
+                } catch (\Exception $e) {
+                    \Log::error('File upload failed: ' . $e->getMessage());
+                    throw $e;
+                }
             }
 
             $step1Data = [
