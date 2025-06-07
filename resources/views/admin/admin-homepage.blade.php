@@ -989,7 +989,7 @@
 
   <!-- ACCOUNT APPROVAL SECTION (Backend-Driven) -->
   <div class="account-approval-container">
-    <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">ACCOUNT APPROVAL</h2>
+    <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">RESIDENCE ACCOUNT APPROVAL</h2>
     @if(session('success'))
         <script>
             Swal.fire({
@@ -1034,7 +1034,7 @@
 
   <!-- USER ACTIVITY SECTION -->
   <div class="account-approval-container">
-    <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">USER ACTIVITY</h2>
+    <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">RESIDENCE USER ACTIVITY</h2>
     <div class="table-responsive">
       <table id="userActivityTable">
         <thead>
@@ -1053,6 +1053,28 @@
     </div>
   </div>
   <!-- END USER ACTIVITY SECTION -->
+
+  <!-- EMPLOYEE ACTIVITY SECTION -->
+  <div class="account-approval-container">
+    <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">EMPLOYEE ACTIVITY</h2>
+    <div class="table-responsive">
+      <table id="employeeActivityTable">
+        <thead>
+          <tr>
+            <th>Employee Name</th>
+            <th>Email Address</th>
+            <th>Last Login</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="employeeActivityTableBody">
+          <!-- Data will be loaded here via JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- END EMPLOYEE ACTIVITY SECTION -->
 
   <!-- EMPLOYEE ACCOUNT APPROVAL SECTION -->
   @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
@@ -1532,6 +1554,7 @@
   document.addEventListener('DOMContentLoaded', function() {
       loadPendingUsers();
       loadUserActivity();
+      loadEmployeeActivity();
   });
 
   function loadPendingUsers() {
@@ -1693,6 +1716,87 @@
       });
   }
 
+  function loadEmployeeActivity() {
+      fetch('{{ url("/api/admin/employee-activity") }}', {
+          headers: {
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+              'Accept': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest'
+          },
+          credentials: 'same-origin'
+      })
+      .then(response => response.json())
+      .then(data => {
+          const tbody = document.getElementById('employeeActivityTableBody');
+          tbody.innerHTML = '';
+          
+          if (data.data.length === 0) {
+              tbody.innerHTML = `
+                  <tr>
+                      <td colspan="5" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">
+                          No employees found.
+                      </td>
+                  </tr>
+              `;
+              return;
+          }
+
+          data.data.forEach(employee => {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                  <td data-label="Employee Name">${employee.first_name} ${employee.last_name}</td>
+                  <td data-label="Email Address">${employee.email}</td>
+                  <td data-label="Last Login">
+                      ${employee.last_login ? new Date(employee.last_login).toLocaleString('en-PH', {
+                          dateStyle: 'full',
+                          timeStyle: 'short',
+                          hour12: true
+                      }) : 'Never'}
+                  </td>
+                  <td data-label="Status">
+                      <span class="status-badge ${employee.status === 'approved' ? 'status-approved' : 'status-declined'}">
+                          ${employee.status === 'approved' ? 'Active' : 'Inactive'}
+                      </span>
+                  </td>
+                  <td data-label="Action">
+                      ${isAdmin1() ? `
+                          <form method="POST" action="/admin/delete-employee/${employee.id}">
+                              @csrf
+                              @method('DELETE')
+                              <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i>Delete Account</button>
+                          </form>
+                      ` : !employee.is_active ? `
+                          <form method="POST" action="/admin/delete-employee/${employee.id}">
+                              @csrf
+                              @method('DELETE')
+                              <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i>Delete Account</button>
+                          </form>
+                      ` : `
+                          <button class="delete-btn" disabled style="opacity:0.5; cursor:not-allowed;" title="Cannot delete active employees">
+                              <i class="fas fa-trash-alt"></i>Delete Account
+                          </button>
+                      `}
+                  </td>
+              `;
+              tbody.appendChild(row);
+          });
+
+          // Reattach event listeners for delete buttons
+          attachEmployeeDeleteEventListeners();
+      })
+      .catch(error => {
+          console.error('Error loading employee activity:', error);
+          const tbody = document.getElementById('employeeActivityTableBody');
+          tbody.innerHTML = `
+              <tr>
+                  <td colspan="5" style="text-align:center; padding: 24px; color: #ef4444; font-size: 1.1rem; background: #f7faff;">
+                      Error loading employees. Please try again.
+                  </td>
+              </tr>
+          `;
+      });
+  }
+
   function attachDeleteEventListeners() {
       const deleteForms = document.querySelectorAll('form[action*="delete-user"]');
       deleteForms.forEach(form => {
@@ -1701,6 +1805,28 @@
               Swal.fire({
                   title: 'Delete User?',
                   text: "Are you sure you want to delete this user? This action cannot be undone!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#ef4444',
+                  cancelButtonColor: '#6b7280',
+                  confirmButtonText: 'Yes, delete!'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      form.submit();
+                  }
+              });
+          });
+      });
+  }
+
+  function attachEmployeeDeleteEventListeners() {
+      const deleteForms = document.querySelectorAll('form[action*="delete-employee"]');
+      deleteForms.forEach(form => {
+          form.addEventListener('submit', function(e) {
+              e.preventDefault();
+              Swal.fire({
+                  title: 'Delete Employee?',
+                  text: "Are you sure you want to delete this employee? This action cannot be undone!",
                   icon: 'warning',
                   showCancelButton: true,
                   confirmButtonColor: '#ef4444',

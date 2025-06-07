@@ -26,7 +26,8 @@ class Employee extends Authenticatable
         'address',
         'id_card_image',
         'status',
-        'email'
+        'email',
+        'last_login'
     ];
 
     /**
@@ -49,6 +50,7 @@ class Employee extends Authenticatable
         return [
             'password' => 'hashed',
             'birthday' => 'date',
+            'last_login' => 'datetime',
         ];
     }
 }

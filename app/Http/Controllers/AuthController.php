@@ -111,6 +111,10 @@ class AuthController extends Controller
             return redirect()->back()->withErrors(['username' => 'Your account has been declined. Please contact the administrator.']);
         }
 
+        // Update last login timestamp
+        $employee->last_login = now()->setTimezone('Asia/Manila');
+        $employee->save();
+
         Auth::guard('employee')->login($employee);
         return redirect()->route('admin.homepage')->with('success', 'Login successful');
     }

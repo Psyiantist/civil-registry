@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Mail\UserAcceptanceMail;
 use App\Mail\UserRejectionMail;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Employee;
 
 class EmployeeController extends Controller
 {
@@ -43,6 +44,22 @@ class EmployeeController extends Controller
         return response()->json([
             'success' => true,
             'data' => $users
+        ]);
+    }
+
+    public function getEmployeeActivity()
+    {
+        $employees = Employee::where('status', 'approved')
+            ->select('id', 'first_name', 'last_name', 'email', 'last_login', 'status')
+            ->get()
+            ->map(function ($employee) {
+                $employee->is_active = $employee->last_login && $employee->last_login->diffInDays(now()) <= 14;
+                return $employee;
+            });
+            
+        return response()->json([
+            'success' => true,
+            'data' => $employees
         ]);
     }
 
