@@ -37,7 +37,7 @@ class AdminRegisterController extends Controller
                     
                     // Store in public disk
                     $file->storeAs('uploads', $filename, 'public');
-                    $filename = Storage::disk('public')->url('uploads/' . $filename);
+                    // Store only the filename, not the full URL
                     \Log::info('File uploaded successfully: ' . $filename);
                 } catch (\Exception $e) {
                     \Log::error('File upload failed: ' . $e->getMessage());
