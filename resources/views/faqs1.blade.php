@@ -6,7 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
 	<title> FAQs Page </title>
-  <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
 	<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 	<style type="text/css">
     body {
@@ -306,7 +305,7 @@
        <div class="hcwhy">
      <h3> How can we help you? </h3>
         <form class="search-container2">
-            <input type="text" placeholder="Ask anything">
+            <input type="text" id="searchInput" placeholder="Ask anything">
             <button type="submit">
                 <i class="fa fa-search"> </i>
             </button>
@@ -334,53 +333,100 @@
 
               @include('layouts.footer')
 
-<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 <script type="text/javascript">
-    function performSearch() {
-        const input = document.getElementById("searchInput").value.trim().toLowerCase();
+    // Initialize all DOM elements once
+    const elements = {
+        menuToggle: document.querySelector('.menu-toggle'),
+        menu: document.querySelector('.menu'),
+        searchButton: document.querySelector('.search-container2 button'),
+        searchInput: document.getElementById("searchInput"),
+        faqQuestions: document.querySelectorAll('.faq-question')
+    };
 
-        if (input === "") {
-            alert("Please enter a search term.");
-        } else {
-            if (input === "home page" || input === "homepage" || input === "home") {
-                window.location.href = "{{ route('home') }}";
-            } else if (input === "faqs" || input === "facts" || input === "help") {
-                window.location.href = "{{ route('faqs') }}";
-            } else if (input === "about" || input === "about civil") {
-                window.location.href = "{{ route('about') }}";
-            } else if (input === "contact" || input === "number" || input === "email") {
-                window.location.href = "{{ route('contact') }}";
-            } else {
-                alert("No results found.");
-                inputField.value = "";
-            }
-        }
-    }
-
-    document.getElementById("searchInput").addEventListener("keypress", function(e) {
-        if (e.key === "Enter") {
-            performSearch();
-        }
-    });
-
-    const button = document.querySelector('.menu-toggle');
-    const menu = document.querySelector('.menu');
-    if (button && menu) {
-        button.onclick = () => {
-            menu.classList.toggle('expand-mobile');
-            button.classList.toggle('expand-icon');
+    // Menu toggle functionality
+    if (elements.menuToggle && elements.menu) {
+        elements.menuToggle.onclick = () => {
+            elements.menu.classList.toggle('expand-mobile');
+            elements.menuToggle.classList.toggle('expand-icon');
         };
     }
 
-    function toggleDropdown() {
-        const dropdown = document.getElementById("accountDropdown");
-        alert("Please login or register your account first.");
-        dropdown.classList.toggle("show");
+    // Search functionality
+    function performSearch() {
+        const input = elements.searchInput.value.trim().toLowerCase();
+        const faqItems = document.querySelectorAll('.faq-item');
+        let found = false;
+
+        if (input === "") {
+            alert("Please enter a search term.");
+            return;
+        }
+
+        // First check for navigation keywords
+        if (input === "home page" || input === "homepage" || input === "home") {
+            window.location.href = "{{ route('home') }}";
+            return;
+        } else if (input === "faqs" || input === "facts" || input === "help") {
+            window.location.href = "{{ route('faqs') }}";
+            return;
+        } else if (input === "about" || input === "about civil") {
+            window.location.href = "{{ route('about') }}";
+            return;
+        } else if (input === "contact" || input === "number" || input === "email") {
+            window.location.href = "{{ route('contact') }}";
+            return;
+        }
+
+        // Search through FAQ items
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question').textContent.toLowerCase();
+            const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+            
+            if (question.includes(input) || answer.includes(input)) {
+                item.style.display = 'flex';
+                found = true;
+                // Automatically expand the matching FAQ
+                const questionElement = item.querySelector('.faq-question');
+                const answerElement = item.querySelector('.faq-answer');
+                const icon = questionElement.querySelector('i');
+                
+                questionElement.classList.add('active');
+                answerElement.classList.add('show');
+                icon?.classList.add('active');
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        if (!found) {
+            alert("No matching FAQs found.");
+            // Reset display of all FAQs
+            faqItems.forEach(item => {
+                item.style.display = 'flex';
+            });
+        }
     }
 
-    const faqQuestions = document.querySelectorAll('.faq-question');
+    // Add event listener for search button click
+    if (elements.searchButton) {
+        elements.searchButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            performSearch();
+        });
+    }
 
-    faqQuestions.forEach(question => {
+    // Add event listener for Enter key
+    if (elements.searchInput) {
+        elements.searchInput.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                performSearch();
+            }
+        });
+    }
+
+    // FAQ toggle functionality
+    elements.faqQuestions.forEach(question => {
         question.addEventListener('click', () => {
             const answer = question.nextElementSibling;
             const icon = question.querySelector('i');
@@ -397,6 +443,15 @@
             icon?.classList.toggle('active');
         });
     });
+
+    // Account dropdown functionality
+    function toggleDropdown() {
+        const dropdown = document.getElementById("accountDropdown");
+        if (dropdown) {
+            alert("Please login or register your account first.");
+            dropdown.classList.toggle("show");
+        }
+    }
 </script>
 
 </body>
