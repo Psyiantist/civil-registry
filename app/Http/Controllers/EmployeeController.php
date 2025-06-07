@@ -49,18 +49,27 @@ class EmployeeController extends Controller
 
     public function getEmployeeActivity()
     {
-        $employees = Employee::where('status', 'approved')
-            ->select('id', 'first_name', 'last_name', 'email', 'last_login', 'status')
-            ->get()
-            ->map(function ($employee) {
-                $employee->is_active = $employee->last_login && $employee->last_login->diffInDays(now()) <= 14;
-                return $employee;
-            });
-            
-        return response()->json([
-            'success' => true,
-            'data' => $employees
-        ]);
+        try {
+            $employees = Employee::where('status', 'approved')
+                ->select('id', 'first_name', 'last_name', 'email', 'last_login', 'status')
+                ->get()
+                ->map(function ($employee) {
+                    $employee->is_active = $employee->last_login && $employee->last_login->diffInDays(now()) <= 14;
+                    return $employee;
+                });
+                
+            return response()->json([
+                'success' => true,
+                'data' => $employees
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error in getEmployeeActivity: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error loading employee activity',
+                'data' => []
+            ], 500);
+        }
     }
 
     public function showAdminAppointment()

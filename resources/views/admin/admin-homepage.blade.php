@@ -1725,12 +1725,23 @@
           },
           credentials: 'same-origin'
       })
-      .then(response => response.json())
-      .then(data => {
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(response => {
           const tbody = document.getElementById('employeeActivityTableBody');
           tbody.innerHTML = '';
           
-          if (data.data.length === 0) {
+          if (!response.success) {
+              throw new Error(response.message || 'Failed to load employee activity');
+          }
+
+          const employees = response.data || [];
+          
+          if (employees.length === 0) {
               tbody.innerHTML = `
                   <tr>
                       <td colspan="5" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">
@@ -1741,7 +1752,7 @@
               return;
           }
 
-          data.data.forEach(employee => {
+          employees.forEach(employee => {
               const row = document.createElement('tr');
               row.innerHTML = `
                   <td data-label="Employee Name">${employee.first_name} ${employee.last_name}</td>
