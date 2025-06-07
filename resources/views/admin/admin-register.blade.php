@@ -8,6 +8,7 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style type="text/css">
         * {
             margin: 0;
@@ -575,7 +576,6 @@
         function updateFileName(input) {
             const fileNameDisplay = document.getElementById('fileNameDisplay');
             if (input.files && input.files[0]) {
-                // Get only the filename without the path
                 const fileName = input.files[0].name;
                 fileNameDisplay.textContent = fileName;
             } else {
@@ -595,10 +595,51 @@
             }
 
             if (age < 18) {
-                alert('You must be at least 18 years old to register as an admin.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Age Restriction',
+                    text: 'You must be at least 18 years old to register as an admin.',
+                    confirmButtonColor: '#426DDC'
+                });
                 this.value = '';
             }
         });
+
+        // Show validation errors using SweetAlert
+        @if($errors->any())
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                html: `
+                    <ul style="text-align: left; list-style-type: none; padding: 0;">
+                        @foreach($errors->all() as $error)
+                            <li style="margin-bottom: 8px;">• {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `,
+                confirmButtonColor: '#426DDC'
+            });
+        @endif
+
+        // Show success message using SweetAlert
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '{{ session('success') }}',
+                confirmButtonColor: '#426DDC'
+            });
+        @endif
+
+        // Show error message using SweetAlert
+        @if(session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '{{ session('error') }}',
+                confirmButtonColor: '#426DDC'
+            });
+        @endif
     </script>
 </body>
 </html> 

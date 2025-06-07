@@ -23,10 +23,14 @@ class AdminRegisterController extends Controller
                 'first_name' => 'required|string|max:255',
                 'last_name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:employees,email',
-                'password' => 'required|string|min:8|confirmed',
+                'password' => 'required|string|min:8',
+                'password_confirmation' => 'required|same:password',
                 'birthday' => 'required|date',
                 'address' => 'required|string',
                 'id_card_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ], [
+                'password_confirmation.same' => 'The password confirmation does not match.',
+                'password.min' => 'The password must be at least 8 characters.',
             ]);
 
             $filename = null;
