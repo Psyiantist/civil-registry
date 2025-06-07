@@ -1058,14 +1058,14 @@
   <div class="account-approval-container">
     <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">EMPLOYEE ACTIVITY</h2>
     <div class="table-responsive">
-      <table id="employeeActivityTable">
+      <table id="employeeActivityTable" style="width: 100%; min-width: 800px; border-collapse: collapse; font-family: 'Poppins', sans-serif; background: white;">
         <thead>
           <tr>
-            <th>Employee Name</th>
-            <th>Email Address</th>
-            <th>Last Login</th>
-            <th>Status</th>
-            <th>Action</th>
+            <th style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap; background-color: #1E63E9; color: white; font-weight: 600; position: sticky; top: 0; z-index: 10;">Employee Name</th>
+            <th style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap; background-color: #1E63E9; color: white; font-weight: 600; position: sticky; top: 0; z-index: 10;">Email Address</th>
+            <th style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap; background-color: #1E63E9; color: white; font-weight: 600; position: sticky; top: 0; z-index: 10;">Last Login</th>
+            <th style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap; background-color: #1E63E9; color: white; font-weight: 600; position: sticky; top: 0; z-index: 10;">Status</th>
+            <th style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap; background-color: #1E63E9; color: white; font-weight: 600; position: sticky; top: 0; z-index: 10;">Action</th>
           </tr>
         </thead>
         <tbody id="employeeActivityTableBody">
@@ -1755,21 +1755,21 @@
           employees.forEach(employee => {
               const row = document.createElement('tr');
               row.innerHTML = `
-                  <td data-label="Employee Name">${employee.first_name} ${employee.last_name}</td>
-                  <td data-label="Email Address">${employee.email}</td>
-                  <td data-label="Last Login">
+                  <td data-label="Employee Name" style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap;">${employee.first_name} ${employee.last_name}</td>
+                  <td data-label="Email Address" style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap;">${employee.email}</td>
+                  <td data-label="Last Login" style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap;">
                       ${employee.last_login ? new Date(employee.last_login).toLocaleString('en-PH', {
                           dateStyle: 'full',
                           timeStyle: 'short',
                           hour12: true
                       }) : 'Never'}
                   </td>
-                  <td data-label="Status">
-                      <span class="status-badge ${employee.status === 'approved' ? 'status-approved' : 'status-declined'}">
-                          ${employee.status === 'approved' ? 'Active' : 'Inactive'}
+                  <td data-label="Status" style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap;">
+                      <span class="status-badge ${employee.is_active ? 'status-approved' : 'status-declined'}">
+                          ${employee.is_active ? 'Active' : 'Inactive'}
                       </span>
                   </td>
-                  <td data-label="Action">
+                  <td data-label="Action" style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap;">
                       ${isAdmin1() ? `
                           <form method="POST" action="/admin/delete-employee/${employee.id}">
                               @csrf

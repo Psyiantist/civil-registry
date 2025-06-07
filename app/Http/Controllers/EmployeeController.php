@@ -57,10 +57,11 @@ class EmployeeController extends Controller
             \Log::info('Total employees in database: ' . $employeeCount);
 
             $employees = Employee::where('status', 'approved')
+                ->whereNotIn('username', ['admin1', 'Admin1'])
                 ->select('id', 'first_name', 'last_name', 'email', 'last_login', 'status')
                 ->get();
             
-            \Log::info('Found ' . $employees->count() . ' approved employees');
+            \Log::info('Found ' . $employees->count() . ' approved employees (excluding admin)');
 
             $employees = $employees->map(function ($employee) {
                 try {
