@@ -570,6 +570,23 @@
                 eyeIcon.classList.add('fa-eye-slash');
             }
         }
+
+        // Add birthday validation
+        document.getElementById('birthday').addEventListener('change', function(e) {
+            const birthday = new Date(this.value);
+            const today = new Date();
+            const age = today.getFullYear() - birthday.getFullYear();
+            const monthDiff = today.getMonth() - birthday.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthday.getDate())) {
+                age--;
+            }
+
+            if (age < 18) {
+                alert('You must be at least 18 years old to register as an admin.');
+                this.value = '';
+            }
+        });
     </script>
 </body>
 </html> 
