@@ -18,15 +18,15 @@ class Employee extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'username',
-        'password',
         'first_name',
         'last_name',
+        'username',
+        'email',
+        'password',
         'birthday',
         'address',
         'id_card_image',
         'status',
-        'email',
         'last_login'
     ];
 
@@ -45,12 +45,8 @@ class Employee extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'password' => 'hashed',
-            'birthday' => 'date',
-            'last_login' => 'datetime',
-        ];
-    }
+    protected $casts = [
+        'birthday' => 'date',
+        'last_login' => 'datetime'
+    ];
 }

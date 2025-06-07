@@ -50,13 +50,27 @@ class EmployeeController extends Controller
     public function getEmployeeActivity()
     {
         try {
+            \Log::info('Starting getEmployeeActivity');
+            
+            // First check if we can query the Employee model
+            $employeeCount = Employee::count();
+            \Log::info('Total employees in database: ' . $employeeCount);
+
             $employees = Employee::where('status', 'approved')
                 ->select('id', 'first_name', 'last_name', 'email', 'last_login', 'status')
-                ->get()
-                ->map(function ($employee) {
+                ->get();
+            
+            \Log::info('Found ' . $employees->count() . ' approved employees');
+
+            $employees = $employees->map(function ($employee) {
+                try {
                     $employee->is_active = $employee->last_login && $employee->last_login->diffInDays(now()) <= 14;
                     return $employee;
-                });
+                } catch (\Exception $e) {
+                    \Log::error('Error processing employee ' . $employee->id . ': ' . $e->getMessage());
+                    return $employee;
+                }
+            });
                 
             return response()->json([
                 'success' => true,
@@ -64,9 +78,10 @@ class EmployeeController extends Controller
             ]);
         } catch (\Exception $e) {
             \Log::error('Error in getEmployeeActivity: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
             return response()->json([
                 'success' => false,
-                'message' => 'Error loading employee activity',
+                'message' => 'Error loading employee activity: ' . $e->getMessage(),
                 'data' => []
             ], 500);
         }
