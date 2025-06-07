@@ -406,30 +406,43 @@
         <div>
         <h3 class="text-center text-gray-600 mb-2"> Morning </h3>
         <div class="grid grid-cols-2 gap-2">
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="07:00"> 7:00 </button>
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="07:30"> 7:30 </button>
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="08:00"> 8:00 </button>
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="08:30"> 8:30 </button>
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="09:00"> 9:00 </button>
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="09:30"> 9:30 </button>
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="10:00"> 10:00 </button>
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="10:30"> 10:30 </button>
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="11:00"> 11:00 </button>
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="11:30"> 11:30 </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="08:00"> 8:00 AM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="08:15"> 8:15 AM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="08:30"> 8:30 AM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="08:45"> 8:45 AM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="09:00"> 9:00 AM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="09:15"> 9:15 AM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="09:30"> 9:30 AM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="09:45"> 9:45 AM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="10:00"> 10:00 AM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="10:15"> 10:15 AM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="10:30"> 10:30 AM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="10:45"> 10:45 AM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="11:00"> 11:00 AM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="11:15"> 11:15 AM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="11:30"> 11:30 AM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="11:45"> 11:45 AM </button>
         </div>
         </div>
            
         <div>
         <h3 class="text-center text-gray-600 mb-2"> Afternoon </h3>
         <div class="grid grid-cols-2 gap-2">
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="13:00"> 1:00 </button>
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="13:30"> 1:30 </button>
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="14:00"> 2:00 </button>
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="14:30"> 2:30 </button>
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="15:00"> 3:00 </button>
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="15:30"> 3:30 </button>
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="16:00"> 4:00 </button>
-            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="16:30"> 4:30 </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="13:00"> 1:00 PM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="13:15"> 1:15 PM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="13:30"> 1:30 PM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="13:45"> 1:45 PM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="14:00"> 2:00 PM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="14:15"> 2:15 PM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="14:30"> 2:30 PM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="14:45"> 2:45 PM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="15:00"> 3:00 PM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="15:15"> 3:15 PM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="15:30"> 3:30 PM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="15:45"> 3:45 PM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="16:00"> 4:00 PM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="16:15"> 4:15 PM </button>
+            <button type="button" class="border rounded py-2 bg-brown-500 cursor-pointer" onclick="selectTime(this)" data-time="16:30"> 4:30 PM </button>
         </div>
         </div>
         </div>
