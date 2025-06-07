@@ -1105,7 +1105,7 @@
                 <td data-label="Address">{{ $employee->address ?? 'N/A' }}</td>
                 <td data-label="ID Card">
                   @if($employee->id_card_image)
-                    <a href="{{ asset('storage/uploads/' . $employee->id_card_image) }}" target="_blank" style="color: #1E63E9; text-decoration: underline;">View ID Card</a>
+                    <a href="javascript:void(0)" onclick="showIdImage('{{ url('/storage/uploads/' . $employee->id_card_image) }}', '{{ $employee->first_name }} {{ $employee->last_name }} Government Issued ID')" style="color: #1E63E9; text-decoration: underline;">View Government Issued ID</a>
                   @else
                     <span style="color: #aaa;">No ID Card</span>
                   @endif
@@ -1139,150 +1139,49 @@
 
   <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
   <script type="text/javascript">
-
-  let originalImageSrc = {};
-  let selectedFiles = {};
-
-  function handleFileSelect(input, imgId, announcementId) {
-      const file = input.files[0];
-      const imgElement = document.getElementById(imgId);
-      const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
-      const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
-
-      if (!imgElement) {
-          alert("Image element not found.");
+  // Wait for document to be fully loaded
+  document.addEventListener('DOMContentLoaded', function() {
+      // Initialize SweetAlert2
+      if (typeof Swal === 'undefined') {
+          console.error('SweetAlert2 is not loaded');
           return;
       }
 
-      if (!originalImageSrc[announcementId]) {
-          originalImageSrc[announcementId] = imgElement.src;
-      }
-
-      if (file) {
-          // Store the selected file
-          selectedFiles[announcementId] = file;
-          
-          // Preview the image
-          const reader = new FileReader();
-          reader.onload = function(e) {
-              imgElement.src = e.target.result;
-          };
-          reader.readAsDataURL(file);
-          
-          // Show the save changes container
-          saveChangesContainer.style.display = 'block';
-          fileNameDisplay.textContent = file.name;
-      }
-  }
-
-  function saveImageChanges(imgId, announcementId) {
-      const imgElement = document.getElementById(imgId);
-      const file = selectedFiles[announcementId];
-      const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
-      const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
-
-      if (!file) {
-          alert("No file selected.");
-          return;
-      }
-
-      const formData = new FormData();
-      formData.append('image', file);
-
-      fetch(`/admin/announcements/${announcementId}`, {
-          method: 'POST',
-          headers: {
-              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-          },
-          body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.success) {
-              alert("Image uploaded successfully!");
-              // Optionally update the image src to the new file if you want to force refresh
-              // imgElement.src = `/storage/announcements/${data.image_path}`;
-              saveChangesContainer.style.display = 'none';
-              selectedFiles[announcementId] = null;
-              fileNameDisplay.textContent = 'No file chosen';
-          } else {
-              alert("Failed to upload image");
+      // Initialize showIdImage function
+      window.showIdImage = function(imageUrl, title) {
+          try {
+              Swal.fire({
+                  title: title,
+                  imageUrl: imageUrl,
+                  imageWidth: 400,
+                  imageHeight: 400,
+                  imageAlt: 'ID Card Image',
+                  showConfirmButton: true,
+                  confirmButtonText: 'Close',
+                  confirmButtonColor: '#426DDC',
+                  width: 'auto',
+                  padding: '2em',
+                  background: '#fff',
+                  backdrop: 'rgba(0,0,0,0.8)',
+                  customClass: {
+                      container: 'id-image-modal'
+                  }
+              });
+          } catch (error) {
+              console.error('Error showing ID image:', error);
+              // Fallback to regular link if SweetAlert fails
+              window.open(imageUrl, '_blank');
           }
-      })
-      .catch(error => {
-          console.error('Error:', error);
-          alert("An error occurred while uploading the image");
-      });
-  }
+      };
 
-  function cancelImageChanges(imgId, announcementId) {
-      const imgElement = document.getElementById(imgId);
-      const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
-      const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
-      const fileInput = document.querySelector(`input[onchange="handleFileSelect(this, '${imgId}', ${announcementId})"]`);
+      // Initialize other variables
+      window.originalImageSrc = {};
+      window.selectedFiles = {};
 
-      // Reset the image to original
-      imgElement.src = originalImageSrc[announcementId];
-      
-      // Reset the file input
-      fileInput.value = '';
-      
-      // Hide save changes container
-      saveChangesContainer.style.display = 'none';
-      
-      // Reset file name display
-      fileNameDisplay.textContent = 'No file chosen';
-      
-      // Clear selected file
-      selectedFiles[announcementId] = null;
-  }
-
-  function resetImage(imgId, announcementId) {
-      const imgElement = document.getElementById(imgId);
-      const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
-      const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
-      const fileInput = document.querySelector(`input[onchange="handleFileSelect(this, '${imgId}', ${announcementId})"]`);
-
-      // Reset to default image
-      imgElement.src = "{{ asset('storage/announcements/default-announcement.png') }}";
-      
-      // Reset the file input
-      fileInput.value = '';
-      
-      // Hide save changes container
-      saveChangesContainer.style.display = 'none';
-      
-      // Reset file name display
-      fileNameDisplay.textContent = 'No file chosen';
-      
-      // Clear selected file
-      selectedFiles[announcementId] = null;
-
-      // Update the image in the database
-      const formData = new FormData();
-      formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
-      formData.append('reset_to_default', true);
-
-      fetch(`/admin/announcements/${announcementId}`, {
-          method: 'POST',
-          body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.success) {
-              alert("Image reset to default successfully!");
-              originalImageSrc[announcementId] = imgElement.src;
-          } else {
-              alert("Failed to reset image");
-          }
-      })
-      .catch(error => {
-          console.error('Error:', error);
-          alert("An error occurred while resetting the image");
-      });
-  }
-
-    
+      // Load initial data
+      loadPendingUsers();
+      loadUserActivity();
+  });
 
   function toggleDropdown() {
       const dropdown = document.getElementById("accountDropdown");
@@ -1327,7 +1226,7 @@
   }
 
   function updateAnnouncement(id, field, value) {
-      fetch(`/admin/announcements/${id}`, {
+      fetch('{{ url("/admin/announcements") }}/' + id, {
           method: 'PUT',
           headers: {
               'Content-Type': 'application/json',
@@ -1513,7 +1412,7 @@
   });
 
   function loadPendingUsers() {
-      fetch('/api/admin/pending-users', {
+      fetch('{{ url("/api/admin/pending-users") }}', {
           headers: {
               'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
               'Accept': 'application/json',
@@ -1545,7 +1444,7 @@
                   <td data-label="ID Type">${user.id_type}</td>
                   <td data-label="ID Uploaded">
                       ${user.id_image ? 
-                          `<a href="/storage/uploads/${user.id_image}" target="_blank" style="color: #1E63E9; text-decoration: underline;">View ID</a>` :
+                          `<a href="javascript:void(0)" onclick="showIdImage('{{ url('/storage/uploads') }}/${user.id_image}', '${user.first_name} ${user.last_name} Government Issued ID')" style="color: #1E63E9; text-decoration: underline;">View Government Issued ID</a>` :
                           `<span style="color: #aaa;">No ID</span>`
                       }
                   </td>
@@ -1591,7 +1490,7 @@
   }
 
   function loadUserActivity() {
-      fetch('/api/admin/user-activity', {
+      fetch('{{ url("/api/admin/user-activity") }}', {
           headers: {
               'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
               'Accept': 'application/json',
@@ -1738,6 +1637,178 @@
                       form.submit();
                   }
               });
+          });
+      });
+  }
+
+  function handleFileSelect(input, imgId, announcementId) {
+      const file = input.files[0];
+      const imgElement = document.getElementById(imgId);
+      const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
+      const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
+
+      if (!imgElement) {
+          console.error("Image element not found.");
+          return;
+      }
+
+      if (!originalImageSrc[announcementId]) {
+          originalImageSrc[announcementId] = imgElement.src;
+      }
+
+      if (file) {
+          // Store the selected file
+          selectedFiles[announcementId] = file;
+          
+          // Preview the image
+          const reader = new FileReader();
+          reader.onload = function(e) {
+              imgElement.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+          
+          // Show the save changes container
+          saveChangesContainer.style.display = 'block';
+          fileNameDisplay.textContent = file.name;
+      }
+  }
+
+  function saveImageChanges(imgId, announcementId) {
+      const imgElement = document.getElementById(imgId);
+      const file = selectedFiles[announcementId];
+      const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
+      const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
+
+      if (!file) {
+          Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'No file selected.',
+              confirmButtonColor: '#426DDC'
+          });
+          return;
+      }
+
+      const formData = new FormData();
+      formData.append('image', file);
+
+      fetch('{{ url("/admin/announcements") }}/' + announcementId, {
+          method: 'POST',
+          headers: {
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+          },
+          body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Success!',
+                  text: 'Image uploaded successfully!',
+                  confirmButtonColor: '#426DDC'
+              });
+              saveChangesContainer.style.display = 'none';
+              selectedFiles[announcementId] = null;
+              fileNameDisplay.textContent = 'No file chosen';
+          } else {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'Failed to upload image',
+                  confirmButtonColor: '#426DDC'
+              });
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'An error occurred while uploading the image',
+              confirmButtonColor: '#426DDC'
+          });
+      });
+  }
+
+  function cancelImageChanges(imgId, announcementId) {
+      const imgElement = document.getElementById(imgId);
+      const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
+      const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
+      const fileInput = document.querySelector(`input[onchange="handleFileSelect(this, '${imgId}', ${announcementId})"]`);
+
+      // Reset the image to original
+      imgElement.src = originalImageSrc[announcementId];
+      
+      // Reset the file input
+      fileInput.value = '';
+      
+      // Hide save changes container
+      saveChangesContainer.style.display = 'none';
+      
+      // Reset file name display
+      fileNameDisplay.textContent = 'No file chosen';
+      
+      // Clear selected file
+      selectedFiles[announcementId] = null;
+  }
+
+  function resetImage(imgId, announcementId) {
+      const imgElement = document.getElementById(imgId);
+      const fileNameDisplay = document.getElementById("fileNameDisplay" + announcementId);
+      const saveChangesContainer = document.getElementById("saveChangesContainer" + announcementId);
+      const fileInput = document.querySelector(`input[onchange="handleFileSelect(this, '${imgId}', ${announcementId})"]`);
+
+      // Reset to default image
+      imgElement.src = "{{ asset('storage/announcements/default-announcement.png') }}";
+      
+      // Reset the file input
+      fileInput.value = '';
+      
+      // Hide save changes container
+      saveChangesContainer.style.display = 'none';
+      
+      // Reset file name display
+      fileNameDisplay.textContent = 'No file chosen';
+      
+      // Clear selected file
+      selectedFiles[announcementId] = null;
+
+      // Update the image in the database
+      const formData = new FormData();
+      formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
+      formData.append('reset_to_default', true);
+
+      fetch('{{ url("/admin/announcements") }}/' + announcementId, {
+          method: 'POST',
+          body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Success!',
+                  text: 'Image reset to default successfully!',
+                  confirmButtonColor: '#426DDC'
+              });
+              originalImageSrc[announcementId] = imgElement.src;
+          } else {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'Failed to reset image',
+                  confirmButtonColor: '#426DDC'
+              });
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'An error occurred while resetting the image',
+              confirmButtonColor: '#426DDC'
           });
       });
   }

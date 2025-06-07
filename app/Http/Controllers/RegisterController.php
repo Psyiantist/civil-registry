@@ -60,7 +60,8 @@ class RegisterController extends Controller
             if($request->hasFile('id_image')){
                 $file = $request->file('id_image');
                 $filename = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('storage/uploads'), $filename);
+                $file->storeAs('uploads', $filename, 'public');
+                $filename = Storage::disk('public')->url('uploads/' . $filename);
             }
 
             $step1Data = [

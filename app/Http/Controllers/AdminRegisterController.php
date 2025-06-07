@@ -35,8 +35,9 @@ class AdminRegisterController extends Controller
                     $file = $request->file('id_card_image');
                     $filename = time() . '_' . $file->getClientOriginalName();
                     
-                    // Use Storage facade instead of direct file operations
-                    $file->storeAs('public/uploads', $filename);
+                    // Store in public disk
+                    $file->storeAs('uploads', $filename, 'public');
+                    $filename = Storage::disk('public')->url('uploads/' . $filename);
                     \Log::info('File uploaded successfully: ' . $filename);
                 } catch (\Exception $e) {
                     \Log::error('File upload failed: ' . $e->getMessage());

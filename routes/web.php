@@ -20,6 +20,17 @@ Route::get('/', function () {
     return view('homepage');
 });
 
+// Add route for serving uploaded images
+Route::get('/storage/uploads/{filename}', function ($filename) {
+    $path = storage_path('app/public/uploads/' . $filename);
+    
+    if (!file_exists($path)) {
+        abort(404);
+    }
+    
+    return response()->file($path);
+})->where('filename', '.*');
+
 // USER ROUTES
 Route::view('/home', 'homepage')->name('home');
 Route::view('/about', 'about')->name('about');

@@ -45,6 +45,7 @@ return [
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
+            'prefix' => env('FILESYSTEM_PREFIX', ''),
         ],
 
     ],
