@@ -535,7 +535,8 @@
 
                 <div class="input-group file-group">
                     <label for="id_card_image" class="file-label">Upload Government Issued ID</label>
-                    <input type="file" id="id_card_image" name="id_card_image" accept="image/*" required class="modern-input file-input {{ $errors->has('id_card_image') ? 'input-error' : '' }}">
+                    <input type="file" id="id_card_image" name="id_card_image" accept="image/*" required class="modern-input file-input {{ $errors->has('id_card_image') ? 'input-error' : '' }}" onchange="updateFileName(this)">
+                    <span id="fileNameDisplay" class="file-name-display" style="margin-top: 5px; color: #666; font-size: 14px;">No file chosen</span>
                 </div>
                 @error('id_card_image')
                     <span class="error-message">{{ $message }}</span>
@@ -568,6 +569,17 @@
                 passwordField.type = 'password';
                 eyeIcon.classList.remove('fa-eye');
                 eyeIcon.classList.add('fa-eye-slash');
+            }
+        }
+
+        function updateFileName(input) {
+            const fileNameDisplay = document.getElementById('fileNameDisplay');
+            if (input.files && input.files[0]) {
+                // Get only the filename without the path
+                const fileName = input.files[0].name;
+                fileNameDisplay.textContent = fileName;
+            } else {
+                fileNameDisplay.textContent = 'No file chosen';
             }
         }
 
