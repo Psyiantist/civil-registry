@@ -297,7 +297,7 @@
        <div class="hcwhy"> 
      <h3> How can we help you? </h3>
         <form class="search-container2">
-            <input type="text" placeholder="Ask anything">
+            <input type="text" id="searchInput" placeholder="Ask anything">
             <button type="submit">
                 <i class="fa fa-search"> </i>
             </button>
@@ -330,36 +330,124 @@
 
 <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 <script type="text/javascript">
-        
+    // Initialize all DOM elements once
+    const elements = {
+        menuToggle: document.querySelector('.menu-toggle'),
+        menu: document.querySelector('.menu'),
+        searchButton: document.querySelector('.search-container2 button'),
+        searchInput: document.getElementById("searchInput"),
+        faqQuestions: document.querySelectorAll('.faq-question')
+    };
 
+    // Menu toggle functionality
+    if (elements.menuToggle && elements.menu) {
+        elements.menuToggle.onclick = () => {
+            elements.menu.classList.toggle('expand-mobile');
+            elements.menuToggle.classList.toggle('expand-icon');
+        };
+    }
 
-    
-        function toggleDropdown() {
-        const dropdown = document.getElementById("accountDropdown");
+    // Search functionality
+    function performSearch() {
+        const input = elements.searchInput.value.trim().toLowerCase();
+        const faqItems = document.querySelectorAll('.faq-item');
+        let found = false;
 
-             dropdown.classList.toggle("show");
+        if (input === "") {
+            alert("Please enter a search term.");
+            return;
         }
 
-        const faqQuestions = document.querySelectorAll('.faq-question');
+        // First check for navigation keywords
+        if (input === "home page" || input === "homepage" || input === "home") {
+            window.location.href = "{{ route('home') }}";
+            return;
+        } else if (input === "faqs" || input === "facts" || input === "help") {
+            window.location.href = "{{ route('faqs') }}";
+            return;
+        } else if (input === "about" || input === "about civil") {
+            window.location.href = "{{ route('about') }}";
+            return;
+        } else if (input === "contact" || input === "number" || input === "email") {
+            window.location.href = "{{ route('contact') }}";
+            return;
+        }
 
-        faqQuestions.forEach(question => {
+        // Search through FAQ items
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question').textContent.toLowerCase();
+            const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+            
+            if (question.includes(input) || answer.includes(input)) {
+                item.style.display = 'flex';
+                found = true;
+                // Automatically expand the matching FAQ
+                const questionElement = item.querySelector('.faq-question');
+                const answerElement = item.querySelector('.faq-answer');
+                const icon = questionElement.querySelector('i');
+                
+                questionElement.classList.add('active');
+                answerElement.classList.add('show');
+                icon?.classList.add('active');
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        if (!found) {
+            alert("No matching FAQs found.");
+            // Reset display of all FAQs
+            faqItems.forEach(item => {
+                item.style.display = 'flex';
+            });
+        }
+    }
+
+    // Add event listener for search button click
+    if (elements.searchButton) {
+        elements.searchButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            performSearch();
+        });
+    }
+
+    // Add event listener for Enter key
+    if (elements.searchInput) {
+        elements.searchInput.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                performSearch();
+            }
+        });
+    }
+
+    // FAQ toggle functionality
+    elements.faqQuestions.forEach(question => {
         question.addEventListener('click', () => {
-        const answer = question.nextElementSibling;
-        const icon = question.querySelector('i');
+            const answer = question.nextElementSibling;
+            const icon = question.querySelector('i');
 
-        document.querySelectorAll('.faq-answer').forEach(ans => {
+            document.querySelectorAll('.faq-answer').forEach(ans => {
                 if (ans !== answer) ans.classList.remove('show');
-        });
-        document.querySelectorAll('.faq-question i').forEach(ic => {
+            });
+            document.querySelectorAll('.faq-question i').forEach(ic => {
                 if (ic !== icon) ic.classList.remove('active');
-        });
+            });
 
             question.classList.toggle('active');
             answer.classList.toggle('show');
             icon?.classList.toggle('active');
         });
-        });
+    });
 
+    // Account dropdown functionality
+    function toggleDropdown() {
+        const dropdown = document.getElementById("accountDropdown");
+        if (dropdown) {
+            alert("Please login or register your account first.");
+            dropdown.classList.toggle("show");
+        }
+    }
 </script>
 
 </body>
