@@ -112,6 +112,17 @@
                 </div>
             </div>
 
+            <p><strong>Appointment Details:</strong></p>
+            <ul>
+                <li><strong>Requester Name:</strong> {{ $appointment->requester_name }}</li>
+                <li><strong>Document Owner:</strong> {{ $appointment->document_owner_name }}</li>
+                <li><strong>Relationship:</strong> {{ $appointment->relationship }}</li>
+                <li><strong>Appointment Type:</strong> {{ $appointment->appointment_type }}</li>
+                <li><strong>Document Type:</strong> {{ $appointment->document_type }}</li>
+                <li><strong>Date:</strong> {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('F d, Y') }}</li>
+                <li><strong>Time:</strong> {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</li>
+            </ul>
+
             <div class="note-box">
                 <strong>Important Information:</strong>
                 <ul>

@@ -11,12 +11,15 @@ class Appointment extends Model
 
     protected $fillable = [
         'user_id',
-        'reference_number',
+        'requester_name',
+        'document_owner_name',
+        'relationship',
         'appointment_type',
         'document_type',
         'appointment_date',
         'appointment_time',
         'status',
+        'reference_number',
         'cancellation_reason'
     ];
 

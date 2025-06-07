@@ -384,6 +384,22 @@
             </div>
             </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label class="block text-gray-600 mb-2">Name of Requester</label>
+                    <input type="text" name="requester_name" class="w-full border rounded py-2 px-3 text-gray-600" required>
+                </div>
+                <div>
+                    <label class="block text-gray-600 mb-2">Name of Document Owner</label>
+                    <input type="text" name="document_owner_name" class="w-full border rounded py-2 px-3 text-gray-600" required>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-gray-600 mb-2">Relationship to Document Owner</label>
+                <input type="text" name="relationship" class="w-full border rounded py-2 px-3 text-gray-600" required>
+            </div>
+
             <div class="mb-6">
             <label class="block text-gray-600 mb-2"> Select preferred date and time </label>
             <div class="flex items-center justify-between mb-4">

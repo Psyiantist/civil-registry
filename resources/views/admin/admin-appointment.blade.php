@@ -849,6 +849,9 @@
                         <thead class="bg-blue-600 text-white">
                             <tr>
                                 <th class="py-3 px-4 text-left">User Name</th>
+                                <th class="py-3 px-4 text-left">Requester Name</th>
+                                <th class="py-3 px-4 text-left">Document Owner</th>
+                                <th class="py-3 px-4 text-left">Relationship</th>
                                 <th class="py-3 px-4 text-left">Appointment Type</th>
                                 <th class="py-3 px-4 text-left">Document Type</th>
                                 <th class="py-3 px-4 text-left">Date & Time</th>
@@ -861,6 +864,9 @@
                             @foreach($appointments as $appointment)
                             <tr class="border-b">
                                 <td class="py-3 px-4">{{ $appointment->user->first_name }} {{ $appointment->user->last_name }}</td>
+                                <td class="py-3 px-4">{{ $appointment->requester_name }}</td>
+                                <td class="py-3 px-4">{{ $appointment->document_owner_name }}</td>
+                                <td class="py-3 px-4">{{ $appointment->relationship }}</td>
                                 <td class="py-3 px-4">{{ $appointment->appointment_type }}</td>
                                 <td class="py-3 px-4">{{ $appointment->document_type }}</td>
                                 <td class="py-3 px-4">{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('F d, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->setTimezone('Asia/Manila')->format('h:i A') }}</td>
@@ -979,6 +985,9 @@
                         <tr>
                             <th class="py-3 px-4 text-left">Reference Number</th>
                             <th class="py-3 px-4 text-left">User Name</th>
+                            <th class="py-3 px-4 text-left">Requester Name</th>
+                            <th class="py-3 px-4 text-left">Document Owner</th>
+                            <th class="py-3 px-4 text-left">Relationship</th>
                             <th class="py-3 px-4 text-left">Appointment Type</th>
                             <th class="py-3 px-4 text-left">Document Type</th>
                             <th class="py-3 px-4 text-left">Date & Time</th>
@@ -993,6 +1002,9 @@
                         <tr class="border-b">
                             <td class="py-3 px-4 font-medium">{{ $appointment->reference_number }}</td>
                             <td class="py-3 px-4">{{ $appointment->user->first_name }} {{ $appointment->user->last_name }}</td>
+                            <td class="py-3 px-4">{{ $appointment->requester_name }}</td>
+                            <td class="py-3 px-4">{{ $appointment->document_owner_name }}</td>
+                            <td class="py-3 px-4">{{ $appointment->relationship }}</td>
                             <td class="py-3 px-4">{{ $appointment->appointment_type }}</td>
                             <td class="py-3 px-4">{{ $appointment->document_type }}</td>
                             <td class="py-3 px-4">{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('F d, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->setTimezone('Asia/Manila')->format('h:i A') }}</td>
@@ -1339,6 +1351,9 @@ window.addEventListener("click", function(event) {
                     let rowHtml = `
                         <td class="py-3 px-4 font-medium">${appointment.reference_number}</td>
                         <td class="py-3 px-4">${appointment.user.first_name} ${appointment.user.last_name}</td>
+                        <td class="py-3 px-4">${appointment.requester_name}</td>
+                        <td class="py-3 px-4">${appointment.document_owner_name}</td>
+                        <td class="py-3 px-4">${appointment.relationship}</td>
                         <td class="py-3 px-4">${appointment.appointment_type}</td>
                         <td class="py-3 px-4">${appointment.document_type}</td>
                         <td class="py-3 px-4">${new Date(appointment.appointment_date).toLocaleDateString()} ${new Date(appointment.appointment_time).toLocaleTimeString()}</td>
@@ -1533,6 +1548,9 @@ window.addEventListener("click", function(event) {
                     let rowHtml = `
                         <td class="py-3 px-4 font-medium">${appointment.reference_number}</td>
                         <td class="py-3 px-4">${appointment.user.first_name} ${appointment.user.last_name}</td>
+                        <td class="py-3 px-4">${appointment.requester_name}</td>
+                        <td class="py-3 px-4">${appointment.document_owner_name}</td>
+                        <td class="py-3 px-4">${appointment.relationship}</td>
                         <td class="py-3 px-4">${appointment.appointment_type}</td>
                         <td class="py-3 px-4">${appointment.document_type}</td>
                         <td class="py-3 px-4">${new Date(appointment.appointment_date).toLocaleDateString()} ${new Date(appointment.appointment_time).toLocaleTimeString()}</td>

@@ -98,6 +98,17 @@
                 <p><em>No release without these requirements.</em></p>
             </div>
 
+            <p><strong>Appointment Details:</strong></p>
+            <ul>
+                <li><strong>Requester Name:</strong> {{ $appointment->requester_name }}</li>
+                <li><strong>Document Owner:</strong> {{ $appointment->document_owner_name }}</li>
+                <li><strong>Relationship:</strong> {{ $appointment->relationship }}</li>
+                <li><strong>Appointment Type:</strong> {{ $appointment->appointment_type }}</li>
+                <li><strong>Document Type:</strong> {{ $appointment->document_type }}</li>
+                <li><strong>Date:</strong> {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('F d, Y') }}</li>
+                <li><strong>Time:</strong> {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</li>
+            </ul>
+
             <p>If you have any questions or need to make changes to your appointment, please contact us immediately.</p>
             
             <p>Best regards,<br>
