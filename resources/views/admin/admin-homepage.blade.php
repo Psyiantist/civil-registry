@@ -1105,7 +1105,7 @@
                 <td data-label="Address">{{ $employee->address ?? 'N/A' }}</td>
                 <td data-label="ID Card">
                   @if($employee->id_card_image)
-                    <a href="javascript:void(0)" onclick="showIdImage('/storage/uploads/{{ $employee->id_card_image }}', '{{ $employee->first_name }} {{ $employee->last_name }} Government Issued ID')" style="color: #1E63E9; text-decoration: underline;">View Government Issued ID</a>
+                    <a href="javascript:void(0)" onclick="showIdImage('{{ url('/storage/uploads/' . $employee->id_card_image) }}', '{{ $employee->first_name }} {{ $employee->last_name }} Government Issued ID')" style="color: #1E63E9; text-decoration: underline;">View Government Issued ID</a>
                   @else
                     <span style="color: #aaa;">No ID Card</span>
                   @endif
@@ -1444,7 +1444,7 @@
                   <td data-label="ID Type">${user.id_type}</td>
                   <td data-label="ID Uploaded">
                       ${user.id_image ? 
-                          `<a href="javascript:void(0)" onclick="showIdImage('/storage/uploads/${user.id_image}', '${user.first_name} ${user.last_name} Government Issued ID')" style="color: #1E63E9; text-decoration: underline;">View Government Issued ID</a>` :
+                          `<a href="javascript:void(0)" onclick="showIdImage('{{ url('/storage/uploads') }}/${user.id_image}', '${user.first_name} ${user.last_name} Government Issued ID')" style="color: #1E63E9; text-decoration: underline;">View Government Issued ID</a>` :
                           `<span style="color: #aaa;">No ID</span>`
                       }
                   </td>
