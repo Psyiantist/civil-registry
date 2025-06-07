@@ -125,6 +125,14 @@
                     <li>Bring all required documents for your appointment type</li>
                     <li>Wear appropriate attire (business casual)</li>
                 </ul>
+                <p><strong>Document Claiming Requirements:</strong></p>
+                <p>If someone else will attend or claim the document on behalf of the owner, they must bring:</p>
+                <ul>
+                    <li>✓ Authorization letter signed by the document owner</li>
+                    <li>✓ Photocopy of the owner's valid ID</li>
+                    <li>✓ Three signatures of the owner (on the letter or ID)</li>
+                </ul>
+                <p><em>No release without these requirements.</em></p>
             </div>
 
             <div class="important-box">
