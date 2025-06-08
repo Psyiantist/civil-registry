@@ -581,7 +581,13 @@
                     <img src="{{ asset('storage/assets/city_of_mandaluyong_logo.png') }}" 
                          alt="Profile" 
                          class="profile-image">
-                    <div class="profile-name">Admin</div>
+                    <div class="profile-name">
+                        @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
+                            Admin
+                        @else
+                            {{ Auth::guard('employee')->user()->first_name }} {{ Auth::guard('employee')->user()->last_name }}
+                        @endif
+                    </div>
                     <div class="profile-email">city.registrar@<br>mandaluyong.gov.ph</div>
                 </div>
                 <a href="{{ route('admin.logout') }}" class="logout-link">

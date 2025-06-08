@@ -43,6 +43,54 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
     }
 
+    /* Custom styles for file input */
+    .custom-file-label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #426DDC;
+        color: white;
+        padding: 8px 18px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;
+        position: relative;
+        overflow: hidden;
+        min-width: 200px;
+        max-width: 300px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        transition: all 0.3s ease;
+    }
+
+    .custom-file-label:hover {
+        background: #3452a8;
+    }
+
+    .custom-file-label input[type="file"] {
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    .custom-file-label span {
+        color: white !important;
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-align: center;
+        pointer-events: none;
+        z-index: 1;
+    }
+
     /* Main content below the NAV BAR */
 		html, body {
       background-color: #d8e4f0;
@@ -908,6 +956,51 @@
       transform: translateY(-2px) scale(1.04);
     }
 
+    /* New file input styles */
+    .file-input-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .file-input-container input[type="file"] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .file-input-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #426DDC;
+      color: white;
+      padding: 8px 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      min-width: 200px;
+      max-width: 300px;
+      transition: all 0.3s ease;
+    }
+
+    .file-input-button:hover {
+      background: #3452a8;
+    }
+
+    .file-input-button span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
 	</style>
 </head>
 
@@ -1625,20 +1718,16 @@
                       <span class="status-badge status-pending">Pending</span>
                   </td>
                   <td data-label="Action">
-                      ${isAdmin1() ? `
-                          <div style="display: flex; flex-direction: column; gap: 8px;">
-                              <form method="POST" action="/admin/accept-user/${user.id}" class="approval-action-form">
-                                  @csrf
-                                  <button type="submit" class="approve-btn"><i class="fas fa-check-circle"></i>Approve</button>
-                              </form>
-                              <form method="POST" action="/admin/reject-user/${user.id}" class="approval-action-form">
-                                  @csrf
-                                  <button type="submit" class="reject-btn"><i class="fas fa-times-circle"></i>Reject</button>
-                              </form>
-                          </div>
-                      ` : `
-                          <span style="color: #666; font-style: italic;">Only admin1 can approve accounts</span>
-                      `}
+                      <div style="display: flex; flex-direction: column; gap: 8px;">
+                          <form method="POST" action="/admin/accept-user/${user.id}" class="approval-action-form">
+                              @csrf
+                              <button type="submit" class="approve-btn"><i class="fas fa-check-circle"></i>Approve</button>
+                          </form>
+                          <form method="POST" action="/admin/reject-user/${user.id}" class="approval-action-form">
+                              @csrf
+                              <button type="submit" class="reject-btn"><i class="fas fa-times-circle"></i>Reject</button>
+                          </form>
+                      </div>
                   </td>
               `;
               tbody.appendChild(row);
@@ -1945,11 +2034,12 @@
         <div style="margin-bottom: 20px;">
           <label style="display: block; margin-bottom: 8px; color: #555;">Image</label>
           <div style="display: flex; align-items: center; gap: 12px;">
-            <label class="custom-file-label">
-              <input type="file" name="image" accept="image/*" id="customFileInput" required>
-              <span>Choose File</span>
-            </label>
-            <span id="fileName" style="color: #666;">No file chosen</span>
+            <div class="file-input-container">
+              <input type="file" name="image" accept="image/*" id="customFileInput" required onchange="updateFileName(this)">
+              <button type="button" class="file-input-button" onclick="document.getElementById('customFileInput').click()">
+                <span id="fileText">Choose File</span>
+              </button>
+            </div>
           </div>
         </div>
         <div style="display: flex; justify-content: flex-end; gap: 12px;">
@@ -1959,6 +2049,21 @@
       </form>
     </div>
   </div>
+
+  <script type="text/javascript">
+    // ... existing code ...
+
+    function updateFileName(input) {
+      const fileText = document.getElementById('fileText');
+      if (input.files && input.files[0]) {
+        fileText.textContent = input.files[0].name;
+      } else {
+        fileText.textContent = 'Choose File';
+      }
+    }
+
+    // ... rest of existing code ...
+  </script>
 
 </body>
 </html>
