@@ -47,7 +47,7 @@ class EmployeeController extends Controller
         ]);
     }
 
-    public function getEmployeeActivity()
+    public function getEmployeeActivity(Request $request)
     {
         try {
             \Log::info('Starting getEmployeeActivity');
@@ -56,10 +56,27 @@ class EmployeeController extends Controller
             $employeeCount = Employee::count();
             \Log::info('Total employees in database: ' . $employeeCount);
 
-            $employees = Employee::where('status', 'approved')
+            $query = Employee::where('status', 'approved')
                 ->whereNotIn('username', ['admin1', 'Admin1'])
-                ->select('id', 'first_name', 'last_name', 'email', 'last_login', 'status')
-                ->get();
+                ->select('id', 'first_name', 'last_name', 'email', 'last_login', 'status');
+
+            // Apply status filter if provided
+            $statusFilter = $request->input('status');
+            if ($statusFilter && $statusFilter !== 'all') {
+                $query->where(function($q) use ($statusFilter) {
+                    if ($statusFilter === 'active') {
+                        $q->whereNotNull('last_login')
+                          ->whereRaw('last_login >= ?', [now()->subDays(14)]);
+                    } else if ($statusFilter === 'inactive') {
+                        $q->where(function($q) {
+                            $q->whereNull('last_login')
+                              ->orWhereRaw('last_login < ?', [now()->subDays(14)]);
+                        });
+                    }
+                });
+            }
+
+            $employees = $query->get();
             
             \Log::info('Found ' . $employees->count() . ' approved employees (excluding admin)');
 

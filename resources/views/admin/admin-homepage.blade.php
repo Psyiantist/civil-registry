@@ -1137,6 +1137,16 @@
   <!-- EMPLOYEE ACTIVITY SECTION -->
   <div class="account-approval-container">
     <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">EMPLOYEE ACTIVITY</h2>
+    <div style="padding: 16px; background: #fff; border-bottom: 1px solid #e3e8f0;">
+      <div style="display: flex; justify-content: flex-end; align-items: center; gap: 12px;">
+        <label for="employeeStatusFilter" style="font-weight: 500; color: #4b5563;">Filter by Status:</label>
+        <select id="employeeStatusFilter" style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; font-family: 'Poppins', sans-serif; min-width: 150px;">
+          <option value="all">All Employees</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+    </div>
     <div class="table-responsive">
       <table id="employeeActivityTable" style="width: 100%; min-width: 800px; border-collapse: collapse; font-family: 'Poppins', sans-serif; background: white;">
         <thead>
@@ -1839,7 +1849,9 @@
   });
 
   function loadEmployeeActivity() {
-      fetch('{{ url("/api/admin/employee-activity") }}', {
+      const statusFilter = document.getElementById('employeeStatusFilter').value;
+      
+      fetch(`{{ url("/api/admin/employee-activity") }}?status=${statusFilter}`, {
           headers: {
               'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
               'Accept': 'application/json',
@@ -1929,6 +1941,11 @@
           `;
       });
   }
+
+  // Add event listener for the employee status filter
+  document.getElementById('employeeStatusFilter').addEventListener('change', function() {
+      loadEmployeeActivity();
+  });
 
   function attachDeleteEventListeners() {
       const deleteForms = document.querySelectorAll('form[action*="delete-user"]');
