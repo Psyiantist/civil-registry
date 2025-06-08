@@ -1333,30 +1333,22 @@ window.addEventListener("click", function(event) {
             hideLoading();
             if (data.success) {
                 const tableBody = document.getElementById('approvedAppointmentTable');
+                if (!tableBody) {
+                    console.error('Table body element not found');
+                    return;
+                }
+                
                 tableBody.innerHTML = '';
                 
                 // Update the count display
-                document.getElementById('approvedCount').textContent = data.appointments.length;
+                const countElement = document.getElementById('approvedCount');
+                if (countElement) {
+                    countElement.textContent = data.appointments.length;
+                }
                 
                 data.appointments.forEach(appointment => {
                     const row = document.createElement('tr');
                     row.className = 'border-b';
-                    
-                    // Format the date and time properly
-                    const appointmentDate = new Date(appointment.appointment_date);
-                    const appointmentTime = new Date(appointment.appointment_time);
-                    
-                    const formattedDate = appointmentDate.toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                    });
-                    
-                    const formattedTime = appointmentTime.toLocaleTimeString('en-US', {
-                        hour: 'numeric',
-                        minute: '2-digit',
-                        hour12: true
-                    });
                     
                     let rowHtml = `
                         <td class="py-3 px-4 font-medium">${appointment.reference_number}</td>
@@ -1366,7 +1358,7 @@ window.addEventListener("click", function(event) {
                         <td class="py-3 px-4">${appointment.relationship}</td>
                         <td class="py-3 px-4">${appointment.appointment_type}</td>
                         <td class="py-3 px-4">${appointment.document_type}</td>
-                        <td class="py-3 px-4">${formattedDate} ${formattedTime}</td>
+                        <td class="py-3 px-4">${appointment.appointment_date} ${appointment.appointment_time}</td>
                         <td class="py-3 px-4">
                             <span class="bg-green-300 text-green-900 px-2 py-1 rounded text-sm">${appointment.status}</span>
                         </td>`;
