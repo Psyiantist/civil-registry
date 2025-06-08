@@ -84,6 +84,41 @@
             return;
         }
     });
+
+    let loginAttempts = 0;
+    let cooldown = false;
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginForm = document.getElementById('loginForm');
+        const loginButton = document.querySelector('.btnn');
+        if (loginForm && loginButton) {
+            loginForm.addEventListener('submit', function(e) {
+                if (cooldown) {
+                    e.preventDefault();
+                    alert('Too many attempts. Please wait 15 seconds.');
+                    return;
+                }
+                loginAttempts++;
+                if (loginAttempts >= 3) {
+                    cooldown = true;
+                    loginButton.disabled = true;
+                    let seconds = 15;
+                    loginButton.textContent = `Please wait ${seconds}s`;
+                    const interval = setInterval(() => {
+                        seconds--;
+                        loginButton.textContent = `Please wait ${seconds}s`;
+                        if (seconds <= 0) {
+                            clearInterval(interval);
+                            cooldown = false;
+                            loginAttempts = 0;
+                            loginButton.disabled = false;
+                            loginButton.textContent = 'SIGN IN';
+                        }
+                    }, 1000);
+                    e.preventDefault();
+                }
+            });
+        }
+    });
   </script>
   <style type="text/css">
     html, body {

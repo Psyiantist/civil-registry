@@ -12,6 +12,7 @@ use App\Mail\PasswordResetMail;
 use App\Mail\RegistrationMail;
 use App\Services\GeneratePassword;
 use Illuminate\Support\Str;
+use Illuminate\Cache\RateLimiter;
 
 class AuthController extends Controller
 {
@@ -23,27 +24,34 @@ class AuthController extends Controller
 
     public function loginHandler(Request $request)
     {
-        //dd($request->all());
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|string|min:8',
             'remember' => 'boolean|nullable',
         ]);
 
+        $limiter = app(RateLimiter::class);
+        $key = Str::lower($request->input('email')).'|user-login';
+        if ($limiter->tooManyAttempts($key, 3)) {
+            $seconds = $limiter->availableIn($key);
+            return redirect()->back()->withErrors(['email' => "Too many login attempts. Please try again in $seconds seconds."])->withInput($request->only('email', 'remember'));
+        }
+
         $credentials = $request->only('email', 'password');
         $remember = $request->has('remember');
 
-        // Find the user first to check verification status
         $user = User::where('email', $request->email)->first();
-        
         if ($user && ($user->is_verified == 0 || $user->status == 'Rejected')) {
+            $limiter->hit($key, 15);
             return redirect()->back()->withErrors(['email' => 'Please verify your email first or your account is rejected.']);
         }
 
         if (Auth::attempt($credentials, $remember)) {
+            $limiter->clear($key);
             return redirect()->route('residence-homepage')->with('success', 'Login successful');
         }
 
+        $limiter->hit($key, 15);
         return redirect()->back()->withErrors([
             'email' => 'Invalid email or password',
         ])->withInput($request->only('email', 'remember'));
@@ -85,38 +93,44 @@ class AuthController extends Controller
             'password' => 'required|string|min:8',
         ]);
 
+        $limiter = app(RateLimiter::class);
+        $key = Str::lower($request->input('username')).'|admin-login';
+        if ($limiter->tooManyAttempts($key, 3)) {
+            $seconds = $limiter->availableIn($key);
+            return redirect()->back()->withErrors(['username' => "Too many login attempts. Please try again in $seconds seconds."])->withInput($request->only('username'));
+        }
+
         $employee = Employee::where('username', $request->username)->first();
-        
         if (!$employee) {
+            $limiter->hit($key, 15);
             return redirect()->back()->withErrors(['username' => 'Invalid username']);
         }
 
-        // Check if the password is already hashed
         if (strlen($employee->password) < 60) {
-            // If not hashed, hash it now
             $employee->password = Hash::make($employee->password);
             $employee->save();
         }
 
         if (!Hash::check($request->password, $employee->password)) {
+            $limiter->hit($key, 15);
             return redirect()->back()->withErrors(['password' => 'Invalid password']);
         }
 
-        // Check if account is pending
         if ($employee->status === 'pending') {
+            $limiter->hit($key, 15);
             return redirect()->back()->withErrors(['username' => 'Your account is pending approval. Please wait for admin approval.']);
         }
 
-        // Check if account is declined
         if ($employee->status === 'declined') {
+            $limiter->hit($key, 15);
             return redirect()->back()->withErrors(['username' => 'Your account has been declined. Please contact the administrator.']);
         }
 
-        // Update last login timestamp
         $employee->last_login = now()->setTimezone('Asia/Manila');
         $employee->save();
 
         Auth::guard('employee')->login($employee);
+        $limiter->clear($key);
         return redirect()->route('admin.homepage')->with('success', 'Login successful');
     }
 
