@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration - Step 2</title>
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <style>
         html, body {
@@ -337,7 +338,7 @@
                 @enderror
 
                 <label for="dob">Date of Birth:</label>
-                <input type="date" id="dob" name="date_of_birth" required value="{{ old('date_of_birth') }}" class="{{ $errors->has('date_of_birth') ? 'input-error' : '' }}">
+                <input type="date" id="dob" name="date_of_birth" required value="{{ old('date_of_birth') }}" class="{{ $errors->has('date_of_birth') ? 'input-error' : '' }}" max="{{ date('Y-m-d', strtotime('-18 years')) }}">
                 @error('date_of_birth')
                     <span class="error-message">{{ $message }}</span>
                 @enderror
