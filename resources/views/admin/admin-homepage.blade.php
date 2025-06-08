@@ -1673,20 +1673,16 @@
                       <span class="status-badge status-pending">Pending</span>
                   </td>
                   <td data-label="Action">
-                      ${isAdmin1() ? `
-                          <div style="display: flex; flex-direction: column; gap: 8px;">
-                              <form method="POST" action="{{ url('/admin/accept-user') }}/${user.id}" class="approval-action-form">
-                                  @csrf
-                                  <button type="submit" class="approve-btn"><i class="fas fa-check-circle"></i>Approve</button>
-                              </form>
-                              <form method="POST" action="{{ url('/admin/reject-user') }}/${user.id}" class="approval-action-form">
-                                  @csrf
-                                  <button type="submit" class="reject-btn"><i class="fas fa-times-circle"></i>Reject</button>
-                              </form>
-                          </div>
-                      ` : `
-                          <span style="color: #666; font-style: italic;">Only admin1 can approve accounts</span>
-                      `}
+                      <div style="display: flex; flex-direction: column; gap: 8px;">
+                          <form method="POST" action="{{ url('/admin/accept-user') }}/${user.id}" class="approval-action-form">
+                              @csrf
+                              <button type="submit" class="approve-btn"><i class="fas fa-check-circle"></i>Approve</button>
+                          </form>
+                          <form method="POST" action="{{ url('/admin/reject-user') }}/${user.id}" class="approval-action-form">
+                              @csrf
+                              <button type="submit" class="reject-btn"><i class="fas fa-times-circle"></i>Reject</button>
+                          </form>
+                      </div>
                   </td>
               `;
               tbody.appendChild(row);
