@@ -49,4 +49,12 @@ class Employee extends Authenticatable
         'birthday' => 'date',
         'last_login' => 'datetime'
     ];
+
+    public function getLastLoginAttribute($value)
+    {
+        if ($value) {
+            return \Carbon\Carbon::parse($value)->setTimezone('Asia/Manila');
+        }
+        return null;
+    }
 }

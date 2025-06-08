@@ -22,7 +22,7 @@ class UpdateLastLogin
     {
         // Only update last_login for User model instances
         if ($event->user instanceof User) {
-            $event->user->last_login = now();
+            $event->user->last_login = now()->setTimezone('Asia/Manila');
             $event->user->save();
         }
     }
