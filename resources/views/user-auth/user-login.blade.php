@@ -512,8 +512,6 @@
 
 <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 <script>
-let loginAttempts = 0;
-let cooldown = false;
 document.addEventListener('DOMContentLoaded', function() {
     // Search functionality
     const searchInput = document.getElementById("searchInput");
@@ -566,34 +564,40 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    const loginForm = document.getElementById('loginForm');
+    // Login throttling
+    const loginForm = document.querySelector('form[action="{{ route("login") }}"]');
     const loginButton = document.querySelector('.btnn');
+    
     if (loginForm && loginButton) {
         loginForm.addEventListener('submit', function(e) {
-            if (cooldown) {
+            const email = document.getElementById('email').value;
+            const key = `login_attempts_${email}`;
+            const cooldownKey = `login_cooldown_${email}`;
+            
+            // Check if in cooldown
+            const cooldownEnd = sessionStorage.getItem(cooldownKey);
+            if (cooldownEnd && Date.now() < parseInt(cooldownEnd)) {
                 e.preventDefault();
-                alert('Too many attempts. Please wait 15 seconds.');
+                const secondsLeft = Math.ceil((parseInt(cooldownEnd) - Date.now()) / 1000);
+                alert(`Too many login attempts. Please try again in ${secondsLeft} seconds.`);
                 return;
             }
-            loginAttempts++;
-            if (loginAttempts >= 3) {
-                cooldown = true;
-                loginButton.disabled = true;
-                let seconds = 15;
-                loginButton.textContent = `Please wait ${seconds}s`;
-                const interval = setInterval(() => {
-                    seconds--;
-                    loginButton.textContent = `Please wait ${seconds}s`;
-                    if (seconds <= 0) {
-                        clearInterval(interval);
-                        cooldown = false;
-                        loginAttempts = 0;
-                        loginButton.disabled = false;
-                        loginButton.textContent = 'SIGN IN';
-                    }
-                }, 1000);
+
+            // Get current attempts
+            let attempts = parseInt(sessionStorage.getItem(key) || '0');
+            
+            if (attempts >= 3) {
                 e.preventDefault();
+                // Set cooldown for 15 seconds
+                const cooldownEndTime = Date.now() + (15 * 1000);
+                sessionStorage.setItem(cooldownKey, cooldownEndTime.toString());
+                sessionStorage.setItem(key, '0'); // Reset attempts
+                alert('Too many login attempts. Please try again in 15 seconds.');
+                return;
             }
+
+            // Increment attempts
+            sessionStorage.setItem(key, (attempts + 1).toString());
         });
     }
 });

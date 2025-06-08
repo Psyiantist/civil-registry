@@ -65,6 +65,41 @@
                 rememberMeCheckbox.checked = true;
             }
         }
+
+        // Login throttling
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm && loginButton) {
+            loginForm.addEventListener('submit', function(e) {
+                const username = document.getElementById('username').value;
+                const key = `admin_login_attempts_${username}`;
+                const cooldownKey = `admin_login_cooldown_${username}`;
+                
+                // Check if in cooldown
+                const cooldownEnd = sessionStorage.getItem(cooldownKey);
+                if (cooldownEnd && Date.now() < parseInt(cooldownEnd)) {
+                    e.preventDefault();
+                    const secondsLeft = Math.ceil((parseInt(cooldownEnd) - Date.now()) / 1000);
+                    alert(`Too many login attempts. Please try again in ${secondsLeft} seconds.`);
+                    return;
+                }
+
+                // Get current attempts
+                let attempts = parseInt(sessionStorage.getItem(key) || '0');
+                
+                if (attempts >= 3) {
+                    e.preventDefault();
+                    // Set cooldown for 15 seconds
+                    const cooldownEndTime = Date.now() + (15 * 1000);
+                    sessionStorage.setItem(cooldownKey, cooldownEndTime.toString());
+                    sessionStorage.setItem(key, '0'); // Reset attempts
+                    alert('Too many login attempts. Please try again in 15 seconds.');
+                    return;
+                }
+
+                // Increment attempts
+                sessionStorage.setItem(key, (attempts + 1).toString());
+            });
+        }
     });
      
     // Add password validation
@@ -82,41 +117,6 @@
             e.preventDefault();
             alert('Password confirmation does not match.');
             return;
-        }
-    });
-
-    let loginAttempts = 0;
-    let cooldown = false;
-    document.addEventListener('DOMContentLoaded', function() {
-        const loginForm = document.getElementById('loginForm');
-        const loginButton = document.querySelector('.btnn');
-        if (loginForm && loginButton) {
-            loginForm.addEventListener('submit', function(e) {
-                if (cooldown) {
-                    e.preventDefault();
-                    alert('Too many attempts. Please wait 15 seconds.');
-                    return;
-                }
-                loginAttempts++;
-                if (loginAttempts >= 3) {
-                    cooldown = true;
-                    loginButton.disabled = true;
-                    let seconds = 15;
-                    loginButton.textContent = `Please wait ${seconds}s`;
-                    const interval = setInterval(() => {
-                        seconds--;
-                        loginButton.textContent = `Please wait ${seconds}s`;
-                        if (seconds <= 0) {
-                            clearInterval(interval);
-                            cooldown = false;
-                            loginAttempts = 0;
-                            loginButton.disabled = false;
-                            loginButton.textContent = 'SIGN IN';
-                        }
-                    }, 1000);
-                    e.preventDefault();
-                }
-            });
         }
     });
   </script>
