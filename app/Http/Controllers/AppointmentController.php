@@ -25,6 +25,9 @@ class AppointmentController extends Controller
                 'document_type' => 'required',
                 'appointment_date' => 'required|date',
                 'appointment_time' => 'required',
+                'requester_name' => 'required',
+                'document_owner_name' => 'required',
+                'relationship' => 'required',
             ]);
 
             $user = Auth::user();
@@ -50,6 +53,9 @@ class AppointmentController extends Controller
                 'document_type' => $request->document_type,
                 'appointment_date' => $request->appointment_date,
                 'appointment_time' => $request->appointment_time,
+                'requester_name' => $request->requester_name,
+                'document_owner_name' => $request->document_owner_name,
+                'relationship' => $request->relationship,
                 'status' => 'Pending'
             ]);
 
@@ -140,8 +146,7 @@ class AppointmentController extends Controller
         try {
             Log::info('Attempting to update appointment status', [
                 'appointment_id' => $id,
-                'new_status' => $request->status,
-                'cancellation_reason' => $request->cancellation_reason
+                'new_status' => $request->status
             ]);
 
             $appointment = Appointment::findOrFail($id);
@@ -152,15 +157,9 @@ class AppointmentController extends Controller
                 'old_status' => $oldStatus
             ]);
 
-            $updateData = [
+            $appointment->update([
                 'status' => $request->status
-            ];
-
-            if ($request->has('cancellation_reason')) {
-                $updateData['cancellation_reason'] = $request->cancellation_reason;
-            }
-
-            $appointment->update($updateData);
+            ]);
 
             Log::info('Appointment updated successfully', [
                 'appointment_id' => $appointment->id,
@@ -177,8 +176,7 @@ class AppointmentController extends Controller
                 'employee_id' => $employee->id,
                 'action' => 'status_update',
                 'old_status' => $oldStatus,
-                'new_status' => $request->status,
-                'reason' => $request->cancellation_reason
+                'new_status' => $request->status
             ]);
 
             // Send appropriate email based on status
@@ -212,7 +210,8 @@ class AppointmentController extends Controller
                         $appointment->appointment_date,
                         $appointment->appointment_time,
                         $user->first_name,
-                        $appointment->reference_number
+                        $appointment->reference_number,
+                        $appointment
                     ));
                     break;
             }

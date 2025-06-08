@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('appointments', function (Blueprint $table) {
-            $table->dropColumn('cancellation_reason');
+        Schema::table('appointment_logs', function (Blueprint $table) {
+            $table->dropColumn('reason');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('appointments', function (Blueprint $table) {
-            $table->text('cancellation_reason')->nullable()->after('status');
+        Schema::table('appointment_logs', function (Blueprint $table) {
+            $table->text('reason')->nullable()->after('new_status');
         });
     }
 }; 

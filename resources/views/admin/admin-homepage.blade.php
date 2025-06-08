@@ -956,51 +956,6 @@
       transform: translateY(-2px) scale(1.04);
     }
 
-    /* New file input styles */
-    .file-input-container {
-      position: relative;
-      display: inline-block;
-    }
-
-    .file-input-container input[type="file"] {
-      position: absolute;
-      left: 0;
-      top: 0;
-      opacity: 0;
-      width: 100%;
-      height: 100%;
-      cursor: pointer;
-      z-index: 2;
-    }
-
-    .file-input-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: #426DDC;
-      color: white;
-      padding: 8px 18px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-family: 'Poppins', sans-serif;
-      font-size: 14px;
-      min-width: 200px;
-      max-width: 300px;
-      transition: all 0.3s ease;
-    }
-
-    .file-input-button:hover {
-      background: #3452a8;
-    }
-
-    .file-input-button span {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 100%;
-    }
-
 	</style>
 </head>
 
@@ -1718,16 +1673,20 @@
                       <span class="status-badge status-pending">Pending</span>
                   </td>
                   <td data-label="Action">
-                      <div style="display: flex; flex-direction: column; gap: 8px;">
-                          <form method="POST" action="/admin/accept-user/${user.id}" class="approval-action-form">
-                              @csrf
-                              <button type="submit" class="approve-btn"><i class="fas fa-check-circle"></i>Approve</button>
-                          </form>
-                          <form method="POST" action="/admin/reject-user/${user.id}" class="approval-action-form">
-                              @csrf
-                              <button type="submit" class="reject-btn"><i class="fas fa-times-circle"></i>Reject</button>
-                          </form>
-                      </div>
+                      ${isAdmin1() ? `
+                          <div style="display: flex; flex-direction: column; gap: 8px;">
+                              <form method="POST" action="{{ url('/admin/accept-user') }}/${user.id}" class="approval-action-form">
+                                  @csrf
+                                  <button type="submit" class="approve-btn"><i class="fas fa-check-circle"></i>Approve</button>
+                              </form>
+                              <form method="POST" action="{{ url('/admin/reject-user') }}/${user.id}" class="approval-action-form">
+                                  @csrf
+                                  <button type="submit" class="reject-btn"><i class="fas fa-times-circle"></i>Reject</button>
+                              </form>
+                          </div>
+                      ` : `
+                          <span style="color: #666; font-style: italic;">Only admin1 can approve accounts</span>
+                      `}
                   </td>
               `;
               tbody.appendChild(row);
@@ -1793,13 +1752,13 @@
                   </td>
                   <td data-label="Action">
                       ${isAdmin1() ? `
-                          <form method="POST" action="/admin/delete-user/${user.id}">
+                          <form method="POST" action="{{ url('/admin/delete-user') }}/${user.id}">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i>Delete Account</button>
                           </form>
                       ` : !user.is_active ? `
-                          <form method="POST" action="/admin/delete-user/${user.id}">
+                          <form method="POST" action="{{ url('/admin/delete-user') }}/${user.id}">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i>Delete Account</button>
@@ -1885,13 +1844,13 @@
                   </td>
                   <td data-label="Action" style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap;">
                       ${isAdmin1() ? `
-                          <form method="POST" action="/admin/delete-employee/${employee.id}">
+                          <form method="POST" action="{{ url('/admin/delete-employee') }}/${employee.id}">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i>Delete Account</button>
                           </form>
                       ` : !employee.is_active ? `
-                          <form method="POST" action="/admin/delete-employee/${employee.id}">
+                          <form method="POST" action="{{ url('/admin/delete-employee') }}/${employee.id}">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i>Delete Account</button>
@@ -2034,12 +1993,10 @@
         <div style="margin-bottom: 20px;">
           <label style="display: block; margin-bottom: 8px; color: #555;">Image</label>
           <div style="display: flex; align-items: center; gap: 12px;">
-            <div class="file-input-container">
+            <label class="custom-file-label" id="fileLabel">
               <input type="file" name="image" accept="image/*" id="customFileInput" required onchange="updateFileName(this)">
-              <button type="button" class="file-input-button" onclick="document.getElementById('customFileInput').click()">
-                <span id="fileText">Choose File</span>
-              </button>
-            </div>
+              <span id="fileText">Choose File</span>
+            </label>
           </div>
         </div>
         <div style="display: flex; justify-content: flex-end; gap: 12px;">

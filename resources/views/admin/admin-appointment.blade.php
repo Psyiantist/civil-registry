@@ -900,7 +900,6 @@
                                                 <option value="Approved" {{ $appointment->status == 'Approved' ? 'selected' : '' }} {{ $isLimitReached ? 'disabled' : '' }}>Approved</option>
                                                 <option value="Declined" {{ $appointment->status == 'Declined' ? 'selected' : '' }}>Declined</option>
                                             </select>
-                                            <input type="hidden" name="cancellation_reason" id="cancellation_reason_{{ $appointment->id }}">
                                             @if($isLimitReached)
                                                 <div class="text-red-600 text-sm mt-1">Daily appointment limit (40) reached for this date</div>
                                             @endif
@@ -1036,17 +1035,14 @@
     <div id="cancellationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
             <h2 class="text-xl font-bold mb-4 text-center text-red-700">Cancel Appointment</h2>
+            <p class="text-gray-600 mb-4 text-center">Are you sure you want to cancel this appointment?</p>
             <form id="cancellationForm" method="POST">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="status" value="Cancelled">
-                <div class="mb-4">
-                    <label for="cancellation_reason" class="block text-gray-700 text-sm font-bold mb-2">Reason for Cancellation:</label>
-                    <textarea name="cancellation_reason" id="cancellation_reason" rows="3" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required></textarea>
-                </div>
                 <div class="flex justify-end space-x-3">
-                    <button type="button" onclick="closeCancellationModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors duration-200">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors duration-200">Confirm Cancellation</button>
+                    <button type="button" onclick="closeCancellationModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors duration-200">No, Keep It</button>
+                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors duration-200">Yes, Cancel Appointment</button>
                 </div>
             </form>
         </div>
@@ -1074,13 +1070,12 @@
             <h2 class="text-xl font-bold mb-4 text-center text-blue-700">Appointment Activity Logs</h2>
             <div class="max-h-[500px] overflow-y-auto">
                 <table class="min-w-full bg-white">
-                    <thead class="bg-blue-600 text-white">
-                        <tr>
-                            <th class="py-2 px-4 text-left">Date & Time</th>
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="py-2 px-4 text-left">Date</th>
                             <th class="py-2 px-4 text-left">Employee</th>
                             <th class="py-2 px-4 text-left">Action</th>
                             <th class="py-2 px-4 text-left">Status Change</th>
-                            <th class="py-2 px-4 text-left">Reason</th>
                         </tr>
                     </thead>
                     <tbody id="logsTableBody">
@@ -1179,7 +1174,6 @@ window.addEventListener("click", function(event) {
     function closeCancellationModal() {
         const modal = document.getElementById('cancellationModal');
         modal.classList.add('hidden');
-        document.getElementById('cancellation_reason').value = '';
     }
 
     function showDeleteModal(appointmentId) {
@@ -1254,7 +1248,6 @@ window.addEventListener("click", function(event) {
                             <td class="py-2 px-4">${log.employee ? log.employee.first_name + ' ' + log.employee.last_name : 'Unknown'}</td>
                             <td class="py-2 px-4">${actionText}</td>
                             <td class="py-2 px-4">${statusChange}</td>
-                            <td class="py-2 px-4">${log.reason || 'No reason provided'}</td>
                         `;
                         
                         logsTableBody.appendChild(row);
@@ -1416,32 +1409,19 @@ window.addEventListener("click", function(event) {
         if (cancellationForm) {
             cancellationForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                const reason = document.getElementById('cancellation_reason').value.trim();
-                if (!reason) {
-                    alert('Please provide a reason for cancellation');
-                    return;
-                }
-                
                 showLoading();
                 const formData = new FormData(this);
-                
-                // Add the cancellation reason to the form data
-                formData.append('cancellation_reason', reason);
                 formData.append('status', 'Cancelled');
                 
-                // Log the form data for debugging
-                console.log('Form Data:', Object.fromEntries(formData));
-                console.log('Form Action:', this.action);
-                
-                // Submit the form with the cancellation reason
+                // Submit the form
                 fetch(this.action, {
-                    method: 'POST', // Change to POST
+                    method: 'POST',
                     body: formData,
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                         'Accept': 'application/json',
                         'X-Requested-With': 'XMLHttpRequest',
-                        'X-HTTP-Method-Override': 'PUT' // Add this header to simulate PUT
+                        'X-HTTP-Method-Override': 'PUT'
                     },
                     credentials: 'same-origin'
                 })

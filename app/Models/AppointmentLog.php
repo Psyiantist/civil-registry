@@ -12,7 +12,6 @@ class AppointmentLog extends Model
         'action',
         'old_status',
         'new_status',
-        'reason',
         'details'
     ];
 

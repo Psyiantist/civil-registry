@@ -416,6 +416,7 @@
             <!-- Calendar days will be generated-->
             </div>
             <input type="hidden" name="appointment_date" id="selectedDate">
+            <input type="hidden" name="appointment_time" id="selectedTime">
             </div>
 
         <div class="grid grid-cols-2 gap-4 mb-6">
@@ -462,7 +463,6 @@
         </div>
         </div>
         </div>
-        <input type="hidden" name="appointment_time" id="selectedTime">
 
         <div class="text-center">
             <button type="submit" id="confirmBtn" class="bg-gray-500 hover:bg-blue-500 text-white py-2 px-6 rounded">
@@ -571,7 +571,9 @@
                 .then(data => {
                     if (loadingOverlay) loadingOverlay.style.display = 'none';
                     if (data.success) {
-                        showConfirmationAlert(selectedDate.value, selectedTime.value, data);
+                        const date = selectedDate?.value || '';
+                        const time = selectedTime?.value || '';
+                        showConfirmationAlert(date, time, data);
                         this.reset();
                         if (calendarDays) {
                             generateCalendar();

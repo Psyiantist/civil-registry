@@ -582,7 +582,7 @@
                          alt="Profile" 
                          class="profile-image">
                     <div class="profile-name">
-                        @if(Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1')
+                        @if(strtolower(Auth::guard('employee')->user()->username) === 'admin1')
                             Admin
                         @else
                             {{ Auth::guard('employee')->user()->first_name }} {{ Auth::guard('employee')->user()->last_name }}

@@ -8,6 +8,7 @@
 	<title> Home Page </title>
   <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
 	<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<style type="text/css">
 
 		*{
@@ -190,10 +191,8 @@
       width: 100%;
       max-width: 100vw;
       min-height: 100vh;
-      background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url('{{ asset('storage/assets/appointment_bg.jpg') }}') center 40% fixed;
-      background-size: cover;
-      background-repeat: no-repeat;
       font-family: 'Poppins';
+      background-color: #d8e4f0;
     }
 
     section {
@@ -204,21 +203,18 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url('{{ asset('storage/assets/appointment_bg.jpg') }}') center 40% fixed;
-      background-size: cover;
-      background-repeat: no-repeat;
+      position: relative;
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      position: relative;
       overflow-y: auto;
       overflow-x: hidden;
     }
 
     .details {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
+      width: 100vw;
+      max-width: 100vw;
+      margin: 0;
       position: relative;
       text-align: center;
       display: flex;
@@ -226,7 +222,12 @@
       justify-content: center;
       min-height: 100vh;
       padding: 20px;
+      background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url('{{ asset('storage/assets/appointment_bg.jpg') }}') center 40% fixed;
+      background-size: cover;
+      background-repeat: no-repeat;
+      transition: background-position 0.3s ease;
     }
+
     .details h5 {
       font-size: 65px;
       margin: 0 0 -20px -10px;
@@ -299,13 +300,35 @@
     .form {
       width: 400px;
       max-width: 90vw;
-      margin: 40px auto 60px auto;
+      margin: 100px auto 100px auto;
       position: relative;
       border-radius: 10px;
       background-color: white;
       padding: 25px;
       box-sizing: border-box;
-      /* keep other form styles as before */
+      z-index: 1;
+    }
+
+    .form::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #d8e4f0;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .form:target::before {
+      opacity: 1;
+    }
+
+    .form-visible::before {
+      opacity: 1;
     }
 
     .form h2 {
@@ -876,7 +899,8 @@
 </head>
 
 <body>
-	@include('layouts.public-navbar')
+    <div class="page-background default"></div>
+    @include('layouts.public-navbar')
 
     <div class="details">
       <div>
@@ -929,19 +953,78 @@
     </div>
 
 <script type="text/javascript">
-function openModal() {
-    document.getElementById("termsModal").style.display = "block";
-}
-function closeModal() {
-    document.getElementById("termsModal").style.display = "none";
-}
-window.onclick = function(event) {
-    const modal = document.getElementById("termsModal");
-    if (event.target == modal) {
-        modal.style.display = "none";
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Document ready');
+    
+    // Modal functionality
+    function openModal() {
+        document.getElementById("termsModal").style.display = "block";
     }
-}
+    
+    function closeModal() {
+        document.getElementById("termsModal").style.display = "none";
+    }
+    
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById("termsModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    
+    // Search functionality
+    function performSearch() {
+        const routes = {
+            home: "http://localhost/civil-registry/public/home",
+            faqs: "http://localhost/civil-registry/public/faqs",
+            about: "http://localhost/civil-registry/public/about",
+            contact: "http://localhost/civil-registry/public/contact"
+        };
 
+        const input = document.getElementById("searchInput").value.trim().toLowerCase();
+
+        if (input === "") {
+            alert("Please enter a search term.");
+        } else {
+            if (["home page", "homepage", "home"].includes(input)) {
+                window.location.href = routes.home;
+            } else if (["faqs", "facts", "help", "faq", "question"].includes(input)) {
+                window.location.href = routes.faqs;
+            } else if (["about", "about civil"].includes(input)) {
+                window.location.href = routes.about;
+            } else if (["contact", "number", "email"].includes(input)) {
+                window.location.href = routes.contact;
+            } else {
+                alert("No results found.");
+                inputField.value = "";
+            }
+        }
+    }
+
+    // Mobile menu toggle
+    const button = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('.menu');
+    if (button && menu) {
+        button.onclick = () => {
+            menu.classList.toggle('expand-mobile');
+            button.classList.toggle('expand-icon');
+        };
+    }
+
+    // User dropdown
+    function toggleDropdown() {
+        const dropdown = document.getElementById("accountDropdown");
+        alert("Please login or register your account first.");
+        dropdown.classList.toggle("show");
+    }
+
+    // Make functions globally available
+    window.openModal = openModal;
+    window.closeModal = closeModal;
+    window.performSearch = performSearch;
+    window.toggleDropdown = toggleDropdown;
+});
 </script>
 
 @include('layouts.footer')

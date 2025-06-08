@@ -115,13 +115,6 @@
                     <span class="detail-label">Scheduled Time:</span>
                     <span>{{ \Carbon\Carbon::parse($appointmentTime)->format('h:i A') }}</span>
                 </div>
-
-                @if(isset($reason))
-                <div class="detail-item">
-                    <span class="detail-label">Cancellation Reason:</span>
-                    <span>{{ $reason }}</span>
-                </div>
-                @endif
             </div>
 
             <p><strong>Appointment Details:</strong></p>

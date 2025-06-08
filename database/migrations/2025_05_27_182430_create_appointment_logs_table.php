@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('action');
             $table->string('old_status')->nullable();
             $table->string('new_status')->nullable();
-            $table->text('reason')->nullable();
             $table->timestamps();
         });
     }
