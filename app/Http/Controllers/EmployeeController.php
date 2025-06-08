@@ -21,8 +21,7 @@ class EmployeeController extends Controller
 
     public function getPendingUsers()
     {
-        $pending_users = User::where('is_verified', '0')
-            ->where('status', 'Pending')
+        $pending_users = User::where('status', 'Pending')
             ->select('id', 'first_name', 'last_name', 'email', 'id_type', 'id_image', 'current_address', 'date_of_birth', 'status')
             ->get();
             
