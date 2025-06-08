@@ -20,7 +20,7 @@
         nav {
             top: 0;
             height: 65px;
-            z-index: 9999;
+            z-index: 1000;
             display: flex;
             position: sticky;
             align-items: center;

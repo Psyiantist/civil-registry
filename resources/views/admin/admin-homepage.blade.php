@@ -20,6 +20,28 @@
       box-sizing: border-box;
     }
 
+    /* Custom styles for ID image popup */
+    .swal2-title-custom {
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 1.2em !important;
+        font-weight: 600 !important;
+        color: #1f2937 !important;
+        margin-bottom: 0.5em !important;
+        line-height: 1.4 !important;
+    }
+
+    .swal2-confirm-button-custom {
+        font-family: 'Poppins', sans-serif !important;
+        font-weight: 500 !important;
+        padding: 0.5em 1.5em !important;
+        border-radius: 6px !important;
+        transition: all 0.2s ease !important;
+    }
+
+    .swal2-confirm-button-custom:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    }
 
     /* Main content below the NAV BAR */
 		html, body {
@@ -1164,23 +1186,26 @@
 
   function showIdImage(imageUrl, title) {
       Swal.fire({
-          title: title,
+          title: `<div style="font-family: 'Poppins', sans-serif; font-size: 1.2em; font-weight: 600; color: #1f2937; margin-bottom: 0.5em;">${title}</div>`,
           imageUrl: imageUrl,
-          imageWidth: 400,
-          imageHeight: 400,
+          imageWidth: 300,
+          imageHeight: 300,
           imageAlt: 'ID Card Image',
           showConfirmButton: true,
           confirmButtonText: 'Close',
           confirmButtonColor: '#426DDC',
           width: 'auto',
-          padding: '2em',
+          padding: '1.5em',
           background: '#fff',
           backdrop: `
               rgba(0,0,0,0.8)
           `,
           customClass: {
-              container: 'id-image-modal'
-          }
+              container: 'id-image-modal',
+              title: 'swal2-title-custom',
+              confirmButton: 'swal2-confirm-button-custom'
+          },
+          zIndex: 9999
       });
   }
 
