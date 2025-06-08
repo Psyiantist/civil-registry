@@ -1350,6 +1350,27 @@ window.addEventListener("click", function(event) {
                     const row = document.createElement('tr');
                     row.className = 'border-b';
                     
+                    // Format the date and time
+                    const date = new Date(appointment.appointment_date);
+                    const time = appointment.appointment_time;
+                    
+                    // Format date as "Month Day, Year"
+                    const formattedDate = date.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                    
+                    // Format time as "HH:MM AM/PM"
+                    const [hours, minutes] = time.split(':');
+                    const formattedTime = new Date();
+                    formattedTime.setHours(parseInt(hours), parseInt(minutes));
+                    const timeString = formattedTime.toLocaleTimeString('en-US', {
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        hour12: true
+                    });
+                    
                     let rowHtml = `
                         <td class="py-3 px-4 font-medium">${appointment.reference_number}</td>
                         <td class="py-3 px-4">${appointment.user.first_name} ${appointment.user.last_name}</td>
@@ -1358,7 +1379,7 @@ window.addEventListener("click", function(event) {
                         <td class="py-3 px-4">${appointment.relationship}</td>
                         <td class="py-3 px-4">${appointment.appointment_type}</td>
                         <td class="py-3 px-4">${appointment.document_type}</td>
-                        <td class="py-3 px-4">${appointment.appointment_date} ${appointment.appointment_time}</td>
+                        <td class="py-3 px-4">${formattedDate} ${timeString}</td>
                         <td class="py-3 px-4">
                             <span class="bg-green-300 text-green-900 px-2 py-1 rounded text-sm">${appointment.status}</span>
                         </td>`;
