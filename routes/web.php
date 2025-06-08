@@ -31,6 +31,17 @@ Route::get('/storage/uploads/{filename}', function ($filename) {
     return response()->file($path);
 })->where('filename', '.*');
 
+// Add route for serving announcement files
+Route::get('/storage/announcements/{filename}', function ($filename) {
+    $path = storage_path('app/public/announcements/' . $filename);
+    
+    if (!file_exists($path)) {
+        abort(404);
+    }
+    
+    return response()->file($path);
+})->where('filename', '.*');
+
 // USER ROUTES
 Route::view('/home', 'homepage')->name('home');
 Route::view('/about', 'about')->name('about');
