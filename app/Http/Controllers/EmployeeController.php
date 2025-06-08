@@ -119,14 +119,15 @@ class EmployeeController extends Controller
         return redirect()->back()->with('success', 'User accepted successfully');
     }
 
-    public function rejectUser(User $user)
+    public function rejectUser(User $user, Request $request)
     {
         if (auth()->guard('employee')->user()->username !== 'admin1' && auth()->guard('employee')->user()->username !== 'Admin1') {
             return redirect()->back()->with('error', 'Only admin1 can reject users');
         }
 
+        $reason = $request->input('rejection_reason', 'No reason provided');
         $user->update(['is_verified' => 0, 'status' => 'Rejected']);
-        Mail::to($user->email)->send(new UserRejectionMail($user->first_name));
+        Mail::to($user->email)->send(new UserRejectionMail($user->first_name, $reason));
         return redirect()->back()->with('success', 'User rejected successfully');
     }
 

@@ -28,7 +28,7 @@ class EmployeeApprovalController extends Controller
         return redirect()->back()->with('employee_success', 'Employee account has been approved successfully.');
     }
 
-    public function rejectEmployee($id)
+    public function rejectEmployee($id, Request $request)
     {
         if (Auth::guard('employee')->user()->username !== 'admin1' && Auth::guard('employee')->user()->username !== 'Admin1') {
             return redirect()->back()->with('employee_error', 'Only admin1 can reject employee accounts.');
@@ -38,8 +38,10 @@ class EmployeeApprovalController extends Controller
         $employee->status = 'declined';
         $employee->save();
 
+        $reason = $request->input('rejection_reason', 'No reason provided');
+
         // Send rejection email
-        Mail::to($employee->username)->send(new EmployeeRejectionMail($employee->first_name));
+        Mail::to($employee->username)->send(new EmployeeRejectionMail($employee->first_name, $reason));
 
         return redirect()->back()->with('employee_success', 'Employee account has been rejected.');
     }

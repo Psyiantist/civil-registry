@@ -1105,6 +1105,16 @@
   <!-- USER ACTIVITY SECTION -->
   <div class="account-approval-container">
     <h2 style="text-align: center; color: #333; padding: 16px; border-radius: 8px 8px 0 0; margin: 0; background: #eaf1fb; letter-spacing: 2px; font-weight: 700; font-size: 2rem;">RESIDENCE USER ACTIVITY</h2>
+    <div style="padding: 16px; background: #fff; border-bottom: 1px solid #e3e8f0;">
+      <div style="display: flex; justify-content: flex-end; align-items: center; gap: 12px;">
+        <label for="userStatusFilter" style="font-weight: 500; color: #4b5563;">Filter by Status:</label>
+        <select id="userStatusFilter" style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; font-family: 'Poppins', sans-serif; min-width: 150px;">
+          <option value="all">All Users</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+    </div>
     <div class="table-responsive">
       <table id="userActivityTable">
         <thead>
@@ -1528,9 +1538,27 @@
                   showCancelButton: true,
                   confirmButtonColor: '#ef4444',
                   cancelButtonColor: '#6b7280',
-                  confirmButtonText: 'Yes, reject!'
+                  confirmButtonText: 'Yes, reject!',
+                  input: 'textarea',
+                  inputLabel: 'Reason for rejection',
+                  inputPlaceholder: 'Please provide a reason for rejecting this user...',
+                  inputAttributes: {
+                      'aria-label': 'Reason for rejection'
+                  },
+                  showCancelButton: true,
+                  inputValidator: (value) => {
+                      if (!value) {
+                          return 'You need to provide a reason for rejection!';
+                      }
+                  }
               }).then((result) => {
                   if (result.isConfirmed) {
+                      // Create a hidden input for the reason
+                      const reasonInput = document.createElement('input');
+                      reasonInput.type = 'hidden';
+                      reasonInput.name = 'rejection_reason';
+                      reasonInput.value = result.value;
+                      form.appendChild(reasonInput);
                       form.submit();
                   }
               });
@@ -1591,9 +1619,27 @@
                   showCancelButton: true,
                   confirmButtonColor: '#ef4444',
                   cancelButtonColor: '#6b7280',
-                  confirmButtonText: 'Yes, reject!'
+                  confirmButtonText: 'Yes, reject!',
+                  input: 'textarea',
+                  inputLabel: 'Reason for rejection',
+                  inputPlaceholder: 'Please provide a reason for rejecting this employee...',
+                  inputAttributes: {
+                      'aria-label': 'Reason for rejection'
+                  },
+                  showCancelButton: true,
+                  inputValidator: (value) => {
+                      if (!value) {
+                          return 'You need to provide a reason for rejection!';
+                      }
+                  }
               }).then((result) => {
                   if (result.isConfirmed) {
+                      // Create a hidden input for the reason
+                      const reasonInput = document.createElement('input');
+                      reasonInput.type = 'hidden';
+                      reasonInput.name = 'rejection_reason';
+                      reasonInput.value = result.value;
+                      form.appendChild(reasonInput);
                       form.submit();
                   }
               });
@@ -1705,7 +1751,9 @@
   }
 
   function loadUserActivity() {
-      fetch('{{ url("/api/admin/user-activity") }}', {
+      const statusFilter = document.getElementById('userStatusFilter').value;
+      
+      fetch(`{{ url("/api/admin/user-activity") }}?status=${statusFilter}`, {
           headers: {
               'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
               'Accept': 'application/json',
@@ -1784,6 +1832,11 @@
           `;
       });
   }
+
+  // Add event listener for the status filter
+  document.getElementById('userStatusFilter').addEventListener('change', function() {
+      loadUserActivity();
+  });
 
   function loadEmployeeActivity() {
       fetch('{{ url("/api/admin/employee-activity") }}', {
@@ -1960,9 +2013,27 @@
                   showCancelButton: true,
                   confirmButtonColor: '#ef4444',
                   cancelButtonColor: '#6b7280',
-                  confirmButtonText: 'Yes, reject!'
+                  confirmButtonText: 'Yes, reject!',
+                  input: 'textarea',
+                  inputLabel: 'Reason for rejection',
+                  inputPlaceholder: 'Please provide a reason for rejecting this user...',
+                  inputAttributes: {
+                      'aria-label': 'Reason for rejection'
+                  },
+                  showCancelButton: true,
+                  inputValidator: (value) => {
+                      if (!value) {
+                          return 'You need to provide a reason for rejection!';
+                      }
+                  }
               }).then((result) => {
                   if (result.isConfirmed) {
+                      // Create a hidden input for the reason
+                      const reasonInput = document.createElement('input');
+                      reasonInput.type = 'hidden';
+                      reasonInput.name = 'rejection_reason';
+                      reasonInput.value = result.value;
+                      form.appendChild(reasonInput);
                       form.submit();
                   }
               });

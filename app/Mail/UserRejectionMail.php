@@ -16,9 +16,10 @@ class UserRejectionMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(private string $first_name)
+    public function __construct(private string $first_name, private string $reason)
     {
         $this->first_name = $first_name;
+        $this->reason = $reason;
     }
 
     /**
@@ -38,7 +39,8 @@ class UserRejectionMail extends Mailable
         return new Content(
             view: 'email-views.user-rejection',
             with: [
-                'first_name' => $this->first_name
+                'first_name' => $this->first_name,
+                'reason' => $this->reason
             ]
         );
     }
