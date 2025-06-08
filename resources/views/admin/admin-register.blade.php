@@ -401,6 +401,20 @@
             background: #f9fafe;
             border: none;
             padding: 8px 0;
+            width: 100%;
+        }
+        .file-input::file-selector-button {
+            background: #426DDC;
+            color: white;
+            padding: 8px 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-right: 10px;
+        }
+        .file-input::file-selector-button:hover {
+            background: #344CB7;
         }
         .preview-container {
             margin-top: 10px;
@@ -537,7 +551,6 @@
                 <div class="input-group file-group">
                     <label for="id_card_image" class="file-label">Upload Government Issued ID</label>
                     <input type="file" id="id_card_image" name="id_card_image" accept="image/*" required class="modern-input file-input {{ $errors->has('id_card_image') ? 'input-error' : '' }}" onchange="updateFileName(this)">
-                    <span id="fileNameDisplay" class="file-name-display" style="margin-top: 5px; color: #666; font-size: 14px;">No file chosen</span>
                 </div>
                 @error('id_card_image')
                     <span class="error-message">{{ $message }}</span>
@@ -574,13 +587,7 @@
         }
 
         function updateFileName(input) {
-            const fileNameDisplay = document.getElementById('fileNameDisplay');
-            if (input.files && input.files[0]) {
-                const fileName = input.files[0].name;
-                fileNameDisplay.textContent = fileName;
-            } else {
-                fileNameDisplay.textContent = 'No file chosen';
-            }
+            // No need to update any labels since we're using the native file input
         }
 
         // Add birthday validation

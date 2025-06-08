@@ -311,8 +311,9 @@
                 @enderror
 
                 <label for="uploadID">Upload Government Issued ID:</label>
-                <input type="file" id="uploadID" name="id_image" accept="image/*" required class="{{ $errors->has('id_image') ? 'file-error' : '' }}">
+                <input type="file" id="uploadID" name="id_image" accept="image/*" required class="{{ $errors->has('id_image') ? 'file-error' : '' }}" onchange="validateAndPreviewImage(this)">
                 <img id="uploadedImage" />
+                <div id="fileError" class="error-message" style="display: none;"></div>
                 @error('id_image')
                     <span class="error-message">{{ $message }}</span>
                 @enderror
@@ -353,6 +354,45 @@
         const takeNote = document.getElementById("takeNote");
         const uploadInput = document.getElementById("uploadID");
         const uploadedImage = document.getElementById("uploadedImage");
+        const fileError = document.getElementById("fileError");
+
+        function validateAndPreviewImage(input) {
+            const file = input.files[0];
+            const fileError = document.getElementById("fileError");
+            
+            // Reset error message
+            fileError.style.display = "none";
+            
+            if (file) {
+                // Check file type
+                const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+                if (!validTypes.includes(file.type)) {
+                    fileError.textContent = "Please upload a valid image file (JPEG, PNG, JPG)";
+                    fileError.style.display = "block";
+                    input.value = '';
+                    uploadedImage.style.display = "none";
+                    return;
+                }
+
+                // Check file size (max 5MB)
+                const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+                if (file.size > maxSize) {
+                    fileError.textContent = "File size should not exceed 5MB";
+                    fileError.style.display = "block";
+                    input.value = '';
+                    uploadedImage.style.display = "none";
+                    return;
+                }
+
+                // Preview image
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    uploadedImage.src = e.target.result;
+                    uploadedImage.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            }
+        }
 
         idTypeSelect.addEventListener("change", () => {
             const notes = {
@@ -364,18 +404,6 @@
             };
 
             takeNote.textContent = `Take Note: ${notes[idTypeSelect.value] || "Please select your ID type."}`;
-        });
-
-        uploadInput.addEventListener("change", () => {
-            const file = uploadInput.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    uploadedImage.src = e.target.result;
-                    uploadedImage.style.display = "block";
-                };
-                reader.readAsDataURL(file);
-            }
         });
 
         // Add date of birth validation

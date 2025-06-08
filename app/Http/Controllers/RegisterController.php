@@ -49,7 +49,7 @@ class RegisterController extends Controller
         try {
             $request->validate([
                 'id_type' => 'required|string|max:255',
-                'id_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'id_image' => 'required|image|mimes:jpeg,jpg,png|max:2048',
                 'years_residency' => 'required|integer|min:0',
                 'current_address' => 'required|string|max:255',
                 'permanent_address' => 'required|string|max:255',
@@ -63,9 +63,14 @@ class RegisterController extends Controller
                     $randomNumber = mt_rand(100000, 999999);
                     $filename = $randomNumber . '_' . $file->getClientOriginalName();
                     
-                    // Store in public disk
-                    $file->storeAs('uploads', $filename, 'public');
-                    // Store only the filename, not the full URL
+                    // Validate file type
+                    $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                    if (!in_array($file->getMimeType(), $allowedTypes)) {
+                        throw new \Exception('Invalid file type. Only JPEG, JPG, and PNG files are allowed.');
+                    }
+                    
+                    // Store directly in uploads directory
+                    $file->move(public_path('storage/uploads'), $filename);
                     \Log::info('File uploaded successfully: ' . $filename);
                 } catch (\Exception $e) {
                     \Log::error('File upload failed: ' . $e->getMessage());

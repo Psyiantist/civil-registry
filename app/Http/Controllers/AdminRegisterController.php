@@ -27,7 +27,7 @@ class AdminRegisterController extends Controller
                 'password_confirmation' => 'required|same:password',
                 'birthday' => 'required|date',
                 'address' => 'required|string',
-                'id_card_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'id_card_image' => 'required|image|mimes:jpeg,jpg,png|max:2048',
             ], [
                 'password_confirmation.same' => 'The password confirmation does not match.',
                 'password.min' => 'The password must be at least 8 characters.',
@@ -40,9 +40,14 @@ class AdminRegisterController extends Controller
                     $randomNumber = mt_rand(100000, 999999);
                     $filename = $randomNumber . '_' . $file->getClientOriginalName();
                     
-                    // Store in public disk
-                    $file->storeAs('uploads', $filename, 'public');
-                    // Store only the filename, not the full URL
+                    // Validate file type
+                    $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                    if (!in_array($file->getMimeType(), $allowedTypes)) {
+                        throw new \Exception('Invalid file type. Only JPEG, JPG, and PNG files are allowed.');
+                    }
+                    
+                    // Store directly in uploads directory
+                    $file->move(public_path('storage/uploads'), $filename);
                     \Log::info('File uploaded successfully: ' . $filename);
                 } catch (\Exception $e) {
                     \Log::error('File upload failed: ' . $e->getMessage());
