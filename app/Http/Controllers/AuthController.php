@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\PasswordResetMail;
 use App\Mail\RegistrationMail;
 use App\Services\GeneratePassword;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -168,6 +169,34 @@ class AuthController extends Controller
     {
         Auth::guard('employee')->logout();
         return redirect()->route('admin.login')->with('success', 'Logout successful');
+    }
+
+    public function adminForgetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:employees,email'
+        ], [
+            'email.exists' => 'No account found with this email address.'
+        ]);
+
+        $employee = Employee::where('email', $request->email)->first();
+        
+        if (!$employee) {
+            return redirect()->back()->withErrors(['email' => 'No account found with this email address.']);
+        }
+
+        // Generate a random password
+        $newPassword = Str::random(12);
+        
+        // Update the employee's password
+        $employee->password = Hash::make($newPassword);
+        $employee->save();
+
+        // Send email with new password
+        Mail::to($employee->email)->send(new PasswordResetMail($employee->first_name, $newPassword));
+
+        return redirect()->route('admin.login')
+            ->with('success', 'A new password has been sent to your email address. Please check your inbox.');
     }
 
     public function login(Request $request)

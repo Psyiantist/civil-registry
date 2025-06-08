@@ -567,48 +567,21 @@
     </div>
     <div id="forgotPasswordContainer" class="form" style="display: none;">
       <h3 style="text-align:center; font-size: 22px; font-weight: bold; margin-bottom: 8px; margin-top: 0; font-family: Poppins">Forgot Password</h3>
-      <p class="link" style="margin-bottom: 18px; font-size: 16px;">Please enter your username and new password:</p>
-      <form id="forgotPasswordForm" action="{{ route('admin.password.update') }}" method="POST">
+      <p class="link" style="margin-bottom: 18px; font-size: 16px;">Please enter your email address to reset your password:</p>
+      <form id="forgotPasswordForm" action="{{ route('admin.forget.password') }}" method="POST">
         @csrf
-        <input type="text" id="userName" name="username" placeholder="Username" required value="{{ old('username') }}" 
-               class="{{ $errors->has('username') ? 'error' : '' }}">
-        <div class="input-group">
-          <input type="password" id="newPassword" name="password" placeholder="Enter New Password" required minlength="8"
-                 class="{{ $errors->has('password') ? 'error' : '' }}">
-          <i class="fa fa-eye-slash eye-icon" id="eye-icon-new" onclick="togglePasswordVisibility('newPassword')"></i>
-        </div>
-        <div class="input-group">
-          <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm New Password" required minlength="8"
-                 class="{{ $errors->has('password_confirmation') ? 'error' : '' }}">
-          <i class="fa fa-eye-slash eye-icon" id="eye-icon-confirm" onclick="togglePasswordVisibility('password_confirmation')"></i>
-        </div>
-        <div class="password-requirements" style="font-size: 12px; color: #666; margin: 5px 0 15px 0; text-align: left;">
-          Password must be at least 8 characters long
-        </div>
+        <input type="email" id="email" name="email" placeholder="Email Address" required value="{{ old('email') }}" 
+               class="{{ $errors->has('email') ? 'error' : '' }}"
+               style="width: 100%; height: 38px; background: transparent; border-bottom: 2px solid #222; border-top: none; border-right: none; border-left: none; font-size: 15px; letter-spacing: 1px; margin-bottom: 18px; font-family: 'Poppins', sans-serif; padding-left: 0; color: #222;">
         <button class="btnn" type="submit">SUBMIT</button>
         @if(session('success'))
           <div style="color: green; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif; padding: 10px; background-color: #d4edda; border-radius: 5px;">
             {{ session('success') }}
           </div>
         @endif
-        @if($errors->has('username'))
+        @if($errors->has('email'))
           <div style="color: red; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif; padding: 10px; background-color: #f8d7da; border-radius: 5px;">
-            {{ $errors->first('username') }}
-          </div>
-        @endif
-        @if($errors->has('password'))
-          <div style="color: red; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif; padding: 10px; background-color: #f8d7da; border-radius: 5px;">
-            {{ $errors->first('password') }}
-          </div>
-        @endif
-        @if($errors->has('password_confirmation'))
-          <div style="color: red; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif; padding: 10px; background-color: #f8d7da; border-radius: 5px;">
-            {{ $errors->first('password_confirmation') }}
-          </div>
-        @endif
-        @if($errors->has('error'))
-          <div style="color: red; text-align: center; margin-top: 10px; font-family: 'Poppins', sans-serif; padding: 10px; background-color: #f8d7da; border-radius: 5px;">
-            {{ $errors->first('error') }}
+            {{ $errors->first('email') }}
           </div>
         @endif
       </form>

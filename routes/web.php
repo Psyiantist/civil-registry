@@ -77,6 +77,7 @@ Route::get('/admin/login', [AuthController::class, 'showEmployeeLoginForm'])->na
 Route::post('/admin/login', [AuthController::class, 'employeeLoginHandler'])->name('admin.login');
 Route::get('/admin/logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
 Route::post('/admin/password/update', [AuthController::class, 'updateAdminPassword'])->name('admin.password.update');
+Route::post('/admin/forget-password', [AuthController::class, 'adminForgetPassword'])->name('admin.forget.password');
 
 Route::middleware(['auth:employee'])->group(function () {
     Route::get('/admin/homepage', [AdminController::class, 'showHomepage'])->name('admin.homepage');
