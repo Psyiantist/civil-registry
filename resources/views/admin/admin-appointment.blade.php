@@ -869,7 +869,7 @@
                                 <td class="py-3 px-4">{{ $appointment->relationship }}</td>
                                 <td class="py-3 px-4">{{ $appointment->appointment_type }}</td>
                                 <td class="py-3 px-4">{{ $appointment->document_type }}</td>
-                                <td class="py-3 px-4">{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('F d, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->setTimezone('Asia/Manila')->format('h:i A') }}</td>
+                                <td class="py-3 px-4">{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('F d, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</td>
                                 <td class="py-3 px-4">
                                     @php
                                         $statusColors = [
@@ -1006,7 +1006,7 @@
                             <td class="py-3 px-4">{{ $appointment->relationship }}</td>
                             <td class="py-3 px-4">{{ $appointment->appointment_type }}</td>
                             <td class="py-3 px-4">{{ $appointment->document_type }}</td>
-                            <td class="py-3 px-4">{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('F d, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->setTimezone('Asia/Manila')->format('h:i A') }}</td>
+                            <td class="py-3 px-4">{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('F d, Y') }} {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</td>
                             <td class="py-3 px-4">
                                 <span class="bg-green-300 text-green-900 px-2 py-1 rounded text-sm">{{ $appointment->status }}</span>
                             </td>
@@ -1363,9 +1363,7 @@ window.addEventListener("click", function(event) {
                     
                     // Format time as "HH:MM AM/PM"
                     const [hours, minutes] = time.split(':');
-                    const formattedTime = new Date();
-                    formattedTime.setHours(parseInt(hours), parseInt(minutes));
-                    const timeString = formattedTime.toLocaleTimeString('en-US', {
+                    const timeString = new Date(2000, 0, 1, parseInt(hours), parseInt(minutes)).toLocaleTimeString('en-US', {
                         hour: 'numeric',
                         minute: '2-digit',
                         hour12: true
