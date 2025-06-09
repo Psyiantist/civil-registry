@@ -46,17 +46,14 @@ class AppointmentController extends Controller
             
             $referenceNumber = sprintf("CR-%s-%03d", $date, $sequence);
 
-            // Combine date and time and set timezone to Asia/Manila
-            $appointmentDateTime = \Carbon\Carbon::parse($request->appointment_date . ' ' . $request->appointment_time, 'UTC')
-                                    ->setTimezone('Asia/Manila');
-
+            // Store the appointment with the original time
             $appointment = Appointment::create([
                 'user_id' => $user->id,
                 'reference_number' => $referenceNumber,
                 'appointment_type' => $request->appointment_type,
                 'document_type' => $request->document_type,
-                'appointment_date' => $appointmentDateTime->toDateString(),
-                'appointment_time' => $appointmentDateTime->toTimeString('minute'),
+                'appointment_date' => $request->appointment_date,
+                'appointment_time' => $request->appointment_time,
                 'requester_name' => $request->requester_name,
                 'document_owner_name' => $request->document_owner_name,
                 'relationship' => $request->relationship,
