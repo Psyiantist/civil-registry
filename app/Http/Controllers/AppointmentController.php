@@ -430,4 +430,35 @@ class AppointmentController extends Controller
             ], 500);
         }
     }
+
+    public function getBookedSlots(Request $request)
+    {
+        try {
+            $request->validate([
+                'date' => 'required|date'
+            ]);
+
+            $bookedSlots = Appointment::where('appointment_date', $request->date)
+                ->whereIn('status', ['Pending', 'Approved'])
+                ->pluck('appointment_time')
+                ->toArray();
+
+            return response()->json([
+                'success' => true,
+                'bookedSlots' => $bookedSlots
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to get booked slots: ' . $e->getMessage(), [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'request_data' => $request->all(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile()
+            ]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to get booked slots: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

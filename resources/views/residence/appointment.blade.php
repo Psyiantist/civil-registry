@@ -764,6 +764,36 @@
         if (selectedDateInput) {
             selectedDateInput.value = selectedDate.toISOString().split('T')[0];
         }
+
+        // Reset all time buttons
+        const timeButtons = document.querySelectorAll('.grid-cols-2 button');
+        timeButtons.forEach(button => {
+            button.classList.remove('selected-time', 'bg-gray-300', 'cursor-not-allowed');
+            button.disabled = false;
+        });
+
+        // Check for booked slots
+        fetch(`{{ route('residence.appointment.booked-slots') }}?date=${selectedDateInput.value}`, {
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.bookedSlots) {
+                timeButtons.forEach(button => {
+                    if (data.bookedSlots.includes(button.dataset.time)) {
+                        button.classList.add('bg-gray-300', 'cursor-not-allowed');
+                        button.disabled = true;
+                        button.title = 'This time slot is already booked';
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching booked slots:', error);
+        });
     }
 
     function selectTime(element) {

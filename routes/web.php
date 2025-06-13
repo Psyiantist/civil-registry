@@ -81,6 +81,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/residence/profile/update', [ProfileController::class, 'updateProfile'])->name('residence.profile.update');
     Route::post('/residence/profile/remove-image', [ProfileController::class, 'removeProfileImage'])->name('residence.profile.remove-image');
     Route::post('/residence/appointment/store', [AppointmentController::class, 'storeAppointment'])->name('residence.appointment.store');
+    Route::get('/residence/appointment/booked-slots', [AppointmentController::class, 'getBookedSlots'])->name('residence.appointment.booked-slots');
 });
 
 // ADMIN ROUTES
