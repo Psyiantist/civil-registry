@@ -8,7 +8,11 @@
   <link rel="icon" type="image/x-icon" href="{{ asset('storage/assets/civil_registry_logo.png') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
   <style type="text/css">
 
     body {
@@ -1081,8 +1085,8 @@
         </script>
     @endif
     <div class="table-responsive">
-      <table id="approvalTable">
-        <thead>
+      <table id="approvalTable" class="table table-striped table-bordered">
+        <thead class="table-primary">
           <tr>
             <th>User Name</th>
             <th>Email Address</th>
@@ -1108,7 +1112,7 @@
     <div style="padding: 16px; background: #fff; border-bottom: 1px solid #e3e8f0;">
       <div style="display: flex; justify-content: flex-end; align-items: center; gap: 12px;">
         <label for="userStatusFilter" style="font-weight: 500; color: #4b5563;">Filter by Status:</label>
-        <select id="userStatusFilter" style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; font-family: 'Poppins', sans-serif; min-width: 150px;">
+        <select id="userStatusFilter" class="form-select" style="min-width: 150px;">
           <option value="all">All Users</option>
           <option value="active">Active</option>
           <option value="inactive">Inactive</option>
@@ -1116,8 +1120,8 @@
       </div>
     </div>
     <div class="table-responsive">
-      <table id="userActivityTable">
-        <thead>
+      <table id="userActivityTable" class="table table-striped table-bordered">
+        <thead class="table-primary">
           <tr>
             <th>User Name</th>
             <th>Email Address</th>
@@ -1140,7 +1144,7 @@
     <div style="padding: 16px; background: #fff; border-bottom: 1px solid #e3e8f0;">
       <div style="display: flex; justify-content: flex-end; align-items: center; gap: 12px;">
         <label for="employeeStatusFilter" style="font-weight: 500; color: #4b5563;">Filter by Status:</label>
-        <select id="employeeStatusFilter" style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; font-family: 'Poppins', sans-serif; min-width: 150px;">
+        <select id="employeeStatusFilter" class="form-select" style="min-width: 150px;">
           <option value="all">All Employees</option>
           <option value="active">Active</option>
           <option value="inactive">Inactive</option>
@@ -1148,14 +1152,14 @@
       </div>
     </div>
     <div class="table-responsive">
-      <table id="employeeActivityTable" style="width: 100%; min-width: 800px; border-collapse: collapse; font-family: 'Poppins', sans-serif; background: white;">
-        <thead>
+      <table id="employeeActivityTable" class="table table-striped table-bordered">
+        <thead class="table-primary">
           <tr>
-            <th style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap; background-color: #1E63E9; color: white; font-weight: 600; position: sticky; top: 0; z-index: 10;">Employee Name</th>
-            <th style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap; background-color: #1E63E9; color: white; font-weight: 600; position: sticky; top: 0; z-index: 10;">Email Address</th>
-            <th style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap; background-color: #1E63E9; color: white; font-weight: 600; position: sticky; top: 0; z-index: 10;">Last Login</th>
-            <th style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap; background-color: #1E63E9; color: white; font-weight: 600; position: sticky; top: 0; z-index: 10;">Status</th>
-            <th style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap; background-color: #1E63E9; color: white; font-weight: 600; position: sticky; top: 0; z-index: 10;">Action</th>
+            <th>Employee Name</th>
+            <th>Email Address</th>
+            <th>Last Login</th>
+            <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody id="employeeActivityTableBody">
@@ -1191,8 +1195,8 @@
         </script>
     @endif
     <div class="table-responsive">
-      <table id="employeeApprovalTable">
-        <thead>
+      <table id="employeeApprovalTable" class="table table-striped table-bordered">
+        <thead class="table-primary">
           <tr>
             <th>Employee Name</th>
             <th>Email Address</th>
@@ -1206,34 +1210,38 @@
         <tbody>
           @if($pending_employees->isEmpty())
             <tr>
-              <td colspan="7" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">No pending employee accounts for approval.</td>
+              <td colspan="7" class="text-center py-4 text-muted">No pending employee accounts for approval.</td>
             </tr>
           @else
             @foreach($pending_employees as $employee)
               <tr>
-                <td data-label="Employee Name">{{ $employee->first_name }} {{ $employee->last_name }}</td>
-                <td data-label="Username">{{ $employee->username }}</td>
-                <td data-label="Birthday">{{ $employee->birthday ? $employee->birthday->format('M d, Y') : 'N/A' }}</td>
-                <td data-label="Address">{{ $employee->address ?? 'N/A' }}</td>
-                <td data-label="ID Card">
+                <td>{{ $employee->first_name }} {{ $employee->last_name }}</td>
+                <td>{{ $employee->username }}</td>
+                <td>{{ $employee->birthday ? $employee->birthday->format('M d, Y') : 'N/A' }}</td>
+                <td>{{ $employee->address ?? 'N/A' }}</td>
+                <td>
                   @if($employee->id_card_image)
-                    <a href="javascript:void(0)" onclick="showIdImage('{{ url('/storage/uploads/' . $employee->id_card_image) }}', '{{ $employee->first_name }} {{ $employee->last_name }} Government Issued ID')" style="color: #1E63E9; text-decoration: underline;">View Government Issued ID</a>
+                    <a href="javascript:void(0)" onclick="showIdImage('{{ url('/storage/uploads/' . $employee->id_card_image) }}', '{{ $employee->first_name }} {{ $employee->last_name }} Government Issued ID')" class="text-primary text-decoration-underline">View Government Issued ID</a>
                   @else
-                    <span style="color: #aaa;">No ID Card</span>
+                    <span class="text-muted">No ID Card</span>
                   @endif
                 </td>
-                <td data-label="Status">
-                  <span class="status-badge status-pending">Pending</span>
+                <td>
+                  <span class="badge bg-warning">Pending</span>
                 </td>
-                <td data-label="Action">
-                  <div style="display: flex; flex-direction: column; gap: 8px;">
+                <td>
+                  <div class="d-flex flex-column gap-2">
                     <form method="POST" action="{{ route('admin.accept-employee', $employee->id) }}" class="approval-action-form">
                       @csrf
-                      <button type="submit" class="approve-btn"><i class="fas fa-check-circle"></i>Approve</button>
+                      <button type="submit" class="btn btn-success btn-sm w-100">
+                        <i class="fas fa-check-circle"></i> Approve
+                      </button>
                     </form>
                     <form method="POST" action="{{ route('admin.reject-employee', $employee->id) }}" class="approval-action-form">
                       @csrf
-                      <button type="submit" class="reject-btn"><i class="fas fa-times-circle"></i>Reject</button>
+                      <button type="submit" class="btn btn-warning btn-sm w-100">
+                        <i class="fas fa-times-circle"></i> Reject
+                      </button>
                     </form>
                   </div>
                 </td>
@@ -2104,6 +2112,63 @@
     }
 
     // ... rest of existing code ...
+  </script>
+
+  <script>
+    $(document).ready(function() {
+      // Initialize DataTables
+      $('#approvalTable').DataTable({
+        responsive: true,
+        order: [[0, 'asc']],
+        pageLength: 10,
+        language: {
+          search: "Search:",
+          lengthMenu: "Show _MENU_ entries per page",
+          info: "Showing _START_ to _END_ of _TOTAL_ entries",
+          infoEmpty: "No entries to show",
+          infoFiltered: "(filtered from _MAX_ total entries)"
+        }
+      });
+
+      $('#userActivityTable').DataTable({
+        responsive: true,
+        order: [[0, 'asc']],
+        pageLength: 10,
+        language: {
+          search: "Search:",
+          lengthMenu: "Show _MENU_ entries per page",
+          info: "Showing _START_ to _END_ of _TOTAL_ entries",
+          infoEmpty: "No entries to show",
+          infoFiltered: "(filtered from _MAX_ total entries)"
+        }
+      });
+
+      $('#employeeActivityTable').DataTable({
+        responsive: true,
+        order: [[0, 'asc']],
+        pageLength: 10,
+        language: {
+          search: "Search:",
+          lengthMenu: "Show _MENU_ entries per page",
+          info: "Showing _START_ to _END_ of _TOTAL_ entries",
+          infoEmpty: "No entries to show",
+          infoFiltered: "(filtered from _MAX_ total entries)"
+        }
+      });
+
+      $('#employeeApprovalTable').DataTable({
+        responsive: true,
+        order: [[0, 'asc']],
+        pageLength: 10,
+        language: {
+          search: "Search:",
+          lengthMenu: "Show _MENU_ entries per page",
+          info: "Showing _START_ to _END_ of _TOTAL_ entries",
+          infoEmpty: "No entries to show",
+          infoFiltered: "(filtered from _MAX_ total entries)"
+        }
+      });
+    });
   </script>
 
 </body>
