@@ -32,6 +32,19 @@ class AppointmentController extends Controller
 
             $user = Auth::user();
 
+            // Check if user already has an appointment on the same day
+            $existingAppointment = Appointment::where('user_id', $user->id)
+                ->where('appointment_date', $request->appointment_date)
+                ->whereIn('status', ['Pending', 'Approved'])
+                ->first();
+
+            if ($existingAppointment) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You already have an appointment scheduled for this date. Please choose a different date.'
+                ], 422);
+            }
+
             // Generate reference number (format: CR-YYYYMMDD-XXX)
             $date = now()->format('Ymd');
             $lastAppointment = Appointment::where('reference_number', 'like', "CR-{$date}-%")

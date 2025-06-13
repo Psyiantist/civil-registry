@@ -842,8 +842,8 @@
             title: 'Appointment Error',
             html: `
                 <div class="text-center">
-                    <p class="mb-4">There was an error processing your appointment request.</p>
-                    <p class="text-gray-600">${errorMessage || 'Please try again or contact our support team for assistance.'}</p>
+                    <p class="mb-4">${errorMessage || 'There was an error processing your appointment request.'}</p>
+                    <p class="text-sm text-gray-600">Please try again or contact our support team for assistance.</p>
                 </div>
             `,
             confirmButtonColor: '#426DDC',
