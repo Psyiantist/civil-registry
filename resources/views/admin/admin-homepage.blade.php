@@ -14,10 +14,159 @@
   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
   <style type="text/css">
+    /* Add these styles at the beginning of your existing styles */
+    .table {
+      width: 100%;
+      margin-bottom: 1rem;
+      color: #212529;
+      border-collapse: collapse;
+    }
 
+    .table th,
+    .table td {
+      padding: 0.75rem;
+      vertical-align: top;
+      border-top: 1px solid #dee2e6;
+    }
+
+    .table thead th {
+      vertical-align: bottom;
+      border-bottom: 2px solid #dee2e6;
+      background-color: #1E63E9;
+      color: white;
+    }
+
+    .table tbody + tbody {
+      border-top: 2px solid #dee2e6;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .table-bordered {
+      border: 1px solid #dee2e6;
+    }
+
+    .table-bordered th,
+    .table-bordered td {
+      border: 1px solid #dee2e6;
+    }
+
+    .table-responsive {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25em 0.4em;
+      font-size: 75%;
+      font-weight: 700;
+      line-height: 1;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: baseline;
+      border-radius: 0.25rem;
+    }
+
+    .bg-warning {
+      background-color: #f59e0b !important;
+      color: white !important;
+    }
+
+    .btn {
+      display: inline-block;
+      font-weight: 500;
+      text-align: center;
+      vertical-align: middle;
+      user-select: none;
+      border: 1px solid transparent;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      border-radius: 0.25rem;
+      transition: all 0.15s ease-in-out;
+      margin: 0 2px;
+    }
+
+    .btn-sm {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      border-radius: 0.2rem;
+    }
+
+    .btn-success {
+      color: #fff;
+      background-color: #22c55e;
+      border-color: #22c55e;
+    }
+
+    .btn-success:hover {
+      background-color: #16a34a;
+      border-color: #16a34a;
+    }
+
+    .btn-warning {
+      color: #fff;
+      background-color: #f59e0b;
+      border-color: #f59e0b;
+    }
+
+    .btn-warning:hover {
+      background-color: #d97706;
+      border-color: #d97706;
+    }
+
+    .btn i {
+      margin-right: 4px;
+    }
+
+    .d-inline {
+      display: inline-block !important;
+    }
+
+    .text-center {
+      text-align: center !important;
+    }
+
+    .text-muted {
+      color: #6c757d !important;
+    }
+
+    .py-4 {
+      padding-top: 1.5rem !important;
+      padding-bottom: 1.5rem !important;
+    }
+
+    .gap-2 {
+      gap: 0.5rem !important;
+    }
+
+    .d-flex {
+      display: flex !important;
+    }
+
+    .flex-column {
+      flex-direction: column !important;
+    }
+
+    .text-primary {
+      color: #1E63E9 !important;
+    }
+
+    .text-decoration-underline {
+      text-decoration: underline !important;
+    }
+
+    /* Your existing styles continue below */
     body {
-            font-family: 'Poppins';
-        }
+      font-family: 'Poppins';
+    }
+
     *{
       margin: 0;
       padding: 0;
@@ -600,8 +749,9 @@
       }
 
       .approve-btn, .reject-btn, .delete-btn {
-        padding: 4px 8px;
-        font-size: 0.8rem;
+        padding: 6px 12px;
+        font-size: 0.85rem;
+        margin: 2px;
       }
     }
 
@@ -663,6 +813,8 @@
 
       #approvalTable td:last-child, #userActivityTable td:last-child, #employeeApprovalTable td:last-child {
         border-bottom: none;
+        justify-content: flex-end;
+        gap: 8px;
       }
 
       .status-badge {
@@ -1229,21 +1381,19 @@
                 <td>
                   <span class="badge bg-warning">Pending</span>
                 </td>
-                <td>
-                  <div class="d-flex flex-column gap-2">
-                    <form method="POST" action="{{ route('admin.accept-employee', $employee->id) }}" class="approval-action-form">
-                      @csrf
-                      <button type="submit" class="btn btn-success btn-sm w-100">
-                        <i class="fas fa-check-circle"></i> Approve
-                      </button>
+                <td class="text-center">
+                    <form method="POST" action="{{ route('admin.accept-employee', $employee->id) }}" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-success btn-sm approve-btn">
+                            <i class="fas fa-check"></i> Approve
+                        </button>
                     </form>
-                    <form method="POST" action="{{ route('admin.reject-employee', $employee->id) }}" class="approval-action-form">
-                      @csrf
-                      <button type="submit" class="btn btn-warning btn-sm w-100">
-                        <i class="fas fa-times-circle"></i> Reject
-                      </button>
+                    <form method="POST" action="{{ route('admin.reject-employee', $employee->id) }}" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-warning btn-sm reject-btn">
+                            <i class="fas fa-times"></i> Reject
+                        </button>
                     </form>
-                  </div>
                 </td>
               </tr>
             @endforeach
@@ -1857,101 +2007,70 @@
   });
 
   function loadEmployeeActivity() {
-      const statusFilter = document.getElementById('employeeStatusFilter').value;
-      
-      fetch(`{{ url("/api/admin/employee-activity") }}?status=${statusFilter}`, {
-          headers: {
-              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-              'Accept': 'application/json',
-              'X-Requested-With': 'XMLHttpRequest'
-          },
-          credentials: 'same-origin'
-      })
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok');
-          }
-          return response.json();
-      })
-      .then(response => {
-          const tbody = document.getElementById('employeeActivityTableBody');
-          tbody.innerHTML = '';
-          
-          if (!response.success) {
-              throw new Error(response.message || 'Failed to load employee activity');
-          }
+    fetch('{{ route("api.admin.employee-activity") }}')
+        .then(response => response.json())
+        .then(response => {
+            if (!response.success) {
+                throw new Error(response.message || 'Failed to load employee activity');
+            }
 
-          const employees = response.data || [];
-          
-          if (employees.length === 0) {
-              tbody.innerHTML = `
-                  <tr>
-                      <td colspan="5" style="text-align:center; padding: 24px; color: #888; font-size: 1.1rem; background: #f7faff;">
-                          No employees found.
-                      </td>
-                  </tr>
-              `;
-              return;
-          }
+            const tbody = document.getElementById('employeeActivityTableBody');
+            tbody.innerHTML = '';
+            
+            if (!response.data || response.data.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-muted">No employees found.</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            response.data.forEach(employee => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td data-label="Employee Name">${employee.first_name} ${employee.last_name}</td>
+                    <td data-label="Email Address">${employee.email}</td>
+                    <td data-label="Last Login">${employee.last_login ? new Date(employee.last_login).toLocaleString() : 'Never'}</td>
+                    <td data-label="Status">
+                        <span class="status-badge ${employee.is_active ? 'bg-success' : 'bg-danger'}">
+                            ${employee.is_active ? 'Active' : 'Inactive'}
+                        </span>
+                    </td>
+                    <td data-label="Action" class="text-center">
+                        <form method="POST" action="{{ url('/admin/delete-employee') }}/${employee.id}" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm delete-btn">
+                                <i class="fas fa-trash-alt"></i> Delete Account
+                            </button>
+                        </form>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
 
-          employees.forEach(employee => {
-              const row = document.createElement('tr');
-              row.innerHTML = `
-                  <td data-label="Employee Name" style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap;">${employee.first_name} ${employee.last_name}</td>
-                  <td data-label="Email Address" style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap;">${employee.email}</td>
-                  <td data-label="Last Login" style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap;">
-                      ${employee.last_login ? new Date(employee.last_login).toLocaleString('en-PH', {
-                          dateStyle: 'full',
-                          timeStyle: 'short',
-                          hour12: true
-                      }) : 'Never'}
-                  </td>
-                  <td data-label="Status" style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap;">
-                      <span class="status-badge ${employee.is_active ? 'status-approved' : 'status-declined'}">
-                          ${employee.is_active ? 'Active' : 'Inactive'}
-                      </span>
-                  </td>
-                  <td data-label="Action" style="padding: 12px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #e3e8f0; white-space: nowrap;">
-                      ${isAdmin1() ? `
-                          <form method="POST" action="{{ url('/admin/delete-employee') }}/${employee.id}">
-                              @csrf
-                              @method('DELETE')
-                              <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i>Delete Account</button>
-                          </form>
-                      ` : !employee.is_active ? `
-                          <form method="POST" action="{{ url('/admin/delete-employee') }}/${employee.id}">
-                              @csrf
-                              @method('DELETE')
-                              <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i>Delete Account</button>
-                          </form>
-                      ` : `
-                          <button class="delete-btn" disabled style="opacity:0.5; cursor:not-allowed;" title="Cannot delete active employees">
-                              <i class="fas fa-trash-alt"></i>Delete Account
-                          </button>
-                      `}
-                  </td>
-              `;
-              tbody.appendChild(row);
-          });
+            // Reattach event listeners for delete buttons
+            attachEmployeeDeleteEventListeners();
+        })
+        .catch(error => {
+            console.error('Error loading employee activity:', error);
+            const tbody = document.getElementById('employeeActivityTableBody');
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-danger">Error loading employees. Please try again.</td>
+                </tr>
+            `;
+        });
+}
 
-          // Reattach event listeners for delete buttons
-          attachEmployeeDeleteEventListeners();
-      })
-      .catch(error => {
-          console.error('Error loading employee activity:', error);
-          const tbody = document.getElementById('employeeActivityTableBody');
-          tbody.innerHTML = `
-              <tr>
-                  <td colspan="5" style="text-align:center; padding: 24px; color: #ef4444; font-size: 1.1rem; background: #f7faff;">
-                      Error loading employees. Please try again.
-                  </td>
-              </tr>
-          `;
-      });
-  }
-
-  // Add event listener for the employee status filter
+  // Add event listener for status filter
   document.getElementById('employeeStatusFilter').addEventListener('change', function() {
+      loadEmployeeActivity();
+  });
+
+  // Load employee activity when page loads
+  document.addEventListener('DOMContentLoaded', function() {
       loadEmployeeActivity();
   });
 
@@ -1978,21 +2097,23 @@
   }
 
   function attachEmployeeDeleteEventListeners() {
-      const deleteForms = document.querySelectorAll('form[action*="delete-employee"]');
-      deleteForms.forEach(form => {
+      document.querySelectorAll('#employeeActivityTableBody form').forEach(form => {
           form.addEventListener('submit', function(e) {
               e.preventDefault();
+              const employeeName = this.closest('tr').querySelector('td:first-child').textContent;
+              
               Swal.fire({
-                  title: 'Delete Employee?',
-                  text: "Are you sure you want to delete this employee? This action cannot be undone!",
+                  title: 'Delete Employee Account',
+                  text: `Are you sure you want to delete ${employeeName}'s account?`,
                   icon: 'warning',
                   showCancelButton: true,
-                  confirmButtonColor: '#ef4444',
-                  cancelButtonColor: '#6b7280',
-                  confirmButtonText: 'Yes, delete!'
+                  confirmButtonColor: '#dc3545',
+                  cancelButtonColor: '#6c757d',
+                  confirmButtonText: 'Yes, delete it!',
+                  cancelButtonText: 'Cancel'
               }).then((result) => {
                   if (result.isConfirmed) {
-                      form.submit();
+                      this.submit();
                   }
               });
           });
@@ -2119,55 +2240,72 @@
       // Initialize DataTables
       $('#approvalTable').DataTable({
         responsive: true,
-        order: [[0, 'asc']],
-        pageLength: 10,
+        paging: false,
+        searching: false,
+        info: false,
+        ordering: false,
         language: {
-          search: "Search:",
-          lengthMenu: "Show _MENU_ entries per page",
-          info: "Showing _START_ to _END_ of _TOTAL_ entries",
-          infoEmpty: "No entries to show",
-          infoFiltered: "(filtered from _MAX_ total entries)"
+          emptyTable: ""
         }
       });
 
       $('#userActivityTable').DataTable({
         responsive: true,
-        order: [[0, 'asc']],
-        pageLength: 10,
+        paging: false,
+        searching: false,
+        info: false,
+        ordering: false,
         language: {
-          search: "Search:",
-          lengthMenu: "Show _MENU_ entries per page",
-          info: "Showing _START_ to _END_ of _TOTAL_ entries",
-          infoEmpty: "No entries to show",
-          infoFiltered: "(filtered from _MAX_ total entries)"
+          emptyTable: ""
         }
       });
 
       $('#employeeActivityTable').DataTable({
         responsive: true,
-        order: [[0, 'asc']],
-        pageLength: 10,
+        paging: false,
+        searching: false,
+        info: false,
+        ordering: false,
         language: {
-          search: "Search:",
-          lengthMenu: "Show _MENU_ entries per page",
-          info: "Showing _START_ to _END_ of _TOTAL_ entries",
-          infoEmpty: "No entries to show",
-          infoFiltered: "(filtered from _MAX_ total entries)"
+          emptyTable: ""
         }
       });
 
       $('#employeeApprovalTable').DataTable({
         responsive: true,
-        order: [[0, 'asc']],
-        pageLength: 10,
+        paging: false,
+        searching: false,
+        info: false,
+        ordering: false,
         language: {
-          search: "Search:",
-          lengthMenu: "Show _MENU_ entries per page",
-          info: "Showing _START_ to _END_ of _TOTAL_ entries",
-          infoEmpty: "No entries to show",
-          infoFiltered: "(filtered from _MAX_ total entries)"
+          emptyTable: ""
         }
       });
+    });
+  </script>
+  <script>
+    // Filter functionality for user activity
+    $('#userStatusFilter').change(function() {
+        var status = $(this).val();
+        var table = $('#userActivityTable').DataTable();
+        
+        if (status === 'all') {
+            table.column(3).search('').draw();
+        } else {
+            table.column(3).search(status).draw();
+        }
+    });
+
+    // Filter functionality for employee activity
+    $('#employeeStatusFilter').change(function() {
+        var status = $(this).val();
+        var table = $('#employeeActivityTable').DataTable();
+        
+        if (status === 'all') {
+            table.column(3).search('').draw();
+        } else {
+            table.column(3).search(status).draw();
+        }
     });
   </script>
 
