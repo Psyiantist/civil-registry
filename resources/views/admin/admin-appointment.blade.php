@@ -1439,7 +1439,7 @@ window.addEventListener("click", function(event) {
                 e.preventDefault();
                 showLoading();
                 const formData = new FormData(this);
-                formData.append('status', 'Cancelled');
+                formData.append('status', 'Pending');
                 
                 // Submit the form
                 fetch(this.action, {
