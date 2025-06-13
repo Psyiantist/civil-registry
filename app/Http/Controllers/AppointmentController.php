@@ -386,4 +386,48 @@ class AppointmentController extends Controller
             return redirect()->back()->with('error', 'Failed to send test email: ' . $e->getMessage());
         }
     }
+
+    public function checkExistingAppointment(Request $request)
+    {
+        try {
+            $request->validate([
+                'document_type' => 'required',
+                'requester_name' => 'required',
+                'document_owner_name' => 'required'
+            ]);
+
+            $user = Auth::user();
+
+            // Check for existing appointments with the same document type and user
+            $existingAppointment = Appointment::where('user_id', $user->id)
+                ->where('document_type', $request->document_type)
+                ->where('requester_name', $request->requester_name)
+                ->where('document_owner_name', $request->document_owner_name)
+                ->whereIn('status', ['Pending', 'Approved'])
+                ->first();
+
+            if ($existingAppointment) {
+                return response()->json([
+                    'hasExistingAppointment' => true,
+                    'appointment' => $existingAppointment
+                ]);
+            }
+
+            return response()->json([
+                'hasExistingAppointment' => false
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to check existing appointment: ' . $e->getMessage(), [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'request_data' => $request->all(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile()
+            ]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to check existing appointment: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

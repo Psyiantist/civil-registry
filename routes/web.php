@@ -150,6 +150,9 @@ Route::middleware(['auth:employee'])->group(function () {
     Route::get('/api/admin/pending-users', [EmployeeController::class, 'getPendingUsers'])->name('api.admin.pending-users');
     Route::get('/api/admin/user-activity', [EmployeeController::class, 'getUserActivity'])->name('api.admin.user-activity');
     Route::get('/api/admin/employee-activity', [EmployeeController::class, 'getEmployeeActivity'])->name('api.admin.employee-activity');
+
+    // Residence Appointment Routes
+    Route::post('/residence/appointment/check-existing', [AppointmentController::class, 'checkExistingAppointment'])->name('residence.appointment.check-existing');
 });
 
 // Public Routes

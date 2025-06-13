@@ -536,6 +536,8 @@
                 const selectedTime = document.getElementById('selectedTime');
                 const appointmentType = document.querySelector('select[name="appointment_type"]');
                 const documentType = document.querySelector('select[name="document_type"]');
+                const requesterName = document.querySelector('input[name="requester_name"]');
+                const documentOwnerName = document.querySelector('input[name="document_owner_name"]');
 
                 if (!selectedDate?.value || !selectedTime?.value || !appointmentType?.value || !documentType?.value) {
                     Swal.fire({
@@ -548,18 +550,60 @@
                     return;
                 }
 
-                const formData = new FormData(this);
-                
-                fetch(this.action, {
+                // First check for existing appointments
+                fetch('{{ route("residence.appointment.check-existing") }}', {
                     method: 'POST',
-                    body: formData,
+                    body: JSON.stringify({
+                        document_type: documentType.value,
+                        requester_name: requesterName.value,
+                        document_owner_name: documentOwnerName.value
+                    }),
                     headers: {
+                        'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
                         'Accept': 'application/json',
                         'X-Requested-With': 'XMLHttpRequest'
                     }
                 })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.hasExistingAppointment) {
+                        if (loadingOverlay) loadingOverlay.style.display = 'none';
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Existing Appointment Found',
+                            html: `
+                                <div class="text-center">
+                                    <p class="mb-4">You already have an existing appointment for this document.</p>
+                                    <div class="space-y-2 mb-4">
+                                        <p>📄 Document: ${data.appointment.document_type}</p>
+                                        <p>📅 Date: ${new Date(data.appointment.appointment_date).toLocaleDateString()}</p>
+                                        <p>⏰ Time: ${data.appointment.appointment_time}</p>
+                                        <p>📋 Status: ${data.appointment.status}</p>
+                                    </div>
+                                    <p class="text-sm text-gray-600">Please wait for your current appointment to be processed before making a new one.</p>
+                                </div>
+                            `,
+                            confirmButtonColor: '#426DDC',
+                            confirmButtonText: 'OK'
+                        });
+                        return;
+                    }
+
+                    // If no existing appointment, proceed with form submission
+                    const formData = new FormData(this);
+                    return fetch(this.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+                })
                 .then(response => {
+                    if (!response) return; // Skip if we returned early due to existing appointment
                     if (loadingOverlay) loadingOverlay.style.display = 'none';
                     if (!response.ok) {
                         return response.json().then(data => {
@@ -569,6 +613,7 @@
                     return response.json();
                 })
                 .then(data => {
+                    if (!data) return; // Skip if we returned early due to existing appointment
                     if (loadingOverlay) loadingOverlay.style.display = 'none';
                     if (data.success) {
                         const date = selectedDate?.value || '';
