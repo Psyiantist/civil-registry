@@ -10,6 +10,26 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Datepicker CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+  <!-- Bootstrap Timepicker CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css">
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap Datepicker JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <!-- Bootstrap Timepicker JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
+
+  <!-- Add these in the head section, after jQuery -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
   <style>
 
@@ -818,7 +838,580 @@
         }
     }
 
+    /* Datepicker Enhanced Styles */
+    .datepicker {
+        padding: 8px;
+        border: 1px solid #E5E7EB;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        background: white;
+    }
+
+    .datepicker-dropdown {
+        margin-top: -10px !important;
+    }
+
+    .datepicker table tr td,
+    .datepicker table tr th {
+        padding: 4px;
+        font-size: 0.8125rem;
+    }
+
+    .datepicker table tr td.active.active,
+    .datepicker table tr td.active.highlighted.active,
+    .datepicker table tr td.active.highlighted:active,
+    .datepicker table tr td.active:active {
+        background: #3B82F6 !important;
+        border-color: #2563EB !important;
+    }
+
+    .datepicker table tr td.today {
+        background: #EFF6FF !important;
+        border-color: #BFDBFE !important;
+    }
+
+    .datepicker table tr td:hover:not(.active):not(.disabled) {
+        background: #F3F4F6 !important;
+    }
+
+    .datepicker table tr td.disabled {
+        color: #9CA3AF !important;
+        background: #F9FAFB !important;
+    }
+
+    .datepicker .datepicker-switch {
+        font-size: 0.875rem;
+        font-weight: 600;
+        padding: 4px;
+    }
+
+    .datepicker .prev,
+    .datepicker .next {
+        padding: 4px;
+    }
+
+    /* Input Group Styles */
+    .input-group {
+        position: relative;
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+        max-width: 300px; /* Limit the width */
+    }
+
+    .input-group .form-control {
+        position: relative;
+        flex: 1 1 auto;
+        width: 1%;
+        min-width: 0;
+        padding: 0.5rem 0.75rem; /* Reduced padding */
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.25; /* Reduced line height */
+        color: #1F2937;
+        background-color: #fff;
+        border: 1px solid #E5E7EB; /* Thinner border */
+        border-radius: 0.5rem; /* Smaller border radius */
+        transition: all 0.2s ease;
+        height: 38px; /* Fixed height */
+    }
+
+    .input-group .form-control:focus {
+        border-color: #3B82F6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        outline: none;
+    }
+
+    .input-group-text {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 0.75rem; /* Reduced padding */
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.25; /* Reduced line height */
+        color: #6B7280;
+        text-align: center;
+        white-space: nowrap;
+        background-color: #F9FAFB;
+        border: 1px solid #E5E7EB; /* Thinner border */
+        border-radius: 0.5rem; /* Smaller border radius */
+        margin-left: -1px;
+        transition: all 0.2s ease;
+        height: 38px; /* Fixed height */
+    }
+
+    .input-group-text i {
+        color: #3B82F6;
+        transition: all 0.2s ease;
+        font-size: 0.875rem; /* Smaller icon */
+    }
+
+    /* Date Filter Container */
+    .date-filter-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: flex-end;
+    }
+
+    .date-input-wrapper {
+        flex: 0 1 auto;
+        min-width: 200px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .input-group {
+            max-width: 100%;
+        }
+
+        .input-group .form-control,
+        .input-group-text {
+            padding: 0.375rem 0.625rem;
+            font-size: 0.8125rem;
+            height: 34px; /* Slightly smaller on mobile */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .input-group .form-control,
+        .input-group-text {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            height: 32px; /* Even smaller on mobile */
+        }
+    }
+
+    /* Filter Section Styles */
+    .filter-section {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 1.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        margin-bottom: 1.5rem;
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .filter-section:hover {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        transform: translateY(-1px);
+    }
+
+    /* Button Styles */
+    .filter-button {
+        background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: none;
+        box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+        letter-spacing: 0.025em;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .filter-button:hover {
+        background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.25);
+    }
+
+    .filter-button:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px -1px rgba(37, 99, 235, 0.2);
+    }
+
+    .filter-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
+    }
+
+    .filter-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent
+        );
+        transition: 0.5s;
+    }
+
+    .filter-button:hover::before {
+        left: 100%;
+    }
+
+    .filter-button i {
+        font-size: 0.875rem;
+        transition: transform 0.3s ease;
+    }
+
+    .filter-button:hover i {
+        transform: rotate(90deg);
+    }
+
+    /* Clear Button Styles */
+    .clear-button {
+        background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: none;
+        box-shadow: 0 4px 6px -1px rgba(75, 85, 99, 0.2);
+        letter-spacing: 0.025em;
+    }
+
+    .clear-button:hover {
+        background: linear-gradient(135deg, #4B5563 0%, #374151 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 8px -1px rgba(75, 85, 99, 0.25);
+    }
+
+    .clear-button:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px -1px rgba(75, 85, 99, 0.2);
+    }
+
+    .clear-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(107, 114, 128, 0.3);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .filter-section {
+            padding: 1rem;
+        }
+
+        .input-group .form-control,
+        .input-group-text {
+            padding: 0.625rem 0.75rem;
+            font-size: 0.8125rem;
+        }
+
+        .filter-button,
+        .clear-button {
+            padding: 0.625rem 1rem;
+            font-size: 0.8125rem;
+        }
+
+        .datepicker {
+            padding: 10px;
+        }
+
+        .datepicker table tr td,
+        .datepicker table tr th {
+            padding: 5px;
+            font-size: 0.8125rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .filter-section {
+            padding: 0.75rem;
+        }
+
+        .input-group .form-control,
+        .input-group-text {
+            padding: 0.5rem 0.625rem;
+            font-size: 0.75rem;
+        }
+
+        .filter-button,
+        .clear-button {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .datepicker {
+            padding: 8px;
+        }
+
+        .datepicker table tr td,
+        .datepicker table tr th {
+            padding: 4px;
+            font-size: 0.75rem;
+        }
+    }
+
+    /* Date Input Styles */
+    .date-input-wrapper {
+        width: 180px;
+    }
+
+    .input-group {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .input-group .form-control {
+        width: 100%;
+        height: 32px !important;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8125rem;
+        line-height: 1.2;
+        color: #1F2937;
+        background-color: #fff;
+        border: 1px solid #E5E7EB;
+        border-radius: 0.375rem;
+    }
+
+    .input-group-text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 32px !important;
+        padding: 0 0.5rem;
+        font-size: 0.8125rem;
+        color: #6B7280;
+        background-color: #F9FAFB;
+        border: 1px solid #E5E7EB;
+        border-radius: 0.375rem;
+        margin-left: -1px;
+    }
+
+    /* Bootstrap Datepicker Overrides */
+    .bootstrap-datetimepicker-widget {
+        width: 280px !important;
+        padding: 8px !important;
+        margin-top: -10px !important;
+        border: 1px solid #E5E7EB !important;
+        border-radius: 0.5rem !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+        background: white !important;
+    }
+
+    .bootstrap-datetimepicker-widget table td {
+        padding: 4px !important;
+        font-size: 0.8125rem !important;
+    }
+
+    .bootstrap-datetimepicker-widget table th {
+        padding: 4px !important;
+        font-size: 0.8125rem !important;
+    }
+
+    .bootstrap-datetimepicker-widget .datepicker-days table td.active {
+        background: #3B82F6 !important;
+        color: white !important;
+    }
+
+    .bootstrap-datetimepicker-widget .datepicker-days table td.today {
+        background: #EFF6FF !important;
+        color: #1F2937 !important;
+    }
+
+    .bootstrap-datetimepicker-widget .datepicker-days table td:hover:not(.active):not(.disabled) {
+        background: #F3F4F6 !important;
+    }
+
+    .bootstrap-datetimepicker-widget .datepicker-days table td.disabled {
+        color: #9CA3AF !important;
+        background: #F9FAFB !important;
+    }
+
+    .bootstrap-datetimepicker-widget .datepicker-switch {
+        font-size: 0.875rem !important;
+        font-weight: 600 !important;
+        padding: 4px !important;
+    }
+
+    .bootstrap-datetimepicker-widget .prev,
+    .bootstrap-datetimepicker-widget .next {
+        padding: 4px !important;
+    }
+
+    .datepicker-container {
+        position: fixed !important;
+        z-index: 999999 !important;
+        width: 300px;
+    }
+    .datepicker {
+        position: fixed !important;
+        z-index: 999999 !important;
+        margin-top: 4px !important;
+        padding: 8px !important;
+        border: 1px solid #E5E7EB !important;
+        border-radius: 0.5rem !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+        background: white !important;
+        width: 100% !important;
+    }
+    .datepicker-dropdown {
+        position: fixed !important;
+        padding: 8px !important;
+        z-index: 999999 !important;
+    }
+    .datepicker table {
+        z-index: 999999 !important;
+    }
+    .datepicker table tr td,
+    .datepicker table tr th {
+        z-index: 999999 !important;
+    }
+    .overflow-x-auto {
+        position: relative;
+        z-index: 1;
+    }
+    .max-h-\[600px\] {
+        position: relative;
+        z-index: 1;
+    }
+    table {
+        position: relative;
+        z-index: 1;
+    }
+    thead, tbody {
+        position: relative;
+        z-index: 1;
+    }
+    .date-input-wrapper {
+        position: relative;
+        z-index: 999999;
+    }
+    /* Specific rules for approved appointments table */
+    #approvedAppointmentTable {
+        position: relative;
+        z-index: 1;
+    }
+    #approvedAppointmentTable tr,
+    #approvedAppointmentTable td,
+    #approvedAppointmentTable th {
+        position: relative;
+        z-index: 1;
+    }
+    .min-w-full.bg-white.shadow.rounded-lg {
+        position: relative;
+        z-index: 1;
+    }
+    /* Add z-index for the specific class combination */
+    .max-h-\[600px\].overflow-y-auto.relative {
+        position: relative;
+        z-index: 1;
+    }
+    /* Ensure the table container is below the datepicker */
+    .overflow-y-auto {
+        position: relative;
+        z-index: 1;
+    }
+    /* Make sure the datepicker is always on top */
+    .bootstrap-datetimepicker-widget {
+        position: fixed !important;
+        z-index: 999999 !important;
+    }
+    .bootstrap-datetimepicker-widget.dropdown-menu {
+        z-index: 999999 !important;
+    }
+    .bootstrap-datetimepicker-widget table {
+        z-index: 999999 !important;
+    }
+    .bootstrap-datetimepicker-widget table td,
+    .bootstrap-datetimepicker-widget table th {
+        z-index: 999999 !important;
+    }
   </style>
+
+  <script>
+    $(document).ready(function() {
+        // Initialize datepicker with fixed positioning
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true,
+            container: 'body', // This ensures the datepicker is appended to body
+            orientation: 'top auto'
+        });
+
+        // Handle datepicker positioning
+        $('.datepicker').on('show', function(e) {
+            var input = $(e.target);
+            var offset = input.offset();
+            var datepicker = $('.datepicker-dropdown');
+            
+            // Position the datepicker above the input
+            datepicker.css({
+                'position': 'fixed',
+                'top': (offset.top - datepicker.outerHeight() - 10) + 'px', // Add 10px gap
+                'left': offset.left + 'px',
+                'z-index': '999999'
+            });
+        });
+
+        // Start date picker
+        $('#start_date_btn').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true,
+            container: 'body',
+            orientation: 'top auto'
+        }).on('changeDate', function(e) {
+            // Update hidden input
+            $('#start_date').val(e.format());
+            // Update button text
+            $('#start_date_display').text(e.format('MMMM d, yyyy'));
+            // Set minimum date for end date picker
+            $('#end_date_btn').datepicker('setStartDate', e.date);
+        });
+
+        // End date picker
+        $('#end_date_btn').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true,
+            container: 'body',
+            orientation: 'top auto'
+        }).on('changeDate', function(e) {
+            // Update hidden input
+            $('#end_date').val(e.format());
+            // Update button text
+            $('#end_date_display').text(e.format('MMMM d, yyyy'));
+            // Set maximum date for start date picker
+            $('#start_date_btn').datepicker('setEndDate', e.date);
+        });
+
+        // Clear date filters
+        $('#clear_date_filter').on('click', function() {
+            $('#start_date').val('');
+            $('#end_date').val('');
+            $('#start_date_display').text('Select start date');
+            $('#end_date_display').text('Select end date');
+            $('#start_date_btn').datepicker('clearDates');
+            $('#end_date_btn').datepicker('clearDates');
+            loadApprovedAppointments();
+        });
+
+        // Filter appointments
+        $('#filter_appointments').on('click', function() {
+            const startDate = $('#start_date').val();
+            const endDate = $('#end_date').val();
+            
+            if (startDate && endDate) {
+                loadApprovedAppointments(startDate, endDate);
+            } else {
+                alert('Please select both start and end dates');
+            }
+        });
+    });
+  </script>
 </head>
 
 <body>
@@ -839,13 +1432,13 @@
                 </div>
             @endif
 
-            <div class="max-h-[600px] overflow-y-auto relative">
+            <div class="max-h-[600px] overflow-y-auto relative" style="position: relative; z-index: 1;">
                 @if($appointments->isEmpty())
                     <div class="text-center py-8 bg-white shadow rounded-lg">
                         <p class="text-gray-500 text-lg">No appointments have been made yet.</p>
                     </div>
                 @else
-                    <table class="min-w-full bg-white shadow rounded-lg overflow-hidden">
+                    <table class="min-w-full bg-white shadow rounded-lg overflow-hidden" style="position: relative; z-index: 1;">
                         <thead class="bg-blue-600 text-white">
                             <tr>
                                 <th class="py-3 px-4 text-left">User Name</th>
@@ -946,40 +1539,44 @@
         </div>
         <div class="overflow-x-auto">
             <div class="mb-4 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white/95 p-6 rounded-xl shadow-lg backdrop-blur-sm border border-white/20">
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <div class="relative">
-                        <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                <div class="flex flex-col sm:flex-row gap-8">
+                    <div class="date-input-wrapper">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
                         <div class="relative">
-                            <input type="date" id="start_date" name="start_date" 
-                                class="w-full px-4 py-2.5 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 ease-in-out cursor-pointer"
-                                onchange="updateApprovedCount(this.value)"
-                            >
+                            <button type="button" id="start_date_btn" class="px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors duration-200 flex items-center gap-2 shadow-sm">
+                                <i class="fas fa-calendar text-gray-600"></i>
+                                <span id="start_date_display">Select start date</span>
+                            </button>
+                            <input type="hidden" id="start_date" name="start_date">
+                            <div id="start_date_container" class="datepicker-container"></div>
                         </div>
                     </div>
-                    <div class="relative">
-                        <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                    <div class="date-input-wrapper ml-8">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">End Date</label>
                         <div class="relative">
-                            <input type="date" id="end_date" name="end_date" 
-                                class="w-full px-4 py-2.5 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 ease-in-out cursor-pointer"
-                                onchange="updateApprovedCount(this.value)"
-                            >
+                            <button type="button" id="end_date_btn" class="px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors duration-200 flex items-center gap-2 shadow-sm">
+                                <i class="fas fa-calendar text-gray-600"></i>
+                                <span id="end_date_display">Select end date</span>
+                            </button>
+                            <input type="hidden" id="end_date" name="end_date">
+                            <div id="end_date_container" class="datepicker-container"></div>
                         </div>
                     </div>
                 </div>
-                <div class="flex gap-2">
-                    <button onclick="filterApprovedAppointments()" class="px-4 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 ease-in-out transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl flex items-center gap-2">
+                <div class="flex items-end gap-3 ml-8">
+                    <button onclick="filterApprovedAppointments()" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 flex items-center gap-2 shadow-sm">
                         <i class="fas fa-filter"></i>
                         <span>Filter</span>
                     </button>
-                    <button onclick="clearDateFilters()" class="px-4 py-2.5 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-lg font-semibold hover:from-gray-700 hover:to-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200 ease-in-out transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl flex items-center gap-2">
+                    <button onclick="clearDateFilters()" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors duration-200 flex items-center gap-2 shadow-sm">
                         <i class="fas fa-times"></i>
                         <span>Clear</span>
                     </button>
                 </div>
             </div>
 
-            <div class="max-h-[600px] overflow-y-auto relative">
-                <table class="min-w-full bg-white shadow rounded-lg overflow-hidden">
+            <div class="max-h-[600px] overflow-y-auto relative" style="position: relative; z-index: 1;">
+                <table class="min-w-full bg-white shadow rounded-lg overflow-hidden" style="position: relative; z-index: 1;">
                     <thead class="bg-blue-600 text-white">
                         <tr>
                             <th class="py-3 px-4 text-left">Reference Number</th>
@@ -1525,15 +2122,14 @@ window.addEventListener("click", function(event) {
     });
 
     function clearDateFilters() {
-        // Clear date inputs
-        document.getElementById('start_date').value = '';
-        document.getElementById('end_date').value = '';
+        $('#start_date').val('');
+        $('#end_date').val('');
         
         // Reset the approved count to the initial value
         const initialCount = {{ $approvedAppointments->count() }};
         document.getElementById('approvedCount').textContent = initialCount;
         
-        // Reload the approved appointments table to show all appointments
+        // Reload the approved appointments table
         showLoading();
         fetch('{{ route("admin.appointments.filter-approved") }}', {
             headers: {
@@ -1547,43 +2143,7 @@ window.addEventListener("click", function(event) {
         .then(data => {
             hideLoading();
             if (data.success) {
-                const tableBody = document.getElementById('approvedAppointmentTable');
-                tableBody.innerHTML = '';
-                
-                data.appointments.forEach(appointment => {
-                    const row = document.createElement('tr');
-                    row.className = 'border-b';
-                    let rowHtml = `
-                        <td class="py-3 px-4 font-medium">${appointment.reference_number}</td>
-                        <td class="py-3 px-4">${appointment.user.first_name} ${appointment.user.last_name}</td>
-                        <td class="py-3 px-4">${appointment.requester_name}</td>
-                        <td class="py-3 px-4">${appointment.document_owner_name}</td>
-                        <td class="py-3 px-4">${appointment.relationship}</td>
-                        <td class="py-3 px-4">${appointment.appointment_type}</td>
-                        <td class="py-3 px-4">${appointment.document_type}</td>
-                        <td class="py-3 px-4">${new Date(appointment.appointment_date).toLocaleDateString()} ${new Date(appointment.appointment_time).toLocaleTimeString()}</td>
-                        <td class="py-3 px-4">
-                            <span class="bg-green-300 text-green-900 px-2 py-1 rounded text-sm">${appointment.status}</span>
-                        </td>`;
-
-                    if ({{ Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1' ? 'true' : 'false' }}) {
-                        rowHtml += `
-                            <td class="py-3 px-4">
-                                <form action="/admin/appointments/${appointment.id}/status" method="POST" class="inline">
-                                    @csrf
-                                    @method('PUT')
-                                    <select name="status" onchange="handleApprovedStatusChange(this, ${appointment.id})" class="status-select">
-                                        <option value="Approved" ${appointment.status === 'Approved' ? 'selected' : ''}>Approved</option>
-                                        <option value="Completed" ${appointment.status === 'Completed' ? 'selected' : ''}>Completed</option>
-                                        <option value="Cancelled">Cancel</option>
-                                    </select>
-                                </form>
-                            </td>`;
-                    }
-
-                    row.innerHTML = rowHtml;
-                    tableBody.appendChild(row);
-                });
+                updateApprovedAppointmentsTable(data.appointments);
             }
         })
         .catch(error => {
@@ -1592,6 +2152,125 @@ window.addEventListener("click", function(event) {
             alert('Failed to reset appointments. Please try again.');
         });
     }
+
+    // Helper function to update the appointments table
+    function updateApprovedAppointmentsTable(appointments) {
+        const tableBody = document.getElementById('approvedAppointmentTable');
+        tableBody.innerHTML = '';
+        
+        appointments.forEach(appointment => {
+            const row = document.createElement('tr');
+            row.className = 'border-b';
+            
+            // Format the date and time
+            const date = new Date(appointment.appointment_date);
+            const time = appointment.appointment_time;
+            
+            // Format date as "Month Day, Year"
+            const formattedDate = date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Format time as "HH:MM AM/PM"
+            const [hours, minutes] = time.split(':');
+            const timeString = new Date(2000, 0, 1, parseInt(hours), parseInt(minutes)).toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+            
+            let rowHtml = `
+                <td class="py-3 px-4 font-medium">${appointment.reference_number}</td>
+                <td class="py-3 px-4">${appointment.user.first_name} ${appointment.user.last_name}</td>
+                <td class="py-3 px-4">${appointment.requester_name}</td>
+                <td class="py-3 px-4">${appointment.document_owner_name}</td>
+                <td class="py-3 px-4">${appointment.relationship}</td>
+                <td class="py-3 px-4">${appointment.appointment_type}</td>
+                <td class="py-3 px-4">${appointment.document_type}</td>
+                <td class="py-3 px-4">${formattedDate} ${timeString}</td>
+                <td class="py-3 px-4">
+                    <span class="bg-green-300 text-green-900 px-2 py-1 rounded text-sm">${appointment.status}</span>
+                </td>`;
+
+            if ({{ Auth::guard('employee')->user()->username === 'admin1' || Auth::guard('employee')->user()->username === 'Admin1' ? 'true' : 'false' }}) {
+                rowHtml += `
+                    <td class="py-3 px-4">
+                        <form action="/admin/appointments/${appointment.id}/status" method="POST" class="inline">
+                            @csrf
+                            @method('PUT')
+                            <select name="status" onchange="handleApprovedStatusChange(this, ${appointment.id})" class="status-select">
+                                <option value="Approved" ${appointment.status === 'Approved' ? 'selected' : ''}>Approved</option>
+                                <option value="Completed" ${appointment.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                                <option value="Cancelled">Cancel</option>
+                            </select>
+                        </form>
+                    </td>`;
+            }
+
+            row.innerHTML = rowHtml;
+            tableBody.appendChild(row);
+        });
+    }
+
+    // Initialize datepickers with custom options
+    $(document).ready(function() {
+        // Start date picker
+        $('#start_date_btn').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true,
+            container: 'body',
+            orientation: 'top auto'
+        }).on('changeDate', function(e) {
+            // Update hidden input
+            $('#start_date').val(e.format());
+            // Update button text
+            $('#start_date_display').text(e.format('MMMM d, yyyy'));
+            // Set minimum date for end date picker
+            $('#end_date_btn').datepicker('setStartDate', e.date);
+        });
+
+        // End date picker
+        $('#end_date_btn').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true,
+            container: 'body',
+            orientation: 'top auto'
+        }).on('changeDate', function(e) {
+            // Update hidden input
+            $('#end_date').val(e.format());
+            // Update button text
+            $('#end_date_display').text(e.format('MMMM d, yyyy'));
+            // Set maximum date for start date picker
+            $('#start_date_btn').datepicker('setEndDate', e.date);
+        });
+
+        // Clear date filters
+        $('#clear_date_filter').on('click', function() {
+            $('#start_date').val('');
+            $('#end_date').val('');
+            $('#start_date_display').text('Select start date');
+            $('#end_date_display').text('Select end date');
+            $('#start_date_btn').datepicker('clearDates');
+            $('#end_date_btn').datepicker('clearDates');
+            loadApprovedAppointments();
+        });
+
+        // Filter appointments
+        $('#filter_appointments').on('click', function() {
+            const startDate = $('#start_date').val();
+            const endDate = $('#end_date').val();
+            
+            if (startDate && endDate) {
+                loadApprovedAppointments(startDate, endDate);
+            } else {
+                alert('Please select both start and end dates');
+            }
+        });
+    });
   </script>
 </body>
 </html>
