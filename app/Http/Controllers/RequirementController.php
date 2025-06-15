@@ -19,6 +19,14 @@ class RequirementController extends Controller
             'description' => 'required|string',
         ]);
 
+        // Check for duplicate requirement
+        $existingRequirement = Requirement::where('title', $request->title)->first();
+        if ($existingRequirement) {
+            return redirect()->route('admin.requirements')
+                ->with('error', 'A requirement with this title already exists.')
+                ->withInput();
+        }
+
         Requirement::create($request->all());
         return redirect()->route('admin.requirements')->with('success', 'Requirement created successfully');
     }
@@ -29,6 +37,17 @@ class RequirementController extends Controller
             'title' => 'required|string',
             'description' => 'required|string',
         ]);
+
+        // Check for duplicate requirement, excluding current requirement
+        $existingRequirement = Requirement::where('title', $request->title)
+            ->where('id', '!=', $id)
+            ->first();
+            
+        if ($existingRequirement) {
+            return redirect()->route('admin.requirements')
+                ->with('error', 'A requirement with this title already exists.')
+                ->withInput();
+        }
 
         $requirement = Requirement::find($id);
         $requirement->update($request->all());

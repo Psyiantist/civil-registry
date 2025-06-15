@@ -181,15 +181,20 @@
     <!-- Add Requirement Container -->
     <div class="bg-white p-4 md:p-6 rounded-lg shadow-md w-full md:w-[45%] max-w-lg min-h-[600px] mb-6 md:mb-0">
         <h2 class="text-xl md:text-2xl font-bold text-blue-800 mb-4">Add Requirement</h2>
+        @if(session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <span class="block sm:inline">{{ session('error') }}</span>
+            </div>
+        @endif
         <form action="{{ route('admin.requirements.store') }}" method="POST" class="mb-6">
             @csrf
             <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2">Title</label>
-                <input type="text" name="title" class="w-full border rounded px-3 py-2 text-gray-900" required>
+                <input type="text" name="title" class="w-full border rounded px-3 py-2 text-gray-900" value="{{ old('title') }}" required>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2">Description (you can use bullets or paragraphs)</label>
-                <textarea name="description" rows="6" class="w-full border rounded px-3 py-2 text-gray-900" placeholder="• Bullet 1&#10;• Bullet 2" required></textarea>
+                <textarea name="description" rows="6" class="w-full border rounded px-3 py-2 text-gray-900" placeholder="• Bullet 1&#10;• Bullet 2" required>{{ old('description') }}</textarea>
             </div>
             <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 w-full md:w-auto">Add Requirement</button>
         </form>
@@ -234,16 +239,21 @@
 <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4">
     <div class="bg-white p-4 md:p-8 rounded-lg w-full max-w-lg">
         <h2 class="text-lg md:text-xl font-bold mb-4">Edit Requirement</h2>
+        @if(session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <span class="block sm:inline">{{ session('error') }}</span>
+            </div>
+        @endif
         <form id="editForm" method="POST">
             @csrf
             @method('PUT')
             <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2">Title</label>
-                <input type="text" id="editTitle" name="title" class="w-full border rounded px-3 py-2 text-gray-900" required>
+                <input type="text" id="editTitle" name="title" class="w-full border rounded px-3 py-2 text-gray-900" value="{{ old('title') }}" required>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2">Description</label>
-                <textarea id="editDescription" name="description" rows="6" class="w-full border rounded px-3 py-2 text-gray-900" required></textarea>
+                <textarea id="editDescription" name="description" rows="6" class="w-full border rounded px-3 py-2 text-gray-900" required>{{ old('description') }}</textarea>
             </div>
             <div class="flex flex-col md:flex-row justify-end gap-2">
                 <button type="button" onclick="closeEditModal()" class="bg-gray-400 text-white px-4 py-2 rounded w-full md:w-auto mb-2 md:mb-0">Cancel</button>
