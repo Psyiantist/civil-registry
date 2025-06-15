@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
   <title> Home Page - Residence View Login </title>
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-  <style type="text/css">
+  <style>
     /* Reset styles only for login page content */
     html, body {
       margin: 0;
@@ -15,6 +15,7 @@
       width: 100%;
       height: 100%;
       overflow-x: hidden;
+      font-family: 'Poppins', sans-serif;
     }
     
     .login-content * {
@@ -31,7 +32,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)),url('{{ asset('storage/assets/appointment_bg.jpg') }}') center 40% fixed;
+      background: linear-gradient(rgba(90, 110, 130, 0.3), rgba(90, 110, 130, 0.3)), url('/storage/assets/appointment_bg.jpg') center 40% fixed;
       background-size: cover;
       background-repeat: no-repeat;
       padding: 20px;
