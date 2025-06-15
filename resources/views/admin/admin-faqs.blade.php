@@ -609,8 +609,10 @@
                         })
                     });
                     
+                    const data = await response.json();
+                    
                     if (!response.ok) {
-                        throw new Error('Failed to update FAQ');
+                        throw new Error(data.message || 'Failed to update FAQ');
                     }
                     
                     // Show success message
@@ -638,7 +640,22 @@
                     saveButton.remove();
                 } catch (error) {
                     console.error('Error:', error);
-                    alert('Failed to update FAQ');
+                    // Show error message
+                    const errorMessage = document.createElement('div');
+                    errorMessage.style.position = 'fixed';
+                    errorMessage.style.top = '20px';
+                    errorMessage.style.right = '20px';
+                    errorMessage.style.padding = '10px 20px';
+                    errorMessage.style.backgroundColor = '#f44336';
+                    errorMessage.style.color = 'white';
+                    errorMessage.style.borderRadius = '4px';
+                    errorMessage.style.zIndex = '1000';
+                    errorMessage.textContent = error.message;
+                    document.body.appendChild(errorMessage);
+                    
+                    setTimeout(() => {
+                        errorMessage.remove();
+                    }, 3000);
                 }
             };
         }
@@ -693,15 +710,20 @@
             <h3>Add New FAQ</h3>
             <button class="close-modal" onclick="document.getElementById('addFaqModal').style.display='none'">&times;</button>
         </div>
+        @if(session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <span class="block sm:inline">{{ session('error') }}</span>
+            </div>
+        @endif
         <form action="{{ route('admin.faqs.store') }}" method="POST" class="modal-form">
             @csrf
             <div>
                 <label>Question:</label>
-                <input type="text" name="question" required>
+                <input type="text" name="question" value="{{ old('question') }}" required>
             </div>
             <div>
                 <label>Answer:</label>
-                <textarea name="answer" required></textarea>
+                <textarea name="answer" required>{{ old('answer') }}</textarea>
             </div>
             <div class="modal-actions">
                 <button type="button" class="cancel-btn" onclick="document.getElementById('addFaqModal').style.display='none'">Cancel</button>

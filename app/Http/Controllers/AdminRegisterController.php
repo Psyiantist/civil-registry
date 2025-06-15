@@ -25,7 +25,27 @@ class AdminRegisterController extends Controller
                 'email' => 'required|string|email|max:255|unique:employees,email',
                 'password' => 'required|string|min:8',
                 'password_confirmation' => 'required|same:password',
-                'birthday' => 'required|date',
+                'birthday' => [
+                    'required',
+                    'date',
+                    function ($attribute, $value, $fail) {
+                        $birthday = new \DateTime($value);
+                        $today = new \DateTime();
+                        $age = $today->diff($birthday)->y;
+
+                        if ($birthday > $today) {
+                            $fail('Birthday cannot be in the future.');
+                        }
+
+                        if ($age < 18) {
+                            $fail('You must be at least 18 years old to register as an admin.');
+                        }
+
+                        if ($age > 100) {
+                            $fail('Please enter a valid age (18-100 years).');
+                        }
+                    },
+                ],
                 'address' => 'required|string',
                 'id_card_image' => 'required|image|mimes:jpeg,jpg,png|max:2048',
             ], [

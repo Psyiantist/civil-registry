@@ -20,6 +20,14 @@ class FaqController extends Controller
             'answer' => 'required|string',
         ]);
 
+        // Check for duplicate question
+        $existingFaq = Faq::where('question', $request->question)->first();
+        if ($existingFaq) {
+            return redirect()->route('admin.faqs')
+                ->with('error', 'A FAQ with this question already exists.')
+                ->withInput();
+        }
+
         Faq::create([
             'question' => $request->question,
             'answer' => $request->answer,
@@ -35,6 +43,17 @@ class FaqController extends Controller
             'question' => 'required|string',
             'answer' => 'required|string',
         ]);
+
+        // Check for duplicate question, excluding current FAQ
+        $existingFaq = Faq::where('question', $request->question)
+            ->where('id', '!=', $faq->id)
+            ->first();
+            
+        if ($existingFaq) {
+            return redirect()->route('admin.faqs')
+                ->with('error', 'A FAQ with this question already exists.')
+                ->withInput();
+        }
 
         $faq->update([
             'question' => $request->question,

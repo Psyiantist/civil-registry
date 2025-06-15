@@ -594,13 +594,28 @@
         document.getElementById('birthday').addEventListener('change', function(e) {
             const birthday = new Date(this.value);
             const today = new Date();
-            const age = today.getFullYear() - birthday.getFullYear();
+            
+            // Calculate age more precisely
+            let age = today.getFullYear() - birthday.getFullYear();
             const monthDiff = today.getMonth() - birthday.getMonth();
             
             if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthday.getDate())) {
                 age--;
             }
 
+            // Check if birthday is in the future
+            if (birthday > today) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Date',
+                    text: 'Birthday cannot be in the future.',
+                    confirmButtonColor: '#426DDC'
+                });
+                this.value = '';
+                return;
+            }
+
+            // Check minimum age (18 years)
             if (age < 18) {
                 Swal.fire({
                     icon: 'error',
@@ -609,7 +624,46 @@
                     confirmButtonColor: '#426DDC'
                 });
                 this.value = '';
+                return;
             }
+
+            // Check maximum age (100 years)
+            if (age > 100) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Age Restriction',
+                    text: 'Please enter a valid age (18-100 years).',
+                    confirmButtonColor: '#426DDC'
+                });
+                this.value = '';
+                return;
+            }
+
+            // Set maximum date to today
+            const maxDate = new Date();
+            maxDate.setFullYear(maxDate.getFullYear() - 18);
+            this.max = maxDate.toISOString().split('T')[0];
+
+            // Set minimum date (100 years ago)
+            const minDate = new Date();
+            minDate.setFullYear(minDate.getFullYear() - 100);
+            this.min = minDate.toISOString().split('T')[0];
+        });
+
+        // Set initial date restrictions when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const birthdayInput = document.getElementById('birthday');
+            const today = new Date();
+            
+            // Set maximum date to 18 years ago
+            const maxDate = new Date();
+            maxDate.setFullYear(maxDate.getFullYear() - 18);
+            birthdayInput.max = maxDate.toISOString().split('T')[0];
+            
+            // Set minimum date to 100 years ago
+            const minDate = new Date();
+            minDate.setFullYear(minDate.getFullYear() - 100);
+            birthdayInput.min = minDate.toISOString().split('T')[0];
         });
 
         // Show validation errors using SweetAlert
