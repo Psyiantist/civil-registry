@@ -169,7 +169,4 @@ Route::get('/contact-info', [ContactController::class, 'getContact'])->name('con
 Route::get('/admin/register', [AdminRegisterController::class, 'showRegistrationForm'])->name('admin.register');
 Route::post('/admin/register', [AdminRegisterController::class, 'register']);
 
-
-Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
